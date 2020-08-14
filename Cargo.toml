@@ -1,5 +1,5 @@
 [workspace]
 members = [
-  "ez-xsd",
-  "ez-wsdl",
+  "CXT/xsd10",
+  "WST/wsdl11",
 ]
