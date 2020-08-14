@@ -1,6 +1,5 @@
 [workspace]
 members = [
-  "xsd-parser",
-  "xsd-types",
-  "wsdl-parser",
+  "ez-xsd",
+  "ez-wsdl",
 ]
