@@ -2,5 +2,6 @@
 members = [
   "CXT/xsd10",
   "WST/wsdl11",
-  "examples/onvif_profile_S"
+  "examples/xsd_onvif",
+  "examples/wsdl_onvif",
 ]

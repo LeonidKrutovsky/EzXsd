@@ -10,3 +10,5 @@
 - [ ] XInclude  
 - [ ] XForms: 1.0 and 1.1  
 - [ ] XML Catalogs 1.1  
+
+We use [roxmltree](https://github.com/RazrFalcon/roxmltree) lib for XML 1.0 parsing. 
