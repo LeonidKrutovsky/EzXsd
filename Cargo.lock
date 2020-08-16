@@ -110,18 +110,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ez-xsd"
-version = "0.1.0"
-dependencies = [
- "Inflector",
- "bigdecimal",
- "chrono",
- "clap",
- "num-bigint",
- "roxmltree",
-]
-
-[[package]]
 name = "getopts"
 version = "0.2.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -379,3 +367,14 @@ name = "xmlparser"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52613e655f6f11f63c0fe7d1c3b5ef69e44d96df9b65dab296b441ed0e1125f5"
+
+[[package]]
+name = "xsd10"
+version = "0.1.0"
+dependencies = [
+ "Inflector",
+ "bigdecimal",
+ "chrono",
+ "num-bigint",
+ "roxmltree",
+]

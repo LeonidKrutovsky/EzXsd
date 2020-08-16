@@ -115,6 +115,4 @@ mod tests {
         assert_eq!(Integer(0.to_bigint().unwrap()).to_string(), "0");
         assert_eq!(Integer(-1.to_bigint().unwrap()).to_string(), "-1");
     }
-
 }
-

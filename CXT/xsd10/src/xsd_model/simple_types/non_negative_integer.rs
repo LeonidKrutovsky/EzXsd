@@ -121,4 +121,3 @@ mod tests {
         assert_eq!(NonNegativeInteger(0.to_biguint().unwrap()).to_string(), "0");
     }
 }
-

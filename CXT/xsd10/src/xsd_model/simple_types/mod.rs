@@ -139,7 +139,6 @@ pub fn xsd_simple_type(name: &str) -> Result<SimpleType, String> {
     })
 }
 
-
 // Parses ISO 8601 timezone.
 pub fn parse_timezone(s: &str) -> Result<FixedOffset, String> {
     if s == "Z" {

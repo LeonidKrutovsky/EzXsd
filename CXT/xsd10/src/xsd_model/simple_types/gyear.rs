@@ -1,8 +1,8 @@
 use chrono::FixedOffset;
 use std::fmt;
 
-use std::str::FromStr;
 use crate::xsd_model::simple_types::parse_timezone;
+use std::str::FromStr;
 
 // xsd:gYear
 // The type xsd:gYear represents a specific calendar year. The letter g signifies "Gregorian." The format of xsd:gYear is CCYY. No left truncation is allowed. To represent years later than 9999, additional digits can be added to the left of the year value. To represent years before 0001, a preceding minus sign ("-") is allowed.
@@ -208,7 +208,7 @@ mod tests {
                 value: 987,
                 timezone: None
             }
-                .to_string(),
+            .to_string(),
             "0987"
         );
 
@@ -218,7 +218,7 @@ mod tests {
                 value: 987,
                 timezone: Some(FixedOffset::east(0))
             }
-                .to_string(),
+            .to_string(),
             "0987+00:00"
         );
 
@@ -228,7 +228,7 @@ mod tests {
                 value: 987,
                 timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "0987+06:30"
         );
 
@@ -238,7 +238,7 @@ mod tests {
                 value: 987,
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "0987-06:30"
         );
 
@@ -248,7 +248,7 @@ mod tests {
                 value: -987,
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "-0987-06:30"
         );
 
@@ -258,9 +258,8 @@ mod tests {
                 value: -98765,
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "-98765-06:30"
         );
     }
 }
-

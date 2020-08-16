@@ -120,4 +120,3 @@ mod tests {
         assert_eq!(NegativeInteger(-1.to_bigint().unwrap()).to_string(), "-1");
     }
 }
-

@@ -3,7 +3,6 @@ use std::fmt;
 
 use std::str::FromStr;
 
-
 // xsd:positiveInteger
 // The type xsd:positiveInteger represents an arbitrarily large positive integer. An xsd:positiveInteger is a sequence of digits, optionally preceded by a + sign. Leading zeros are permitted, but decimal points are not.
 //
@@ -74,7 +73,6 @@ impl fmt::Display for PositiveInteger {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::utils::xml_eq::assert_xml_eq;
 
     #[test]
     fn positive_integer_parse_test() {

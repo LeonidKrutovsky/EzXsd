@@ -37,7 +37,6 @@ use crate::xsd_model::simple_types::parse_timezone;
 // xsd:anySimpleType
 //     restricted by xsd:time
 
-
 #[derive(PartialEq, Debug)]
 pub struct Time {
     pub value: NaiveTime,
@@ -126,11 +125,9 @@ impl fmt::Display for Time {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::utils::xml_eq::assert_xml_eq;
 
     #[test]
     fn time_parse_test() {
@@ -179,7 +176,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: None
             }
-                .to_string(),
+            .to_string(),
             "04:40:00"
         );
 
@@ -189,7 +186,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::east(0))
             }
-                .to_string(),
+            .to_string(),
             "04:40:00+00:00"
         );
 
@@ -199,7 +196,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "04:40:00+06:30"
         );
 
@@ -209,9 +206,8 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "04:40:00-06:30"
         );
     }
 }
-

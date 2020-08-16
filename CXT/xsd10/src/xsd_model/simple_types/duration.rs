@@ -370,4 +370,3 @@ mod tests {
         check_invalid("PT15.S");
     }
 }
-

@@ -1,7 +1,7 @@
+use crate::xsd_model::simple_types::parse_timezone;
 use chrono::{format::strftime::StrftimeItems, FixedOffset, NaiveDate};
 use std::fmt;
 use std::str::FromStr;
-use crate::xsd_model::simple_types::parse_timezone;
 
 // xsd:date
 // The type xsd:date represents a Gregorian calendar date in the format CCYY-MM-DD where CC represents the century, YY the year, MM the month and DD the day. No left truncation is allowed for any part of the date. To represent years later than 9999, additional digits can be added to the left of the year value, but extra leading zeros are not permitted. To represent years before 0001, a preceding minus sign ("-") is allowed. The year 0000 is not a valid year in the Gregorian calendar.
@@ -171,7 +171,7 @@ mod tests {
                 value: NaiveDate::from_ymd(2020, 2, 2),
                 timezone: None
             }
-                .to_string(),
+            .to_string(),
             "2020-02-02"
         );
 
@@ -181,7 +181,7 @@ mod tests {
                 value: NaiveDate::from_ymd(2020, 2, 2),
                 timezone: Some(FixedOffset::east(0))
             }
-                .to_string(),
+            .to_string(),
             "2020-02-02+00:00"
         );
 
@@ -191,7 +191,7 @@ mod tests {
                 value: NaiveDate::from_ymd(2020, 2, 2),
                 timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "2020-02-02+06:30"
         );
 
@@ -201,9 +201,8 @@ mod tests {
                 value: NaiveDate::from_ymd(2020, 2, 2),
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
             }
-                .to_string(),
+            .to_string(),
             "2020-02-02-06:30"
         );
     }
 }
-
