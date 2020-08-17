@@ -1,10 +1,10 @@
-use crate::model::{Operation, Documentation, Output, Input, Fault};
+use crate::model::complex_types::t_operation::OperationContent;
+use crate::model::elements::ElementType;
+use crate::model::{Documentation, Fault, Input, Operation, Output};
+use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::NCName;
 use xsd10::xml_to_xsd::ElementChildren;
-use crate::xml_to_wsdl::WsdlNode;
-use crate::model::elements::ElementType;
-use crate::model::complex_types::t_operation::OperationContent;
 
 impl<'a> Operation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {

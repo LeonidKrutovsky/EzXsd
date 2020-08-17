@@ -1,6 +1,6 @@
 use crate::model::Part;
-use roxmltree::Node;
 use crate::xml_to_wsdl::documentation::documentation_only;
+use roxmltree::Node;
 use xsd10::model::simple_types::NCName;
 
 impl<'a> Part<'a> {

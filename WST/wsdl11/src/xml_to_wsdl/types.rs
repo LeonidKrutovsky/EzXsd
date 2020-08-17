@@ -1,6 +1,6 @@
 use crate::model::Types;
-use roxmltree::Node;
 use crate::xml_to_wsdl::documentation::documentation_first;
+use roxmltree::Node;
 use xsd10::xml_to_xsd::ElementChildren;
 
 impl<'a> Types<'a> {

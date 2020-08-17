@@ -42,7 +42,7 @@ pub struct Operation<'a> {
     pub elements: Vec<RawElement<'a>>,
     pub content: OperationContent<'a>,
     pub name: xsd::NCName<'a>,
-    parameter_order: &'a str, //TODO: xsd::NMTOKENS<'a>,
+    pub parameter_order: Option<&'a str>, //TODO: xsd::NMTOKENS<'a>,
 }
 
 // Choice [1..1]

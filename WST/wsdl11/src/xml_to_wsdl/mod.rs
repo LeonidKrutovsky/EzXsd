@@ -5,7 +5,11 @@ pub mod definitions;
 pub mod documentation;
 pub mod fault;
 pub mod import;
+pub mod message;
+pub mod operation;
 pub mod param;
+pub mod part;
+pub mod port_type;
 pub mod types;
 
 pub const WSDL_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/";

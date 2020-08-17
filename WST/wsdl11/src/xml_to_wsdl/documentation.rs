@@ -7,7 +7,7 @@ use xsd10::xml_to_xsd::ElementChildren;
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         if !node.attributes().is_empty() {
-            return Err(format!("Attributes not allowed"));
+            return Err(format!("Attributes not allowed {:?}", node));
         }
 
         Ok(Self {

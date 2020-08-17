@@ -9,7 +9,7 @@
 //     Any element [0..*] Namespace: ##other, Process Contents: lax  from type wsdl:tExtensibleDocumented
 //     wsdl:part [0..*]
 // Attributes
-// name	[1..1]	xsd:NCName
+//  name	[1..1]	xsd:NCName
 // Used by
 //     Element wsdl:message
 // Type inheritance chain

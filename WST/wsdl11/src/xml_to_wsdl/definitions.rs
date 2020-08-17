@@ -1,10 +1,10 @@
 use crate::model::elements::ElementType;
-use crate::model::{Import, Types};
+use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
 use crate::model::Definitions;
+use crate::model::{Import, Message, Types};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::{AnyUri, NCName};
-use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
 
 impl<'a> Definitions<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -32,7 +32,7 @@ fn parse_content<'a>(node: Node<'a, '_>) -> Result<AnyTopLevelOptionalElement<'a
     match node.wsdl_type()? {
         ElementType::Import => Ok(AnyTopLevelOptionalElement::Import(Import::parse(node)?)),
         ElementType::Types => Ok(AnyTopLevelOptionalElement::Types(Types::parse(node)?)),
-        ElementType::Message => unimplemented!(),
+        ElementType::Message => Ok(AnyTopLevelOptionalElement::Message(Message::parse(node)?)),
         ElementType::PortType => unimplemented!(),
         ElementType::Binding => unimplemented!(),
         ElementType::Service => unimplemented!(),
