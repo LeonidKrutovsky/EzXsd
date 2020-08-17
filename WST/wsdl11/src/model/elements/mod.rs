@@ -6,3 +6,4 @@ pub mod message;
 pub mod port_type;
 pub mod service;
 pub mod part;
+pub mod definitions;

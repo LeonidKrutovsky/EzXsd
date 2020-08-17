@@ -3,7 +3,7 @@ All elements
 | wsdl element | Struct | Validation | Tests |
 | -------- | ------ | ---------- | ----- |
 | binding
-| definitions
+| definitions | * |
 | documentation
 | fault | * |
 | fault | * |
