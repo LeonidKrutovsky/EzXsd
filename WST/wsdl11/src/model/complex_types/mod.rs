@@ -17,3 +17,4 @@ pub mod t_operation;
 pub mod t_binding;
 pub mod t_binding_operation;
 pub mod t_port_type;
+pub mod t_defenitions;
