@@ -1,8 +1,10 @@
 use crate::model::elements::ElementType;
+use crate::model::{Import, Types};
 use crate::model::Definitions;
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::{AnyUri, NCName};
+use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
 
 impl<'a> Definitions<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -16,19 +18,24 @@ impl<'a> Definitions<'a> {
             }
         }
 
-        use ElementType::*;
-        for ch in node.children().filter(|n| n.is_element()) {
-            match ch.wsdl_type()? {
-                Import => unimplemented!(),
-                Types => unimplemented!(),
-                Message => unimplemented!(),
-                PortType => unimplemented!(),
-                Binding => unimplemented!(),
-                Service => unimplemented!(),
-                x => return Err(format!("Invalid child element: {:?}", x)),
-            }
-        }
+        res.content = node
+            .children()
+            .filter(|n| n.is_element())
+            .map(parse_content)
+            .collect::<Result<Vec<_>, _>>()?;
 
         Ok(res)
+    }
+}
+
+fn parse_content<'a>(node: Node<'a, '_>) -> Result<AnyTopLevelOptionalElement<'a>, String> {
+    match node.wsdl_type()? {
+        ElementType::Import => Ok(AnyTopLevelOptionalElement::Import(Import::parse(node)?)),
+        ElementType::Types => Ok(AnyTopLevelOptionalElement::Types(Types::parse(node)?)),
+        ElementType::Message => unimplemented!(),
+        ElementType::PortType => unimplemented!(),
+        ElementType::Binding => unimplemented!(),
+        ElementType::Service => unimplemented!(),
+        x => return Err(format!("Invalid child element: {:?}", x)),
     }
 }

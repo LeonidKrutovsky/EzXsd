@@ -6,6 +6,7 @@ pub mod documentation;
 pub mod fault;
 pub mod import;
 pub mod param;
+pub mod types;
 
 pub const WSDL_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/";
 
