@@ -19,4 +19,4 @@ All elements
 | port | * |
 | portType | * |
 | service | * |
-| types
+| types | * |
