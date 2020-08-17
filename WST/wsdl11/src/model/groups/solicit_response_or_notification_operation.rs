@@ -13,7 +13,7 @@
 //     Type wsdl:tOperation (Element wsdl:operation)
 
 use crate::model::elements::fault::Fault;
-use crate::model::elements::input::ParamInput;
+use crate::model::elements::input::Input;
 use crate::model::elements::output::ParamOutput;
 
 #[derive(Debug)]
@@ -24,6 +24,6 @@ pub struct SolicitResponseOrNotificationOperation<'a> {
 
 #[derive(Debug)]
 pub struct SolicitResponse<'a> {
-    input: ParamInput<'a>,
+    input: Input<'a>,
     faults: Vec<Fault<'a>>,
 }
