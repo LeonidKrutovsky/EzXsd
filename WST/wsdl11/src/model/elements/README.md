@@ -5,8 +5,8 @@ All elements
 | binding
 | definitions
 | documentation
-| fault
-| fault
+| fault | * |
+| fault | * |
 | import
 | input | * |
 | input | * |
