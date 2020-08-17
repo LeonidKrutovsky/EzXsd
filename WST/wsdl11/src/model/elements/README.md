@@ -7,7 +7,7 @@ All elements
 | documentation
 | fault | * |
 | fault | * |
-| import
+| import | * |
 | input | * |
 | input | * |
 | message | * |
@@ -17,6 +17,6 @@ All elements
 | output | * |
 | part
 | port
-| portType
+| portType | * |
 | service
 | types
