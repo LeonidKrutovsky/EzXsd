@@ -17,10 +17,10 @@
 //         wsdl:tExtensibleDocumented
 //             wsdl:tMessage
 
-use xsd10::xsd_model::simple_types as xsd;
-use crate::model::{RawAttribute, RawElement};
 use crate::model::complex_types::t_documentation::Documentation;
 use crate::model::complex_types::t_part::Part;
+use crate::model::RawElement;
+use xsd10::xsd_model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct Message<'a> {

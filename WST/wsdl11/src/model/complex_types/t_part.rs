@@ -19,9 +19,9 @@
 //         wsdl:tExtensibleAttributesDocumented
 //             wsdl:tPart
 
-use xsd10::xsd_model::simple_types as xsd;
-use crate::model::RawAttribute;
 use crate::model::complex_types::t_documentation::Documentation;
+use crate::model::RawAttribute;
+use xsd10::xsd_model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct Part<'a> {

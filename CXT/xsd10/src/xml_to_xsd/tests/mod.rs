@@ -6,7 +6,9 @@ mod onvif_files_test {
     use crate::xml_to_xsd::schema::parse_document;
     use roxmltree::Document;
     macro_rules! INPUT_PATH {
-        () => {"../../../input/"}
+        () => {
+            "../../../input/"
+        };
     }
     //const INPUT_PATH: &str = "../../../input/";
 

@@ -12,7 +12,11 @@
 // Used in
 //     Type wsdl:tOperation (Element wsdl:operation)
 
-#[derive(Clone, Debug, PartialEq)]
+use crate::model::elements::fault::Fault;
+use crate::model::elements::input::ParamInput;
+use crate::model::elements::output::ParamOutput;
+
+#[derive(Debug)]
 pub enum SolicitResponseOrNotificationOperation<'a> {
     SolicitResponse {
         output: ParamOutput<'a>,

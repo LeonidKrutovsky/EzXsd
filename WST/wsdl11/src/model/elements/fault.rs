@@ -1,5 +1,5 @@
-use crate::model::complex_types::t_fault;
 use crate::model::complex_types::t_binding_operation_fault;
+use crate::model::complex_types::t_fault;
 
 // wsdl:fault
 // Element information

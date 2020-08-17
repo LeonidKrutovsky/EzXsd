@@ -41,6 +41,6 @@
 use crate::model::complex_types::t_documented::Documented;
 use crate::model::RawElement;
 
-pub trait ExtensibleDocumented<'a> : Documented<'a> {
+pub trait ExtensibleDocumented<'a>: Documented<'a> {
     fn elements(&self) -> Vec<RawElement<'a>>;
 }

@@ -23,11 +23,11 @@ impl<'a> SchemaSet<'a> {
         for d in docs {
             let root = d.root_element();
             if root.xsd_type()? == ElementType::Schema {
-                res.add_schema(root);
+                res.add_schema(root)?;
             } else {
                 for ch in root.element_children() {
                     if ch.xsd_type()? == ElementType::Schema {
-                        res.add_schema(root);
+                        res.add_schema(root)?;
                     }
                 }
             }

@@ -26,6 +26,6 @@
 
 use crate::model::complex_types::t_documented::Documented;
 
-pub trait ExtensibleAttributesDocumented<'a> : Documented<'a> {
+pub trait ExtensibleAttributesDocumented<'a>: Documented<'a> {
     fn required(&self) -> Option<bool>;
 }

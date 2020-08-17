@@ -21,6 +21,7 @@ pub mod local_element;
 pub mod nested_particle;
 pub mod restriction;
 pub mod schema;
+#[allow(dead_code)]
 pub mod schema_set;
 pub mod schema_top;
 pub mod simple_content;
@@ -114,7 +115,7 @@ impl<'a, 'input: 'a> ElementChildrenIterator<'a, 'input> {
             node
         }
     }
-
+    #[allow(dead_code)]
     #[inline]
     fn has_next(&self) -> bool {
         self.front.is_none()
