@@ -4,7 +4,7 @@ All elements
 | -------- | ------ | ---------- | ----- |
 | binding | * |
 | definitions | * |
-| documentation
+| documentation | * |
 | fault | * |
 | fault | * |
 | import | * |
