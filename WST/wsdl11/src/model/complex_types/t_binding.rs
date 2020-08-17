@@ -6,8 +6,8 @@
 // Content
 //  Sequence [1..1]
 //     wsdl:documentation [0..1]   from type wsdl:tDocumented
-//     Any element [0..*] Namespace: ##other, Process Contents: lax   from type wsdl:tExtensibleDocumented
-//     wsdl:operation [0..*]
+//     Any element        [0..*] Namespace: ##other, Process Contents: lax   from type wsdl:tExtensibleDocumented
+//     wsdl:operation     [0..*]
 // Attributes
 //     name	[1..1]	xsd:NCName
 //     type	[1..1]	xsd:QName

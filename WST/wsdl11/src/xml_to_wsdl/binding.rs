@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
 use crate::model::{Binding, Documentation, Operation};
+use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::{NCName, QName};
 use xsd10::xml_to_xsd::ElementChildren;
-use crate::xml_to_wsdl::WsdlNode;
-use crate::model::elements::ElementType;
 
 impl<'a> Binding<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {

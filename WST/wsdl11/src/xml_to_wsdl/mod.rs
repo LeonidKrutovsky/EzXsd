@@ -1,5 +1,6 @@
 use crate::model::elements::{wsdl_element_type, ElementType};
 
+pub mod binding;
 pub mod binding_operation_message;
 pub mod definitions;
 pub mod documentation;

@@ -1,6 +1,6 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
-use crate::model::Definitions;
+use crate::model::{Binding, Definitions, PortType};
 use crate::model::{Import, Message, Types};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
@@ -33,8 +33,8 @@ fn parse_content<'a>(node: Node<'a, '_>) -> Result<AnyTopLevelOptionalElement<'a
         ElementType::Import => Ok(AnyTopLevelOptionalElement::Import(Import::parse(node)?)),
         ElementType::Types => Ok(AnyTopLevelOptionalElement::Types(Types::parse(node)?)),
         ElementType::Message => Ok(AnyTopLevelOptionalElement::Message(Message::parse(node)?)),
-        ElementType::PortType => unimplemented!(),
-        ElementType::Binding => unimplemented!(),
+        ElementType::PortType => Ok(AnyTopLevelOptionalElement::PortType(PortType::parse(node)?)),
+        ElementType::Binding => Ok(AnyTopLevelOptionalElement::Binding(Binding::parse(node)?)),
         ElementType::Service => unimplemented!(),
         x => return Err(format!("Invalid child element: {:?}", x)),
     }
