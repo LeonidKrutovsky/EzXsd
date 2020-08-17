@@ -2,7 +2,8 @@
 
 - [x] WSDL: 1.1
 - [ ] WSDL: 2.0
-- [ ] SOAP: 1.1 and 1.2
+- [ ] SOAP: 1.1
+- [ ] SOAP: 1.2
 - [ ] WS-Addressing 1.0
 - [ ] WS-AtomicTransaction 1.1/1.2
 - [ ] WS-BPEL 2.0
