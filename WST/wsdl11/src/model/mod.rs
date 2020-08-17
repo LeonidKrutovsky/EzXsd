@@ -1,3 +1,10 @@
+// http://schemas.xmlsoap.org/wsdl/http/
+pub mod http;
+//http://schemas.xmlsoap.org/wsdl/mime/
+pub mod mime;
+//http://schemas.xmlsoap.org/wsdl/soap/
+pub mod soap;
+// http://schemas.xmlsoap.org/wsdl/
 pub mod complex_types;
 pub mod elements;
 pub mod groups;
