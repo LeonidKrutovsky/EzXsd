@@ -21,7 +21,7 @@ use crate::model::{RawAttribute, RawElement};
 use crate::model::complex_types::t_documentation::Documentation;
 
 #[derive(Default, Debug)]
-pub struct BindingOperationMessage<'a> {
+pub struct BindingOperationFault<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub name: xsd::NCName<'a>,
