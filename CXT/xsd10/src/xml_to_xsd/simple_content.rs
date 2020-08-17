@@ -1,8 +1,8 @@
-use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::{
+use crate::model::elements::ElementType;
+use crate::model::{
     Annotation, SimpleContent, SimpleContentChoice, SimpleExtension, SimpleRestriction,
 };
+use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 
 impl<'a> SimpleContent<'a> {

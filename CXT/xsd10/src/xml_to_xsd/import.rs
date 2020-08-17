@@ -1,5 +1,5 @@
+use crate::model::Import;
 use crate::xml_to_xsd::utils::annotation_only;
-use crate::xsd_model::Import;
 use roxmltree::Node;
 
 impl<'a> Import<'a> {
@@ -22,7 +22,7 @@ impl<'a> Import<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::Import;
+    use crate::model::Import;
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

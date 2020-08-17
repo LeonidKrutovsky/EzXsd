@@ -1,5 +1,5 @@
+use crate::model::Include;
 use crate::xml_to_xsd::utils::annotation_only;
-use crate::xsd_model::Include;
 use roxmltree::Node;
 
 impl<'a> Include<'a> {
@@ -21,7 +21,7 @@ impl<'a> Include<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::elements::include::Include;
+    use crate::model::elements::include::Include;
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

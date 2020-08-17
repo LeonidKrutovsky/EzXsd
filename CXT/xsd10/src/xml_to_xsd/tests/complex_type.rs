@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod test {
+    use crate::model::groups::nested_particle::NestedParticle;
+    use crate::model::groups::schema_top::SchemaTop;
+    use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::{Annotation, TopLevelComplexType};
     use crate::xml_to_xsd::schema::parse_document;
-    use crate::xsd_model::groups::nested_particle::NestedParticle;
-    use crate::xsd_model::groups::schema_top::SchemaTop;
-    use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-    use crate::xsd_model::{Annotation, TopLevelComplexType};
     use roxmltree::Document;
     use std::rc::Rc;
 

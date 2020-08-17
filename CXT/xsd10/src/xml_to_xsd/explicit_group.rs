@@ -1,11 +1,11 @@
 use roxmltree::Node;
 
+use crate::model::elements::ElementType;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
 
-use crate::xsd_model::complex_types::explicit_group::ExplicitGroup;
-use crate::xsd_model::groups::nested_particle::NestedParticle;
-use crate::xsd_model::Annotation;
+use crate::model::complex_types::explicit_group::ExplicitGroup;
+use crate::model::groups::nested_particle::NestedParticle;
+use crate::model::Annotation;
 
 impl<'a> ExplicitGroup<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -33,8 +33,8 @@ impl<'a> ExplicitGroup<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::complex_types::explicit_group::ExplicitGroup;
-    use crate::xsd_model::MaxOccurs::Bounded;
+    use crate::model::complex_types::explicit_group::ExplicitGroup;
+    use crate::model::MaxOccurs::Bounded;
     use num_bigint::ToBigUint;
 
     #[test]

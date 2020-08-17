@@ -1,17 +1,17 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::schema_top::SchemaTop;
+use crate::model::simple_types::any_uri::AnyUri;
+use crate::model::simple_types::block_set::BlockSet;
+use crate::model::simple_types::form_choice::FormChoice;
+use crate::model::simple_types::full_derivation_set::FullDerivationSet;
+use crate::model::simple_types::id::Id;
+use crate::model::simple_types::language::Language;
+use crate::model::simple_types::token::Token;
+use crate::model::Annotation;
+use crate::model::Import;
+use crate::model::Include;
+use crate::model::Schema;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::schema_top::SchemaTop;
-use crate::xsd_model::simple_types::any_uri::AnyUri;
-use crate::xsd_model::simple_types::block_set::BlockSet;
-use crate::xsd_model::simple_types::form_choice::FormChoice;
-use crate::xsd_model::simple_types::full_derivation_set::FullDerivationSet;
-use crate::xsd_model::simple_types::id::Id;
-use crate::xsd_model::simple_types::language::Language;
-use crate::xsd_model::simple_types::token::Token;
-use crate::xsd_model::Annotation;
-use crate::xsd_model::Import;
-use crate::xsd_model::Include;
-use crate::xsd_model::Schema;
 use roxmltree::{Document, Node};
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {

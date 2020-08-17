@@ -29,12 +29,12 @@
 //         wsdl:tExtensibleDocumented
 //             wsdl:tOperation
 
-use xsd10::xsd_model::simple_types as xsd;
-use crate::model::RawElement;
 use crate::model::complex_types::t_documentation::Documentation;
+use crate::model::elements::fault::Fault;
 use crate::model::elements::input::ParamInput;
 use crate::model::elements::output::ParamOutput;
-use crate::model::elements::fault::Fault;
+use crate::model::RawElement;
+use xsd10::model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct Operation<'a> {
@@ -42,9 +42,8 @@ pub struct Operation<'a> {
     pub elements: Vec<RawElement<'a>>,
     pub content: OperationContent<'a>,
     pub name: xsd::NCName<'a>,
-    parameter_order: &'a str,  //TODO: xsd::NMTOKENS<'a>,
+    parameter_order: &'a str, //TODO: xsd::NMTOKENS<'a>,
 }
-
 
 // Choice [1..1]
 //     Sequence [1..1]     from group wsdl:request-response-or-one-way-operation
@@ -80,6 +79,8 @@ pub enum OperationContent<'a> {
 
 impl Default for OperationContent<'_> {
     fn default() -> Self {
-        Self::OneWay {input: ParamInput::default()}
+        Self::OneWay {
+            input: ParamInput::default(),
+        }
     }
 }

@@ -1,4 +1,4 @@
-use crate::model::complex_types::{t_operation, t_binding_operation};
+use crate::model::complex_types::{t_binding_operation, t_operation};
 
 // wsdl:operation
 // Element information
@@ -35,7 +35,6 @@ use crate::model::complex_types::{t_operation, t_binding_operation};
 //         <wsdl:output message="tns:GetLastTradePriceOutput"/>
 //     </wsdl:operation>
 pub type Operation<'a> = t_operation::Operation<'a>;
-
 
 // wsdl:operation
 // Element information

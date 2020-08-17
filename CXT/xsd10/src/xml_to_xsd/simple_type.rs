@@ -1,10 +1,10 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::simple_derivation::SimpleDerivation;
+use crate::model::simple_types::ncname::NCName;
+use crate::model::simple_types::simple_derivation_set::SimpleDerivationSet;
+use crate::model::{Annotation, Restriction};
+use crate::model::{List, LocalSimpleType, TopLevelSimpleType, Union};
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::simple_derivation::SimpleDerivation;
-use crate::xsd_model::simple_types::ncname::NCName;
-use crate::xsd_model::simple_types::simple_derivation_set::SimpleDerivationSet;
-use crate::xsd_model::{Annotation, Restriction};
-use crate::xsd_model::{List, LocalSimpleType, TopLevelSimpleType, Union};
 use roxmltree::Node;
 
 impl<'a> LocalSimpleType<'a> {
@@ -106,8 +106,8 @@ impl<'a> SimpleDerivation<'a> {
 #[cfg(test)]
 mod test {
 
-    use crate::xsd_model::groups::simple_derivation::SimpleDerivation;
-    use crate::xsd_model::TopLevelSimpleType;
+    use crate::model::groups::simple_derivation::SimpleDerivation;
+    use crate::model::TopLevelSimpleType;
 
     #[test]
     fn test_top_level_simple_type_parse() {

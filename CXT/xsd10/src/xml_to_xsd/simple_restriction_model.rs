@@ -1,8 +1,8 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::facets::Facets;
+use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
+use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::facets::Facets;
-use crate::xsd_model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::xsd_model::LocalSimpleType;
 use roxmltree::Node;
 
 impl<'a> SimpleRestrictionModel<'a> {
@@ -28,9 +28,9 @@ impl<'a> SimpleRestrictionModel<'a> {
 
 #[cfg(test)]
 mod test {
+    use crate::model::groups::facets::Facets;
+    use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
     use crate::xml_to_xsd::ElementChildren;
-    use crate::xsd_model::groups::facets::Facets;
-    use crate::xsd_model::groups::simple_restriction_model::SimpleRestrictionModel;
 
     #[test]
     fn test_parse() {

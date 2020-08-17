@@ -1,9 +1,9 @@
+use crate::model::groups::attr_decls::AttrDecls;
+use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
+use crate::model::simple_types::qname::QName;
+use crate::model::SimpleRestriction;
 use crate::xml_to_xsd::utils::annotation_first;
 use crate::xml_to_xsd::ElementChildren;
-use crate::xsd_model::groups::attr_decls::AttrDecls;
-use crate::xsd_model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::SimpleRestriction;
 use roxmltree::Node;
 
 impl<'a> SimpleRestriction<'a> {

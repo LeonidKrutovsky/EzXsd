@@ -16,18 +16,19 @@
 // Used in
 //     Type wsdl:tDefinitions (Element wsdl:definitions)
 
+use crate::model::elements::binding::Binding;
 use crate::model::elements::import::Import;
-use crate::model::elements::types::Types;
 use crate::model::elements::message::Message;
 use crate::model::elements::port_type::PortType;
-use crate::model::elements::binding::Binding;
 use crate::model::elements::service::Service;
+use crate::model::elements::types::Types;
 
+#[derive(Debug)]
 pub enum AnyTopLevelOptionalElement<'a> {
     Import(Import<'a>),
     Types(Types<'a>),
     Message(Message<'a>),
     PortType(PortType<'a>),
     Binding(Binding<'a>),
-    Service(Service<'a>)
+    Service(Service<'a>),
 }

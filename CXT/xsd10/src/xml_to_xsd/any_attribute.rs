@@ -1,5 +1,5 @@
+use crate::model::AnyAttribute;
 use crate::xml_to_xsd::utils::annotation_only;
-use crate::xsd_model::AnyAttribute;
 use roxmltree::Node;
 
 impl<'a> AnyAttribute<'a> {
@@ -21,7 +21,7 @@ impl<'a> AnyAttribute<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::AnyAttribute;
+    use crate::model::AnyAttribute;
 
     #[test]
     fn test_parse() {

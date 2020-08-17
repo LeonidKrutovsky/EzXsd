@@ -1,7 +1,7 @@
-use crate::xsd_model::complex_types::explicit_group::ExplicitGroup;
-use crate::xsd_model::complex_types::named_group::NamedGroup;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
+use crate::model::complex_types::explicit_group::ExplicitGroup;
+use crate::model::complex_types::named_group::NamedGroup;
+use crate::model::elements::ElementType;
+use crate::model::groups::type_def_particle::TypeDefParticle;
 use roxmltree::Node;
 
 impl<'a> TypeDefParticle<'a> {

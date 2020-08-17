@@ -19,9 +19,9 @@
 //             wsdl:tBinding
 
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::RawElement;
-use xsd10::xsd_model::simple_types as xsd;
 use crate::model::complex_types::t_operation::Operation;
+use crate::model::RawElement;
+use xsd10::model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct Binding<'a> {

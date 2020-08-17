@@ -1,10 +1,10 @@
+use crate::model::complex_types::local_attribute_type::UseType;
+use crate::model::elements::ElementType;
+use crate::model::simple_types::form_choice::FormChoice;
+use crate::model::simple_types::ncname::NCName;
+use crate::model::simple_types::qname::QName;
+use crate::model::{Annotation, LocalAttribute, LocalSimpleType, TopLevelAttribute};
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::complex_types::local_attribute_type::UseType;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::simple_types::form_choice::FormChoice;
-use crate::xsd_model::simple_types::ncname::NCName;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::{Annotation, LocalAttribute, LocalSimpleType, TopLevelAttribute};
 use roxmltree::Node;
 
 impl<'a> TopLevelAttribute<'a> {

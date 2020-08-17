@@ -1,9 +1,7 @@
-use crate::xsd_model::complex_types::named_group::NamedGroup;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::schema_top::SchemaTop;
-use crate::xsd_model::{
-    TopLevelAttribute, TopLevelComplexType, TopLevelElement, TopLevelSimpleType,
-};
+use crate::model::complex_types::named_group::NamedGroup;
+use crate::model::elements::ElementType;
+use crate::model::groups::schema_top::SchemaTop;
+use crate::model::{TopLevelAttribute, TopLevelComplexType, TopLevelElement, TopLevelSimpleType};
 use roxmltree::Node;
 use std::rc::Rc;
 

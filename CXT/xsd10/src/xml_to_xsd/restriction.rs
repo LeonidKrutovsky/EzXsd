@@ -1,8 +1,8 @@
+use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
+use crate::model::simple_types::qname::QName;
+use crate::model::Restriction;
 use crate::xml_to_xsd::utils::annotation_first;
 use crate::xml_to_xsd::ElementChildren;
-use crate::xsd_model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::Restriction;
 use roxmltree::Node;
 
 impl<'a> Restriction<'a> {
@@ -32,7 +32,7 @@ impl<'a> Restriction<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::Restriction;
+    use crate::model::Restriction;
     #[test]
     fn test_parse_restriction() {
         let doc = roxmltree::Document::parse(

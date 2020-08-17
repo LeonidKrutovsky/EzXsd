@@ -1,7 +1,7 @@
+use crate::model::groups::complex_type_model::ComplexTypeModel;
+use crate::model::simple_types::derivation_set::DerivationSet;
+use crate::model::TopLevelComplexType;
 use crate::xml_to_xsd::utils::annotation_first;
-use crate::xsd_model::groups::complex_type_model::ComplexTypeModel;
-use crate::xsd_model::simple_types::derivation_set::DerivationSet;
-use crate::xsd_model::TopLevelComplexType;
 use roxmltree::Node;
 
 impl<'a> TopLevelComplexType<'a> {
@@ -56,8 +56,8 @@ impl<'a> TopLevelComplexType<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-    use crate::xsd_model::TopLevelComplexType;
+    use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::TopLevelComplexType;
 
     #[test]
     fn test_top_level_complex_type_parse() {

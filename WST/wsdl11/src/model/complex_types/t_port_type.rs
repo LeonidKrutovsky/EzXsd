@@ -18,14 +18,14 @@
 //             wsdl:tPortType
 
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::RawAttribute;
-use xsd10::xsd_model::simple_types as xsd;
 use crate::model::complex_types::t_operation::Operation;
+use crate::model::RawAttribute;
+use xsd10::model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct PortType<'a> {
     pub documentation: Option<Documentation<'a>>,
-    pub operation: Operation<'a>,
+    pub operation: Vec<Operation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub name: xsd::NCName<'a>,
 }

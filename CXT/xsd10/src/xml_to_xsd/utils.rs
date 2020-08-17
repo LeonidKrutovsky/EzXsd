@@ -1,6 +1,6 @@
+use crate::model::elements::ElementType;
+use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::Annotation;
 use roxmltree::Node;
 
 pub fn annotation_only<'a>(

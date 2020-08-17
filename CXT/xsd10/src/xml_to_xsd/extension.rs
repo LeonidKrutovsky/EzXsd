@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::attr_decls::AttrDecls;
+use crate::model::groups::type_def_particle::TypeDefParticle;
+use crate::model::simple_types::qname::QName;
+use crate::model::{Annotation, Extension};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::attr_decls::AttrDecls;
-use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::{Annotation, Extension};
 use roxmltree::Node;
 
 impl<'a> Extension<'a> {
@@ -52,8 +52,8 @@ impl<'a> Extension<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-    use crate::xsd_model::Extension;
+    use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::Extension;
 
     #[test]
     fn test_empty() {

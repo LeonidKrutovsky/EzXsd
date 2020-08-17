@@ -1,8 +1,8 @@
+use crate::model::complex_types::explicit_group::ExplicitGroup;
+use crate::model::elements::ElementType;
+use crate::model::groups::nested_particle::NestedParticle;
+use crate::model::{Any, LocalElement};
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::complex_types::explicit_group::ExplicitGroup;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::nested_particle::NestedParticle;
-use crate::xsd_model::{Any, LocalElement};
 use roxmltree::Node;
 
 impl<'a> NestedParticle<'a> {

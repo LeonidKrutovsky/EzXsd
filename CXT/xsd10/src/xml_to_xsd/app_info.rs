@@ -1,4 +1,4 @@
-use crate::xsd_model::elements::app_info::AppInfo;
+use crate::model::elements::app_info::AppInfo;
 use roxmltree::Node;
 
 impl<'a> AppInfo<'a> {
@@ -19,7 +19,7 @@ impl<'a> AppInfo<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::elements::app_info::AppInfo;
+    use crate::model::elements::app_info::AppInfo;
 
     #[test]
     fn test_parse() {

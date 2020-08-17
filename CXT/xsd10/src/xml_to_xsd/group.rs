@@ -1,9 +1,9 @@
+use crate::model::complex_types::named_group::{ContentChoice, NamedGroup};
+use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use crate::model::elements::ElementType;
+use crate::model::simple_types::ncname::NCName;
+use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::complex_types::named_group::{ContentChoice, NamedGroup};
-use crate::xsd_model::complex_types::simple_explicit_group::SimpleExplicitGroup;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::simple_types::ncname::NCName;
-use crate::xsd_model::Annotation;
 use roxmltree::Node;
 
 impl<'a> NamedGroup<'a> {

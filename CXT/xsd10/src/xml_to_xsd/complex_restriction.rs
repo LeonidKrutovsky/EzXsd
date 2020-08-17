@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::attr_decls::AttrDecls;
+use crate::model::groups::type_def_particle::TypeDefParticle;
+use crate::model::simple_types::qname::QName;
+use crate::model::{Annotation, ComplexRestriction};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::attr_decls::AttrDecls;
-use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::{Annotation, ComplexRestriction};
 use roxmltree::Node;
 
 impl<'a> ComplexRestriction<'a> {
@@ -52,8 +52,8 @@ impl<'a> ComplexRestriction<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-    use crate::xsd_model::ComplexRestriction;
+    use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::ComplexRestriction;
 
     #[test]
     fn test_empty() {

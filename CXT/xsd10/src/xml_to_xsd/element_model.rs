@@ -1,8 +1,8 @@
+use crate::model::complex_types::local_complex_type::LocalComplexType;
+use crate::model::elements::ElementType;
+use crate::model::groups::element_model::{ElementModel, ElementModelChoice};
+use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::complex_types::local_complex_type::LocalComplexType;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::element_model::{ElementModel, ElementModelChoice};
-use crate::xsd_model::LocalSimpleType;
 use roxmltree::Node;
 
 impl<'a> ElementModel<'a> {

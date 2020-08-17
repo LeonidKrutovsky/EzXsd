@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::attr_decls::AttrDecls;
+use crate::model::groups::complex_type_model::ComplexTypeModel;
+use crate::model::groups::type_def_particle::TypeDefParticle;
+use crate::model::{ComplexContent, SimpleContent};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::attr_decls::AttrDecls;
-use crate::xsd_model::groups::complex_type_model::ComplexTypeModel;
-use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-use crate::xsd_model::{ComplexContent, SimpleContent};
 use roxmltree::Node;
 
 impl<'a> ComplexTypeModel<'a> {
@@ -51,10 +51,10 @@ impl<'a> ComplexTypeModel<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::complex_types::local_attribute_type::UseType;
-    use crate::xsd_model::groups::complex_type_model::ComplexTypeModel;
-    use crate::xsd_model::groups::type_def_particle::TypeDefParticle;
-    use crate::xsd_model::{ComplexContentChoice, MaxOccurs, SimpleContentChoice};
+    use crate::model::complex_types::local_attribute_type::UseType;
+    use crate::model::groups::complex_type_model::ComplexTypeModel;
+    use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::{ComplexContentChoice, MaxOccurs, SimpleContentChoice};
     use num_bigint::ToBigUint;
 
     #[test]

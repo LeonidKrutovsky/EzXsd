@@ -1,10 +1,10 @@
+use crate::model::simple_types::qname::QName;
+use crate::model::simple_types::xsd_simple_type;
+use crate::model::{Schema, TopLevelAttribute, TopLevelElement};
 use crate::xml_to_xsd::schema_set::global_types_set::CustomType;
 use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
 use crate::xml_to_xsd::schema_set::SchemaSet;
 use crate::xml_to_xsd::XSD_NS_URI;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::simple_types::xsd_simple_type;
-use crate::xsd_model::{Schema, TopLevelAttribute, TopLevelElement};
 use roxmltree::Node;
 
 pub struct SchemaWrapper<'a> {

@@ -1,9 +1,9 @@
+use crate::model::groups::element_model::ElementModel;
+use crate::model::simple_types::block_set::BlockSet;
+use crate::model::simple_types::derivation_set::DerivationSet;
+use crate::model::simple_types::qname::QName;
+use crate::model::TopLevelElement;
 use crate::xml_to_xsd::utils::annotation_first;
-use crate::xsd_model::groups::element_model::ElementModel;
-use crate::xsd_model::simple_types::block_set::BlockSet;
-use crate::xsd_model::simple_types::derivation_set::DerivationSet;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::TopLevelElement;
 use roxmltree::Node;
 
 // Attributes

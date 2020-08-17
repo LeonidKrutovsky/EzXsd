@@ -1,12 +1,12 @@
 use roxmltree::Node;
 
+use crate::model::complex_types::facet::Facet;
+use crate::model::complex_types::no_fixed_facet::NoFixedFacet;
+use crate::model::complex_types::num_facet::NumFacet;
+use crate::model::elements::ElementType;
+use crate::model::groups::facets::Facets;
+use crate::model::{Pattern, TotalDigits, WhiteSpace};
 use crate::xml_to_xsd::utils::annotation_only;
-use crate::xsd_model::complex_types::facet::Facet;
-use crate::xsd_model::complex_types::no_fixed_facet::NoFixedFacet;
-use crate::xsd_model::complex_types::num_facet::NumFacet;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::facets::Facets;
-use crate::xsd_model::{Pattern, TotalDigits, WhiteSpace};
 use std::str::ParseBoolError;
 
 impl<'a> Facet<'a> {

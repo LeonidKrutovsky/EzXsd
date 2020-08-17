@@ -1,5 +1,5 @@
-use crate::xsd_model::simple_types::SimpleType;
-use crate::xsd_model::{TopLevelComplexType, TopLevelSimpleType};
+use crate::model::simple_types::SimpleType;
+use crate::model::{TopLevelComplexType, TopLevelSimpleType};
 use std::rc::Rc;
 
 #[derive(Debug)]

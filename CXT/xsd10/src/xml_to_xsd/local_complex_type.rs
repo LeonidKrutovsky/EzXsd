@@ -1,6 +1,6 @@
+use crate::model::groups::complex_type_model::ComplexTypeModel;
+use crate::model::LocalComplexType;
 use crate::xml_to_xsd::utils::annotation_first;
-use crate::xsd_model::groups::complex_type_model::ComplexTypeModel;
-use crate::xsd_model::LocalComplexType;
 use roxmltree::Node;
 
 impl<'a> LocalComplexType<'a> {

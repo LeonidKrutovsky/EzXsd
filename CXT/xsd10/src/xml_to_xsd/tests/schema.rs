@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod test {
+    use crate::model::simple_types::form_choice::FormChoice;
+    use crate::model::Schema;
     use crate::xml_to_xsd::schema::parse_document;
-    use crate::xsd_model::simple_types::form_choice::FormChoice;
-    use crate::xsd_model::Schema;
     use roxmltree::Document;
 
     const TEXT: &str = include_str!("fixtures/schema.xsd");

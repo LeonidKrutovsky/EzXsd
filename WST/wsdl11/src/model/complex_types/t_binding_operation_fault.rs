@@ -18,7 +18,7 @@
 
 use crate::model::complex_types::t_documentation::Documentation;
 use crate::model::RawElement;
-use xsd10::xsd_model::simple_types as xsd;
+use xsd10::model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct BindingOperationFault<'a> {

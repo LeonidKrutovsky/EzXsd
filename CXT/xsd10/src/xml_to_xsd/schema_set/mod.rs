@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::simple_types::any_uri::AnyUri;
+use crate::model::Schema;
 use crate::xml_to_xsd::schema_set::global_types_set::GlobalTypesSet;
 use crate::xml_to_xsd::schema_set::schema_wrapper::SchemaWrapper;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::simple_types::any_uri::AnyUri;
-use crate::xsd_model::Schema;
 use roxmltree::{Document, Node};
 use std::collections::HashMap;
 
@@ -56,11 +56,11 @@ impl<'a> SchemaSet<'a> {
 
 #[cfg(test)]
 mod test {
+    use crate::model::groups::simple_derivation::SimpleDerivation;
+    use crate::model::simple_types::qname::QName;
+    use crate::model::simple_types::SimpleType;
     use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
     use crate::xml_to_xsd::schema_set::SchemaSet;
-    use crate::xsd_model::groups::simple_derivation::SimpleDerivation;
-    use crate::xsd_model::simple_types::qname::QName;
-    use crate::xsd_model::simple_types::SimpleType;
     use roxmltree::Document;
 
     const TYPES: &str = include_str!("../../../input/xsd/types.xsd");

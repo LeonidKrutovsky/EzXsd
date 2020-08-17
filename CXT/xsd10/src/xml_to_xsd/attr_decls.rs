@@ -1,7 +1,7 @@
+use crate::model::elements::ElementType;
+use crate::model::groups::attr_decls::AttrDecls;
+use crate::model::{AnyAttribute, LocalAttribute};
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::attr_decls::AttrDecls;
-use crate::xsd_model::{AnyAttribute, LocalAttribute};
 use roxmltree::Node;
 
 impl<'a> AttrDecls<'a> {
@@ -26,8 +26,8 @@ impl<'a> AttrDecls<'a> {
 
 #[cfg(test)]
 mod test {
+    use crate::model::groups::attr_decls::AttrDecls;
     use crate::xml_to_xsd::ElementChildren;
-    use crate::xsd_model::groups::attr_decls::AttrDecls;
 
     #[test]
     fn test_parse() {

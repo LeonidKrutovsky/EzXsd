@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::simple_types::qname::QName;
+use crate::model::Annotation;
+use crate::model::LocalSimpleType;
+use crate::model::Union;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::Annotation;
-use crate::xsd_model::LocalSimpleType;
-use crate::xsd_model::Union;
 use roxmltree::Node;
 
 impl<'a> Union<'a> {
@@ -37,7 +37,7 @@ impl<'a> Union<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::Union;
+    use crate::model::Union;
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

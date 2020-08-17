@@ -1,5 +1,5 @@
+use crate::model::Any;
 use crate::xml_to_xsd::utils::annotation_only;
-use crate::xsd_model::Any;
 use roxmltree::Node;
 
 impl<'a> Any<'a> {
@@ -23,8 +23,8 @@ impl<'a> Any<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::elements::any::Any;
-    use crate::xsd_model::MaxOccurs;
+    use crate::model::elements::any::Any;
+    use crate::model::MaxOccurs;
     use num_bigint::ToBigUint;
 
     #[test]

@@ -1,9 +1,9 @@
+use crate::model::elements::ElementType;
+use crate::model::simple_types::qname::QName;
+use crate::model::Annotation;
+use crate::model::List;
+use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::Annotation;
-use crate::xsd_model::List;
-use crate::xsd_model::LocalSimpleType;
 use roxmltree::Node;
 
 impl<'a> List<'a> {
@@ -35,7 +35,7 @@ impl<'a> List<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::List;
+    use crate::model::List;
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

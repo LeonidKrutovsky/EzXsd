@@ -1,4 +1,4 @@
-use crate::xsd_model::Documentation;
+use crate::model::Documentation;
 use roxmltree::Node;
 
 impl<'a> Documentation<'a> {
@@ -20,7 +20,7 @@ impl<'a> Documentation<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::Documentation;
+    use crate::model::Documentation;
 
     #[test]
     fn test_documentation_parse() {

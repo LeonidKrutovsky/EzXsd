@@ -1,9 +1,9 @@
+use crate::model::groups::element_model::ElementModel;
+use crate::model::simple_types::block_set::BlockSet;
+use crate::model::simple_types::form_choice::FormChoice;
+use crate::model::simple_types::qname::QName;
+use crate::model::LocalElement;
 use crate::xml_to_xsd::utils::annotation_first;
-use crate::xsd_model::groups::element_model::ElementModel;
-use crate::xsd_model::simple_types::block_set::BlockSet;
-use crate::xsd_model::simple_types::form_choice::FormChoice;
-use crate::xsd_model::simple_types::qname::QName;
-use crate::xsd_model::LocalElement;
 use roxmltree::Node;
 
 impl<'a> LocalElement<'a> {

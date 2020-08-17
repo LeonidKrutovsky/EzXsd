@@ -1,5 +1,5 @@
-use crate::xsd_model::groups::schema_top::SchemaTop;
-use crate::xsd_model::{
+use crate::model::groups::schema_top::SchemaTop;
+use crate::model::{
     Schema, TopLevelAttribute, TopLevelComplexType, TopLevelElement, TopLevelSimpleType,
 };
 use std::collections::HashMap;

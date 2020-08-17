@@ -1,8 +1,8 @@
+use crate::model::elements::annotation::Annotation;
+use crate::model::elements::app_info::AppInfo;
+use crate::model::elements::documentation::Documentation;
+use crate::model::elements::ElementType;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::elements::annotation::Annotation;
-use crate::xsd_model::elements::app_info::AppInfo;
-use crate::xsd_model::elements::documentation::Documentation;
-use crate::xsd_model::elements::ElementType;
 use roxmltree::Node;
 
 impl<'a> Annotation<'a> {
@@ -34,7 +34,7 @@ impl<'a> Annotation<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::xsd_model::elements::annotation::Annotation;
+    use crate::model::elements::annotation::Annotation;
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

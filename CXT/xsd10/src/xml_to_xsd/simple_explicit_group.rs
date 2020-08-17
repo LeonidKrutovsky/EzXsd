@@ -1,8 +1,8 @@
+use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use crate::model::elements::ElementType;
+use crate::model::groups::nested_particle::NestedParticle;
+use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
-use crate::xsd_model::complex_types::simple_explicit_group::SimpleExplicitGroup;
-use crate::xsd_model::elements::ElementType;
-use crate::xsd_model::groups::nested_particle::NestedParticle;
-use crate::xsd_model::Annotation;
 use roxmltree::Node;
 
 impl<'a> SimpleExplicitGroup<'a> {
