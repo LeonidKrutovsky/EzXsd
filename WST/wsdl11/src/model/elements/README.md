@@ -11,8 +11,8 @@ All elements
 | input | * |
 | input | * |
 | message | * |
-| operation
-| operation
+| operation | * |
+| operation | * |
 | output | * |
 | output | * |
 | part | * |

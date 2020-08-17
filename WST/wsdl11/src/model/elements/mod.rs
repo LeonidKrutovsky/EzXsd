@@ -11,3 +11,4 @@ pub mod port;
 pub mod types;
 pub mod binding;
 pub mod documentation;
+pub mod operation;
