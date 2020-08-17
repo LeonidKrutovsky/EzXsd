@@ -21,4 +21,4 @@ All complex types
 |tPort | * |
 |tPortType
 |tService | * |
-|tTypes
+|tTypes | * |
