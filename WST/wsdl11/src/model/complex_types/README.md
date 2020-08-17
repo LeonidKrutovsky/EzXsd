@@ -3,7 +3,7 @@ All complex types
 | wsdl Type | Struct | Validation | Tests |
 | -------- | ------ | ---------- | ----- |
 |tBinding | * |
-|tBindingOperation
+|tBindingOperation | * |
 |tBindingOperationFault | * |
 |tBindingOperationMessage | * |
 |tDefinitions

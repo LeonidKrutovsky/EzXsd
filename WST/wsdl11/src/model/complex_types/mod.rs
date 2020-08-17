@@ -15,3 +15,4 @@ pub mod t_service;
 pub mod t_types;
 pub mod t_operation;
 pub mod t_binding;
+pub mod t_binding_operation;
