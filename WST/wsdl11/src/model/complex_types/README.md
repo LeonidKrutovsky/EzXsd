@@ -2,7 +2,7 @@ All complex types
 
 | wsdl Type | Struct | Validation | Tests |
 | -------- | ------ | ---------- | ----- |
-|tBinding
+|tBinding | * |
 |tBindingOperation
 |tBindingOperationFault | * |
 |tBindingOperationMessage | * |
@@ -15,7 +15,7 @@ All complex types
 |tFault | * |
 |tImport | * |
 |tMessage | * |
-|tOperation
+|tOperation | * |
 |tParam | * |
 |tPart | * |
 |tPort | * |
