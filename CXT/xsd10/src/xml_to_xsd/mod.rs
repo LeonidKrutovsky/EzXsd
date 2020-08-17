@@ -43,6 +43,7 @@ use crate::model::simple_types::any_uri::AnyUri;
 use crate::model::simple_types::id::Id;
 use crate::model::simple_types::language::Language;
 use crate::model::simple_types::ncname::NCName;
+use crate::model::simple_types::QName;
 use roxmltree::{Attribute, Node};
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";
@@ -79,6 +80,12 @@ impl_from_attr!(AnyUri);
 impl_from_attr!(Language);
 impl_from_attr!(Id);
 impl_from_attr!(NCName);
+
+impl<'a> From<&'a Attribute<'a>> for QName<'a> {
+    fn from(a: &'a Attribute<'a>) -> Self {
+        QName::new(a.value())
+    }
+}
 
 #[derive(Clone)]
 pub struct ElementChildrenIterator<'a, 'input: 'a> {

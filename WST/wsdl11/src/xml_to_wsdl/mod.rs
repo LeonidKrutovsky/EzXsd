@@ -1,10 +1,11 @@
 use crate::model::elements::{wsdl_element_type, ElementType};
 
+pub mod binding_operation_message;
 pub mod definitions;
 pub mod documentation;
 pub mod fault;
 pub mod import;
-pub mod input;
+pub mod param;
 
 pub const WSDL_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/";
 

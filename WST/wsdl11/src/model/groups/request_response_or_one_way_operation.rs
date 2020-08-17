@@ -14,7 +14,7 @@
 
 use crate::model::elements::fault::Fault;
 use crate::model::elements::input::Input;
-use crate::model::elements::output::ParamOutput;
+use crate::model::elements::output::Output;
 
 #[derive(Debug)]
 pub struct RequestResponseOrOneWayOperation<'a> {
@@ -24,6 +24,6 @@ pub struct RequestResponseOrOneWayOperation<'a> {
 
 #[derive(Debug)]
 pub struct RequestResponse<'a> {
-    output: ParamOutput<'a>,
+    output: Output<'a>,
     faults: Vec<Fault<'a>>,
 }

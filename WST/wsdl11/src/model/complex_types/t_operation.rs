@@ -32,7 +32,7 @@
 use crate::model::complex_types::t_documentation::Documentation;
 use crate::model::elements::fault::Fault;
 use crate::model::elements::input::Input;
-use crate::model::elements::output::ParamOutput;
+use crate::model::elements::output::Output;
 use crate::model::RawElement;
 use xsd10::model::simple_types as xsd;
 
@@ -61,19 +61,19 @@ pub struct Operation<'a> {
 pub enum OperationContent<'a> {
     RequestResponse {
         input: Input<'a>,
-        output: ParamOutput<'a>,
+        output: Output<'a>,
         faults: Vec<Fault<'a>>,
     },
     OneWay {
         input: Input<'a>,
     },
     SolicitResponse {
-        output: ParamOutput<'a>,
+        output: Output<'a>,
         input: Input<'a>,
         faults: Vec<Fault<'a>>,
     },
     Notification {
-        output: ParamOutput<'a>,
+        output: Output<'a>,
     },
 }
 

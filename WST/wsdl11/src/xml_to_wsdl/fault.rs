@@ -1,9 +1,6 @@
 use crate::model::{BindingOperationFault, Fault};
 use crate::xml_to_wsdl::documentation::{documentation_first, documentation_only};
 use roxmltree::Node;
-use std::any::Any;
-use xsd10::model::simple_types::NCName;
-use xsd10::model::simple_types::QName;
 use xsd10::xml_to_xsd::ElementChildren;
 
 impl<'a> Fault<'a> {
@@ -14,7 +11,7 @@ impl<'a> Fault<'a> {
             match attr.name() {
                 "name" => res.name = attr.into(),
                 "message" => res.message = attr.into(),
-                x => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.clone()),
             }
         }
 
@@ -31,7 +28,7 @@ impl<'a> BindingOperationFault<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "name" => res.name = attr.into(),
-                x => return Err(format!("Invalid Attribute: {:?}", attr)),
+                _ => return Err(format!("Invalid Attribute: {:?}", attr)),
             }
         }
 

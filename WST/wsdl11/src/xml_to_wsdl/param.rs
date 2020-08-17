@@ -1,6 +1,6 @@
 use crate::model::complex_types::t_param::Param;
-use roxmltree::Node;
 use crate::xml_to_wsdl::documentation::documentation_only;
+use roxmltree::Node;
 
 impl<'a> Param<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {

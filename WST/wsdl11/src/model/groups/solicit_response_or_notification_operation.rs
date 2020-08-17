@@ -14,11 +14,11 @@
 
 use crate::model::elements::fault::Fault;
 use crate::model::elements::input::Input;
-use crate::model::elements::output::ParamOutput;
+use crate::model::elements::output::Output;
 
 #[derive(Debug)]
 pub struct SolicitResponseOrNotificationOperation<'a> {
-    output: ParamOutput<'a>,
+    output: Output<'a>,
     content: Option<SolicitResponse<'a>>,
 }
 

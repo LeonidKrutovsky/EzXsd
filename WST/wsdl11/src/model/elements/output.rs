@@ -21,7 +21,7 @@ use crate::model::complex_types::t_param::Param;
 //     Type wsdl:tOperation via reference to wsdl:solicit-response-or-notification-operation (Element wsdl:operation)
 // Sample instance
 //     <wsdl:output message="tns:GetLastTradePriceOutput"/>
-pub type ParamOutput<'a> = Param<'a>;
+pub type Output<'a> = Param<'a>;
 
 // wsdl:output
 // Element information

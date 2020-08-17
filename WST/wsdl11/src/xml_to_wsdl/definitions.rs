@@ -6,7 +6,7 @@ use xsd10::model::simple_types::{AnyUri, NCName};
 
 impl<'a> Definitions<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
-        let mut res = Definitions::default();
+        let mut res = Self::default();
 
         for attr in node.attributes() {
             match attr.name() {
