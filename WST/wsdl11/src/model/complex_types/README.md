@@ -19,6 +19,6 @@ All complex types
 |tParam | * |
 |tPart | * |
 |tPort | * |
-|tPortType
+|tPortType | * |
 |tService | * |
 |tTypes | * |
