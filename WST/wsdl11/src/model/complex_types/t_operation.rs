@@ -30,14 +30,56 @@
 //             wsdl:tOperation
 
 use xsd10::xsd_model::simple_types as xsd;
-use crate::model::{RawAttribute, RawElement};
+use crate::model::RawElement;
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::complex_types::t_part::Part;
+use crate::model::elements::input::ParamInput;
+use crate::model::elements::output::ParamOutput;
+use crate::model::elements::fault::Fault;
 
 #[derive(Default, Debug)]
 pub struct Operation<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
+    pub content: OperationContent<'a>,
     pub name: xsd::NCName<'a>,
-    parameter_order: &'a str,//xsd::NMTOKENS<'a>,
+    parameter_order: &'a str,  //TODO: xsd::NMTOKENS<'a>,
+}
+
+
+// Choice [1..1]
+//     Sequence [1..1]     from group wsdl:request-response-or-one-way-operation
+//         wsdl:input [1..1]
+//         Sequence [0..1]
+//             wsdl:output [1..1]
+//             wsdl:fault [0..*]
+//     Sequence [1..1]     from group wsdl:solicit-response-or-notification-operation
+//         wsdl:output [1..1]
+//         Sequence [0..1]
+//             wsdl:input [1..1]
+//             wsdl:fault [0..*]
+// Choice between RequestResponseOrOneWayOperation and SolicitResponseOrNotificationOperation
+#[derive(Debug)]
+pub enum OperationContent<'a> {
+    RequestResponse {
+        input: ParamInput<'a>,
+        output: ParamOutput<'a>,
+        faults: Vec<Fault<'a>>,
+    },
+    OneWay {
+        input: ParamInput<'a>,
+    },
+    SolicitResponse {
+        output: ParamOutput<'a>,
+        input: ParamInput<'a>,
+        faults: Vec<Fault<'a>>,
+    },
+    Notification {
+        output: ParamOutput<'a>,
+    },
+}
+
+impl Default for OperationContent<'_> {
+    fn default() -> Self {
+        Self::OneWay {input: ParamInput::default()}
+    }
 }

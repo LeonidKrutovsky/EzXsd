@@ -13,3 +13,4 @@ pub mod t_part;
 pub mod t_port;
 pub mod t_service;
 pub mod t_types;
+pub mod t_operation;

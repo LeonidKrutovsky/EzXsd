@@ -17,13 +17,13 @@ use crate::model::elements::input::ParamInput;
 use crate::model::elements::output::ParamOutput;
 
 #[derive(Debug)]
-pub enum SolicitResponseOrNotificationOperation<'a> {
-    SolicitResponse {
-        output: ParamOutput<'a>,
-        input: ParamInput<'a>,
-        faults: Vec<Fault<'a>>,
-    },
-    Notification {
-        output: ParamOutput<'a>,
-    },
+pub struct SolicitResponseOrNotificationOperation<'a> {
+    output: ParamOutput<'a>,
+    content: Option<SolicitResponse<'a>>,
+}
+
+#[derive(Debug)]
+pub struct SolicitResponse<'a> {
+    input: ParamInput<'a>,
+    faults: Vec<Fault<'a>>,
 }
