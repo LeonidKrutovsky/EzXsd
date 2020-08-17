@@ -9,12 +9,12 @@ All elements
 | fault
 | import
 | input | * |
-| input
+| input | * |
 | message
 | operation
 | operation
-| output
-| output
+| output | * |
+| output | * |
 | part
 | port
 | portType
