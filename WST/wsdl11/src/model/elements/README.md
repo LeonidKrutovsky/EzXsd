@@ -15,8 +15,8 @@ All elements
 | operation
 | output | * |
 | output | * |
-| part
+| part | * |
 | port
 | portType | * |
-| service
+| service | * |
 | types
