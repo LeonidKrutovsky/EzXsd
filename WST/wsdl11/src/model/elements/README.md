@@ -8,7 +8,7 @@ All elements
 | fault
 | fault
 | import
-| input
+| input | * |
 | input
 | message
 | operation

@@ -4,13 +4,13 @@ All complex types
 | -------- | ------ | ---------- | ----- |
 |tBinding
 |tBindingOperation
-|tBindingOperationFault
-|tBindingOperationMessage
+|tBindingOperationFault | * |
+|tBindingOperationMessage | * |
 |tDefinitions
 |tDocumentation | * |
 |tDocumented | * |
-|tExtensibilityElement
-|tExtensibleAttributesDocumented
+|tExtensibilityElement | * |
+|tExtensibleAttributesDocumented | * |
 |tExtensibleDocumented
 |tFault | * |
 |tImport | * |
