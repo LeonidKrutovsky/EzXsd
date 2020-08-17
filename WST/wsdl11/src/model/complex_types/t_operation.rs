@@ -39,5 +39,5 @@ pub struct Operation<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub name: xsd::NCName<'a>,
-    parameter_order: xsd::NMTOKENS<'a>,
+    parameter_order: &'a str,//xsd::NMTOKENS<'a>,
 }
