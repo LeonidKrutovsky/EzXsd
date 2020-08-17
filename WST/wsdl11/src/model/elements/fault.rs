@@ -22,9 +22,9 @@ use crate::model::complex_types::t_fault;
 //     Type wsdl:tOperation via reference to wsdl:solicit-response-or-notification-operation (Element wsdl:operation)
 // Sample instance
 //     <wsdl:fault name="NCName" message="QName">
-//     <wsdl:documentation>Any text, intermingled with:
-//     <!--any element-->
-//     </wsdl:documentation>
+//          <wsdl:documentation>Any text, intermingled with:
+//              <!--any element-->
+//          </wsdl:documentation>
 //     </wsdl:fault>
 
 pub type Fault<'a> = t_fault::Fault<'a>;
@@ -47,10 +47,10 @@ pub type Fault<'a> = t_fault::Fault<'a>;
 //     Type wsdl:tBindingOperation (Element wsdl:operation)
 // Sample instance
 //     <wsdl:fault name="NCName">
-//     <wsdl:documentation>Any text, intermingled with:
-//     <!--any element-->
-//     </wsdl:documentation>
-//     <!--any element-->
+//          <wsdl:documentation>Any text, intermingled with:
+//              <!--any element-->
+//          </wsdl:documentation>
+//          <!--any element-->
 //     </wsdl:fault>
 
 pub type BindingOperationFault<'a> = t_binding_operation_fault::BindingOperationFault<'a>;
