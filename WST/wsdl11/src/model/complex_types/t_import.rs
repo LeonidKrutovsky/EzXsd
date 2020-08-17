@@ -7,9 +7,9 @@
 //
 // wsdl:documentation [0..1]       from type wsdl:tDocumented
 // Attributes
-// Any attribute	[0..*]		        Namespace: ##other, Process Contents: lax	    from type wsdl:tExtensibleAttributesDocumented
-// namespace	[1..1]	    xsd:anyURI
-// location	[1..1]	    xsd:anyURI
+//  Any attribute	[0..*]		        Namespace: ##other, Process Contents: lax	    from type wsdl:tExtensibleAttributesDocumented
+//  namespace	    [1..1]	    xsd:anyURI
+//  location	    [1..1]	    xsd:anyURI
 // Used by
 //     Element wsdl:import
 // Type inheritance chain

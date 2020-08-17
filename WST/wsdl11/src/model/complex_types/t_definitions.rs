@@ -34,6 +34,6 @@ pub struct Definitions<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub content: Vec<AnyTopLevelOptionalElement<'a>>,
-    pub target_namespace: xsd::AnyUri<'a>,
+    pub target_namespace: Option<xsd::AnyUri<'a>>,
     pub name: Option<xsd::NCName<'a>>,
 }

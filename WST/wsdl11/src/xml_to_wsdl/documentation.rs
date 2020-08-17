@@ -1,8 +1,8 @@
+use crate::model::elements::ElementType;
 use crate::model::Documentation;
+use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::xml_to_xsd::ElementChildren;
-use crate::xml_to_wsdl::WsdlNode;
-use crate::model::elements::ElementType;
 
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -10,9 +10,9 @@ impl<'a> Documentation<'a> {
             return Err(format!("Attributes not allowed"));
         }
 
-        Ok(Self{
+        Ok(Self {
             text: node.text(),
-            elements: node.children().filter(|n| n.is_element()).collect()
+            elements: node.children().filter(|n| n.is_element()).collect(),
         })
     }
 }

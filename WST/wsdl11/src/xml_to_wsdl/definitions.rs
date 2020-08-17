@@ -1,8 +1,8 @@
+use crate::model::elements::ElementType;
 use crate::model::Definitions;
+use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::{AnyUri, NCName};
-use crate::xml_to_wsdl::WsdlNode;
-use crate::model::elements::ElementType;
 
 impl<'a> Definitions<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,7 +12,7 @@ impl<'a> Definitions<'a> {
             match attr.name() {
                 "targetNamespace" => res.target_namespace = Some(AnyUri::from(attr)),
                 "name" => res.name = Some(NCName::from(attr)),
-                x => {return Err(format!("Invalid attribute: {}", x))}
+                x => return Err(format!("Invalid attribute: {}", x)),
             }
         }
 
@@ -25,8 +25,7 @@ impl<'a> Definitions<'a> {
                 PortType => unimplemented!(),
                 Binding => unimplemented!(),
                 Service => unimplemented!(),
-                x => {return Err(format!("Invalid child element: {:?}", x))}
-
+                x => return Err(format!("Invalid child element: {:?}", x)),
             }
         }
 
