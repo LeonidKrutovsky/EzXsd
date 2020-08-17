@@ -10,3 +10,4 @@ pub mod t_binding_operation_message;
 pub mod t_binding_operation_fault;
 pub mod t_extensibility_element;
 pub mod t_extensible_attributes_documented;
+pub mod t_extensible_documented;

@@ -11,7 +11,7 @@ All complex types
 |tDocumented | * |
 |tExtensibilityElement | * |
 |tExtensibleAttributesDocumented | * |
-|tExtensibleDocumented
+|tExtensibleDocumented | * |
 |tFault | * |
 |tImport | * |
 |tMessage | * |
