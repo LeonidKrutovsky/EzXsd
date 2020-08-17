@@ -10,7 +10,7 @@ All elements
 | import
 | input | * |
 | input | * |
-| message
+| message | * |
 | operation
 | operation
 | output | * |
