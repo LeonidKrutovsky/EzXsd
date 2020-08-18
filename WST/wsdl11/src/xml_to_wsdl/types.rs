@@ -8,7 +8,7 @@ impl<'a> Types<'a> {
         let mut res = Self::default();
 
         if !node.attributes().is_empty() {
-            return Err(format!("Attributes not allowed! {:?}", node));
+            return Err(format!("Attributes not allowed for wsdl:types! {:?}", node));
         }
 
         if let Some(doc) = documentation_first(node)? {

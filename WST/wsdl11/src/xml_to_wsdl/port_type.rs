@@ -17,9 +17,7 @@ impl<'a> PortType<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Message attribute required: {:?}", node))?
-            .into();
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
 
         for ch in node.element_children() {
             match ch.wsdl_type()? {

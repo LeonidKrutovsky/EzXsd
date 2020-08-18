@@ -1,9 +1,9 @@
-use crate::model::{Port, Documentation};
-use roxmltree::Node;
 use crate::model::elements::ElementType;
+use crate::model::{Documentation, Port};
 use crate::xml_to_wsdl::WsdlNode;
-use xsd10::xml_to_xsd::ElementChildren;
+use roxmltree::Node;
 use xsd10::model::simple_types::{NCName, QName};
+use xsd10::xml_to_xsd::ElementChildren;
 
 impl<'a> Port<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -19,17 +19,15 @@ impl<'a> Port<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Name attribute required: {:?}", node))?
-            .into();
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
 
-        res.binding = binding
-            .ok_or_else(|| format!("Binding attribute required: {:?}", node))?
-            .into();
+        res.binding = binding.ok_or_else(|| format!("Binding attribute required: {:?}", node))?;
 
         for ch in node.element_children() {
             match ch.wsdl_type() {
-                Ok(ElementType::Documentation) => res.documentation = Some(Documentation::parse(ch)?),
+                Ok(ElementType::Documentation) => {
+                    res.documentation = Some(Documentation::parse(ch)?)
+                }
                 _ => res.elements.push(ch),
             }
         }

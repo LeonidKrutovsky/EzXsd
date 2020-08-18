@@ -1,5 +1,5 @@
 use crate::model::elements::ElementType;
-use crate::model::{Binding, Documentation, BindingOperation};
+use crate::model::{Binding, BindingOperation, Documentation};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::{NCName, QName};
@@ -20,17 +20,15 @@ impl<'a> Binding<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Name attribute required: {:?}", node))?
-            .into();
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
 
-        res.type_ = type_
-            .ok_or_else(|| format!("Type attribute required: {:?}", node))?
-            .into();
+        res.type_ = type_.ok_or_else(|| format!("Type attribute required: {:?}", node))?;
 
         for ch in node.element_children() {
             match ch.wsdl_type() {
-                Ok(ElementType::Documentation) => res.documentation = Some(Documentation::parse(ch)?),
+                Ok(ElementType::Documentation) => {
+                    res.documentation = Some(Documentation::parse(ch)?)
+                }
                 Ok(ElementType::Operation) => res.operations.push(BindingOperation::parse(ch)?),
                 _ => res.elements.push(ch),
             }

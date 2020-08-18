@@ -18,8 +18,8 @@
 //         wsdl:tExtensibleDocumented
 //             wsdl:tBinding
 
-use crate::model::complex_types::t_documentation::Documentation;
 use crate::model::complex_types::t_binding_operation::BindingOperation;
+use crate::model::complex_types::t_documentation::Documentation;
 use crate::model::RawElement;
 use xsd10::model::simple_types as xsd;
 

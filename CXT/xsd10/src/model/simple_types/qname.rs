@@ -21,7 +21,7 @@ use std::fmt;
 // Type Inheritance Chain
 //  xsd:anySimpleType
 //      restricted by xsd:QName
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub struct QName<'a> {
     pub prefix: Option<&'a str>,
     pub name: &'a str,

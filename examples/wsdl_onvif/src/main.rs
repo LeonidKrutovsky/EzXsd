@@ -2,7 +2,7 @@ use roxmltree::Document;
 use std::fs;
 use std::io::Read;
 use std::path::Path;
-use wsdl11::parser::definitions::Definitions;
+use wsdl11::model::Definitions;
 use xsd10::xml_to_xsd::schema_set::SchemaSet;
 
 fn main() {
@@ -15,17 +15,18 @@ fn main() {
 fn process_single_file(input_path: &Path) -> Result<(), String> {
     let text = load_file(input_path)?;
     let doc = Document::parse(text.as_str()).unwrap();
-    let definitions = Definitions::new(&doc.root_element());
+    let definitions = Definitions::parse(doc.root_element())?;
     println!("{:#?}", definitions);
 
     let mut schema_set = SchemaSet::default();
-    for ty in definitions.types() {
-        for schema in ty.schemas() {
-            if let Err(e) = schema_set.add_schema(schema) {
+
+    definitions.content.types.iter().for_each(|t| {
+        t.elements.iter().for_each(|e| {
+            if let Err(e) = schema_set.add_schema(e.clone()) {
                 panic!("Error: {}", e);
             }
-        }
-    }
+        })
+    });
 
     for wrapper in schema_set.schemas() {
         println!("{:#?}", wrapper.schema());

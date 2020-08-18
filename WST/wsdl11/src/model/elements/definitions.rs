@@ -30,8 +30,6 @@ use crate::model::complex_types::t_definitions;
 
 pub type Definitions<'a> = t_definitions::Definitions<'a>;
 
-
-
 // Sample instance
 //       <wsdl:definitions name="StockQuote" targetNamespace="http://example.com/stockquote.wsdl">
 //           <wsdl:types>

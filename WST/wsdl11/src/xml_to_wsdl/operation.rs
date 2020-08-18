@@ -1,11 +1,14 @@
 use crate::model::complex_types::t_operation::OperationContent;
 use crate::model::elements::ElementType;
-use crate::model::{Fault, Input, Operation, Output, BindingOperation, Documentation, BindingOperationInput, BindingOperationOutput, BindingOperationFault};
+use crate::model::{
+    BindingOperation, BindingOperationFault, BindingOperationInput, BindingOperationOutput,
+    Documentation, Fault, Input, Operation, Output,
+};
+use crate::xml_to_wsdl::documentation::documentation_first;
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::NCName;
 use xsd10::xml_to_xsd::ElementChildren;
-use crate::xml_to_wsdl::documentation::documentation_first;
 
 impl<'a> Operation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -20,9 +23,7 @@ impl<'a> Operation<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Name attribute required: {:?}", node))?
-            .into();
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
         res.documentation = documentation_first(node)?;
         res.content = OperationContent::parse(node)?;
 
@@ -97,14 +98,13 @@ impl<'a> BindingOperation<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Name attribute required: {:?}", node))?
-            .into();
-
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
 
         for ch in node.element_children() {
             match ch.wsdl_type() {
-                Ok(ElementType::Documentation) => res.documentation = Some(Documentation::parse(ch)?),
+                Ok(ElementType::Documentation) => {
+                    res.documentation = Some(Documentation::parse(ch)?)
+                }
                 Ok(ElementType::Input) => res.input = Some(BindingOperationInput::parse(ch)?),
                 Ok(ElementType::Output) => res.input = Some(BindingOperationOutput::parse(ch)?),
                 Ok(ElementType::Fault) => res.faults.push(BindingOperationFault::parse(ch)?),

@@ -34,7 +34,6 @@ impl<'a> Definitions<'a> {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -116,12 +115,18 @@ mod test {
         let doc = Document::parse(TEXT).unwrap();
         let def = Definitions::parse(doc.root_element()).unwrap();
 
-        assert_eq!(def.target_namespace.unwrap().0, "http://www.onvif.org/ver10/device/wsdl");
+        assert_eq!(
+            def.target_namespace.unwrap().0,
+            "http://www.onvif.org/ver10/device/wsdl"
+        );
         assert_eq!(def.content.types.first().unwrap().elements.len(), 1);
         let messages = &def.content.messages;
 
         assert_eq!(messages.len(), 4);
-        assert_eq!(messages.get("GetServicesRequest").unwrap().part.name.0, "parameters");
+        assert_eq!(
+            messages.get("GetServicesRequest").unwrap().part.name.0,
+            "parameters"
+        );
         assert_eq!(
             messages
                 .get("DeleteGeoLocationResponse")
@@ -129,9 +134,9 @@ mod test {
                 .part
                 .element
                 .as_ref()
-                .unwrap(), &QName::new("tds:DeleteGeoLocationResponse")
+                .unwrap(),
+            &QName::new("tds:DeleteGeoLocationResponse")
         );
-
 
         if let Some(pt) = def.content.port_types.get("Device") {
             assert_eq!(pt.operations.len(), 2);
@@ -151,6 +156,4 @@ mod test {
             panic!("Test failed! Invalid Binding parsing:  {:?}", def.content);
         }
     }
-
-
 }

@@ -19,7 +19,7 @@ impl<'a> Documentation<'a> {
 
 pub fn documentation_only<'a>(node: Node<'a, '_>) -> Result<Option<Documentation<'a>>, String> {
     if node.element_children().count() > 1 {
-        return Err(format!("Only one child allowed!"));
+        return Err(format!("Only one child allowed! {:?}", node));
     }
     if let Some(n) = node.first_element_child() {
         if n.wsdl_type()? == ElementType::Documentation {
@@ -36,7 +36,7 @@ pub fn documentation_first<'a>(node: Node<'a, '_>) -> Result<Option<Documentatio
     if let Some(n) = node.first_element_child() {
         match n.wsdl_type() {
             Ok(ElementType::Documentation) => Ok(Some(Documentation::parse(n)?)),
-            _ => Ok(None)
+            _ => Ok(None),
         }
     } else {
         Ok(None)

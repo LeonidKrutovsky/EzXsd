@@ -25,9 +25,9 @@
 //             wsdl:tDefinitions
 
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::{RawElement, Message, PortType, Binding, Import, Types, Service};
-use xsd10::model::simple_types as xsd;
+use crate::model::{Binding, Import, Message, PortType, RawElement, Service, Types};
 use std::collections::HashMap;
+use xsd10::model::simple_types as xsd;
 
 #[derive(Default, Debug)]
 pub struct Definitions<'a> {
@@ -59,7 +59,8 @@ impl<'a> DefinitionsContent<'a> {
     }
 
     pub fn add_types(&mut self, ty: Types<'a>) -> Result<(), String> {
-        Ok(self.types.push(ty))
+        self.types.push(ty);
+        Ok(())
     }
 
     pub fn add_message(&mut self, mes: Message<'a>) -> Result<(), String> {
@@ -94,4 +95,3 @@ impl<'a> DefinitionsContent<'a> {
         }
     }
 }
-

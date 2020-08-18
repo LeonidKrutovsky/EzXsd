@@ -17,9 +17,7 @@ impl<'a> Part<'a> {
             }
         }
 
-        res.name = name
-            .ok_or_else(|| format!("Message attribute required: {:?}", node))?
-            .into();
+        res.name = name.ok_or_else(|| format!("Name attribute required: {:?}", node))?;
         res.documentation = documentation_only(node)?;
 
         Ok(res)

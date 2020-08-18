@@ -18,6 +18,7 @@ impl<'a> Param<'a> {
         res.message = message
             .ok_or_else(|| format!("Message attribute required: {:?}", node))?
             .into();
+
         res.documentation = documentation_only(node)?;
 
         Ok(res)
