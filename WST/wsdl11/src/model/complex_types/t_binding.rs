@@ -19,7 +19,7 @@
 //             wsdl:tBinding
 
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::complex_types::t_operation::Operation;
+use crate::model::complex_types::t_binding_operation::BindingOperation;
 use crate::model::RawElement;
 use xsd10::model::simple_types as xsd;
 
@@ -27,7 +27,7 @@ use xsd10::model::simple_types as xsd;
 pub struct Binding<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
-    pub operation: Vec<Operation<'a>>,
+    pub operations: Vec<BindingOperation<'a>>,
     pub name: xsd::NCName<'a>,
     pub type_: xsd::QName<'a>,
 }

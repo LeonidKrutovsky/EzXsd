@@ -25,7 +25,7 @@ use xsd10::model::simple_types as xsd;
 #[derive(Default, Debug)]
 pub struct PortType<'a> {
     pub documentation: Option<Documentation<'a>>,
-    pub operation: Vec<Operation<'a>>,
+    pub operations: Vec<Operation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub name: xsd::NCName<'a>,
 }

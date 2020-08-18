@@ -127,6 +127,45 @@ mod test {
         let def = Definitions::parse(doc.root_element()).unwrap();
 
         assert_eq!(def.target_namespace.unwrap().0, "http://www.onvif.org/ver10/device/wsdl");
+        if let Some(AnyTopLevelOptionalElement::Types(types)) = def.content.first() {
+            assert_eq!(types.elements.len(), 1);
+        } else {
+            panic!("Test failed! Invalid PortType parsing:  {:?}", def.content);
+        }
+        let messages = def
+            .content
+            .iter()
+            .filter_map(
+                |x| if let AnyTopLevelOptionalElement::Message(m) = x { Some(m)} else {None}
+            )
+            .collect::<Vec<_>>();
+        assert_eq!(messages.len(), 4);
+        assert_eq!(messages[0].name.0, "GetServicesRequest");
+        assert_eq!(messages[3].name.0, "DeleteGeoLocationResponse");
+
+        if let Some(AnyTopLevelOptionalElement::PortType(pt)) = def.content.get(5) {
+            assert_eq!(pt.operations.len(), 2);
+            assert_eq!(pt.operations[0].name.0, "GetServices");
+            assert!(pt.operations[0].documentation.is_some());
+            assert_eq!(pt.operations[1].name.0, "DeleteGeoLocation");
+            assert!(pt.operations[1].documentation.is_some());
+        } else {
+            panic!("Test failed! Invalid PortType parsing:  {:?}", def.content);
+        }
+
+        if let Some(AnyTopLevelOptionalElement::Binding(b)) = def.content.get(6) {
+            assert_eq!(b.operations.len(), 2);
+
+            assert_eq!(b.operations[0].elements.len(), 1);
+            assert_eq!(b.operations[0].name.0, "GetServices");
+            assert!(b.operations[0].documentation.is_none());
+
+            assert_eq!(b.operations[1].elements.len(), 1);
+            assert_eq!(b.operations[1].name.0, "DeleteGeoLocation");
+            assert!(b.operations[1].documentation.is_none());
+        } else {
+            panic!("Test failed! Invalid Binding parsing:  {:?}", def.content);
+        }
     }
 
 

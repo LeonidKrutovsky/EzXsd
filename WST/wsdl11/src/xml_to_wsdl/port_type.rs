@@ -24,7 +24,7 @@ impl<'a> PortType<'a> {
         for ch in node.element_children() {
             match ch.wsdl_type()? {
                 ElementType::Documentation => res.documentation = Some(Documentation::parse(ch)?),
-                ElementType::Operation => res.operation.push(Operation::parse(ch)?),
+                ElementType::Operation => res.operations.push(Operation::parse(ch)?),
                 _ => return Err(format!("Invalid child element: {:?}", ch)),
             }
         }
