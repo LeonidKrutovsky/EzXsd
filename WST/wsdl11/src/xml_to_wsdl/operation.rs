@@ -1,10 +1,9 @@
 use crate::model::complex_types::t_operation::OperationContent;
 use crate::model::elements::ElementType;
-use crate::model::{Documentation, Fault, Input, Operation, Output};
+use crate::model::{Fault, Input, Operation, Output};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
 use xsd10::model::simple_types::NCName;
-use xsd10::xml_to_xsd::ElementChildren;
 
 impl<'a> Operation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -39,12 +38,6 @@ impl<'a> OperationContent<'a> {
                     // wsdl:request-response-or-one-way-operation
                     return Ok(if let Some(output_node) = children.next() {
                         // RequestResponse
-                        assert_eq!(
-                            output_node.wsdl_type()?,
-                            ElementType::Output,
-                            "{}",
-                            format!("{:?}", output_node)
-                        );
                         OperationContent::RequestResponse {
                             input: Input::parse(ch)?,
                             output: Output::parse(output_node)?,

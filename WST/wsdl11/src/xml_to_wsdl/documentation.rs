@@ -34,10 +34,9 @@ pub fn documentation_only<'a>(node: Node<'a, '_>) -> Result<Option<Documentation
 
 pub fn documentation_first<'a>(node: Node<'a, '_>) -> Result<Option<Documentation<'a>>, String> {
     if let Some(n) = node.first_element_child() {
-        if n.wsdl_type()? == ElementType::Documentation {
-            Ok(Some(Documentation::parse(n)?))
-        } else {
-            Ok(None)
+        match n.wsdl_type() {
+            Ok(ElementType::Documentation) => Ok(Some(Documentation::parse(n)?)),
+            _ => Ok(None)
         }
     } else {
         Ok(None)

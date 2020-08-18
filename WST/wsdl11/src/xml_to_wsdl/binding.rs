@@ -29,9 +29,9 @@ impl<'a> Binding<'a> {
             .into();
 
         for ch in node.element_children() {
-            match ch.wsdl_type()? {
-                ElementType::Documentation => res.documentation = Some(Documentation::parse(ch)?),
-                ElementType::Operation => res.operation.push(Operation::parse(ch)?),
+            match ch.wsdl_type() {
+                Ok(ElementType::Documentation) => res.documentation = Some(Documentation::parse(ch)?),
+                Ok(ElementType::Operation) => res.operation.push(Operation::parse(ch)?),
                 _ => res.elements.push(ch),
             }
         }

@@ -14,6 +14,7 @@ pub mod port_type;
 pub mod types;
 
 pub const WSDL_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/";
+pub const SOAP_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/soap12/";
 
 pub trait WsdlNode {
     fn wsdl_type(&self) -> Result<ElementType, String>;
@@ -24,7 +25,7 @@ impl WsdlNode for roxmltree::Node<'_, '_> {
         if let Some(uri) = self.tag_name().namespace() {
             if uri != WSDL_NS_URI {
                 return Err(format!(
-                    "Invalid prefix for xsd element: {:?}",
+                    "Invalid prefix for wsdl element: {:?}",
                     self.tag_name()
                 ));
             }
