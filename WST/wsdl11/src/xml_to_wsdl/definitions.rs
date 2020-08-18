@@ -1,6 +1,5 @@
 use crate::model::elements::ElementType;
-use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
-use crate::model::{Binding, Definitions, PortType};
+use crate::model::{Binding, Definitions, PortType, Service};
 use crate::model::{Import, Message, Types};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
@@ -20,28 +19,18 @@ impl<'a> Definitions<'a> {
         }
 
         for ch in node.element_children() {
-            res.content.push(parse_content(ch)?);
+            match ch.wsdl_type()? {
+                ElementType::Import => res.content.add_import(Import::parse(ch)?)?,
+                ElementType::Types => res.content.add_types(Types::parse(ch)?)?,
+                ElementType::Message => res.content.add_message(Message::parse(ch)?)?,
+                ElementType::PortType => res.content.add_port_type(PortType::parse(ch)?)?,
+                ElementType::Binding => res.content.add_binding(Binding::parse(ch)?)?,
+                ElementType::Service => res.content.add_service(Service::parse(ch)?)?,
+                x => return Err(format!("Invalid child element: {:?}", x)),
+            }
         }
 
-        res.content = node
-            .children()
-            .filter(|n| n.is_element())
-            .map(parse_content)
-            .collect::<Result<Vec<_>, _>>()?;
-
         Ok(res)
-    }
-}
-
-fn parse_content<'a>(node: Node<'a, '_>) -> Result<AnyTopLevelOptionalElement<'a>, String> {
-    match node.wsdl_type()? {
-        ElementType::Import => Ok(AnyTopLevelOptionalElement::Import(Import::parse(node)?)),
-        ElementType::Types => Ok(AnyTopLevelOptionalElement::Types(Types::parse(node)?)),
-        ElementType::Message => Ok(AnyTopLevelOptionalElement::Message(Message::parse(node)?)),
-        ElementType::PortType => Ok(AnyTopLevelOptionalElement::PortType(PortType::parse(node)?)),
-        ElementType::Binding => Ok(AnyTopLevelOptionalElement::Binding(Binding::parse(node)?)),
-        ElementType::Service => unimplemented!(),
-        x => return Err(format!("Invalid child element: {:?}", x)),
     }
 }
 
@@ -50,6 +39,7 @@ fn parse_content<'a>(node: Node<'a, '_>) -> Result<AnyTopLevelOptionalElement<'a
 mod test {
     use super::*;
     use roxmltree::Document;
+    use xsd10::model::simple_types::QName;
 
     const TEXT: &str = r#"
 <wsdl:definitions
@@ -127,42 +117,36 @@ mod test {
         let def = Definitions::parse(doc.root_element()).unwrap();
 
         assert_eq!(def.target_namespace.unwrap().0, "http://www.onvif.org/ver10/device/wsdl");
-        if let Some(AnyTopLevelOptionalElement::Types(types)) = def.content.first() {
-            assert_eq!(types.elements.len(), 1);
-        } else {
-            panic!("Test failed! Invalid PortType parsing:  {:?}", def.content);
-        }
-        let messages = def
-            .content
-            .iter()
-            .filter_map(
-                |x| if let AnyTopLevelOptionalElement::Message(m) = x { Some(m)} else {None}
-            )
-            .collect::<Vec<_>>();
-        assert_eq!(messages.len(), 4);
-        assert_eq!(messages[0].name.0, "GetServicesRequest");
-        assert_eq!(messages[3].name.0, "DeleteGeoLocationResponse");
+        assert_eq!(def.content.types.first().unwrap().elements.len(), 1);
+        let messages = &def.content.messages;
 
-        if let Some(AnyTopLevelOptionalElement::PortType(pt)) = def.content.get(5) {
+        assert_eq!(messages.len(), 4);
+        assert_eq!(messages.get("GetServicesRequest").unwrap().part.name.0, "parameters");
+        assert_eq!(
+            messages
+                .get("DeleteGeoLocationResponse")
+                .unwrap()
+                .part
+                .element
+                .as_ref()
+                .unwrap(), &QName::new("tds:DeleteGeoLocationResponse")
+        );
+
+
+        if let Some(pt) = def.content.port_types.get("Device") {
             assert_eq!(pt.operations.len(), 2);
             assert_eq!(pt.operations[0].name.0, "GetServices");
             assert!(pt.operations[0].documentation.is_some());
-            assert_eq!(pt.operations[1].name.0, "DeleteGeoLocation");
-            assert!(pt.operations[1].documentation.is_some());
         } else {
             panic!("Test failed! Invalid PortType parsing:  {:?}", def.content);
         }
 
-        if let Some(AnyTopLevelOptionalElement::Binding(b)) = def.content.get(6) {
+        if let Some(b) = def.content.bindings.get("DeviceBinding") {
             assert_eq!(b.operations.len(), 2);
 
             assert_eq!(b.operations[0].elements.len(), 1);
             assert_eq!(b.operations[0].name.0, "GetServices");
             assert!(b.operations[0].documentation.is_none());
-
-            assert_eq!(b.operations[1].elements.len(), 1);
-            assert_eq!(b.operations[1].name.0, "DeleteGeoLocation");
-            assert!(b.operations[1].documentation.is_none());
         } else {
             panic!("Test failed! Invalid Binding parsing:  {:?}", def.content);
         }

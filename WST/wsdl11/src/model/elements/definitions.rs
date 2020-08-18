@@ -26,10 +26,13 @@
 //     key	    binding	    wsdl:binding	@name
 //     key	    service	    wsdl:service	@name
 //     key	    import	    wsdl:import	    @namespace
-
 use crate::model::complex_types::t_definitions;
 
-//Sample instance
+pub type Definitions<'a> = t_definitions::Definitions<'a>;
+
+
+
+// Sample instance
 //       <wsdl:definitions name="StockQuote" targetNamespace="http://example.com/stockquote.wsdl">
 //           <wsdl:types>
 //               <xsd:schema targetNamespace="http://example.com/stockquote.xsd">
@@ -80,4 +83,3 @@ use crate::model::complex_types::t_definitions;
 //               </wsdl:port>
 //           </wsdl:service>
 //       </wsdl:definitions>
-pub type Definitions<'a> = t_definitions::Definitions<'a>;

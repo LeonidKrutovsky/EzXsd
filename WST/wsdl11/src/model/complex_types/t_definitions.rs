@@ -25,15 +25,73 @@
 //             wsdl:tDefinitions
 
 use crate::model::complex_types::t_documentation::Documentation;
-use crate::model::groups::any_top_level_optional_element::AnyTopLevelOptionalElement;
-use crate::model::RawElement;
+use crate::model::{RawElement, Message, PortType, Binding, Import, Types, Service};
 use xsd10::model::simple_types as xsd;
+use std::collections::HashMap;
 
 #[derive(Default, Debug)]
 pub struct Definitions<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
-    pub content: Vec<AnyTopLevelOptionalElement<'a>>,
+    pub content: DefinitionsContent<'a>,
     pub target_namespace: Option<xsd::AnyUri<'a>>,
     pub name: Option<xsd::NCName<'a>>,
 }
+
+// Helper for identity constraints
+#[derive(Default, Debug)]
+pub struct DefinitionsContent<'a> {
+    pub imports: HashMap<&'a str, Import<'a>>,
+    pub types: Vec<Types<'a>>,
+    pub messages: HashMap<&'a str, Message<'a>>,
+    pub port_types: HashMap<&'a str, PortType<'a>>,
+    pub bindings: HashMap<&'a str, Binding<'a>>,
+    pub services: HashMap<&'a str, Service<'a>>,
+}
+
+impl<'a> DefinitionsContent<'a> {
+    pub fn add_import(&mut self, imp: Import<'a>) -> Result<(), String> {
+        if let Some(val) = self.imports.insert(&imp.namespace.0, imp) {
+            Err(format!("Duplicate import namespace: {}", val.namespace.0))
+        } else {
+            Ok(())
+        }
+    }
+
+    pub fn add_types(&mut self, ty: Types<'a>) -> Result<(), String> {
+        Ok(self.types.push(ty))
+    }
+
+    pub fn add_message(&mut self, mes: Message<'a>) -> Result<(), String> {
+        if let Some(val) = self.messages.insert(mes.name.0, mes) {
+            Err(format!("Duplicate message name: {}", val.name.0))
+        } else {
+            Ok(())
+        }
+    }
+
+    pub fn add_port_type(&mut self, pt: PortType<'a>) -> Result<(), String> {
+        if let Some(val) = self.port_types.insert(pt.name.0, pt) {
+            Err(format!("Duplicate port type name: {}", val.name.0))
+        } else {
+            Ok(())
+        }
+    }
+
+    pub fn add_binding(&mut self, bin: Binding<'a>) -> Result<(), String> {
+        if let Some(val) = self.bindings.insert(bin.name.0, bin) {
+            Err(format!("Duplicate binding name: {}", val.name.0))
+        } else {
+            Ok(())
+        }
+    }
+
+    pub fn add_service(&mut self, svc: Service<'a>) -> Result<(), String> {
+        if let Some(val) = self.services.insert(svc.name.0, svc) {
+            Err(format!("Duplicate service name: {}", val.name.0))
+        } else {
+            Ok(())
+        }
+    }
+}
+

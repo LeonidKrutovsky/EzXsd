@@ -9,9 +9,11 @@ pub mod import;
 pub mod message;
 pub mod operation;
 pub mod param;
+pub mod port;
 pub mod part;
 pub mod port_type;
 pub mod types;
+pub mod service;
 
 pub const WSDL_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/";
 pub const SOAP_NS_URI: &str = "http://schemas.xmlsoap.org/wsdl/soap12/";
