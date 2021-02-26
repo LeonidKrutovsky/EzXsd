@@ -36,6 +36,8 @@ pub mod type_def_particle;
 pub mod union;
 pub mod utils;
 
+pub mod attributes;
+
 mod tests;
 
 use crate::model::elements::{xsd_element_type, ElementType};

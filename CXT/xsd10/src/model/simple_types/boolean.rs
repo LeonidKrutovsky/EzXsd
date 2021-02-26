@@ -18,6 +18,8 @@
 // 0	            false
 // 1	            true
 
+use std::convert::TryFrom;
+
 // Invalid values	Comment
 // TRUE	            values are case sensitive
 // T	            the word "true" must be spelled out
@@ -27,8 +29,10 @@
 //      restricted by xsd:boolean
 pub struct Boolean(pub bool);
 
-impl Boolean {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl TryFrom<&str> for Boolean {
+    type Error = String;
+
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
         if s == "0" || s == "false" {
             Ok(Self(false))
         } else if s == "1" || s == "true" {
@@ -42,22 +46,24 @@ impl Boolean {
 #[cfg(test)]
 mod tests {
     use super::Boolean;
+    use std::convert::TryFrom;
+
     #[test]
     fn test_valid_values() {
-        assert!(!Boolean::parse("0").unwrap().0);
-        assert!(!Boolean::parse("0").unwrap().0);
-        assert!(Boolean::parse("1").unwrap().0);
-        assert!(Boolean::parse("true").unwrap().0);
+        assert!(!Boolean::try_from("0").unwrap().0);
+        assert!(!Boolean::try_from("0").unwrap().0);
+        assert!(Boolean::try_from("1").unwrap().0);
+        assert!(Boolean::try_from("true").unwrap().0);
     }
 
     #[test]
     fn test_invalid_values() {
         assert_eq!(
-            Boolean::parse("2").err().unwrap(),
+            Boolean::try_from("2").err().unwrap(),
             "Invalid value for boolean: 2".to_string()
         );
-        assert!(Boolean::parse("True").is_err());
-        assert!(Boolean::parse("FALSE").is_err());
-        assert!(Boolean::parse("").is_err());
+        assert!(Boolean::try_from("True").is_err());
+        assert!(Boolean::try_from("FALSE").is_err());
+        assert!(Boolean::try_from("").is_err());
     }
 }

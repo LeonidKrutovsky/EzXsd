@@ -4,8 +4,10 @@ use std::io::Read;
 use std::path::Path;
 use xsd10::xml_to_xsd::schema_set::SchemaSet;
 
+use std::path::PathBuf;
+
 fn main() {
-    let input_path = Path::new("../../CXT/xsd10/input/xsd");
+    let input_path = Path::new("CXT/xsd10/input/xsd");
     let sources = load_files(&input_path).unwrap();
     let xml_docs = parse_xml_files(sources.as_slice()).unwrap();
     let schema_set = SchemaSet::from_docs(xml_docs.as_slice()).unwrap();
@@ -16,7 +18,10 @@ fn main() {
 }
 
 fn load_files(path: &Path) -> Result<Vec<String>, String> {
+    let srcdir = PathBuf::from(path);
+    println!("Hello      {:?}", fs::canonicalize(&srcdir));
     let md = fs::metadata(path).map_err(|err| err.to_string())?;
+    println!("{:?}", md);
     let mut res = vec![];
     if md.is_dir() {
         res = load_dir(path)?;
@@ -31,6 +36,7 @@ fn load_files(path: &Path) -> Result<Vec<String>, String> {
 
 fn load_dir(input_path: &Path) -> Result<Vec<String>, String> {
     let mut res = vec![];
+    println!("{:?}", input_path);
     for entry in fs::read_dir(input_path).map_err(|e| e.to_string())? {
         let path = entry.map_err(|e| e.to_string())?.path();
         if path.is_dir() {

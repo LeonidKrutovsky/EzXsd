@@ -76,6 +76,7 @@ pub struct Annotation<'a> {
 }
 
 impl<'a> Annotation<'a> {
+    pub const TOKEN: &'static str = "annotation";
     pub fn doc_str(&self, index: usize) -> Option<&'a str> {
         self.documentations.get(index).and_then(|d| d.text)
     }

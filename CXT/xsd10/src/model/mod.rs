@@ -1,3 +1,4 @@
+pub mod attributes;
 pub mod complex_types;
 pub mod elements;
 pub mod groups;

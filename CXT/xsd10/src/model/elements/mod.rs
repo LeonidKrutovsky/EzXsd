@@ -93,7 +93,7 @@ pub fn xsd_element_type(name: &str) -> Result<ElementType, String> {
     use ElementType::*;
     let element = match name {
         "all" => All,
-        "annotation" => Annotation,
+        annotation::Annotation::TOKEN => Annotation,
         "any" => Any,
         "anyAttribute" => AnyAttribute,
         "appInfo" => AppInfo,
