@@ -79,7 +79,7 @@ mod test {
         let schemas = schema_set.schemas();
         let schema_wrapper = schemas.first().unwrap();
         let st = schema_wrapper
-            .resolve_attribute_type(&QName::new("Name"))
+            .resolve_attribute_type(&QName::from("Name"))
             .unwrap();
 
         if let AttributeType::Simple(v) = st {
@@ -113,7 +113,7 @@ mod test {
         let schemas = schema_set.schemas();
         let rules_schema_wrapper = &schemas[0];
         let base = rules_schema_wrapper
-            .resolve_base(&QName::new("tt:IntRange"))
+            .resolve_base(&QName::from("tt:IntRange"))
             .unwrap();
 
         if let AttributeBase::Complex(v) = base {

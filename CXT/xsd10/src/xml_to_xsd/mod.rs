@@ -82,11 +82,11 @@ impl_from_attr!(AnyUri);
 impl_from_attr!(Id);
 impl_from_attr!(NCName);
 
-impl<'a> From<&'a Attribute<'a>> for QName<'a> {
-    fn from(a: &'a Attribute<'a>) -> Self {
-        QName::new(a.value())
-    }
-}
+// impl<'a> From<&'a Attribute<'a>> for QName<'a> {
+//     fn from(a: &'a Attribute<'a>) -> Self {
+//         QName::new(a.value())
+//     }
+// }
 
 #[derive(Clone)]
 pub struct ElementChildrenIterator<'a, 'input: 'a> {

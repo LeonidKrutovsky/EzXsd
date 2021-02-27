@@ -26,7 +26,7 @@ impl<'a> Union<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
                 "memberTypes" => {
-                    res.member_types = attr.value().split(' ').map(QName::new).collect()
+                    res.member_types = attr.value().split(' ').map(QName::from).collect()
                 }
                 _ => res.attributes.push(attr.clone()),
             };
@@ -60,9 +60,9 @@ mod test {
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.id.unwrap().0, "ID");
         assert_eq!(res.member_types.len(), 2);
-        assert_eq!(res.member_types[0].name, "Type1");
-        assert_eq!(res.member_types[1].name, "Type2");
-        assert_eq!(res.member_types[1].prefix.unwrap(), "xs");
+        assert_eq!(res.member_types[0].name(), "Type1");
+        assert_eq!(res.member_types[1].name(), "Type2");
+        assert_eq!(res.member_types[1].prefix().unwrap(), "xs");
         assert_eq!(res.simple_type.len(), 3);
     }
 }

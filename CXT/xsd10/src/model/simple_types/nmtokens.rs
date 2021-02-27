@@ -54,9 +54,7 @@ impl<'a> ToXml for NmTokens<'a> {
             .fold(String::new(), |a, b| format!("{} {}", a, b));
 
         if result.is_empty() {
-            Err(format!(
-                "There must be at least one NMTOKEN in the list."
-            ))
+            Err(format!("There must be at least one NMTOKEN in the list."))
         } else {
             Ok(result)
         }

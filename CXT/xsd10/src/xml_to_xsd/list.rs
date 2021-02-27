@@ -25,7 +25,7 @@ impl<'a> List<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
-                "itemType" => res.item_type = Some(QName::new(attr.value())),
+                "itemType" => res.item_type = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
         }

@@ -22,7 +22,7 @@ impl<'a> Restriction<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
-                "base" => res.base = Some(QName::new(attr.value())),
+                "base" => res.base = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -63,8 +63,8 @@ mod test {
         assert!(res.annotation.is_some());
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.id.unwrap().0, "ID");
-        assert_eq!(res.base.as_ref().unwrap().name, "Type1");
-        assert_eq!(res.base.as_ref().unwrap().prefix.unwrap(), "xsd");
+        assert_eq!(res.base.as_ref().unwrap().name(), "Type1");
+        assert_eq!(res.base.as_ref().unwrap().prefix().unwrap(), "xsd");
         let model = &res.model;
         assert_eq!(model.facets.len(), 12);
     }

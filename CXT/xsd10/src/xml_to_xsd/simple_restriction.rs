@@ -21,7 +21,7 @@ impl<'a> SimpleRestriction<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "base" => base = Some(QName::new(attr.value())),
+                "base" => base = Some(QName::from(attr.value())),
                 "id" => res.id = Some(attr.into()),
                 _ => res.attributes.push(attr.clone()),
             };

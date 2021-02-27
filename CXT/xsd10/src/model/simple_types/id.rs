@@ -28,5 +28,4 @@ use crate::model::simple_types::NCName_;
 #[derive(Debug)]
 pub struct Id<'a>(pub &'a str);
 
-
 pub type Id_<'a> = NCName_<'a>;

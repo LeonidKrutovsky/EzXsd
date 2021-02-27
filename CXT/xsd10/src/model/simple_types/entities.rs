@@ -47,10 +47,9 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-
+use crate::model::simple_types::entity::Entity;
 use crate::model::ToXml;
 use std::borrow::Cow;
-use crate::model::simple_types::entity::Entity;
 
 #[derive(Debug)]
 pub struct Entities<'a>(Vec<Entity<'a>>);

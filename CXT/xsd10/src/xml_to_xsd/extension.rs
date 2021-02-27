@@ -14,7 +14,7 @@ impl<'a> Extension<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
-                "base" => base = Some(QName::new(attr.value())),
+                "base" => base = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -65,8 +65,8 @@ mod test {
         let root = doc.root_element();
         let res = Extension::parse(root).unwrap();
         assert!(res.annotation.is_none());
-        assert_eq!(res.base.name, "BarType");
-        assert_eq!(res.base.prefix, Some("tns"));
+        assert_eq!(res.base.name(), "BarType");
+        assert_eq!(res.base.prefix(), Some("tns"));
         assert!(res.type_def_particle.is_none());
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.id.unwrap().0, "ID");

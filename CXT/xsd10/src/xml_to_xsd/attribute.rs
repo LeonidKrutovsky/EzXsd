@@ -35,7 +35,7 @@ impl<'a> TopLevelAttribute<'a> {
             match attr.name() {
                 "id" => id = Some(attr.into()),
                 "name" => name = Some(attr.into()),
-                "type" => type_ = Some(QName::new(attr.value())),
+                "type" => type_ = Some(QName::from(attr.value())),
                 "default" => default = Some(attr.value()),
                 "fixed" => fixed = Some(attr.value()),
                 _ => attributes.push(attr.clone()),
@@ -89,8 +89,8 @@ impl<'a> LocalAttribute<'a> {
             match attr.name() {
                 "id" => id = Some(attr.into()),
                 "name" => name = Some(attr.into()),
-                "ref" => ref_ = Some(QName::new(attr.value())),
-                "type" => type_ = Some(QName::new(attr.value())),
+                "ref" => ref_ = Some(QName::from(attr.value())),
+                "type" => type_ = Some(QName::from(attr.value())),
                 "use" => use_ = UseType::parse(attr.value())?,
                 "default" => default = Some(attr.value()),
                 "fixed" => fixed = Some(attr.value()),

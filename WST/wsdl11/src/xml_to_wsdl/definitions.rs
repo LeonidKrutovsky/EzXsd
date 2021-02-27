@@ -135,7 +135,7 @@ mod test {
                 .element
                 .as_ref()
                 .unwrap(),
-            &QName::new("tds:DeleteGeoLocationResponse")
+            &QName::from("tds:DeleteGeoLocationResponse")
         );
 
         if let Some(pt) = def.content.port_types.get("Device") {

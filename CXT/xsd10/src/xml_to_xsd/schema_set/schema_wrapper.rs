@@ -32,7 +32,7 @@ impl<'a> SchemaWrapper<'a> {
         self.schema_set
             .types
             .get(ns_uri)
-            .and_then(|gts| gts.elements.get(name.name).map(|v| v.as_ref()))
+            .and_then(|gts| gts.elements.get(name.name()).map(|v| v.as_ref()))
     }
 
     // for 'ref' attribute in xs:attribute
@@ -41,14 +41,14 @@ impl<'a> SchemaWrapper<'a> {
         self.schema_set
             .types
             .get(ns_uri)
-            .and_then(|gts| gts.attributes.get(name.name).map(|v| v.as_ref()))
+            .and_then(|gts| gts.attributes.get(name.name()).map(|v| v.as_ref()))
     }
 
     // for 'type' attribute in xs:attribute
     pub fn resolve_attribute_type(&self, name: &QName) -> Result<AttributeType, String> {
         let ns_uri = self.get_ns_uri(name);
         if ns_uri == XSD_NS_URI {
-            return Ok(AttributeType::Builtin(xsd_simple_type(name.name)?));
+            return Ok(AttributeType::Builtin(xsd_simple_type(name.name())?));
         }
         self.schema_set
             .types
@@ -57,7 +57,7 @@ impl<'a> SchemaWrapper<'a> {
             .and_then(|gts|
                 gts
                     .custom_types
-                    .get(name.name)
+                    .get(name.name())
                     .ok_or_else(|| format!("Can't find simpleType with name: {}", name))
                     .and_then(|v| if let CustomType::Simple(val) = v {
                             Ok(AttributeType::Simple(val.clone()))
@@ -72,13 +72,13 @@ impl<'a> SchemaWrapper<'a> {
     pub fn resolve_base(&self, name: &QName) -> Result<AttributeBase, String> {
         let ns_uri = self.get_ns_uri(name);
         if ns_uri == XSD_NS_URI {
-            return Ok(AttributeBase::Builtin(xsd_simple_type(name.name)?));
+            return Ok(AttributeBase::Builtin(xsd_simple_type(name.name())?));
         }
         self.schema_set
             .types
             .get(ns_uri)
             .and_then(|gts| {
-                gts.custom_types.get(name.name).map(|v| match v {
+                gts.custom_types.get(name.name()).map(|v| match v {
                     CustomType::Simple(val) => AttributeBase::Simple(val.clone()),
                     CustomType::Complex(val) => AttributeBase::Complex(val.clone()),
                 })
@@ -87,8 +87,8 @@ impl<'a> SchemaWrapper<'a> {
     }
 
     fn get_ns_uri(&self, name: &'a QName) -> &str {
-        if name.prefix.is_some() {
-            self.node.lookup_namespace_uri(name.prefix)
+        if name.prefix().is_some() {
+            self.node.lookup_namespace_uri(name.prefix())
         } else {
             self.schema.target_namespace.as_ref().map(|val| val.0)
         }

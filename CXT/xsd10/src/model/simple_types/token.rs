@@ -34,6 +34,7 @@
 //                              used in list xsd:ENTITIES
 
 use crate::model::simple_types::normalized_string::NormalizedString;
+use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
 use regex::Regex;
 use std::borrow::Cow;
@@ -57,9 +58,7 @@ where
 
 impl<'a> ToXml for Token_<'a> {
     fn to_xml(&self) -> Result<String, String> {
-        let re = Regex::new(" {2,}").unwrap();
-        let s = self.0.to_xml()?;
-        Ok(re.replace_all(s.trim(), " ").into())
+        Ok(collapse(self.0.to_xml()?.as_str()))
     }
 
     fn raw(&self) -> &str {

@@ -50,13 +50,14 @@ impl<'a> ToXml for Name<'a> {
     fn to_xml(&self) -> Result<String, String> {
         let result = self.0.to_xml()?;
         if result.is_empty() {
-            Err(format!("An empty value is not valid, unless xsi:nil is used"))
+            Err(format!(
+                "An empty value is not valid, unless xsi:nil is used"
+            ))
         } else if result.starts_with('-') {
             Err(format!("A Name must not start with a hyphen: {}", result))
-        } else if result.chars().nth(0).unwrap().is_digit(10){
+        } else if result.chars().nth(0).unwrap().is_digit(10) {
             Err(format!("A Name must not start with a number: {}", result))
-        }
-        else {
+        } else {
             Ok(result)
         }
     }

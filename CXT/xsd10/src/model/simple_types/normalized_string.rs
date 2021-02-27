@@ -40,6 +40,7 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
+use crate::model::simple_types::white_space_facet::replace;
 use crate::model::simple_types::String_;
 use crate::model::ToXml;
 use std::borrow::Cow;
@@ -58,15 +59,7 @@ where
 
 impl<'a> ToXml for NormalizedString<'a> {
     fn to_xml(&self) -> Result<String, String> {
-        Ok(self
-            .0
-            .to_xml()?
-            .chars()
-            .map(|x| match x {
-                '\n' | '\r' | '\u{0009}' => ' ',
-                c => c,
-            })
-            .collect())
+        Ok(replace(self.0.to_xml()?.as_str()))
     }
 
     fn raw(&self) -> &str {
@@ -87,14 +80,14 @@ mod test {
         let two_lines_str = r"
 This
 is on two lines.
-        ";
+";
 
         eq("This is a string!", "This is a string!");
         eq("Édition française.", "Édition française.");
         eq("12.5", "12.5");
         eq("", "");
         eq("   3 spaces.   ", "   3 spaces.   ");
-        eq(two_lines_str, two_lines_str);
+        eq(two_lines_str, " This is on two lines. ");
         eq("3 < 4", "3 &lt; 4");
         eq("AT&T", "AT&amp;T");
         eq("AT&T", "AT&amp;T");

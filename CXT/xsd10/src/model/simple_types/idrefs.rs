@@ -22,10 +22,9 @@
 //              restricted by xsd:IDREF
 //                used in list xsd:IDREFS
 
-
+use crate::model::simple_types::idref::IdRef;
 use crate::model::ToXml;
 use std::borrow::Cow;
-use crate::model::simple_types::idref::IdRef;
 
 #[derive(Debug)]
 pub struct IdRefs<'a>(Vec<IdRef<'a>>);

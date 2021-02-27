@@ -18,8 +18,8 @@ impl<'a> LocalElement<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
                 "name" => res.name = Some(attr.into()),
-                "ref" => res.ref_ = Some(QName::new(attr.value())),
-                "type" => res.type_ = Some(QName::new(attr.value())),
+                "ref" => res.ref_ = Some(QName::from(attr.value())),
+                "type" => res.type_ = Some(QName::from(attr.value())),
                 "minOccurs" => res.min_occurs = attr.value().parse()?,
                 "maxOccurs" => res.max_occurs = attr.value().parse()?,
                 "default" => res.default = Some(attr.value()),

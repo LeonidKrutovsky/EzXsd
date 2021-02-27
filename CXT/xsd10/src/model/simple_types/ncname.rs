@@ -35,8 +35,8 @@
 //                                  used in list xsd:ENTITIES
 
 use crate::model::simple_types::name::Name;
-use std::borrow::Cow;
 use crate::model::ToXml;
+use std::borrow::Cow;
 
 #[derive(Debug, Default, Clone)]
 pub struct NCName<'a>(pub &'a str);
@@ -60,8 +60,7 @@ impl<'a> ToXml for NCName_<'a> {
         let result = self.0.to_xml()?;
         if result.contains(":") {
             Err(format!("An NCName must not contain a colon: {}", result))
-        }
-        else {
+        } else {
             Ok(result)
         }
     }

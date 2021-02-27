@@ -32,8 +32,8 @@ impl<'a> TopLevelElement<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.into()),
                 "name" => name = Some(attr.into()),
-                "type" => res.type_ = Some(QName::new(attr.value())),
-                "substitutionGroup" => res.substitution_group = Some(QName::new(attr.value())),
+                "type" => res.type_ = Some(QName::from(attr.value())),
+                "substitutionGroup" => res.substitution_group = Some(QName::from(attr.value())),
                 "default" => res.default = Some(attr.value()),
                 "fixed" => res.fixed = Some(attr.value()),
                 "nillable" => {
