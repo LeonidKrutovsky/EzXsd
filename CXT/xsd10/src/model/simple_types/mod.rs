@@ -34,6 +34,8 @@ pub mod string;
 pub mod time;
 pub mod token;
 pub mod name;
+pub mod idrefs;
+pub mod idref;
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;
