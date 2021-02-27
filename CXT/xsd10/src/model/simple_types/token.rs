@@ -17,21 +17,6 @@
 // Content
 //  Based on xsd:normalizedString
 //  White Space: collapse
-// Examples
-//
-// Valid values	                Comment
-// This is a string!
-// Édition française.
-// 12.5
-//                              an empty string is valid
-// PB&amp;J	                    when parsed, it will become "PB&J"
-//    Separated by 3 spaces.	when parsed, it will become "Separated by 3 spaces."
-// This
-// is on two lines.	            when parsed, the line break will be replaced with a space
-// Invalid values	            Comment
-// AT&T	                        ampersand must be escaped
-// 3 < 4	                    the "less than" symbol must be escaped
-//
 // Type Inheritance Chain
 //  xsd:anySimpleType
 //      restricted by xsd:string
@@ -47,5 +32,62 @@
 //                              used in list xsd:IDREFS
 //                          restricted by xsd:ENTITY
 //                              used in list xsd:ENTITIES
+
+use crate::model::simple_types::normalized_string::NormalizedString;
+use std::borrow::{Cow, Borrow};
+use crate::model::ToXml;
+use regex::Regex;
+
 #[derive(Debug)]
 pub struct Token<'a>(pub &'a str);
+
+#[derive(Debug, PartialEq)]
+pub struct Token_<'a>(NormalizedString<'a>);
+
+impl<'a, T> From<T> for Token_<'a> where T: Into<Cow<'a, str>> {
+    fn from(value: T) -> Self {
+        Self {0: NormalizedString::from(value) }
+    }
+}
+
+impl<'a> ToXml for Token_<'a> {
+    fn to_xml(&self) -> Result<String, String> {
+        let re = Regex::new( " {2,}").unwrap();
+        let s = self.0.to_xml()?;
+        Ok(re.replace_all(s.trim(), " ").into())
+    }
+
+    fn raw(&self) -> &str {
+        self.0.raw()
+    }
+}
+
+
+#[cfg(test)]
+mod test {
+    use crate::model::simple_types::Token_ as Str;
+    use crate::model::ToXml;
+
+    #[test]
+    fn test_valid_string() {
+        fn eq(left: &str, right: &str) {
+            assert_eq!(Str::from(left).to_xml().unwrap(), right);
+        }
+        let two_lines_str = r"
+This
+is on two lines.
+        ";
+
+        eq("This is a string!", "This is a string!");
+        eq("Édition française.", "Édition française.");
+        eq("12.5", "12.5");
+        eq("", "");
+        eq("   3 spaces.   ", "3 spaces.");
+        eq(two_lines_str, "This is on two lines.");
+        eq("3 < 4", "3 &lt; 4");
+        eq("AT&T", "AT&amp;T");
+        eq("  WS:    |     T  ", "WS: | T");
+        eq("AT     T", "AT T");
+    }
+}
+
