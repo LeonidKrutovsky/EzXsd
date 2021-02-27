@@ -54,6 +54,11 @@ pub type RawAttribute<'a> = roxmltree::Attribute<'a>;
 pub type RawElement<'a> = roxmltree::Node<'a, 'a>;
 pub type Namespace<'a> = roxmltree::Namespace<'a>;
 
+pub trait ToXml {
+    fn to_xml(&self) -> Result<String, String>;
+    fn raw(&self) -> &str;
+}
+
 #[derive(Debug, PartialEq)]
 pub enum MaxOccurs {
     Bounded(NonNegativeInteger),

@@ -20,10 +20,31 @@
 // Used in
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 
-use crate::model::simple_types::DerivationSet;
+use crate::model::simple_types::{DerivationSet, DerivationSubset};
 
-pub type Block = DerivationSet;
+pub struct Block(DerivationSet);
 
 impl Block {
-        const NAME: &'static str = "abstract";
+    pub const NAME: &'static str = "block";
+
+    pub fn is_all(&self) -> bool {
+        match self.0 {
+            DerivationSet::All => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_list(&self) -> bool {
+        match self.0 {
+            DerivationSet::List(_) => true,
+            _ => false,
+        }
+    }
+
+    pub fn get_list(&self) -> Option<&[DerivationSubset]> {
+        match self.0 {
+            DerivationSet::List(ref value) => Some(value.as_slice()),
+            _ => None,
+        }
+    }
 }

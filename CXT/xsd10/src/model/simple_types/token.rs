@@ -34,9 +34,9 @@
 //                              used in list xsd:ENTITIES
 
 use crate::model::simple_types::normalized_string::NormalizedString;
-use std::borrow::{Cow, Borrow};
 use crate::model::ToXml;
 use regex::Regex;
+use std::borrow::Cow;
 
 #[derive(Debug)]
 pub struct Token<'a>(pub &'a str);
@@ -44,15 +44,20 @@ pub struct Token<'a>(pub &'a str);
 #[derive(Debug, PartialEq)]
 pub struct Token_<'a>(NormalizedString<'a>);
 
-impl<'a, T> From<T> for Token_<'a> where T: Into<Cow<'a, str>> {
+impl<'a, T> From<T> for Token_<'a>
+where
+    T: Into<Cow<'a, str>>,
+{
     fn from(value: T) -> Self {
-        Self {0: NormalizedString::from(value) }
+        Self {
+            0: NormalizedString::from(value),
+        }
     }
 }
 
 impl<'a> ToXml for Token_<'a> {
     fn to_xml(&self) -> Result<String, String> {
-        let re = Regex::new( " {2,}").unwrap();
+        let re = Regex::new(" {2,}").unwrap();
         let s = self.0.to_xml()?;
         Ok(re.replace_all(s.trim(), " ").into())
     }
@@ -61,7 +66,6 @@ impl<'a> ToXml for Token_<'a> {
         self.0.raw()
     }
 }
-
 
 #[cfg(test)]
 mod test {
@@ -90,4 +94,3 @@ is on two lines.
         eq("AT     T", "AT T");
     }
 }
-

@@ -42,25 +42,31 @@
 
 use crate::model::simple_types::String_;
 use crate::model::ToXml;
-use std::borrow::{Cow, Borrow};
+use std::borrow::Cow;
 
 #[derive(Debug, PartialEq)]
 pub struct NormalizedString<'a>(String_<'a>);
 
-impl<'a, T> From<T> for NormalizedString<'a> where T: Into<Cow<'a, str>> {
+impl<'a, T> From<T> for NormalizedString<'a>
+where
+    T: Into<Cow<'a, str>>,
+{
     fn from(value: T) -> Self {
-        Self {0: value.into()}
+        Self { 0: value.into() }
     }
 }
 
 impl<'a> ToXml for NormalizedString<'a> {
     fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_xml()?.chars().map(|x| match x {
-            '\n' |
-            '\r' |
-            '\u{0009}' => ' ',
-            c => c,
-        }).collect())
+        Ok(self
+            .0
+            .to_xml()?
+            .chars()
+            .map(|x| match x {
+                '\n' | '\r' | '\u{0009}' => ' ',
+                c => c,
+            })
+            .collect())
     }
 
     fn raw(&self) -> &str {
@@ -75,7 +81,7 @@ mod test {
 
     #[test]
     fn test_valid_normalized_string() {
-    fn eq(left: &str, right: &str) {
+        fn eq(left: &str, right: &str) {
             assert_eq!(Str::from(left).to_xml().unwrap(), right);
         }
         let two_lines_str = r"

@@ -38,7 +38,7 @@ impl<'a> Schema<'a> {
                     schema.element_form_default = FormChoice::parse(attr.value())?
                 }
                 "id" => schema.id = Some(Id(attr.value())),
-                "lang" => schema.lang = Some(Language(attr.value())),
+                "lang" => schema.lang = Some(Language::from(attr.value())),
                 _ => schema.attributes.push(attr.clone()),
             };
         }

@@ -1,3 +1,4 @@
+use crate::model::simple_types::language::Language;
 use crate::model::Documentation;
 use roxmltree::Node;
 
@@ -9,7 +10,7 @@ impl<'a> Documentation<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "source" => res.source = Some(attr.into()),
-                "lang" => res.lang = Some(attr.into()),
+                "lang" => res.lang = Some(Language::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -20,7 +21,7 @@ impl<'a> Documentation<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::Documentation;
+    use crate::model::{Documentation, ToXml};
 
     #[test]
     fn test_documentation_parse() {
@@ -35,7 +36,7 @@ mod test {
         let res = Documentation::parse(root).unwrap();
         assert_eq!(res.text.unwrap().trim(), "A string");
         assert_eq!(res.source.unwrap().0, "http://ya.com");
-        assert_eq!(res.lang.unwrap().0, "us");
+        assert_eq!(res.lang.unwrap().raw(), "us");
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.elements.len(), 1);
         assert_eq!(res.elements[0].text().unwrap(), "Some element");

@@ -35,8 +35,8 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-use std::borrow::{Cow, Borrow};
 use crate::model::ToXml;
+use std::borrow::{Borrow, Cow};
 
 pub type String_<'a> = Cow<'a, str>;
 
@@ -49,12 +49,12 @@ impl<'a> ToXml for String_<'a> {
             (end, '<') => {
                 result.push_str(unsafe { self.get_unchecked(start..end) });
                 result.push_str("&lt;");
-                start = end+1;
+                start = end + 1;
             }
             (end, '&') => {
                 result.push_str(unsafe { self.get_unchecked(start..end) });
                 result.push_str("&amp;");
-                start = end+1;
+                start = end + 1;
             }
             _ => {}
         });
@@ -96,8 +96,3 @@ is on two lines.
         eq("AT&T", "AT&amp;T");
     }
 }
-
-
-
-
-

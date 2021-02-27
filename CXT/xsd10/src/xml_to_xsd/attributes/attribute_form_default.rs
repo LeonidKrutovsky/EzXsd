@@ -1,6 +1,6 @@
+use crate::model::attributes::attribute_form_default::AttributeFormDefault;
 use crate::model::RawAttribute;
 use std::convert::TryFrom;
-use crate::model::attributes::attribute_form_default::AttributeFormDefault;
 
 impl TryFrom<RawAttribute<'_>> for AttributeFormDefault {
     type Error = String;
@@ -9,7 +9,7 @@ impl TryFrom<RawAttribute<'_>> for AttributeFormDefault {
         match value.value() {
             "qualified" => Ok(Self::Qualified),
             "unqualified" => Ok(Self::Unqualified),
-            _ => Err(format!("Invalid attribute {:?}", value))
+            _ => Err(format!("Invalid attribute {:?}", value)),
         }
     }
 }

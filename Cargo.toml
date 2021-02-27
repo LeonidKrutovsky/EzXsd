@@ -1,6 +1,6 @@
 [workspace]
 members = [
-  "xml-utils",
+  #"xml-utils",
   "CXT/xsd10",
   "WST/wsdl11",
   "examples/xsd_onvif",

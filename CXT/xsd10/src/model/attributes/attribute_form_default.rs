@@ -17,9 +17,9 @@
 
 pub enum AttributeFormDefault {
     Qualified,
-    Unqualified
+    Unqualified,
 }
 
-impl AttributeFormDefault{
+impl AttributeFormDefault {
     const NAME: &'static str = "attributeFormDefault";
 }
