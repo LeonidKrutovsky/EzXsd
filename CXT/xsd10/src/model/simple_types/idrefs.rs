@@ -1,5 +1,7 @@
 // xsd:IDREFS
-// The type xsd:IDREFS represents a list of IDREF values separated by whitespace. There must be at least one IDREF in the list. Each of the IDREF values must match an ID contained in the same XML document.
+// The type xsd:IDREFS represents a list of IDREF values separated by whitespace.
+// There must be at least one IDREF in the list. Each of the IDREF values must
+// match an ID contained in the same XML document.
 //
 // Simple Type Information
 // Namespace: http://www.w3.org/2001/XMLSchema

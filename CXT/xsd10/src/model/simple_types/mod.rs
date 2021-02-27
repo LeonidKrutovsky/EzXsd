@@ -36,6 +36,8 @@ pub mod token;
 pub mod name;
 pub mod idrefs;
 pub mod idref;
+pub mod entity;
+pub mod entities;
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;
