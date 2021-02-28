@@ -17,9 +17,6 @@
 // false
 // 0	            false
 // 1	            true
-
-use std::convert::TryFrom;
-
 // Invalid values	Comment
 // TRUE	            values are case sensitive
 // T	            the word "true" must be spelled out
@@ -27,12 +24,17 @@ use std::convert::TryFrom;
 // Type Inheritance Chain
 //  xsd:anySimpleType
 //      restricted by xsd:boolean
+
+use std::convert::TryFrom;
+use std::str::FromStr;
+use crate::model::ToXml;
+
 pub struct Boolean(pub bool);
 
-impl TryFrom<&str> for Boolean {
-    type Error = String;
+impl FromStr for Boolean {
+    type Err = String;
 
-    fn try_from(s: &str) -> Result<Self, Self::Error> {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s == "0" || s == "false" {
             Ok(Self(false))
         } else if s == "1" || s == "true" {
@@ -43,27 +45,44 @@ impl TryFrom<&str> for Boolean {
     }
 }
 
+impl PartialEq<bool> for Boolean {
+    fn eq(&self, other: &bool) -> bool {
+        self.0 == *other
+    }
+}
+
+impl ToXml for Boolean {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(self.0.to_string())
+    }
+
+    fn raw(&self) -> &str {
+        unimplemented!()
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::Boolean;
-    use std::convert::TryFrom;
+    use std::str::FromStr;
 
     #[test]
     fn test_valid_values() {
-        assert!(!Boolean::try_from("0").unwrap().0);
-        assert!(!Boolean::try_from("0").unwrap().0);
-        assert!(Boolean::try_from("1").unwrap().0);
-        assert!(Boolean::try_from("true").unwrap().0);
+        assert!(!Boolean::from_str("0").unwrap().0);
+        assert!(!Boolean::from_str("0").unwrap().0);
+        assert!(Boolean::from_str("1").unwrap().0);
+        assert!(Boolean::from_str("true").unwrap().0);
     }
 
     #[test]
     fn test_invalid_values() {
         assert_eq!(
-            Boolean::try_from("2").err().unwrap(),
+            Boolean::from_str("2").err().unwrap(),
             "Invalid value for boolean: 2".to_string()
         );
-        assert!(Boolean::try_from("True").is_err());
-        assert!(Boolean::try_from("FALSE").is_err());
-        assert!(Boolean::try_from("").is_err());
+        assert!(Boolean::from_str("True").is_err());
+        assert!(Boolean::from_str("FALSE").is_err());
+        assert!(Boolean::from_str("").is_err());
     }
 }
