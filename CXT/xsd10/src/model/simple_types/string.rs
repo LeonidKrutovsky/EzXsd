@@ -35,39 +35,50 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
+use crate::model::simple_types::any_simple_type::AnySimpleType;
 use crate::model::ToXml;
 use std::borrow::{Borrow, Cow};
 
-pub type String_<'a> = Cow<'a, str>;
+#[derive(Debug, PartialEq)]
+pub struct String_<'a>(AnySimpleType<'a>);
+
+impl<'a, T> From<T> for String_<'a>
+where
+    T: Into<Cow<'a, str>>,
+{
+    fn from(value: T) -> Self {
+        Self { 0: value.into() }
+    }
+}
 
 impl<'a> ToXml for String_<'a> {
     fn to_xml(&self) -> Result<String, String> {
         let mut result = String::new();
         let mut start = 0;
 
-        self.chars().enumerate().for_each(|x| match x {
+        self.0.chars().enumerate().for_each(|x| match x {
             (end, '<') => {
-                result.push_str(unsafe { self.get_unchecked(start..end) });
+                result.push_str(unsafe { self.0.get_unchecked(start..end) });
                 result.push_str("&lt;");
                 start = end + 1;
             }
             (end, '&') => {
-                result.push_str(unsafe { self.get_unchecked(start..end) });
+                result.push_str(unsafe { self.0.get_unchecked(start..end) });
                 result.push_str("&amp;");
                 start = end + 1;
             }
             _ => {}
         });
 
-        if start != self.len() {
-            result.push_str(unsafe { self.get_unchecked(start..) });
+        if start != self.0.len() {
+            result.push_str(unsafe { self.0.get_unchecked(start..) });
         }
 
         Ok(result)
     }
 
     fn raw(&self) -> &str {
-        self.borrow()
+        self.0.borrow()
     }
 }
 

@@ -53,7 +53,9 @@ where
     T: Into<Cow<'a, str>>,
 {
     fn from(value: T) -> Self {
-        Self { 0: value.into() }
+        Self {
+            0: String_::from(value.into()),
+        }
     }
 }
 

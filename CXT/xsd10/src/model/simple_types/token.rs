@@ -36,7 +36,6 @@
 use crate::model::simple_types::normalized_string::NormalizedString;
 use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
-use regex::Regex;
 use std::borrow::Cow;
 
 #[derive(Debug)]

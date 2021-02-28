@@ -14,11 +14,10 @@
 //  xsd:anySimpleType
 //    restricted by xsd:hexBinary
 
-
 use crate::model::simple_types::any_simple_type::AnySimpleType;
-use std::borrow::Cow;
-use crate::model::ToXml;
 use crate::model::simple_types::white_space_facet::collapse;
+use crate::model::ToXml;
+use std::borrow::Cow;
 
 pub struct HexBinary<'a>(AnySimpleType<'a>);
 
@@ -27,9 +26,7 @@ where
     T: Into<Cow<'a, str>>,
 {
     fn from(value: T) -> Self {
-        Self {
-            0: value.into(),
-        }
+        Self { 0: value.into() }
     }
 }
 

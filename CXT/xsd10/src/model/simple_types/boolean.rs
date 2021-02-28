@@ -25,9 +25,9 @@
 //  xsd:anySimpleType
 //      restricted by xsd:boolean
 
+use crate::model::ToXml;
 use std::convert::TryFrom;
 use std::str::FromStr;
-use crate::model::ToXml;
 
 pub struct Boolean(pub bool);
 
@@ -60,7 +60,6 @@ impl ToXml for Boolean {
         unimplemented!()
     }
 }
-
 
 #[cfg(test)]
 mod tests {

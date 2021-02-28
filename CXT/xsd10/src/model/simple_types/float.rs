@@ -12,21 +12,20 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use std::str::FromStr;
 use crate::model::ToXml;
+use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Float(pub f32);
 
-impl FromStr for Float
-{
+impl FromStr for Float {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "-INF" => Ok(Float(f32::NEG_INFINITY)),
             "INF" => Ok(Float(f32::INFINITY)),
-            _ => Ok(Float(s.parse::<f32>().map_err(|e| e.to_string())?))
+            _ => Ok(Float(s.parse::<f32>().map_err(|e| e.to_string())?)),
         }
     }
 }
@@ -39,13 +38,11 @@ impl PartialEq<f32> for Float {
 
 impl ToXml for Float {
     fn to_xml(&self) -> Result<String, String> {
-        Ok(
-            match self.0 {
-                f32::NEG_INFINITY => "-INF".into(),
-                f32::INFINITY => "INF".into(),
-                _ => self.0.to_string()
-            }
-        )
+        Ok(match self.0 {
+            f32::NEG_INFINITY => "-INF".into(),
+            f32::INFINITY => "INF".into(),
+            _ => self.0.to_string(),
+        })
     }
 
     fn raw(&self) -> &str {
@@ -53,13 +50,11 @@ impl ToXml for Float {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::float::Float;
-    use std::num::ParseFloatError;
-    use std::str::FromStr;
     use crate::model::ToXml;
+    use std::str::FromStr;
 
     #[test]
     fn test_valid_parse() {

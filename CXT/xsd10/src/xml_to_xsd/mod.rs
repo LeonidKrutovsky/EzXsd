@@ -44,7 +44,6 @@ use crate::model::elements::{xsd_element_type, ElementType};
 use crate::model::simple_types::any_uri::AnyUri;
 use crate::model::simple_types::id::Id;
 use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::QName;
 use roxmltree::{Attribute, Node};
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";

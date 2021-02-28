@@ -20,14 +20,14 @@
 //  xsd:anySimpleType
 //      restricted by xsd:QName
 
+use crate::model::simple_types::any_simple_type::AnySimpleType;
 use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
 use core::fmt;
-use regex::Regex;
 use std::borrow::{Borrow, Cow};
 
 #[derive(Default, Debug, PartialEq)]
-pub struct QName<'a>(Cow<'a, str>);
+pub struct QName<'a>(AnySimpleType<'a>);
 
 impl<'a, T> From<T> for QName<'a>
 where
@@ -72,7 +72,7 @@ impl<'a> ToXml for QName<'a> {
     }
 
     fn raw(&self) -> &str {
-        self.0.raw()
+        self.0.borrow()
     }
 }
 

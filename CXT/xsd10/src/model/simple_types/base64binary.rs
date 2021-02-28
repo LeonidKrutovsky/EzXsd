@@ -25,11 +25,10 @@
 //  xsd:anySimpleType
 //      restricted by xsd:base64Binary
 
-
 use crate::model::simple_types::any_simple_type::AnySimpleType;
 use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
-use std::borrow::{Cow, Borrow};
+use std::borrow::{Borrow, Cow};
 
 #[derive(Debug, PartialEq)]
 pub struct Base64Binary<'a>(AnySimpleType<'a>);
@@ -41,9 +40,7 @@ where
     T: Into<Cow<'a, str>>,
 {
     fn from(value: T) -> Self {
-        Self {
-            0: value.into(),
-        }
+        Self { 0: value.into() }
     }
 }
 

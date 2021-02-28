@@ -19,21 +19,20 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use std::str::FromStr;
 use crate::model::ToXml;
+use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Double(pub f64);
 
-impl FromStr for Double
-{
+impl FromStr for Double {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "-INF" => Ok(Double(f64::NEG_INFINITY)),
             "INF" => Ok(Double(f64::INFINITY)),
-            _ => Ok(Double(s.parse::<f64>().map_err(|e| e.to_string())?))
+            _ => Ok(Double(s.parse::<f64>().map_err(|e| e.to_string())?)),
         }
     }
 }
@@ -46,13 +45,11 @@ impl PartialEq<f64> for Double {
 
 impl ToXml for Double {
     fn to_xml(&self) -> Result<String, String> {
-        Ok(
-            match self.0 {
-                f64::NEG_INFINITY => "-INF".into(),
-                f64::INFINITY => "INF".into(),
-                _ => self.0.to_string()
-            }
-        )
+        Ok(match self.0 {
+            f64::NEG_INFINITY => "-INF".into(),
+            f64::INFINITY => "INF".into(),
+            _ => self.0.to_string(),
+        })
     }
 
     fn raw(&self) -> &str {
@@ -60,12 +57,11 @@ impl ToXml for Double {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::double::Double;
-    use std::str::FromStr;
     use crate::model::ToXml;
+    use std::str::FromStr;
 
     #[test]
     fn test_valid_parse() {
