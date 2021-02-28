@@ -12,28 +12,90 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-pub type Float = f32;
+use std::str::FromStr;
+use crate::model::ToXml;
+
+#[derive(Debug, PartialEq)]
+pub struct Float(pub f32);
+
+impl FromStr for Float
+{
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "-INF" => Ok(Float(f32::NEG_INFINITY)),
+            "INF" => Ok(Float(f32::INFINITY)),
+            _ => Ok(Float(s.parse::<f32>().map_err(|e| e.to_string())?))
+        }
+    }
+}
+
+impl PartialEq<f32> for Float {
+    fn eq(&self, other: &f32) -> bool {
+        self.0 == *other
+    }
+}
+
+impl ToXml for Float {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(
+            match self.0 {
+                f32::NEG_INFINITY => "-INF".into(),
+                f32::INFINITY => "INF".into(),
+                _ => self.0.to_string()
+            }
+        )
+    }
+
+    fn raw(&self) -> &str {
+        unimplemented!()
+    }
+}
+
 
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::float::Float;
     use std::num::ParseFloatError;
+    use std::str::FromStr;
+    use crate::model::ToXml;
 
     #[test]
     fn test_valid_parse() {
-        assert_eq!("-3E2".parse::<Float>().unwrap(), -300.0);
-        assert_eq!("4268.22752E11".parse::<Float>().unwrap(), 4268.22752E11);
-        assert_eq!("+24.3e-3".parse::<Float>().unwrap(), 0.0243);
-        assert_eq!("12".parse::<Float>().unwrap(), 12.0);
-        //assert_eq!("-INF".parse::<Float>().unwrap(), f32::neg_infinity());
-        assert_eq!("-0".parse::<Float>().unwrap(), 0.0);
-        assert_eq!("NaN".parse::<Float>().unwrap().to_string(), "NaN");
+        fn eq(left: &str, right: f32) {
+            assert_eq!(Float::from_str(left).unwrap(), right)
+        }
+
+        eq("-3E2", -300.0);
+        eq("4268.22752E11", 4268.22752E11);
+        eq("+24.3e-3", 0.0243);
+        eq("12", 12.0);
+        eq("-INF", f32::NEG_INFINITY);
+        eq("INF", f32::INFINITY);
+        eq("-0", 0.0);
+        assert!(Float::from_str("NaN").unwrap().0.is_nan());
     }
 
     #[test]
     fn test_invalid_parse() {
-        assert!("-3E2.4".parse::<Float>().is_err());
-        assert!("12E".parse::<Float>().is_err());
-        assert!("NAN".parse::<Float>().is_err());
+        assert!(Float::from_str("-3E2.4").is_err());
+        assert!(Float::from_str("12E").is_err());
+        assert!(Float::from_str("NAN").is_err());
+    }
+
+    #[test]
+    fn test_to_xml() {
+        fn eq(left: &str, right: &str) {
+            assert_eq!(Float::from_str(left).unwrap().to_xml().unwrap(), right);
+        }
+        eq("-3E2", "-300");
+        eq("4268.22752E11", "426822740000000");
+        eq("+24.3e-3", "0.0243");
+        eq("12", "12");
+        eq("-INF", "-INF");
+        eq("INF", "INF");
+        eq("-0", "0");
+        eq("NaN", "NaN");
     }
 }
