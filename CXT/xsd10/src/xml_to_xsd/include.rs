@@ -1,6 +1,7 @@
 use crate::model::Include;
 use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
+use crate::model::simple_types::AnyUri;
 
 impl<'a> Include<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Include<'a>, String> {
@@ -9,7 +10,7 @@ impl<'a> Include<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "schemaLocation" => res.schema_location = attr.into(),
+                "schemaLocation" => res.schema_location = AnyUri::from(attr.value()),
                 "id" => res.id = Some(attr.into()),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -22,6 +23,8 @@ impl<'a> Include<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::elements::include::Include;
+    use crate::model::ToXml;
+
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(
@@ -39,6 +42,6 @@ mod test {
         assert_eq!(res.annotation.unwrap().app_infos.len(), 1);
         assert_eq!(res.attributes.len(), 1);
         assert_eq!(res.id.unwrap().0, "ID");
-        assert_eq!(res.schema_location.0, "http://uri");
+        assert_eq!(res.schema_location.raw(), "http://uri");
     }
 }

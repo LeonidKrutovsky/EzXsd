@@ -2,6 +2,7 @@ use num_bigint::{BigInt, ToBigInt};
 use std::fmt;
 
 use std::str::FromStr;
+use crate::model::ToXml;
 
 // xsd:nonPositiveInteger
 // The type xsd:nonPositiveInteger represents an arbitrarily large non-positive integer. An xsd:nonPositiveInteger is a sequence of digits, optionally preceded by a - sign. Leading zeros are permitted, but decimal points are not.
@@ -61,6 +62,16 @@ impl FromStr for NonPositiveInteger {
         } else {
             Ok(NonPositiveInteger(value))
         }
+    }
+}
+
+impl ToXml for NonPositiveInteger {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(self.0.to_string())
+    }
+
+    fn raw(&self) -> &str {
+        unimplemented!()
     }
 }
 

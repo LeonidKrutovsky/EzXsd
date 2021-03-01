@@ -1,6 +1,5 @@
 use crate::model::elements::ElementType;
-use crate::model::simple_types::any_uri::AnyUri;
-use crate::model::Schema;
+use crate::model::{Schema, ToXml};
 use crate::xml_to_xsd::schema_set::global_types_set::GlobalTypesSet;
 use crate::xml_to_xsd::schema_set::schema_wrapper::SchemaWrapper;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
@@ -36,13 +35,13 @@ impl<'a> SchemaSet<'a> {
     }
 
     pub fn add_schema(&mut self, node: Node<'a, '_>) -> Result<(), String> {
-        let schema = Schema::parse(node)?;
-        let ns = schema.target_namespace.as_ref().unwrap_or(&AnyUri(""));
-        self.types
-            .entry(ns.0)
-            .or_insert_with(GlobalTypesSet::default)
-            .add_schema(&schema)?;
-        self.schemas.push((schema, node));
+        // let schema = Schema::parse(node)?;
+        // let ns = schema.target_namespace.as_ref().unwrap_or(&AnyUri::from(""));
+        // self.types
+        //     .entry(ns.0.to_string().as_str())
+        //     .or_insert_with(GlobalTypesSet::default)
+        //     .add_schema(&schema)?;
+        // self.schemas.push((schema, node));
         Ok(())
     }
 

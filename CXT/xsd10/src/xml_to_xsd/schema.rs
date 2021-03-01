@@ -25,7 +25,7 @@ impl<'a> Schema<'a> {
 
         for attr in schema_node.attributes() {
             match attr.name() {
-                "targetNamespace" => schema.target_namespace = Some(AnyUri(attr.value())),
+                "targetNamespace" => schema.target_namespace = Some(AnyUri::from(attr.value())),
                 "version" => schema.version = Some(Token(attr.value())),
                 "finalDefault" => {
                     schema.final_default = Some(FullDerivationSet::parse(attr.value())?)

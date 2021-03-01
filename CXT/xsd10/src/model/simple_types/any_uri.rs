@@ -30,7 +30,31 @@
 // Type Inheritance Chain
 // xsd:anySimpleType
 //  restricted by xsd:anyURI
-#[derive(Debug, Default, PartialEq)]
-pub struct AnyUri<'a>(pub &'a str);
 
-impl<'a> Eq for AnyUri<'a> {}
+
+use crate::model::simple_types::any_simple_type::AnySimpleType;
+use crate::model::simple_types::white_space_facet::collapse;
+use crate::model::ToXml;
+use std::borrow::{Cow, Borrow};
+
+#[derive(Debug, Default, PartialEq)]
+pub struct AnyUri<'a>(pub AnySimpleType<'a>);
+
+impl<'a, T> From<T> for AnyUri<'a>
+where
+    T: Into<Cow<'a, str>>,
+{
+    fn from(value: T) -> Self {
+        Self { 0: value.into() }
+    }
+}
+
+impl<'a> ToXml for AnyUri<'a> {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(collapse(self.0.borrow()))
+    }
+
+    fn raw(&self) -> &str {
+        self.0.borrow()
+    }
+}

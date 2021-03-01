@@ -1,6 +1,6 @@
 use crate::model::simple_types::qname::QName;
 use crate::model::simple_types::xsd_simple_type;
-use crate::model::{Schema, TopLevelAttribute, TopLevelElement};
+use crate::model::{Schema, TopLevelAttribute, TopLevelElement, ToXml};
 use crate::xml_to_xsd::schema_set::global_types_set::CustomType;
 use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
 use crate::xml_to_xsd::schema_set::SchemaSet;
@@ -90,7 +90,7 @@ impl<'a> SchemaWrapper<'a> {
         if name.prefix().is_some() {
             self.node.lookup_namespace_uri(name.prefix())
         } else {
-            self.schema.target_namespace.as_ref().map(|val| val.0)
+            self.schema.target_namespace.as_ref().map(|val| val.raw())
         }
         .unwrap_or("")
     }

@@ -1,6 +1,7 @@
 use num_bigint::{BigInt, ParseBigIntError, ToBigInt};
 use std::fmt;
 use std::str::FromStr;
+use crate::model::ToXml;
 
 // xsd:integer
 // The type xsd:integer represents an arbitrarily large integer, from which twelve other built-in integer types are derived (directly or indirectly). An xsd:integer is a sequence of digits, optionally preceded by a + or - sign. Leading zeros are permitted, but decimal points are not.
@@ -61,10 +62,20 @@ impl ToBigInt for Integer {
 }
 
 impl FromStr for Integer {
-    type Err = ParseBigIntError;
+    type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Integer(BigInt::from_str(s)?))
+        Ok(Integer(BigInt::from_str(s).map_err(|e| e.to_string())?))
+    }
+}
+
+impl ToXml for Integer {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(self.0.to_string())
+    }
+
+    fn raw(&self) -> &str {
+        unimplemented!()
     }
 }
 

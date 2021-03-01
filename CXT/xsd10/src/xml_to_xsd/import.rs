@@ -1,6 +1,7 @@
 use crate::model::Import;
 use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
+use crate::model::simple_types::AnyUri;
 
 impl<'a> Import<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Import<'a>, String> {
@@ -9,9 +10,9 @@ impl<'a> Import<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "schemaLocation" => res.schema_location = Some(attr.into()),
+                "schemaLocation" => res.schema_location = Some(AnyUri::from(attr.value())),
                 "id" => res.id = Some(attr.into()),
-                "namespace" => res.namespace = Some(attr.into()),
+                "namespace" => res.namespace = Some(AnyUri::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -22,7 +23,7 @@ impl<'a> Import<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::Import;
+    use crate::model::{Import, ToXml};
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(
@@ -40,7 +41,7 @@ mod test {
         assert_eq!(res.annotation.unwrap().app_infos.len(), 1);
         assert_eq!(res.attributes.len(), 1);
         assert_eq!(res.id.unwrap().0, "ID");
-        assert_eq!(res.schema_location.unwrap().0, "http://uri");
-        assert_eq!(res.namespace.unwrap().0, "xsd");
+        assert_eq!(res.schema_location.unwrap().raw(), "http://uri");
+        assert_eq!(res.namespace.unwrap().raw(), "xsd");
     }
 }

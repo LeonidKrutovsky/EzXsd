@@ -26,7 +26,6 @@
 //      restricted by xsd:boolean
 
 use crate::model::ToXml;
-use std::convert::TryFrom;
 use std::str::FromStr;
 
 pub struct Boolean(pub bool);

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::form_choice::FormChoice;
-    use crate::model::Schema;
+    use crate::model::{Schema, ToXml};
     use crate::xml_to_xsd::schema::parse_document;
     use roxmltree::Document;
 
@@ -11,7 +11,7 @@ mod test {
         let doc = Document::parse(TEXT).unwrap();
         let schema = parse_document(&doc).unwrap();
         assert_eq!(
-            schema.target_namespace.as_ref().unwrap().0,
+            schema.target_namespace.as_ref().unwrap().raw(),
             "http://www.onvif.org/ver10/schema"
         );
 
@@ -22,7 +22,7 @@ mod test {
 
     fn test_attributes(schema: &Schema) {
         assert_eq!(
-            schema.target_namespace.as_ref().unwrap().0,
+            schema.target_namespace.as_ref().unwrap().raw(),
             "http://www.onvif.org/ver10/schema"
         );
         assert_eq!(schema.element_form_default, FormChoice::Qualified);
@@ -34,28 +34,28 @@ mod test {
 
     fn test_includes(schema: &Schema) {
         assert_eq!(schema.includes.len(), 4);
-        assert_eq!(schema.includes[0].schema_location.0, "common1.xsd");
-        assert_eq!(schema.includes[1].schema_location.0, "common2.xsd");
-        assert_eq!(schema.includes[2].schema_location.0, "common3.xsd");
-        assert_eq!(schema.includes[3].schema_location.0, "common4.xsd");
+        assert_eq!(schema.includes[0].schema_location.raw(), "common1.xsd");
+        assert_eq!(schema.includes[1].schema_location.raw(), "common2.xsd");
+        assert_eq!(schema.includes[2].schema_location.raw(), "common3.xsd");
+        assert_eq!(schema.includes[3].schema_location.raw(), "common4.xsd");
     }
 
     fn test_imports(schema: &Schema) {
         assert_eq!(schema.imports.len(), 4);
         assert_eq!(
-            schema.imports[1].namespace.as_ref().unwrap().0,
+            schema.imports[1].namespace.as_ref().unwrap().raw(),
             "http://www.w3.org/2003/05/soap-envelope"
         );
         assert_eq!(
-            schema.imports[3].namespace.as_ref().unwrap().0,
+            schema.imports[3].namespace.as_ref().unwrap().raw(),
             "http://www.w3.org/2004/08/xop/include"
         );
         assert_eq!(
-            schema.imports[0].schema_location.as_ref().unwrap().0,
+            schema.imports[0].schema_location.as_ref().unwrap().raw(),
             "http://www.w3.org/2005/05/xmlmime"
         );
         assert_eq!(
-            schema.imports[2].schema_location.as_ref().unwrap().0,
+            schema.imports[2].schema_location.as_ref().unwrap().raw(),
             "http://docs.oasis-open.org/wsn/b-2.xsd"
         );
     }

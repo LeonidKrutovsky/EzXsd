@@ -123,6 +123,7 @@ impl fmt::Display for Date {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use chrono::NaiveDateTime;
 
     #[test]
     fn date_parse_test() {

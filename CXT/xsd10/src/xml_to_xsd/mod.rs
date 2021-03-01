@@ -41,7 +41,6 @@ pub mod attributes;
 mod tests;
 
 use crate::model::elements::{xsd_element_type, ElementType};
-use crate::model::simple_types::any_uri::AnyUri;
 use crate::model::simple_types::id::Id;
 use crate::model::simple_types::ncname::NCName;
 use roxmltree::{Attribute, Node};
@@ -75,8 +74,6 @@ macro_rules! impl_from_attr {
         }
     };
 }
-
-impl_from_attr!(AnyUri);
 
 impl_from_attr!(Id);
 impl_from_attr!(NCName);
