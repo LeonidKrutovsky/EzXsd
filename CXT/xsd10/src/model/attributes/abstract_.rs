@@ -15,9 +15,12 @@
 use crate::model::simple_types::Boolean;
 use crate::model::RawAttribute;
 use std::convert::TryFrom;
+extern crate xml_utils;
+use xml_utils::attribute;
 
 pub struct Abstract(Boolean);
 
+#[attribute(name = "abstract")]
 impl Abstract {
     const NAME: &'static str = "abstract";
 }
@@ -27,5 +30,15 @@ impl TryFrom<RawAttribute<'_>> for Abstract {
 
     fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::model::attributes::abstract_::Abstract;
+
+    #[test]
+    pub fn test_abstract() {
+        assert_eq!(Abstract::NAME, "abstract");
     }
 }
