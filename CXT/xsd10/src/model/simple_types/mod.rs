@@ -43,6 +43,13 @@ pub mod string;
 pub mod time;
 pub mod token;
 mod white_space_facet;
+pub mod long;
+pub mod int;
+pub mod short;
+pub mod unsigned_long;
+pub mod unsigned_int;
+pub mod unsigned_short;
+pub mod unsigned_byte;
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;

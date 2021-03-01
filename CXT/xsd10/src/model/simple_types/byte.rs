@@ -1,13 +1,11 @@
 // xsd:byte
-// The type xsd:byte represents an integer between -128 and 127.
-// An xsd:byte is a sequence of digits, optionally preceded by a + or - sign.
-// Leading zeros are permitted, but decimal points are not.
-
+// The type xsd:byte represents an integer between -128 and 127. An xsd:byte is a sequence of digits, optionally preceded by a + or - sign. Leading zeros are permitted, but decimal points are not.
+//
 // Simple Type Information
 // Namespace: http://www.w3.org/2001/XMLSchema
-
+//
 // Schema Document: datatypes.xsd
-
+//
 // Content
 // Based on xsd:short
 // Minimum Inclusive: -128
@@ -16,28 +14,36 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-// Examples
-// Valid values	Comment
-// +3
-// 122
-// 0
-// -123
+use std::str::FromStr;
+use crate::model::ToXml;
 
-// Invalid values	Comment
-// 130	            number is too large
-// 3.0	            value must not contain a decimal point
-//                  an empty value is not valid, unless xsi:nil is used
+#[derive(Debug, PartialOrd, PartialEq, Default)]
+pub struct Byte(pub i8);
 
-// Type Inheritance Chain
-//  xsd:anySimpleType
-//      restricted by xsd:decimal
-//          restricted by xsd:integer
-//              restricted by xsd:long
-//                  restricted by xsd:int
-//                      restricted by xsd:short
-//                          restricted by xsd:byte
+impl FromStr for Byte {
+    type Err = String;
 
-pub type Byte = i8;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self(s.parse::<i8>().map_err(|e| e.to_string())?))
+    }
+}
+
+impl PartialEq<i8> for Byte {
+    fn eq(&self, other: &i8) -> bool {
+        self.0 == *other
+    }
+}
+
+
+impl ToXml for Byte {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(self.0.to_string())
+    }
+
+    fn raw(&self) -> &str {
+        unimplemented!()
+    }
+}
 
 #[cfg(test)]
 mod tests {
