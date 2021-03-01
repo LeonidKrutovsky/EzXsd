@@ -17,8 +17,8 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-use std::str::FromStr;
 use crate::model::ToXml;
+use std::str::FromStr;
 
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct Long(pub i64);
@@ -53,7 +53,13 @@ mod test {
 
     #[test]
     fn test_parse() {
-        assert_eq!("-9223372036854775808".parse::<Long>().unwrap(), -9223372036854775808);
-        assert_eq!("9223372036854775807".parse::<Long>().unwrap(), 9223372036854775807);
+        assert_eq!(
+            "-9223372036854775808".parse::<Long>().unwrap(),
+            -9223372036854775808
+        );
+        assert_eq!(
+            "9223372036854775807".parse::<Long>().unwrap(),
+            9223372036854775807
+        );
     }
 }

@@ -14,8 +14,8 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-use std::str::FromStr;
 use crate::model::ToXml;
+use std::str::FromStr;
 
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct UnsignedLong(pub u64);
@@ -51,6 +51,9 @@ mod test {
     #[test]
     fn test_parse() {
         assert_eq!("0".parse::<UnsignedLong>().unwrap(), 0);
-        assert_eq!("18446744073709551615".parse::<UnsignedLong>().unwrap(), 18446744073709551615);
+        assert_eq!(
+            "18446744073709551615".parse::<UnsignedLong>().unwrap(),
+            18446744073709551615
+        );
     }
 }

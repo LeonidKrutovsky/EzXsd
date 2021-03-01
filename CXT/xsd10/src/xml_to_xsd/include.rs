@@ -1,7 +1,6 @@
 use crate::model::Include;
 use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
-use crate::model::simple_types::AnyUri;
 
 impl<'a> Include<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Include<'a>, String> {
@@ -10,7 +9,7 @@ impl<'a> Include<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "schemaLocation" => res.schema_location = AnyUri::from(attr.value()),
+                "schemaLocation" => res.schema_location = attr.value().parse()?,
                 "id" => res.id = Some(attr.into()),
                 _ => res.attributes.push(attr.clone()),
             };

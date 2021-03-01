@@ -1,5 +1,5 @@
 use crate::model::elements::ElementType;
-use crate::model::{Schema, ToXml};
+use crate::model::Schema;
 use crate::xml_to_xsd::schema_set::global_types_set::GlobalTypesSet;
 use crate::xml_to_xsd::schema_set::schema_wrapper::SchemaWrapper;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};

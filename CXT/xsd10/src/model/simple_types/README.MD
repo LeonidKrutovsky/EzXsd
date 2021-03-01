@@ -12,11 +12,11 @@ All Simple types
 |decimal| * |
 |derivationControl| * |
 |derivationSet| * |
-|double
+|double | * |
 |duration| * |
-|ENTITIES
-|ENTITY
-|float
+|ENTITIES | * |
+|ENTITY| * |
+|float| * |
 |formChoice| * |
 |fullDerivationSet| * |
 |gDay| * |
@@ -24,33 +24,33 @@ All Simple types
 |gMonthDay| * |
 |gYear| * |
 |gYearMonth| * |
-|hexBinary
+|hexBinary| * |
 |ID| * |
-|IDREF
-|IDREFS
-|int
+|IDREF| * |
+|IDREFS| * |
+|int| * |
 |integer| * |
 |language| * |
-|long
-|Name
-|namespaceList
+|long| * |
+|Name| * |
+|namespaceList| * |
 |NCName| * |
 |negativeInteger| * |
-|NMTOKEN
-|NMTOKENS
+|NMTOKEN| * |
+|NMTOKENS| * |
 |nonNegativeInteger| * |
 |nonPositiveInteger| * |
-|normalizedString
-|NOTATION
+|normalizedString| * |
+|NOTATION| * |
 |positiveInteger| * |
 |public| * |
 |QName| * |
-|short
+|short| * |
 |simpleDerivationSet| * |
 |string| * |
 |time| * |
 |token| * |
-|unsignedByte
-|unsignedInt
-|unsignedLong
-|unsignedShort
+|unsignedByte| * |
+|unsignedInt| * |
+|unsignedLong| * |
+|unsignedShort| * |

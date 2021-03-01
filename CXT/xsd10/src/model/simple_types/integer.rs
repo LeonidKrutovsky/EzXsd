@@ -1,7 +1,7 @@
-use num_bigint::{BigInt, ParseBigIntError, ToBigInt};
+use crate::model::ToXml;
+use num_bigint::{BigInt, ToBigInt};
 use std::fmt;
 use std::str::FromStr;
-use crate::model::ToXml;
 
 // xsd:integer
 // The type xsd:integer represents an arbitrarily large integer, from which twelve other built-in integer types are derived (directly or indirectly). An xsd:integer is a sequence of digits, optionally preceded by a + or - sign. Leading zeros are permitted, but decimal points are not.

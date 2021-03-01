@@ -38,10 +38,13 @@ impl FromStr for Base64Binary {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s = s.replace(' ', "");
         if s.len() % 2 != 0 {
-            Err(format!("An odd number of characters is not valid; \
-            characters appear in groups of four: {}", s))
+            Err(format!(
+                "An odd number of characters is not valid; \
+            characters appear in groups of four: {}",
+                s
+            ))
         } else {
-            Ok(Self(base64::decode(s).map_err(|e|e.to_string())?))
+            Ok(Self(base64::decode(s).map_err(|e| e.to_string())?))
         }
     }
 }
@@ -66,7 +69,6 @@ impl ToXml for Base64Binary {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::Base64Binary;
@@ -84,7 +86,7 @@ mod test {
         eq("0F+40A==", &[208, 95, 184, 208]);
     }
 
-        #[test]
+    #[test]
     pub fn test_encode() {
         fn eq(left: &str, right: &str) {
             assert_eq!(Base64Binary::from_str(left).unwrap().encoded(), right);
@@ -94,12 +96,11 @@ mod test {
         eq("", "");
         eq("0 FB8  0F+9", "0FB80F+9");
         eq("0F+40A==", "0F+40A==");
-
     }
 
     #[test]
     fn test_err() {
-                assert!(Base64Binary::from_str("FB8").is_err());
-                assert!(Base64Binary::from_str("==0F").is_err());
-            }
+        assert!(Base64Binary::from_str("FB8").is_err());
+        assert!(Base64Binary::from_str("==0F").is_err());
+    }
 }

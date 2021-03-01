@@ -1,5 +1,4 @@
 use crate::model::elements::app_info::AppInfo;
-use crate::model::simple_types::any_uri::AnyUri;
 use roxmltree::Node;
 
 impl<'a> AppInfo<'a> {
@@ -9,7 +8,7 @@ impl<'a> AppInfo<'a> {
         res.elements = node.children().filter(|n| n.is_element()).collect();
         for attr in node.attributes() {
             match attr.name() {
-                "source" => res.source = Some(AnyUri::from(attr.value())),
+                "source" => res.source = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

@@ -1,8 +1,8 @@
 use num_bigint::{BigInt, ToBigInt};
 use std::fmt;
 
-use std::str::FromStr;
 use crate::model::ToXml;
+use std::str::FromStr;
 
 // xsd:negativeInteger
 // The type xsd:negativeInteger represents an arbitrarily large negative integer. An xsd:negativeInteger is a sequence of digits, preceded by a - sign. Leading zeros are permitted, but decimal points are not.

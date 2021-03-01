@@ -16,12 +16,11 @@
 
 use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
-use std::borrow::Cow;
 use std::str::FromStr;
 
 pub struct HexBinary(Vec<u8>);
 
-impl FromStr for HexBinary{
+impl FromStr for HexBinary {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -30,7 +29,7 @@ impl FromStr for HexBinary{
     }
 }
 
-impl HexBinary{
+impl HexBinary {
     pub fn decoded(&self) -> &[u8] {
         self.0.as_slice()
     }
@@ -39,7 +38,6 @@ impl HexBinary{
         hex::encode(self.0.as_slice())
     }
 }
-
 
 impl ToXml for HexBinary {
     fn to_xml(&self) -> Result<String, String> {

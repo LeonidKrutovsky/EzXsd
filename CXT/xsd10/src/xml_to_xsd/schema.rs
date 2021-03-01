@@ -1,6 +1,5 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::simple_types::any_uri::AnyUri;
 use crate::model::simple_types::block_set::BlockSet;
 use crate::model::simple_types::form_choice::FormChoice;
 use crate::model::simple_types::full_derivation_set::FullDerivationSet;
@@ -13,6 +12,7 @@ use crate::model::Include;
 use crate::model::Schema;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
+use std::convert::TryFrom;
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
     let schema_node = doc.root_element();
@@ -25,7 +25,7 @@ impl<'a> Schema<'a> {
 
         for attr in schema_node.attributes() {
             match attr.name() {
-                "targetNamespace" => schema.target_namespace = Some(AnyUri::from(attr.value())),
+                "targetNamespace" => schema.target_namespace = Some(attr.value().parse()?),
                 "version" => schema.version = Some(Token(attr.value())),
                 "finalDefault" => {
                     schema.final_default = Some(FullDerivationSet::parse(attr.value())?)

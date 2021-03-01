@@ -3,6 +3,7 @@ use crate::model::{Binding, Definitions, PortType, Service};
 use crate::model::{Import, Message, Types};
 use crate::xml_to_wsdl::WsdlNode;
 use roxmltree::Node;
+use std::convert::TryFrom;
 use xsd10::model::simple_types::{AnyUri, NCName};
 use xsd10::xml_to_xsd::ElementChildren;
 
@@ -12,7 +13,7 @@ impl<'a> Definitions<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "targetNamespace" => res.target_namespace = Some(AnyUri::from(attr)),
+                "targetNamespace" => res.target_namespace = Some(attr.value().parse()?),
                 "name" => res.name = Some(NCName::from(attr)),
                 x => return Err(format!("Invalid attribute: {}", x)),
             }

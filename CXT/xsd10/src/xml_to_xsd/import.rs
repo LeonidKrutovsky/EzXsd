@@ -1,7 +1,6 @@
 use crate::model::Import;
 use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
-use crate::model::simple_types::AnyUri;
 
 impl<'a> Import<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Import<'a>, String> {
@@ -10,9 +9,9 @@ impl<'a> Import<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "schemaLocation" => res.schema_location = Some(AnyUri::from(attr.value())),
+                "schemaLocation" => res.schema_location = Some(attr.value().parse()?),
                 "id" => res.id = Some(attr.into()),
-                "namespace" => res.namespace = Some(AnyUri::from(attr.value())),
+                "namespace" => res.namespace = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }
