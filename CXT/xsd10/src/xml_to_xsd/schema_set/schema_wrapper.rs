@@ -1,6 +1,6 @@
 use crate::model::simple_types::qname::QName;
 use crate::model::simple_types::xsd_simple_type;
-use crate::model::{Schema, ToXml, TopLevelAttribute, TopLevelElement};
+use crate::model::{Schema, TopLevelAttribute, TopLevelElement};
 use crate::xml_to_xsd::schema_set::global_types_set::CustomType;
 use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
 use crate::xml_to_xsd::schema_set::SchemaSet;

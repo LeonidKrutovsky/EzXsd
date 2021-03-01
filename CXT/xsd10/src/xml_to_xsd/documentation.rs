@@ -22,7 +22,7 @@ impl<'a> Documentation<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::{Documentation, ToXml};
+    use crate::model::{Documentation};
 
     #[test]
     fn test_documentation_parse() {

@@ -59,8 +59,10 @@ impl<'a> ToXml for Token_<'a> {
     fn to_xml(&self) -> Result<String, String> {
         Ok(collapse(self.0.to_xml()?.as_str()))
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> Token_<'a> {
+    pub fn raw(&self) -> &str {
         self.0.raw()
     }
 }

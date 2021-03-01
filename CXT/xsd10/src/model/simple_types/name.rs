@@ -61,8 +61,10 @@ impl<'a> ToXml for Name<'a> {
             Ok(result)
         }
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> Name<'a> {
+    pub fn raw(&self) -> &str {
         self.0.raw()
     }
 }

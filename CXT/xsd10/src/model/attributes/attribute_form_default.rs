@@ -15,6 +15,9 @@
 // Used in
 // Anonymous type of element xsd:schema
 
+use crate::model::RawAttribute;
+use std::convert::TryFrom;
+
 pub enum AttributeFormDefault {
     Qualified,
     Unqualified,
@@ -22,4 +25,16 @@ pub enum AttributeFormDefault {
 
 impl AttributeFormDefault {
     const NAME: &'static str = "attributeFormDefault";
+}
+
+impl TryFrom<RawAttribute<'_>> for AttributeFormDefault {
+    type Error = String;
+
+    fn try_from(value: RawAttribute) -> Result<Self, Self::Error> {
+        match value.value() {
+            "qualified" => Ok(Self::Qualified),
+            "unqualified" => Ok(Self::Unqualified),
+            _ => Err(format!("Invalid attribute {:?}", value)),
+        }
+    }
 }

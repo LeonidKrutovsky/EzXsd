@@ -12,7 +12,6 @@ use crate::model::Include;
 use crate::model::Schema;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
-use std::convert::TryFrom;
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
     let schema_node = doc.root_element();

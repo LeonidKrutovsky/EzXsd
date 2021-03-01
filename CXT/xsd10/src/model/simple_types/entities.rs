@@ -85,8 +85,4 @@ impl<'a> ToXml for Entities<'a> {
             Ok(result)
         }
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }

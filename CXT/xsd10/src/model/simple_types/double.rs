@@ -51,10 +51,6 @@ impl ToXml for Double {
             _ => self.0.to_string(),
         })
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }
 
 #[cfg(test)]

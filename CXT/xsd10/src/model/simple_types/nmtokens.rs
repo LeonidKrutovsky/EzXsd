@@ -59,8 +59,4 @@ impl<'a> ToXml for NmTokens<'a> {
             Ok(result)
         }
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }

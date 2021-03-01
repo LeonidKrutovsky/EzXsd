@@ -73,10 +73,6 @@ impl ToXml for Integer {
     fn to_xml(&self) -> Result<String, String> {
         Ok(self.0.to_string())
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }
 
 impl fmt::Display for Integer {

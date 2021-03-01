@@ -22,7 +22,6 @@ impl<'a> Include<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::elements::include::Include;
-    use crate::model::ToXml;
 
     #[test]
     fn test_parse() {

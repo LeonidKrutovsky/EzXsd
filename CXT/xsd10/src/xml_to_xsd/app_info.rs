@@ -20,7 +20,6 @@ impl<'a> AppInfo<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::elements::app_info::AppInfo;
-    use crate::model::ToXml;
 
     #[test]
     fn test_parse() {

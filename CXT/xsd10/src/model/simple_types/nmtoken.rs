@@ -55,8 +55,10 @@ impl<'a> ToXml for NmToken<'a> {
             Ok(result)
         }
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> NmToken<'a> {
+    pub fn raw(&self) -> &str {
         self.0.raw()
     }
 }

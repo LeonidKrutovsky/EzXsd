@@ -43,10 +43,6 @@ impl ToXml for HexBinary {
     fn to_xml(&self) -> Result<String, String> {
         Ok(collapse(self.encoded().as_str()))
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }
 
 #[cfg(test)]

@@ -22,7 +22,7 @@ impl<'a> Import<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::{Import, ToXml};
+    use crate::model::{Import};
     #[test]
     fn test_parse() {
         let doc = roxmltree::Document::parse(

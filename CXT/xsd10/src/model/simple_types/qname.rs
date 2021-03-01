@@ -71,7 +71,11 @@ impl<'a> ToXml for QName<'a> {
         }
     }
 
-    fn raw(&self) -> &str {
+
+}
+
+impl<'a> QName<'a> {
+       pub fn raw(&self) -> &str {
         self.0.borrow()
     }
 }

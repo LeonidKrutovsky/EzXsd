@@ -60,8 +60,4 @@ impl<'a> ToXml for IdRefs<'a> {
             Ok(result)
         }
     }
-
-    fn raw(&self) -> &str {
-        unimplemented!()
-    }
 }

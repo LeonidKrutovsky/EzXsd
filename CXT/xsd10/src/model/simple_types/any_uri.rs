@@ -64,6 +64,8 @@ use crate::model::simple_types::any_simple_type::AnySimpleType;
 use crate::model::simple_types::white_space_facet::collapse;
 use crate::model::ToXml;
 
+//TODO: need full validation
+
 #[derive(Debug, Default, PartialEq)]
 pub struct AnyUri<'a>(pub AnySimpleType<'a>);
 
@@ -81,8 +83,10 @@ impl<'a> ToXml for AnyUri<'a> {
     fn to_xml(&self) -> Result<String, String> {
         Ok(collapse(self.0.borrow()))
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> AnyUri<'a> {
+    pub fn raw(&self) -> &str {
         self.0.borrow()
     }
 }

@@ -38,6 +38,7 @@ pub mod nmtokens;
 pub mod non_negative_integer;
 pub mod non_positive_integer;
 pub mod normalized_string;
+pub mod notation;
 pub mod positive_integer;
 pub mod public;
 pub mod qname;
@@ -51,7 +52,6 @@ pub mod unsigned_int;
 pub mod unsigned_long;
 pub mod unsigned_short;
 mod white_space_facet;
-pub mod notation;
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;

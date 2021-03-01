@@ -76,8 +76,10 @@ impl<'a> ToXml for String_<'a> {
 
         Ok(result)
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> String_<'a> {
+    pub fn raw(&self) -> &str {
         self.0.borrow()
     }
 }

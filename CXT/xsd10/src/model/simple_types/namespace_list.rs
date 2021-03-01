@@ -22,6 +22,7 @@
 // Attribute namespace
 
 use crate::model::simple_types::AnyUri;
+use crate::model::ToXml;
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
@@ -69,5 +70,30 @@ impl<'a> FromStr for TargetOrLocal<'a> {
             "##local" => Ok(Self::Local),
             x => Ok(Self::Uri(x.parse()?)),
         }
+    }
+}
+
+impl<'a> ToXml for TargetOrLocal<'a> {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(match self {
+            TargetOrLocal::TargetNamespace => "##targetNamespace".to_string(),
+            TargetOrLocal::Local => "##local".to_string(),
+            TargetOrLocal::Uri(uri) => uri.to_xml()?,
+        })
+    }
+}
+
+impl<'a> ToXml for NamespaceList<'a> {
+    fn to_xml(&self) -> Result<String, String> {
+        Ok(match self {
+            NamespaceList::Any => "##any".to_string(),
+            NamespaceList::Other => "##other".to_string(),
+            NamespaceList::ListOf(x) => x
+                .iter()
+                .map(|v| v.to_xml())
+                .collect::<Result<Vec<String>, String>>()?
+                .into_iter()
+                .fold(String::new(), |a, b| format!("{} {}", a, b)),
+        })
     }
 }

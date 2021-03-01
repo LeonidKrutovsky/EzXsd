@@ -64,8 +64,10 @@ impl<'a> ToXml for NCName_<'a> {
             Ok(result)
         }
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> NCName_<'a> {
+    pub fn raw(&self) -> &str {
         self.0.raw()
     }
 }

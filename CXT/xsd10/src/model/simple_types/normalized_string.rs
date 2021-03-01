@@ -63,8 +63,10 @@ impl<'a> ToXml for NormalizedString<'a> {
     fn to_xml(&self) -> Result<String, String> {
         Ok(replace(self.0.to_xml()?.as_str()))
     }
+}
 
-    fn raw(&self) -> &str {
+impl<'a> NormalizedString<'a> {
+    pub fn raw(&self) -> &str {
         self.0.raw()
     }
 }

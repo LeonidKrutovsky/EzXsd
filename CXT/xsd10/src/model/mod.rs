@@ -56,7 +56,6 @@ pub type Namespace<'a> = roxmltree::Namespace<'a>;
 
 pub trait ToXml {
     fn to_xml(&self) -> Result<String, String>;
-    fn raw(&self) -> &str;
 }
 
 #[derive(Debug, PartialEq)]
