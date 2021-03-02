@@ -44,7 +44,7 @@ impl<'a> ComplexContent<'a> {
                         format!("Invalid 'mixed' attribute value: {}", attr.value())
                     })?)
                 }
-                "id" => id = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             };
         }

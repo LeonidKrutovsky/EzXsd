@@ -44,7 +44,7 @@ pub struct Restriction<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: SimpleRestrictionModel<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub base: Option<QName<'a>>, // base attribute and simpleType child are mutually exclusive, but one or other is required
 }
 

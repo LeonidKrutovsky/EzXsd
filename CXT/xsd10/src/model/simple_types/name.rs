@@ -28,27 +28,33 @@
 //                          restricted by xsd:ENTITY
 //                              used in list xsd:ENTITIES
 
-use crate::model::simple_types::Token_;
-use crate::model::ToXml;
-use std::borrow::Cow;
+use crate::model::simple_types::Token;
+use crate::model::Parse;
 
-#[derive(Debug)]
-pub struct Name<'a>(Token_<'a>);
+#[derive(Debug, Default, Clone)]
+pub struct Name(Token);
 
-impl<'a, T> From<T> for Name<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self {
-            0: Token_::from(value),
+impl Parse for Name {
+    fn parse(value: &str) -> Result<Self, String> {
+        if value.is_empty() {
+            Err(format!(
+                "An empty value is not valid, unless xsi:nil is used"
+            ))
+        } else if value.starts_with('-') {
+            Err(format!("A Name must not start with a hyphen: {}", value))
+        } else if value.chars().nth(0).unwrap().is_digit(10) {
+            Err(format!("A Name must not start with a number: {}", value))
+        } else {
+            Ok(Self(Token::parse(value)?))
         }
     }
-}
 
-impl<'a> ToXml for Name<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        let result = self.0.to_xml()?;
+    fn create(value: String) -> Self {
+        Self(Token::create(value))
+    }
+
+    fn text(&self) -> Result<String, String> {
+        let result: String = self.0.text()?;
         if result.is_empty() {
             Err(format!(
                 "An empty value is not valid, unless xsi:nil is used"
@@ -63,7 +69,7 @@ impl<'a> ToXml for Name<'a> {
     }
 }
 
-impl<'a> Name<'a> {
+impl Name {
     pub fn raw(&self) -> &str {
         self.0.raw()
     }
@@ -72,12 +78,12 @@ impl<'a> Name<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::name::Name;
-    use crate::model::ToXml;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_name() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Name::from(left).to_xml().unwrap(), right);
+            assert_eq!(Name::create(left.to_string()).text().unwrap(), right);
         }
 
         eq("myElement", "myElement");
@@ -89,17 +95,17 @@ mod test {
     #[test]
     fn test_invalid_name() {
         assert_eq!(
-            Name::from("-myelement").to_xml(),
+            Name::create("-myelement".to_string()).text(),
             Err("A Name must not start with a hyphen: -myelement".to_string())
         );
 
         assert_eq!(
-            Name::from("3myelement").to_xml(),
+            Name::create("3myelement".to_string()).text(),
             Err("A Name must not start with a number: 3myelement".to_string())
         );
 
         assert_eq!(
-            Name::from("").to_xml(),
+            Name::create(String::new()).text(),
             Err("An empty value is not valid, unless xsi:nil is used".to_string())
         );
     }

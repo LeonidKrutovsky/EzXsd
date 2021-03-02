@@ -41,9 +41,7 @@ pub mod attributes;
 mod tests;
 
 use crate::model::elements::{xsd_element_type, ElementType};
-use crate::model::simple_types::id::Id;
-use crate::model::simple_types::ncname::NCName;
-use roxmltree::{Attribute, Node};
+use roxmltree::{Node};
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";
 
@@ -64,25 +62,6 @@ impl XsdNode for roxmltree::Node<'_, '_> {
         xsd_element_type(self.tag_name().name())
     }
 }
-
-macro_rules! impl_from_attr {
-    ($type_name:ident) => {
-        impl<'a> From<&'a Attribute<'a>> for $type_name<'a> {
-            fn from(a: &'a Attribute<'a>) -> Self {
-                $type_name(a.value())
-            }
-        }
-    };
-}
-
-impl_from_attr!(Id);
-impl_from_attr!(NCName);
-
-// impl<'a> From<&'a Attribute<'a>> for QName<'a> {
-//     fn from(a: &'a Attribute<'a>) -> Self {
-//         QName::new(a.value())
-//     }
-// }
 
 #[derive(Clone)]
 pub struct ElementChildrenIterator<'a, 'input: 'a> {

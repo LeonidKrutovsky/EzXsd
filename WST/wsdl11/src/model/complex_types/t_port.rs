@@ -28,6 +28,6 @@ use xsd10::model::simple_types as xsd;
 pub struct Port<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
     pub binding: xsd::QName<'a>,
 }

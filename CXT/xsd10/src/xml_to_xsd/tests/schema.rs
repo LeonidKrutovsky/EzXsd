@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::form_choice::FormChoice;
-    use crate::model::{Schema, ToXml};
+    use crate::model::Schema;
     use crate::xml_to_xsd::schema::parse_document;
     use roxmltree::Document;
 
@@ -26,8 +26,8 @@ mod test {
             "http://www.onvif.org/ver10/schema"
         );
         assert_eq!(schema.element_form_default, FormChoice::Qualified);
-        assert_eq!(schema.version.as_ref().unwrap().0, "1.0");
-        assert_eq!(schema.id.as_ref().unwrap().0, "ID");
+        assert_eq!(schema.version.as_ref().unwrap().raw(), "1.0");
+        assert_eq!(schema.id.as_ref().unwrap().raw(), "ID");
         assert_eq!(schema.attributes.len(), 3);
         assert_eq!(schema.attributes[2].value(), "C");
     }

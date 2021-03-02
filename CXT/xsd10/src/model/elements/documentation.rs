@@ -25,7 +25,7 @@ use crate::model::{RawAttribute, RawElement};
 pub struct Documentation<'a> {
     pub text: Option<&'a str>,
     pub elements: Vec<RawElement<'a>>,
-    pub source: Option<AnyUri<'a>>,
-    pub lang: Option<Language<'a>>,
+    pub source: Option<AnyUri>,
+    pub lang: Option<Language>,
     pub attributes: Vec<RawAttribute<'a>>,
 }

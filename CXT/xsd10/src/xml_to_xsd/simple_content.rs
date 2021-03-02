@@ -23,7 +23,7 @@ impl<'a> SimpleContent<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             };
         }

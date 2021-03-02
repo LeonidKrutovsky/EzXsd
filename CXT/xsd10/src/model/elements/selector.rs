@@ -25,6 +25,6 @@ use crate::model::{RawAttribute, XPath};
 pub struct Selector<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub xpath: XPath<'a>,
 }

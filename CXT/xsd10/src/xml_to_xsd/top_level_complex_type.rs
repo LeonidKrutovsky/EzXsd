@@ -19,8 +19,8 @@ impl<'a> TopLevelComplexType<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
-                "name" => name = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
+                "name" => name = Some(attr.value().parse()?),
                 "abstract" => {
                     abstract_ = attr
                         .value()
@@ -79,8 +79,8 @@ mod test {
         let res = TopLevelComplexType::parse(root).unwrap();
         assert_eq!(res.annotation.as_ref().unwrap().doc_str(0), Some("DocText"));
         assert_eq!(res.attributes.len(), 1);
-        assert_eq!(res.id.as_ref().unwrap().0, "ID");
-        assert_eq!(res.name.0, "FloatRange");
+        assert_eq!(res.id.as_ref().unwrap().raw(), "ID");
+        assert_eq!(res.name.raw(), "FloatRange");
         if let TypeDefParticle::Sequence(val) = res.type_def_particle().unwrap() {
             assert_eq!(val.nested_particle.len(), 2);
         } else {

@@ -22,7 +22,7 @@ impl<'a> SimpleRestriction<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "base" => base = Some(QName::from(attr.value())),
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

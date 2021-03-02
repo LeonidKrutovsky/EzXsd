@@ -72,7 +72,7 @@ pub struct Annotation<'a> {
     pub app_infos: Vec<AppInfo<'a>>,
     pub documentations: Vec<Documentation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
 }
 
 impl<'a> Annotation<'a> {

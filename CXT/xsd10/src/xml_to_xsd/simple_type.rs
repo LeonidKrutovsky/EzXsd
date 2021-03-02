@@ -14,7 +14,7 @@ impl<'a> LocalSimpleType<'a> {
         let mut attributes = vec![];
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             }
         }
@@ -62,9 +62,9 @@ impl<'a> TopLevelSimpleType<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
                 "final" => final_ = Some(SimpleDerivationSet::parse(attr.value())?),
-                "name" => name = Some(attr.into()),
+                "name" => name = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             }
         }
@@ -121,8 +121,8 @@ mod test {
         let res = TopLevelSimpleType::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().0, "ID");
-        assert_eq!(res.name.0, "Type1");
+        assert_eq!(res.id.unwrap().raw(), "ID");
+        assert_eq!(res.name.raw(), "Type1");
         match &res.content_choice {
             SimpleDerivation::List(x) => {
                 assert_eq!(x.item_type.as_ref().unwrap().name(), "itemType")

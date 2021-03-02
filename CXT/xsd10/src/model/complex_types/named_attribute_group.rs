@@ -36,6 +36,6 @@ pub struct NamedAttributeGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content: AttrDecls<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Option<Id<'a>>,
-    pub name: NCName<'a>,
+    pub id: Option<Id>,
+    pub name: NCName,
 }

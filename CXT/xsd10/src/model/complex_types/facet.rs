@@ -45,7 +45,7 @@ use crate::model::RawAttribute;
 pub struct Facet<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub value: AnySimpleType<'a>,
     pub fixed: bool,
 }

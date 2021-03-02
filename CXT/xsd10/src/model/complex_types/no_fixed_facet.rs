@@ -30,7 +30,7 @@ use crate::model::RawAttribute;
 #[derive(Default, Debug)]
 pub struct NoFixedFacet<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub value: AnySimpleType<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
 }

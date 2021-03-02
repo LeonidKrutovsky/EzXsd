@@ -28,7 +28,7 @@ use std::str::FromStr;
 #[derive(Debug)]
 pub struct WhiteSpace<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub fixed: bool,
     pub value: WhiteSpaceChoice,
     pub attributes: Vec<RawAttribute<'a>>,

@@ -29,6 +29,6 @@ pub struct Union<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Vec<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub member_types: Vec<QName<'a>>,
 }

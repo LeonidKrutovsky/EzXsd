@@ -53,8 +53,8 @@ use crate::model::{MaxOccurs, RawAttribute};
 pub struct NarrowMaxMin<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
-    pub id: Id<'a>,
-    pub name: Option<NCName<'a>>,
+    pub id: Id,
+    pub name: Option<NCName>,
     pub ref_: Option<QName<'a>>,
     pub type_: Option<QName<'a>>,
     pub default: Option<&'a str>,

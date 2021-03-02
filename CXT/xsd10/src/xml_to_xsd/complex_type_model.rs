@@ -263,7 +263,7 @@ mod test {
             assert!(attr_decls.any_attribute.is_none());
             assert_eq!(attr_decls.attribute_groups.len(), 0);
             assert_eq!(attr_decls.attributes.len(), 1);
-            assert_eq!(attr_decls.attributes[0].name.as_ref().unwrap().0, "token");
+            assert_eq!(attr_decls.attributes[0].name.as_ref().unwrap().raw(), "token");
             assert_eq!(attr_decls.attributes[0].use_, UseType::Required);
         } else {
             panic!("Test failed!");

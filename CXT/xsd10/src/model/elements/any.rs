@@ -31,7 +31,7 @@ use num_bigint::ToBigUint;
 pub struct Any<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub namespace: &'a str, //TODO: namespaceList
     pub process_contents: &'a str,
     pub min_occurs: NonNegativeInteger,

@@ -20,6 +20,6 @@
 //              restricted by xsd:IDREF
 //                used in list xsd:IDREFS
 
-use crate::model::simple_types::NCName_;
+use crate::model::simple_types::NCName;
 
-pub type IdRef<'a> = NCName_<'a>;
+pub type IdRef = NCName;

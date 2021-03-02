@@ -1,4 +1,4 @@
-use crate::model::simple_types::NCName_;
+use crate::model::simple_types::NCName;
 
 // xsd:ID
 // The type xsd:ID is used for an attribute that uniquely identifies an element in an XML document. An xsd:ID value must be an NCName. This means that it must start with a letter or underscore, and can only contain letters, digits, underscores, hyphens, and periods.
@@ -25,7 +25,5 @@ use crate::model::simple_types::NCName_;
 //                  restricted by xsd:Name
 //                      restricted by xsd:NCName
 //                          restricted by xsd:ID
-#[derive(Debug)]
-pub struct Id<'a>(pub &'a str);
 
-pub type Id_<'a> = NCName_<'a>;
+pub type Id = NCName;

@@ -1,4 +1,3 @@
-use crate::model::groups::schema_top::SchemaTop;
 use crate::model::{
     Schema, TopLevelAttribute, TopLevelComplexType, TopLevelElement, TopLevelSimpleType,
 };
@@ -27,41 +26,41 @@ impl<'a> GlobalTypesSet<'a> {
     }
 
     pub fn add_schema(&mut self, schema: &Schema<'a>) -> Result<(), String> {
-        for (cont, _) in schema.content.as_slice() {
-            match cont {
-                SchemaTop::Attribute(val) => {
-                    if self.attributes.insert(val.name.0, val.clone()).is_some() {
-                        return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.0));
-                    }
-                }
-                SchemaTop::Element(val) => {
-                    if self.elements.insert(val.name.0, val.clone()).is_some() {
-                        return Err(format!(
-                            "An element with name '{}' has already been declared in this namespace",
-                            val.name.0
-                        ));
-                    }
-                }
-                SchemaTop::SimpleType(val) => {
-                    if self
-                        .custom_types
-                        .insert(val.name.0, CustomType::Simple(val.clone()))
-                        .is_some()
-                    {
-                        return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.0));
-                    }
-                }
-                SchemaTop::ComplexType(val) => {
-                    if self
-                        .custom_types
-                        .insert(val.name.0, CustomType::Complex(val.clone()))
-                        .is_some()
-                    {
-                        return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.0));
-                    }
-                }
-                _ => {} //TODO: Group, AttributeGroup and Notation
-            }
+        for (_cont, _) in schema.content.as_slice() {
+            // match cont {
+            //     SchemaTop::Attribute(val) => {
+            //         if self.attributes.insert(val.name.raw(), val.clone()).is_some() {
+            //             return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.raw()));
+            //         }
+            //     }
+            //     SchemaTop::Element(val) => {
+            //         if self.elements.insert(val.name.raw(), val.clone()).is_some() {
+            //             return Err(format!(
+            //                 "An element with name '{}' has already been declared in this namespace",
+            //                 val.name.raw()
+            //             ));
+            //         }
+            //     }
+            //     SchemaTop::SimpleType(val) => {
+            //         if self
+            //             .custom_types
+            //             .insert(val.name.raw(), CustomType::Simple(val.clone()))
+            //             .is_some()
+            //         {
+            //             return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.raw()));
+            //         }
+            //     }
+            //     SchemaTop::ComplexType(val) => {
+            //         if self
+            //             .custom_types
+            //             .insert(val.name.raw(), CustomType::Complex(val.clone()))
+            //             .is_some()
+            //         {
+            //             return Err(format!("An attribute with name '{}' has already been declared in this namespace", val.name.raw()));
+            //         }
+            //     }
+            //     _ => {} //TODO: Group, AttributeGroup and Notation
+            // }
         }
         Ok(())
     }

@@ -25,7 +25,7 @@ use crate::model::RawAttribute;
 #[derive(Default, Debug)]
 pub struct Pattern<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub value: &'a str,
     pub attributes: Vec<RawAttribute<'a>>,
 }

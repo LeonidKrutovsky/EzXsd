@@ -16,8 +16,8 @@ impl<'a> LocalElement<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
-                "name" => res.name = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
+                "name" => res.name = Some(attr.value().parse()?),
                 "ref" => res.ref_ = Some(QName::from(attr.value())),
                 "type" => res.type_ = Some(QName::from(attr.value())),
                 "minOccurs" => res.min_occurs = attr.value().parse()?,

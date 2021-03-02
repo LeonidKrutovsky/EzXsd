@@ -54,6 +54,6 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-use crate::model::simple_types::NCName_;
+use crate::model::simple_types::NCName;
 
-pub type Entity<'a> = NCName_<'a>;
+pub type Entity = NCName;

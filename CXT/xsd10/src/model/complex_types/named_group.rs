@@ -38,8 +38,8 @@ pub struct NamedGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content_choice: ContentChoice<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
-    pub name: NCName<'a>,
+    pub id: Id,
+    pub name: NCName,
 }
 
 #[derive(Debug)]

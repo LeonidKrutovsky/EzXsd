@@ -37,8 +37,8 @@ use crate::model::RawAttribute;
 pub struct TopLevelSimpleType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content_choice: SimpleDerivation<'a>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub final_: Option<SimpleDerivationSet>,
-    pub name: NCName<'a>,
+    pub name: NCName,
     pub attributes: Vec<RawAttribute<'a>>,
 }

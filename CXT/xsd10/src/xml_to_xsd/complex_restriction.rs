@@ -13,7 +13,7 @@ impl<'a> ComplexRestriction<'a> {
         let mut base = None;
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "base" => base = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -69,7 +69,7 @@ mod test {
         assert_eq!(res.base.prefix(), Some("tns"));
         assert!(res.type_def_particle.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
         assert_eq!(res.attr_decls.attributes.len(), 0);
     }
 

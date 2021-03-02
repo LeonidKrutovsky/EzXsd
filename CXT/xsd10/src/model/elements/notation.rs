@@ -30,8 +30,8 @@ use crate::model::RawAttribute;
 pub struct Notation<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
-    pub name: NCName<'a>,
+    pub id: Id,
+    pub name: NCName,
     pub public: Option<Public<'a>>,
-    pub system: Option<AnyUri<'a>>,
+    pub system: Option<AnyUri>,
 }

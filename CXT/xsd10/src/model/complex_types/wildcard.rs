@@ -29,7 +29,7 @@ use crate::model::RawAttribute;
 pub struct Wildcard<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub namespace: &'a str, //TODO: namespaceList
     pub process_contents: &'a str,
 }

@@ -34,7 +34,7 @@ use crate::model::RawAttribute;
 #[derive(Default, Debug)]
 pub struct NumFacet<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub fixed: bool,
     pub value: NonNegativeInteger,
     pub attributes: Vec<RawAttribute<'a>>,

@@ -18,7 +18,7 @@ impl<'a> SimpleExplicitGroup<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

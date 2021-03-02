@@ -24,7 +24,7 @@ impl<'a> Union<'a> {
         }
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "memberTypes" => {
                     res.member_types = attr.value().split(' ').map(QName::from).collect()
                 }
@@ -58,7 +58,7 @@ mod test {
         let res = Union::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
         assert_eq!(res.member_types.len(), 2);
         assert_eq!(res.member_types[0].name(), "Type1");
         assert_eq!(res.member_types[1].name(), "Type2");

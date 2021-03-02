@@ -19,4 +19,4 @@ use crate::model::simple_types::token::Token;
 //          xsd:normalizedString
 //              xsd:token
 //                  xsd:public
-pub type Public<'a> = Token<'a>;
+pub type Public<'a> = Token;

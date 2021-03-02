@@ -2,16 +2,14 @@ use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
 use crate::model::simple_types::block_set::BlockSet;
 use crate::model::simple_types::form_choice::FormChoice;
-use crate::model::simple_types::full_derivation_set::FullDerivationSet;
-use crate::model::simple_types::id::Id;
-use crate::model::simple_types::language::Language;
 use crate::model::simple_types::token::Token;
-use crate::model::Annotation;
 use crate::model::Import;
 use crate::model::Include;
 use crate::model::Schema;
+use crate::model::{Annotation, Parse};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
+use crate::model::simple_types::AnyUri;
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
     let schema_node = doc.root_element();
@@ -24,11 +22,9 @@ impl<'a> Schema<'a> {
 
         for attr in schema_node.attributes() {
             match attr.name() {
-                "targetNamespace" => schema.target_namespace = Some(attr.value().parse()?),
-                "version" => schema.version = Some(Token(attr.value())),
-                "finalDefault" => {
-                    schema.final_default = Some(FullDerivationSet::parse(attr.value())?)
-                }
+                "targetNamespace" => schema.target_namespace = Some(AnyUri::parse(attr.value())?),
+                "version" => schema.version = Some(Token::parse(attr.value())?),
+                "finalDefault" => schema.final_default = Some(attr.value().parse()?),
                 "blockDefault" => schema.block_default = Some(BlockSet::parse(attr.value())?),
                 "attributeFormDefault" => {
                     schema.attribute_form_default = FormChoice::parse(attr.value())?
@@ -36,8 +32,8 @@ impl<'a> Schema<'a> {
                 "elementFormDefault" => {
                     schema.element_form_default = FormChoice::parse(attr.value())?
                 }
-                "id" => schema.id = Some(Id(attr.value())),
-                "lang" => schema.lang = Some(Language::from(attr.value())),
+                "id" => schema.id = Some(attr.value().parse()?),
+                "lang" => schema.lang = Some(attr.value().parse()?),
                 _ => schema.attributes.push(attr.clone()),
             };
         }

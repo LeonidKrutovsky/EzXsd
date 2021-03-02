@@ -30,8 +30,8 @@ impl<'a> TopLevelElement<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
-                "name" => name = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
+                "name" => name = Some(attr.value().parse()?),
                 "type" => res.type_ = Some(QName::from(attr.value())),
                 "substitutionGroup" => res.substitution_group = Some(QName::from(attr.value())),
                 "default" => res.default = Some(attr.value()),

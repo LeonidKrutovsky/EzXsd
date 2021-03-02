@@ -10,7 +10,7 @@ impl<'a> Include<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "schemaLocation" => res.schema_location = attr.value().parse()?,
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -39,7 +39,7 @@ mod test {
         assert_eq!(res.annotation.as_ref().unwrap().documentations.len(), 1);
         assert_eq!(res.annotation.unwrap().app_infos.len(), 1);
         assert_eq!(res.attributes.len(), 1);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
         assert_eq!(res.schema_location.raw(), "http://uri");
     }
 }

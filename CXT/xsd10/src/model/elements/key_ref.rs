@@ -38,7 +38,7 @@ pub struct KeyRef<'a> {
     pub selector: Selector<'a>,
     pub fields: Vec<Field<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
-    pub name: NCName<'a>,
+    pub id: Id,
+    pub name: NCName,
     pub refer: QName<'a>,
 }

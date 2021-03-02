@@ -20,7 +20,7 @@ impl<'a> ExplicitGroup<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "minOccurs" => res.min_occurs = attr.value().parse()?,
                 "maxOccurs" => res.max_occurs = attr.value().parse()?,
                 _ => res.attributes.push(attr.clone()),

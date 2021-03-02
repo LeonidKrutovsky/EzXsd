@@ -32,7 +32,7 @@ use crate::model::{MaxOccurs, RawAttribute};
 pub struct NamedGroupRef<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub ref_: QName<'a>,
     pub min_occurs: NonNegativeInteger,
     pub max_occurs: MaxOccurs,

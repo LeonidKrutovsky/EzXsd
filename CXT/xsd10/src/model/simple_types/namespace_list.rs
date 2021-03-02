@@ -22,26 +22,73 @@
 // Attribute namespace
 
 use crate::model::simple_types::AnyUri;
-use crate::model::ToXml;
+use crate::model::{Parse};
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
-pub enum NamespaceList<'a> {
+pub enum NamespaceList {
     Any,
     Other,
-    ListOf(Vec<TargetOrLocal<'a>>),
+    ListOf(Vec<TargetOrLocal>),
 }
 
-impl<'a> Default for NamespaceList<'a> {
+impl Default for NamespaceList {
     fn default() -> Self {
         Self::Any
     }
 }
 
-impl<'a> FromStr for NamespaceList<'a> {
+impl FromStr for NamespaceList {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::parse(s)
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub enum TargetOrLocal {
+    TargetNamespace,
+    Local,
+    Uri(AnyUri),
+}
+
+impl FromStr for TargetOrLocal {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::parse(s)
+    }
+}
+
+impl Parse for TargetOrLocal {
+    fn parse(value: &str) -> Result<Self, String> where Self: Sized {
+        match value {
+            "##targetNamespace" => Ok(Self::TargetNamespace),
+            "##local" => Ok(Self::Local),
+            x => Ok(x.parse()?),
+        }
+    }
+
+    fn create(value: String) -> Self where Self: Sized {
+        match value.as_str() {
+            "##targetNamespace" => Self::TargetNamespace,
+            "##local" => Self::Local,
+            x => Self::Uri(x.to_string().into()),
+        }
+    }
+
+    fn text(&self) -> Result<String, String> {
+        Ok(match self {
+            TargetOrLocal::TargetNamespace => "##targetNamespace".to_string(),
+            TargetOrLocal::Local => "##local".to_string(),
+            TargetOrLocal::Uri(uri) => uri.text()?,
+        })
+    }
+}
+
+impl Parse for NamespaceList {
+    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
         match s {
             "##any" => Ok(Self::Any),
             "##other" => Ok(Self::Other),
@@ -52,45 +99,25 @@ impl<'a> FromStr for NamespaceList<'a> {
             }
         }
     }
-}
 
-#[derive(Debug, PartialEq)]
-pub enum TargetOrLocal<'a> {
-    TargetNamespace,
-    Local,
-    Uri(AnyUri<'a>),
-}
-
-impl<'a> FromStr for TargetOrLocal<'a> {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "##targetNamespace" => Ok(Self::TargetNamespace),
-            "##local" => Ok(Self::Local),
-            x => Ok(Self::Uri(x.parse()?)),
+    fn create(s: String) -> Self where Self: Sized {
+        match s.as_str() {
+            "##any" => Self::Any,
+            "##other" => Self::Other,
+            x => {
+                let res = x.split(' ').map(|v| TargetOrLocal::create(v.to_string())).collect();
+                Self::ListOf(res)
+            }
         }
     }
-}
 
-impl<'a> ToXml for TargetOrLocal<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(match self {
-            TargetOrLocal::TargetNamespace => "##targetNamespace".to_string(),
-            TargetOrLocal::Local => "##local".to_string(),
-            TargetOrLocal::Uri(uri) => uri.to_xml()?,
-        })
-    }
-}
-
-impl<'a> ToXml for NamespaceList<'a> {
-    fn to_xml(&self) -> Result<String, String> {
+    fn text(&self) -> Result<String, String> {
         Ok(match self {
             NamespaceList::Any => "##any".to_string(),
             NamespaceList::Other => "##other".to_string(),
             NamespaceList::ListOf(x) => x
                 .iter()
-                .map(|v| v.to_xml())
+                .map(|v| v.text())
                 .collect::<Result<Vec<String>, String>>()?
                 .into_iter()
                 .fold(String::new(), |a, b| format!("{} {}", a, b)),

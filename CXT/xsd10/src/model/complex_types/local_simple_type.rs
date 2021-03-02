@@ -33,6 +33,6 @@ use crate::model::RawAttribute;
 pub struct LocalSimpleType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content_choice: SimpleDerivation<'a>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub attributes: Vec<RawAttribute<'a>>,
 }

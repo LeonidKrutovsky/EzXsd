@@ -30,7 +30,7 @@ use crate::model::RawAttribute;
 pub struct Import<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
-    pub namespace: Option<AnyUri<'a>>,
-    pub schema_location: Option<AnyUri<'a>>,
+    pub id: Id,
+    pub namespace: Option<AnyUri>,
+    pub schema_location: Option<AnyUri>,
 }

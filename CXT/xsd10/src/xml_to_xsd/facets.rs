@@ -16,7 +16,7 @@ impl<'a> Facet<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value(),
                 "fixed" => {
                     res.fixed = attr
@@ -39,7 +39,7 @@ impl<'a> TotalDigits<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value().parse()?,
                 "fixed" => {
                     res.fixed = attr
@@ -62,7 +62,7 @@ impl<'a> NumFacet<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value().parse()?,
                 "fixed" => {
                     res.fixed = attr
@@ -85,7 +85,7 @@ impl<'a> NoFixedFacet<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value(),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -105,7 +105,7 @@ impl<'a> WhiteSpace<'a> {
         let mut attributes = vec![];
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
                 "value" => value = Some(attr.value().parse()?),
                 "fixed" => {
                     fixed = attr
@@ -137,7 +137,7 @@ impl<'a> Pattern<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value(),
                 _ => res.attributes.push(attr.clone()),
             };

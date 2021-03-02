@@ -33,8 +33,8 @@ impl<'a> TopLevelAttribute<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
-                "name" => name = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
+                "name" => name = Some(attr.value().parse()?),
                 "type" => type_ = Some(QName::from(attr.value())),
                 "default" => default = Some(attr.value()),
                 "fixed" => fixed = Some(attr.value()),
@@ -87,8 +87,8 @@ impl<'a> LocalAttribute<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
-                "name" => name = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
+                "name" => name = Some(attr.value().parse()?),
                 "ref" => ref_ = Some(QName::from(attr.value())),
                 "type" => type_ = Some(QName::from(attr.value())),
                 "use" => use_ = UseType::parse(attr.value())?,

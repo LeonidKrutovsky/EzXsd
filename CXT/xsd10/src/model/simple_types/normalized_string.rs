@@ -40,32 +40,32 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-use crate::model::simple_types::white_space_facet::replace;
+use crate::model::simple_types::white_space_facet::{is_replaced, replace};
 use crate::model::simple_types::String_;
-use crate::model::ToXml;
-use std::borrow::Cow;
+use crate::model::Parse;
 
-#[derive(Debug, PartialEq)]
-pub struct NormalizedString<'a>(String_<'a>);
+#[derive(Debug, Default, Clone)]
+pub struct NormalizedString(String_);
 
-impl<'a, T> From<T> for NormalizedString<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self {
-            0: String_::from(value.into()),
+impl Parse for NormalizedString {
+    fn parse(value: &str) -> Result<Self, String> {
+        if is_replaced(value) {
+            Ok(Self(String_::parse(value)?))
+        } else {
+            Err(format!("Invalid whitespace symbols in value: {}", value))
         }
     }
-}
 
-impl<'a> ToXml for NormalizedString<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(replace(self.0.to_xml()?.as_str()))
+    fn create(value: String) -> Self {
+        Self(String_::create(value))
+    }
+
+    fn text(&self) -> Result<String, String> {
+        Ok(replace(self.0.text()?.as_str()))
     }
 }
 
-impl<'a> NormalizedString<'a> {
+impl NormalizedString {
     pub fn raw(&self) -> &str {
         self.0.raw()
     }
@@ -73,13 +73,16 @@ impl<'a> NormalizedString<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::normalized_string::NormalizedString as Str;
-    use crate::model::ToXml;
+    use crate::model::simple_types::normalized_string::NormalizedString;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_normalized_string() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Str::from(left).to_xml().unwrap(), right);
+            assert_eq!(
+                NormalizedString::create(left.to_string()).text().unwrap(),
+                right
+            );
         }
         let two_lines_str = r"
 This

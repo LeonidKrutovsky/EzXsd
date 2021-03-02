@@ -32,7 +32,7 @@ pub struct All<'a> {
     annotation: Option<Annotation<'a>>,
     elements: Vec<Element<'a>>,
     attributes: Vec<RawAttribute<'a>>,
-    id: Id<'a>,
+    id: Id,
 }
 
 // xsd:all

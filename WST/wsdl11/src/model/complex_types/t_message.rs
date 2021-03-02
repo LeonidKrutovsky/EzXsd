@@ -27,5 +27,5 @@ pub struct Message<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub part: Part<'a>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
 }

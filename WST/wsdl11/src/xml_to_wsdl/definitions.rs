@@ -14,7 +14,7 @@ impl<'a> Definitions<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "targetNamespace" => res.target_namespace = Some(attr.value().parse()?),
-                "name" => res.name = Some(NCName::from(attr)),
+                "name" => res.name = Some(attr.value().parse()?),
                 x => return Err(format!("Invalid attribute: {}", x)),
             }
         }

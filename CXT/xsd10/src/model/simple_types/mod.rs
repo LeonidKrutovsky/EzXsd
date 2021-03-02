@@ -1,3 +1,5 @@
+#[macro_use] mod macros;
+
 pub mod any_simple_type;
 pub mod any_uri;
 pub mod base64binary;
@@ -51,7 +53,10 @@ pub mod unsigned_byte;
 pub mod unsigned_int;
 pub mod unsigned_long;
 pub mod unsigned_short;
+
 mod white_space_facet;
+mod xsd_list;
+
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;
@@ -89,7 +94,7 @@ pub use token::*;
 use chrono::FixedOffset;
 
 pub type AnySimpleType<'a> = &'a str;
-pub type Id<'a> = Option<id::Id<'a>>;
+pub type Id = Option<id::Id>;
 
 #[derive(Debug, PartialEq)]
 pub enum SimpleType {

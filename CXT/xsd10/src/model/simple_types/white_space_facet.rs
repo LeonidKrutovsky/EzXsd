@@ -14,10 +14,20 @@ pub fn replace(value: &str) -> String {
         .collect()
 }
 
+pub fn is_replaced(value: &str) -> bool {
+    value.chars().any(|c| c.is_whitespace() && c != ' ')
+}
+
 //After the processing implied by replace, contiguous sequences
 // of #x20's are collapsed to a single #x20, and leading and trailing
 // #x20's are removed.
 pub fn collapse(value: &str) -> String {
     let re = Regex::new(" {2,}").unwrap();
-    re.replace_all(replace(value).trim(), " ").into()
+    re.replace_all(value.trim(), " ").into()
 }
+
+pub fn is_collapsed(value: &str) -> bool {
+    !is_replaced(value) || value.starts_with(' ') || value.ends_with(' ') || value.contains("  ")
+}
+
+

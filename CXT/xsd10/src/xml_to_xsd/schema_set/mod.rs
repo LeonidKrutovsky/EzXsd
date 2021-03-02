@@ -34,7 +34,7 @@ impl<'a> SchemaSet<'a> {
         Ok(res)
     }
 
-    pub fn add_schema(&mut self, node: Node<'a, '_>) -> Result<(), String> {
+    pub fn add_schema(&mut self, _node: Node<'a, '_>) -> Result<(), String> {
         // let schema = Schema::parse(node)?;
         // let ns = schema.target_namespace.as_ref().unwrap_or(&AnyUri::from(""));
         // self.types
@@ -116,7 +116,7 @@ mod test {
             .unwrap();
 
         if let AttributeBase::Complex(v) = base {
-            assert_eq!(v.name.0, "IntRange");
+            assert_eq!(v.name.raw(), "IntRange");
             assert_eq!(
                 v.annotation.as_ref().unwrap().doc_str(0).unwrap(),
                 "Range of values greater equal Min value and less equal Max value."

@@ -21,7 +21,7 @@ impl<'a> Restriction<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "base" => res.base = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -62,7 +62,7 @@ mod test {
         let res = Restriction::parse(root).unwrap();
         assert!(res.annotation.is_some());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
         assert_eq!(res.base.as_ref().unwrap().name(), "Type1");
         assert_eq!(res.base.as_ref().unwrap().prefix().unwrap(), "xsd");
         let model = &res.model;

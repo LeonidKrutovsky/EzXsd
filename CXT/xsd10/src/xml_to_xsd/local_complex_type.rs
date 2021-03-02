@@ -15,7 +15,7 @@ impl<'a> LocalComplexType<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "mixed" => {
                     res.mixed = attr
                         .value()

@@ -26,7 +26,7 @@ use xsd10::model::simple_types as xsd;
 #[derive(Default, Debug)]
 pub struct Part<'a> {
     pub documentation: Option<Documentation<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
     pub element: Option<xsd::QName<'a>>,
     pub type_: Option<xsd::QName<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,

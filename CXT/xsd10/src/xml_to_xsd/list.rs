@@ -24,7 +24,7 @@ impl<'a> List<'a> {
         }
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "itemType" => res.item_type = Some(QName::from(attr.value())),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -50,8 +50,8 @@ mod test {
         let res = List::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
         assert!(res.item_type.is_none());
-        assert_eq!(res.simple_type.unwrap().id.unwrap().0, "STN");
+        assert_eq!(res.simple_type.unwrap().id.unwrap().raw(), "STN");
     }
 }

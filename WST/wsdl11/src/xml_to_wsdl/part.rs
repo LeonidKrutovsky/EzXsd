@@ -10,7 +10,7 @@ impl<'a> Part<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => name = Some(NCName::from(attr)),
+                "name" => name = Some(attr.value().parse()?),
                 "element" => res.element = Some(attr.into()),
                 "type" => res.type_ = Some(attr.into()),
                 _ => res.attributes.push(attr.clone()),

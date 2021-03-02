@@ -9,7 +9,7 @@ impl<'a> Any<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 "namespace" => res.namespace = attr.value(),
                 "processContents" => res.process_contents = attr.value(),
                 "minOccurs" => res.min_occurs = attr.value().parse()?,

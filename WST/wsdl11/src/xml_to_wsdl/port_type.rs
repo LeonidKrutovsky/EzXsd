@@ -12,7 +12,7 @@ impl<'a> PortType<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => name = Some(NCName::from(attr)),
+                "name" => name = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             }
         }

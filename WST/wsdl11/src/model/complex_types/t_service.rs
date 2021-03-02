@@ -28,5 +28,5 @@ pub struct Service<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub ports: Vec<Port<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
 }

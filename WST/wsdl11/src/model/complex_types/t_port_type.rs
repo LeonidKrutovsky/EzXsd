@@ -27,5 +27,5 @@ pub struct PortType<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub operations: Vec<Operation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
 }

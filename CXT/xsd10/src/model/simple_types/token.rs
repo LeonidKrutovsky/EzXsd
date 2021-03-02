@@ -34,34 +34,37 @@
 //                              used in list xsd:ENTITIES
 
 use crate::model::simple_types::normalized_string::NormalizedString;
-use crate::model::simple_types::white_space_facet::collapse;
-use crate::model::ToXml;
-use std::borrow::Cow;
+use crate::model::simple_types::white_space_facet::{collapse, is_collapsed};
+use crate::model::Parse;
 
-#[derive(Debug)]
-pub struct Token<'a>(pub &'a str);
+#[derive(Debug, Default, Clone)]
+pub struct Token(NormalizedString);
 
-#[derive(Debug, PartialEq)]
-pub struct Token_<'a>(NormalizedString<'a>);
-
-impl<'a, T> From<T> for Token_<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self {
-            0: NormalizedString::from(value),
+impl Parse for Token {
+    fn parse(value: &str) -> Result<Self, String> {
+        if is_collapsed(value) {
+            Ok(Self(NormalizedString::parse(value)?))
+        } else {
+            Err(format!(
+                "Invalid value for Token. White spaces must be collapsed: {}",
+                value
+            ))
         }
     }
-}
 
-impl<'a> ToXml for Token_<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(collapse(self.0.to_xml()?.as_str()))
+    fn create(value: String) -> Self {
+        Self(NormalizedString::create(value))
+    }
+
+    fn text(&self) -> Result<String, String> {
+        Ok(collapse(self.0.text()?.as_str()))
     }
 }
 
-impl<'a> Token_<'a> {
+impl_from_str!(Token);
+impl_from_string!(Token);
+
+impl Token {
     pub fn raw(&self) -> &str {
         self.0.raw()
     }
@@ -69,13 +72,13 @@ impl<'a> Token_<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::Token_ as Str;
-    use crate::model::ToXml;
+    use crate::model::simple_types::Token;
+    use crate::model::Parse;
 
     #[test]
-    fn test_valid_string() {
+    fn test_to_xml() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Str::from(left).to_xml().unwrap(), right);
+            assert_eq!(Token::create(left.to_string()).text().unwrap(), right);
         }
         let two_lines_str = r"
 This

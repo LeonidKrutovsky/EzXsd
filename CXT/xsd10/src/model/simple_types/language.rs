@@ -1,4 +1,4 @@
-use crate::model::simple_types::Token_;
+use crate::model::simple_types::Token;
 
 // xsd:language
 // The type xsd:language represents a natural language identifier, generally used to indicate the language of a document or a part of a document. Before creating a new attribute of type xsd:language, consider using the xml:lang attribute that is intended to indicate the natural language of the element and its content.
@@ -46,4 +46,4 @@ use crate::model::simple_types::Token_;
 //                  restricted by xsd:language
 
 //TODO: add validation
-pub type Language<'a> = Token_<'a>;
+pub type Language = Token;

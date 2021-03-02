@@ -24,5 +24,5 @@ use xsd10::model::simple_types as xsd;
 pub struct BindingOperationFault<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
 }

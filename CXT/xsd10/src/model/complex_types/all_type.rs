@@ -38,7 +38,7 @@ pub struct AllType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub elements: Vec<Element<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub min_occurs: Option<NonNegativeInteger>,
     pub max_occurs: Option<MaxOccurs>,
 }

@@ -24,27 +24,31 @@
 //                  restricted by xsd:NMTOKEN
 //                      used in list xsd:NMTOKENS
 
-use crate::model::simple_types::Token_;
-use crate::model::ToXml;
-use std::borrow::Cow;
+use crate::model::simple_types::Token;
+use crate::model::Parse;
 
 #[derive(Debug)]
-pub struct NmToken<'a>(Token_<'a>);
+pub struct NmToken(Token);
 
-impl<'a, T> From<T> for NmToken<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self {
-            0: Token_::from(value),
+impl Parse for NmToken {
+    fn parse(value: &str) -> Result<Self, String> {
+        if value.is_empty() {
+            Err(format!(
+                "An empty value is not valid NMTOKEN, unless xsi:nil is used"
+            ))
+        } else if value.contains(" ") {
+            Err(format!("NMTOKEN must not contain a space: {}", value))
+        } else {
+            Ok(Self(Token::parse(value)?))
         }
     }
-}
 
-impl<'a> ToXml for NmToken<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        let result = self.0.to_xml()?;
+    fn create(value: String) -> Self {
+        Self(Token::create(value))
+    }
+
+    fn text(&self) -> Result<String, String> {
+        let result = self.0.text()?;
         if result.is_empty() {
             Err(format!(
                 "An empty value is not valid, unless xsi:nil is used"
@@ -57,7 +61,7 @@ impl<'a> ToXml for NmToken<'a> {
     }
 }
 
-impl<'a> NmToken<'a> {
+impl NmToken {
     pub fn raw(&self) -> &str {
         self.0.raw()
     }
@@ -65,13 +69,13 @@ impl<'a> NmToken<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::nmtoken::NmToken as Str;
-    use crate::model::ToXml;
+    use crate::model::simple_types::nmtoken::NmToken;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_string() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Str::from(left).to_xml().unwrap(), right);
+            assert_eq!(NmToken::create(left.to_string()).text().unwrap(), right);
         }
         eq("12.5", "12.5");
         eq("   trim_spaces.   ", "trim_spaces.");
@@ -83,12 +87,12 @@ mod test {
     #[test]
     fn test_err_string() {
         assert_eq!(
-            Str::from("name with spaces").to_xml(),
+            NmToken::create("name with spaces".to_string()).text(),
             Err("NmToken must not contain a space: name with spaces".to_string())
         );
 
         assert_eq!(
-            Str::from("").to_xml(),
+            NmToken::create("".to_string()).text(),
             Err("An empty value is not valid, unless xsi:nil is used".to_string())
         );
     }

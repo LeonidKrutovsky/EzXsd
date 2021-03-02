@@ -43,6 +43,6 @@ pub struct ComplexRestrictionType<'a> {
     pub type_def_particle: Option<TypeDefParticle<'a>>,
     pub attr_decls: AttrDecls<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub base: QName<'a>,
 }

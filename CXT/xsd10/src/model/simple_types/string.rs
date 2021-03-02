@@ -35,24 +35,38 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-use crate::model::simple_types::any_simple_type::AnySimpleType;
-use crate::model::ToXml;
-use std::borrow::{Borrow, Cow};
+use crate::model::Parse;
 
-#[derive(Debug, PartialEq)]
-pub struct String_<'a>(AnySimpleType<'a>);
+#[derive(Debug, Default, Clone)]
+pub struct String_(String);
 
-impl<'a, T> From<T> for String_<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self { 0: value.into() }
+impl Parse for String_ {
+    fn parse(value: &str) -> Result<Self, String> {
+        for i in value.chars().enumerate() {
+            match i {
+                (_, '<') => {
+                    return Err(format!("Symbol '<' must be escaped: {}", value));
+                }
+                (start, '&') => {
+                    //TODO: fix bug
+                    if unsafe { value.get_unchecked(start..start + 4) } != "&lt;"
+                        && unsafe { value.get_unchecked(start..start + 5) } != "&amp;"
+                    {
+                        return Err(format!("Symbol '&' must be escaped: {}", value));
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        Ok(Self(value.to_string()))
     }
-}
 
-impl<'a> ToXml for String_<'a> {
-    fn to_xml(&self) -> Result<String, String> {
+    fn create(value: String) -> Self {
+        Self(value)
+    }
+
+    fn text(&self) -> Result<String, String> {
         let mut result = String::new();
         let mut start = 0;
 
@@ -78,21 +92,21 @@ impl<'a> ToXml for String_<'a> {
     }
 }
 
-impl<'a> String_<'a> {
+impl String_ {
     pub fn raw(&self) -> &str {
-        self.0.borrow()
+        self.0.as_str()
     }
 }
 
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::String_ as Str;
-    use crate::model::ToXml;
+    use crate::model::simple_types::String_;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_string() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Str::from(left).to_xml().unwrap(), right);
+            assert_eq!(String_::create(left.to_string()).text().unwrap(), right);
         }
         let two_lines_str = r"
 This

@@ -1,7 +1,7 @@
 use roxmltree::Node;
 
 use crate::model::simple_types::language::Language;
-use crate::model::Documentation;
+use crate::model::{Documentation, Parse};
 
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Documentation<'a>, String> {
@@ -11,7 +11,7 @@ impl<'a> Documentation<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "source" => res.source = Some(attr.value().parse()?),
-                "lang" => res.lang = Some(Language::from(attr.value())),
+                "lang" => res.lang = Some(Language::parse(attr.value())?),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -22,7 +22,7 @@ impl<'a> Documentation<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::{Documentation};
+    use crate::model::Documentation;
 
     #[test]
     fn test_documentation_parse() {

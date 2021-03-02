@@ -17,7 +17,7 @@ impl<'a> Operation<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => name = Some(NCName::from(attr)),
+                "name" => name = Some(attr.value().parse()?),
                 "parameterOrder" => res.parameter_order = Some(attr.value()),
                 _ => return Err(format!("Invalid attribute. {:?}", node)),
             }
@@ -93,7 +93,7 @@ impl<'a> BindingOperation<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => name = Some(NCName::from(attr)),
+                "name" => name = Some(attr.value().parse()?),
                 _ => return Err(format!("Invalid attribute. {:?}", node)),
             }
         }

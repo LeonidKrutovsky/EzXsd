@@ -48,41 +48,6 @@
 //                used in list xsd:ENTITIES
 
 use crate::model::simple_types::entity::Entity;
-use crate::model::ToXml;
-use std::borrow::Cow;
+use crate::model::simple_types::xsd_list::XsdList;
 
-#[derive(Debug)]
-pub struct Entities<'a>(Vec<Entity<'a>>);
-
-impl<'a, T> From<T> for Entities<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self {
-            0: value
-                .into()
-                .split_whitespace()
-                .map(|v| Entity::from(v.to_string()))
-                .collect(),
-        }
-    }
-}
-
-impl<'a> ToXml for Entities<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        let result = self
-            .0
-            .iter()
-            .map(|x| x.to_xml())
-            .collect::<Result<Vec<String>, String>>()?
-            .into_iter()
-            .fold(String::new(), |a, b| format!("{} {}", a, b));
-
-        if result.is_empty() {
-            Err(format!("There must be at least one IDREF in the list"))
-        } else {
-            Ok(result)
-        }
-    }
-}
+pub type Entities = XsdList<Entity>;

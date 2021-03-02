@@ -23,6 +23,6 @@ use crate::model::{RawAttribute, RawElement};
 pub struct AppInfo<'a> {
     pub text: Option<&'a str>,
     pub elements: Vec<RawElement<'a>>,
-    pub source: Option<AnyUri<'a>>,
+    pub source: Option<AnyUri>,
     pub attributes: Vec<RawAttribute<'a>>,
 }

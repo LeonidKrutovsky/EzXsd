@@ -23,7 +23,7 @@ impl<'a> Annotation<'a> {
         }
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.into()),
+                "id" => res.id = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -51,6 +51,6 @@ mod test {
         assert_eq!(res.app_infos.len(), 2);
         assert_eq!(res.documentations.len(), 2);
         assert_eq!(res.attributes.len(), 3);
-        assert_eq!(res.id.unwrap().0, "ID");
+        assert_eq!(res.id.unwrap().raw(), "ID");
     }
 }

@@ -37,5 +37,5 @@ pub struct SimpleExplicitGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub nested_particle: Vec<NestedParticle<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
 }

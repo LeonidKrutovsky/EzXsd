@@ -26,8 +26,8 @@ impl<'a> NamedGroup<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.into()),
-                "name" => name = Some(attr.into()),
+                "id" => id = Some(attr.value().parse()?),
+                "name" => name = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             };
         }

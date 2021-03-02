@@ -24,6 +24,6 @@ use crate::model::RawAttribute;
 pub struct Include<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
-    pub schema_location: AnyUri<'a>,
+    pub id: Id,
+    pub schema_location: AnyUri,
 }

@@ -34,8 +34,8 @@ pub struct Definitions<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub content: DefinitionsContent<'a>,
-    pub target_namespace: Option<xsd::AnyUri<'a>>,
-    pub name: Option<xsd::NCName<'a>>,
+    pub target_namespace: Option<xsd::AnyUri>,
+    pub name: Option<xsd::NCName>,
 }
 
 // Helper for identity constraints

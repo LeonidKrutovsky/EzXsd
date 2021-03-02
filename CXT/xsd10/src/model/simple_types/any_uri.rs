@@ -57,36 +57,36 @@
 // xsd:anySimpleType
 //  restricted by xsd:anyURI
 
-use std::borrow::{Borrow, Cow};
-use std::str::FromStr;
+use std::borrow::Borrow;
 
-use crate::model::simple_types::any_simple_type::AnySimpleType;
-use crate::model::simple_types::white_space_facet::collapse;
-use crate::model::ToXml;
+use crate::model::simple_types::white_space_facet::{collapse, replace};
+use crate::model::Parse;
+
 
 //TODO: need full validation
 
 #[derive(Debug, Default, PartialEq)]
-pub struct AnyUri<'a>(pub AnySimpleType<'a>);
+pub struct AnyUri(String);
 
-impl<'a> FromStr for AnyUri<'a> {
-    type Err = String;
+impl Parse for AnyUri {
+    fn parse(value: &str) -> Result<Self, String> {
+        Ok(Self(value.to_string()))
+    }
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self {
-            0: Cow::Owned(s.to_string()),
-        })
+    fn create(value: String) -> Self {
+        Self(value)
+    }
+
+    fn text(&self) -> Result<String, String> {
+        Ok(collapse(replace(self.0.borrow()).as_str()))
     }
 }
 
-impl<'a> ToXml for AnyUri<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(collapse(self.0.borrow()))
-    }
-}
+impl_from_str!(AnyUri);
+impl_from_string!(AnyUri);
 
-impl<'a> AnyUri<'a> {
+impl AnyUri {
     pub fn raw(&self) -> &str {
-        self.0.borrow()
+        self.0.as_str()
     }
 }

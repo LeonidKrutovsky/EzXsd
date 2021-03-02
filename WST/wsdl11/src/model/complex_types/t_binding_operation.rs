@@ -35,5 +35,5 @@ pub struct BindingOperation<'a> {
     pub input: Option<BindingOperationInput<'a>>,
     pub output: Option<BindingOperationOutput<'a>>,
     pub faults: Vec<BindingOperationFault<'a>>,
-    pub name: xsd::NCName<'a>,
+    pub name: xsd::NCName,
 }

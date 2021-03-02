@@ -30,6 +30,6 @@ pub struct List<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Option<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id<'a>,
+    pub id: Id,
     pub item_type: Option<QName<'a>>,
 }
