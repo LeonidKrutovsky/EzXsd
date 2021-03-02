@@ -26,8 +26,7 @@
 //      restricted by xsd:base64Binary
 
 use crate::model::simple_types::white_space_facet::{collapse, replace};
-use crate::model::{Parse};
-
+use crate::model::Parse;
 
 #[derive(Debug, PartialEq)]
 pub struct Base64Binary(Vec<u8>);
@@ -43,7 +42,10 @@ impl Base64Binary {
 }
 
 impl Parse for Base64Binary {
-    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(s: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         let s = s.replace(' ', "");
         if s.len() % 2 != 0 {
             Err(format!(
@@ -56,22 +58,20 @@ impl Parse for Base64Binary {
         }
     }
 
-    fn create(value: String) -> Self where Self: Sized {
+    fn create(value: String) -> Self
+    where
+        Self: Sized,
+    {
         Self(value.into_bytes())
     }
 
     fn text(&self) -> Result<String, String> {
-        Ok(
-            collapse(
-                replace(self.encoded().as_str()).as_str()
-            )
-        )
+        Ok(collapse(replace(self.encoded().as_str()).as_str()))
     }
 }
 
 impl_from_str!(Base64Binary);
 impl_from_string!(Base64Binary);
-
 
 #[cfg(test)]
 mod test {

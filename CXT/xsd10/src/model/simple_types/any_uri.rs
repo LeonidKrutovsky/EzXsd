@@ -62,7 +62,6 @@ use std::borrow::Borrow;
 use crate::model::simple_types::white_space_facet::{collapse, replace};
 use crate::model::Parse;
 
-
 //TODO: need full validation
 
 #[derive(Debug, Default, PartialEq)]

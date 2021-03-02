@@ -40,7 +40,6 @@
 use crate::model::simple_types::name::Name;
 use crate::model::Parse;
 
-
 #[derive(Debug, Default, Clone)]
 pub struct NCName(Name);
 

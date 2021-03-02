@@ -11,8 +11,8 @@ impl<'a> Part<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "name" => name = Some(attr.value().parse()?),
-                "element" => res.element = Some(attr.into()),
-                "type" => res.type_ = Some(attr.into()),
+                "element" => res.element = Some(attr.value().parse()?),
+                "type" => res.type_ = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             }
         }

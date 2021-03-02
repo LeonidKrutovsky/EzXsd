@@ -56,8 +56,7 @@ impl FromStr for BlockSet {
         let res = if s == "#all" {
             Self::All
         } else {
-            let res: Result<Vec<_>, String> =
-                s.split(' ').map(BlockSetChoice::from_str).collect();
+            let res: Result<Vec<_>, String> = s.split(' ').map(BlockSetChoice::from_str).collect();
             Self::List(res?)
         };
         Ok(res)

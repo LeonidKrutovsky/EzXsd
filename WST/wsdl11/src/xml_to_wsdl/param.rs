@@ -1,6 +1,7 @@
 use crate::model::complex_types::t_param::Param;
 use crate::xml_to_wsdl::documentation::documentation_only;
 use roxmltree::Node;
+use xsd10::model::simple_types::QName;
 
 impl<'a> Param<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -9,8 +10,8 @@ impl<'a> Param<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => res.name = Some(attr.into()),
-                "message" => message = attr.into(),
+                "name" => res.name = Some(attr.value().parse()?),
+                "message" => message = Some(attr.value().parse::<QName>()?),
                 _ => res.attributes.push(attr.clone()),
             }
         }

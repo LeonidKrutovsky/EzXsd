@@ -68,7 +68,6 @@ impl FromStr for Integer {
     }
 }
 
-
 impl fmt::Display for Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0.to_str_radix(10))

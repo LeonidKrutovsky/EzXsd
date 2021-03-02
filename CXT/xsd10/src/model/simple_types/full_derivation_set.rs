@@ -1,4 +1,4 @@
-use crate::model::{Parse};
+use crate::model::Parse;
 
 // xsd:fullDerivationSet
 // #all or (possibly empty) subset of {extension, restriction, list, union}
@@ -37,7 +37,10 @@ pub enum FullDerivationSubSet {
 }
 
 impl Parse for FullDerivationSubSet {
-    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(s: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         let res = match s {
             "extension" => Self::Extension,
             "restriction" => Self::Restriction,
@@ -48,7 +51,10 @@ impl Parse for FullDerivationSubSet {
         Ok(res)
     }
 
-    fn create(_value: String) -> Self where Self: Sized {
+    fn create(_value: String) -> Self
+    where
+        Self: Sized,
+    {
         unimplemented!()
     }
 
@@ -73,21 +79,25 @@ impl FromStr for FullDerivationSet {
     }
 }
 
-impl Parse for FullDerivationSet{
-    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
+impl Parse for FullDerivationSet {
+    fn parse(s: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         let res = if s == "#all" {
             Self::All
         } else {
-            let res: Result<Vec<_>, String> = s
-                .split(' ')
-                .map( FullDerivationSubSet::parse)
-                .collect();
+            let res: Result<Vec<_>, String> =
+                s.split(' ').map(FullDerivationSubSet::parse).collect();
             Self::List(res?)
         };
         Ok(res)
     }
 
-    fn create(_value: String) -> Self where Self: Sized {
+    fn create(_value: String) -> Self
+    where
+        Self: Sized,
+    {
         unimplemented!()
     }
 
@@ -104,4 +114,3 @@ impl Parse for FullDerivationSet{
         Ok(res)
     }
 }
-

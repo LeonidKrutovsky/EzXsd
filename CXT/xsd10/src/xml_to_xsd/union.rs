@@ -1,10 +1,10 @@
 use crate::model::elements::ElementType;
-use crate::model::{Annotation, Parse};
+use crate::model::simple_types::xsd_list::XsdList;
 use crate::model::LocalSimpleType;
 use crate::model::Union;
+use crate::model::{Annotation, Parse};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
-use crate::model::simple_types::xsd_list::XsdList;
 
 impl<'a> Union<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Union<'a>, String> {
@@ -25,9 +25,7 @@ impl<'a> Union<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "memberTypes" => {
-                    res.member_types = XsdList::parse(attr.value())?
-                }
+                "memberTypes" => res.member_types = XsdList::parse(attr.value())?,
                 _ => res.attributes.push(attr.clone()),
             };
         }

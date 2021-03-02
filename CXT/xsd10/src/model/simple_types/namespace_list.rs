@@ -22,7 +22,7 @@
 // Attribute namespace
 
 use crate::model::simple_types::AnyUri;
-use crate::model::{Parse};
+use crate::model::Parse;
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
@@ -62,7 +62,10 @@ impl FromStr for TargetOrLocal {
 }
 
 impl Parse for TargetOrLocal {
-    fn parse(value: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(value: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         match value {
             "##targetNamespace" => Ok(Self::TargetNamespace),
             "##local" => Ok(Self::Local),
@@ -70,7 +73,10 @@ impl Parse for TargetOrLocal {
         }
     }
 
-    fn create(value: String) -> Self where Self: Sized {
+    fn create(value: String) -> Self
+    where
+        Self: Sized,
+    {
         match value.as_str() {
             "##targetNamespace" => Self::TargetNamespace,
             "##local" => Self::Local,
@@ -88,7 +94,10 @@ impl Parse for TargetOrLocal {
 }
 
 impl Parse for NamespaceList {
-    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(s: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         match s {
             "##any" => Ok(Self::Any),
             "##other" => Ok(Self::Other),
@@ -100,12 +109,18 @@ impl Parse for NamespaceList {
         }
     }
 
-    fn create(s: String) -> Self where Self: Sized {
+    fn create(s: String) -> Self
+    where
+        Self: Sized,
+    {
         match s.as_str() {
             "##any" => Self::Any,
             "##other" => Self::Other,
             x => {
-                let res = x.split(' ').map(|v| TargetOrLocal::create(v.to_string())).collect();
+                let res = x
+                    .split(' ')
+                    .map(|v| TargetOrLocal::create(v.to_string()))
+                    .collect();
                 Self::ListOf(res)
             }
         }

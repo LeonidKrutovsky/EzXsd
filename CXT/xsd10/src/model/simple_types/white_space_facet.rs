@@ -29,5 +29,3 @@ pub fn collapse(value: &str) -> String {
 pub fn is_collapsed(value: &str) -> bool {
     !is_replaced(value) || value.starts_with(' ') || value.ends_with(' ') || value.contains("  ")
 }
-
-

@@ -1,4 +1,5 @@
-#[macro_use] mod macros;
+#[macro_use]
+mod macros;
 
 pub mod any_simple_type;
 pub mod any_uri;
@@ -11,6 +12,7 @@ pub mod datetime;
 pub mod decimal;
 pub mod derivation_set;
 pub mod deriviation_control;
+
 pub mod double;
 pub mod duration;
 pub mod entities;
@@ -56,7 +58,6 @@ pub mod unsigned_short;
 
 mod white_space_facet;
 pub mod xsd_list;
-
 
 pub use any_uri::AnyUri;
 pub use base64binary::Base64Binary;

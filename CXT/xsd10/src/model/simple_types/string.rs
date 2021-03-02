@@ -48,10 +48,10 @@ impl Parse for String_ {
                     return Err(format!("Symbol '<' must be escaped: {}", value));
                 }
                 (start, '&') => {
-                    //TODO: fix bug
-                    if unsafe { value.get_unchecked(start..start + 4) } != "&lt;"
-                        && unsafe { value.get_unchecked(start..start + 5) } != "&amp;"
-                    {
+                    if unsafe {
+                        value.get_unchecked(start..start + 4) != "&lt;"
+                            && value.get_unchecked(start..start + 5) != "&amp;"
+                    } {
                         return Err(format!("Symbol '&' must be escaped: {}", value));
                     }
                 }
@@ -104,7 +104,7 @@ mod test {
     use crate::model::Parse;
 
     #[test]
-    fn test_valid_string() {
+    fn test_xml_conversation() {
         fn eq(left: &str, right: &str) {
             assert_eq!(String_::create(left.to_string()).text().unwrap(), right);
         }
@@ -121,5 +121,32 @@ is on two lines.
         eq(two_lines_str, two_lines_str);
         eq("3 < 4", "3 &lt; 4");
         eq("AT&T", "AT&amp;T");
+    }
+
+    #[test]
+    fn test_parsing() {
+        fn eq(left: &str, right: &str) {
+            assert_eq!(String_::parse(left).unwrap().raw(), right);
+        }
+        let two_lines_str = r"
+This
+is on two lines.
+        ";
+
+        eq("This is a string!", "This is a string!");
+        eq("Édition française.", "Édition française.");
+        eq("12.5", "12.5");
+        eq("", "");
+        eq("   3 spaces.   ", "   3 spaces.   ");
+        eq(two_lines_str, two_lines_str);
+        eq("3 &lt; 4", "3 &lt; 4");
+        eq("AT&amp;T", "AT&amp;T");
+
+        assert!(String_::parse("3 < 4").is_err());
+        assert!(String_::parse("AT&T").is_err());
+        assert_eq!(
+            String_::parse("&").err().unwrap(),
+            "Symbol '&' must be escaped: &"
+        );
     }
 }

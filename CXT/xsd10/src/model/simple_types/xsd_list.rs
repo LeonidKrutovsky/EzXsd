@@ -9,9 +9,9 @@ where
 {
     fn parse(value: &str) -> Result<Self, String> {
         let res = value
-                .split_whitespace()
-                .map(|v| I::parse(v))
-                .collect::<Result<Vec<_>, _>>()?;
+            .split_whitespace()
+            .map(|v| I::parse(v))
+            .collect::<Result<Vec<_>, _>>()?;
 
         if res.is_empty() {
             Err(format!("There must be at least one Item in the list."))
@@ -79,8 +79,6 @@ where
             .collect::<Result<Vec<String>, String>>()?
             .into_iter()
             .fold(String::new(), |a, b| format!("{} {}", a, b));
-            Ok(result)
+        Ok(result)
     }
 }
-
-

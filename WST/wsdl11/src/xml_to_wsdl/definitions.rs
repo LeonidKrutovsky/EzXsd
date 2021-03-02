@@ -39,8 +39,8 @@ impl<'a> Definitions<'a> {
 mod test {
     use super::*;
     use roxmltree::Document;
-    use xsd10::model::simple_types::QName;
     use std::str::FromStr;
+    use xsd10::model::simple_types::QName;
 
     const TEXT: &str = r#"
 <wsdl:definitions

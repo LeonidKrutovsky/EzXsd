@@ -59,15 +59,14 @@ pub trait ToXml {
 }
 
 pub(crate) trait Parse {
-    fn parse(value: &str) -> Result<Self, String> where Self: Sized;
-    fn create(value: String) -> Self where Self: Sized;
+    fn parse(value: &str) -> Result<Self, String>
+    where
+        Self: Sized;
+    fn create(value: String) -> Self
+    where
+        Self: Sized;
     fn text(&self) -> Result<String, String>;
 }
-
-
-
-
-
 
 // impl<T> FromStr for T
 // where

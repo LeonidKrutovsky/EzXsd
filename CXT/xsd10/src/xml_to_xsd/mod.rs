@@ -41,7 +41,7 @@ pub mod attributes;
 mod tests;
 
 use crate::model::elements::{xsd_element_type, ElementType};
-use roxmltree::{Node};
+use roxmltree::Node;
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";
 

@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::simple_type::LocalSimpleType;
 use crate::model::simple_types::qname::QName;
+use crate::model::simple_types::xsd_list::XsdList;
 use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
-use crate::model::simple_types::xsd_list::XsdList;
 
 // xsd:notation
 // Element information

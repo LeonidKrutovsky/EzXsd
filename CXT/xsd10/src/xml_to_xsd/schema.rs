@@ -1,13 +1,13 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
 use crate::model::simple_types::token::Token;
+use crate::model::simple_types::AnyUri;
 use crate::model::Import;
 use crate::model::Include;
 use crate::model::Schema;
 use crate::model::{Annotation, Parse};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
-use crate::model::simple_types::AnyUri;
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
     let schema_node = doc.root_element();
@@ -24,12 +24,8 @@ impl<'a> Schema<'a> {
                 "version" => schema.version = Some(Token::parse(attr.value())?),
                 "finalDefault" => schema.final_default = Some(attr.value().parse()?),
                 "blockDefault" => schema.block_default = Some(attr.value().parse()?),
-                "attributeFormDefault" => {
-                    schema.attribute_form_default = attr.value().parse()?
-                }
-                "elementFormDefault" => {
-                    schema.element_form_default = attr.value().parse()?
-                }
+                "attributeFormDefault" => schema.attribute_form_default = attr.value().parse()?,
+                "elementFormDefault" => schema.element_form_default = attr.value().parse()?,
                 "id" => schema.id = Some(attr.value().parse()?),
                 "lang" => schema.lang = Some(attr.value().parse()?),
                 _ => schema.attributes.push(attr.clone()),

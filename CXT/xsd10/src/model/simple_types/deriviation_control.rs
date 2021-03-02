@@ -49,7 +49,6 @@ impl FromStr for DeriviationControl {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use super::DeriviationControl;

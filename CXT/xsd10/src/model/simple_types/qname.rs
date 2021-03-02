@@ -24,41 +24,47 @@
 //  xsd:anySimpleType
 //      restricted by xsd:QName
 
-use crate::model::{Parse};
-use core::fmt;
 use crate::model::simple_types::NCName;
+use crate::model::Parse;
+use core::fmt;
 
 #[derive(Default, Debug)]
 pub struct QName {
     prefix: Option<NCName>,
-    name: NCName
+    name: NCName,
 }
 
 impl Parse for QName {
-    fn parse(value: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(value: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         if let Some(index) = value.find(':') {
-            Ok(Self{
+            Ok(Self {
                 prefix: Some(value[0..index].parse()?),
-                name: value[index+1..].parse()?
+                name: value[index + 1..].parse()?,
             })
         } else {
-            Ok(Self{
+            Ok(Self {
                 prefix: None,
-                name: value.parse()?
+                name: value.parse()?,
             })
         }
     }
 
-    fn create(value: String) -> Self where Self: Sized {
+    fn create(value: String) -> Self
+    where
+        Self: Sized,
+    {
         if let Some(index) = value.find(':') {
-            Self{
+            Self {
                 prefix: Some(value[0..index].to_string().into()),
-                name: value[index+1..].to_string().into()
+                name: value[index + 1..].to_string().into(),
             }
         } else {
-            Self{
+            Self {
                 prefix: None,
-                name: value.into()
+                name: value.into(),
             }
         }
     }
@@ -88,7 +94,6 @@ impl QName {
         self.name.raw()
     }
 }
-
 
 impl fmt::Display for QName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

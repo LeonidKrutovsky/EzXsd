@@ -1,3 +1,4 @@
+#![allow(illegal_floating_point_literal_pattern)]
 // xsd:float
 // The type xsd:float represents an IEEE single-precision 32-bit floating-point number. The format of xsd:float values is a mantissa (a number which conforms to the type decimal) followed, optionally, by the character "E" or "e" followed by an exponent. The exponent must be an integer. For example, 3E2 represents 3 times 10 to the 2nd power, or 300. The exponent must be an integer.
 //
@@ -12,13 +13,16 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use crate::model::{Parse};
+use crate::model::Parse;
 
 #[derive(Debug, PartialEq)]
 pub struct Float(pub f32);
 
 impl Parse for Float {
-    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
+    fn parse(s: &str) -> Result<Self, String>
+    where
+        Self: Sized,
+    {
         match s {
             "-INF" => Ok(Self(f32::NEG_INFINITY)),
             "INF" => Ok(Self(f32::INFINITY)),
@@ -26,7 +30,10 @@ impl Parse for Float {
         }
     }
 
-    fn create(s: String) -> Self where Self: Sized {
+    fn create(s: String) -> Self
+    where
+        Self: Sized,
+    {
         Self(s.parse::<f32>().unwrap_or(f32::NAN))
     }
 
@@ -47,12 +54,11 @@ impl PartialEq<f32> for Float {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::float::Float;
-    use std::str::FromStr;
     use crate::model::Parse;
+    use std::str::FromStr;
 
     #[test]
     fn test_valid_parse() {

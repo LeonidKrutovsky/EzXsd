@@ -58,10 +58,10 @@ mod test {
     use crate::model::groups::simple_derivation::SimpleDerivation;
     use crate::model::simple_types::qname::QName;
     use crate::model::simple_types::SimpleType;
+    use crate::model::Parse;
     use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
     use crate::xml_to_xsd::schema_set::SchemaSet;
     use roxmltree::Document;
-    use crate::model::Parse;
 
     const TYPES: &str = include_str!("../../../input/xsd/types.xsd");
     const RULES: &str = include_str!("../../../input/xsd/rules.xsd");

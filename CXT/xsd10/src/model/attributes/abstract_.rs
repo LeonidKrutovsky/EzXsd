@@ -16,11 +16,12 @@ use crate::model::simple_types::Boolean;
 use crate::model::RawAttribute;
 use std::convert::TryFrom;
 extern crate xml_utils;
-use xml_utils::attribute;
+use xml_utils::*;
 
+//#[derive(Attribute)]
+#[attribute("abstract")]
 pub struct Abstract(Boolean);
 
-#[attribute(name = "abstract")]
 impl Abstract {
     const NAME: &'static str = "abstract";
 }
@@ -38,7 +39,8 @@ mod test {
     use crate::model::attributes::abstract_::Abstract;
 
     #[test]
-    pub fn test_abstract() {
+    pub fn test_name() {
+        //Abstract::describe();
         assert_eq!(Abstract::NAME, "abstract");
     }
 }

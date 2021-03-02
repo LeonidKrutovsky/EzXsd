@@ -34,7 +34,8 @@ impl FromStr for DerivationSet {
         Ok(match s {
             "#all" => Self::All,
             _ => {
-                let s: Result<Vec<_>, String> = s.split(' ').map(DerivationSubset::from_str).collect();
+                let s: Result<Vec<_>, String> =
+                    s.split(' ').map(DerivationSubset::from_str).collect();
                 Self::List(s?)
             }
         })
