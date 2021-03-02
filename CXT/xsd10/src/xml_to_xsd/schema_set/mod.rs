@@ -61,6 +61,7 @@ mod test {
     use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
     use crate::xml_to_xsd::schema_set::SchemaSet;
     use roxmltree::Document;
+    use crate::model::Parse;
 
     const TYPES: &str = include_str!("../../../input/xsd/types.xsd");
     const RULES: &str = include_str!("../../../input/xsd/rules.xsd");
@@ -78,7 +79,7 @@ mod test {
         let schemas = schema_set.schemas();
         let schema_wrapper = schemas.first().unwrap();
         let st = schema_wrapper
-            .resolve_attribute_type(&QName::from("Name"))
+            .resolve_attribute_type(&QName::create("Name".to_string()))
             .unwrap();
 
         if let AttributeType::Simple(v) = st {
@@ -112,7 +113,7 @@ mod test {
         let schemas = schema_set.schemas();
         let rules_schema_wrapper = &schemas[0];
         let base = rules_schema_wrapper
-            .resolve_base(&QName::from("tt:IntRange"))
+            .resolve_base(&QName::create("tt:IntRange".to_string()))
             .unwrap();
 
         if let AttributeBase::Complex(v) = base {

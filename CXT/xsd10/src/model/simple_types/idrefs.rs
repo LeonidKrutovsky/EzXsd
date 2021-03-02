@@ -23,6 +23,6 @@
 //                used in list xsd:IDREFS
 
 use crate::model::simple_types::idref::IdRef;
-use crate::model::simple_types::xsd_list::XsdList;
+use crate::model::simple_types::xsd_list::NotEmptyXsdList;
 
-pub type IdRefs = XsdList<IdRef>;
+pub type IdRefs = NotEmptyXsdList<IdRef>;

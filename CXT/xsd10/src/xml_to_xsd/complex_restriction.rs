@@ -1,7 +1,6 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::type_def_particle::TypeDefParticle;
-use crate::model::simple_types::qname::QName;
 use crate::model::{Annotation, ComplexRestriction};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
@@ -14,7 +13,7 @@ impl<'a> ComplexRestriction<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "base" => base = Some(QName::from(attr.value())),
+                "base" => base = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

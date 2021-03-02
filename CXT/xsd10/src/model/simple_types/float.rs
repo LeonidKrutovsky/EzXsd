@@ -12,32 +12,25 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use crate::model::ToXml;
-use std::str::FromStr;
+use crate::model::{Parse};
 
 #[derive(Debug, PartialEq)]
 pub struct Float(pub f32);
 
-impl FromStr for Float {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+impl Parse for Float {
+    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
         match s {
-            "-INF" => Ok(Float(f32::NEG_INFINITY)),
-            "INF" => Ok(Float(f32::INFINITY)),
-            _ => Ok(Float(s.parse::<f32>().map_err(|e| e.to_string())?)),
+            "-INF" => Ok(Self(f32::NEG_INFINITY)),
+            "INF" => Ok(Self(f32::INFINITY)),
+            _ => Ok(Self(s.parse::<f32>().map_err(|e| e.to_string())?)),
         }
     }
-}
 
-impl PartialEq<f32> for Float {
-    fn eq(&self, other: &f32) -> bool {
-        self.0 == *other
+    fn create(s: String) -> Self where Self: Sized {
+        Self(s.parse::<f32>().unwrap_or(f32::NAN))
     }
-}
 
-impl ToXml for Float {
-    fn to_xml(&self) -> Result<String, String> {
+    fn text(&self) -> Result<String, String> {
         Ok(match self.0 {
             f32::NEG_INFINITY => "-INF".into(),
             f32::INFINITY => "INF".into(),
@@ -46,11 +39,20 @@ impl ToXml for Float {
     }
 }
 
+impl_from_str!(Float);
+
+impl PartialEq<f32> for Float {
+    fn eq(&self, other: &f32) -> bool {
+        self.0 == *other
+    }
+}
+
+
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::float::Float;
-    use crate::model::ToXml;
     use std::str::FromStr;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_parse() {
@@ -78,7 +80,7 @@ mod test {
     #[test]
     fn test_to_xml() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Float::from_str(left).unwrap().to_xml().unwrap(), right);
+            assert_eq!(Float::from_str(left).unwrap().text().unwrap(), right);
         }
         eq("-3E2", "-300");
         eq("4268.22752E11", "426822740000000");

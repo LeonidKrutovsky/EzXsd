@@ -27,7 +27,7 @@ impl<'a> BindingOperationFault<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "name" => res.name = attr.into(),
+                "name" => res.name = attr.value().parse()?,
                 _ => return Err(format!("Invalid Attribute: {:?}", attr)),
             }
         }

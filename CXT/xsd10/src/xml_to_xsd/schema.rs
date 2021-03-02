@@ -1,7 +1,5 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::form_choice::FormChoice;
 use crate::model::simple_types::token::Token;
 use crate::model::Import;
 use crate::model::Include;
@@ -25,12 +23,12 @@ impl<'a> Schema<'a> {
                 "targetNamespace" => schema.target_namespace = Some(AnyUri::parse(attr.value())?),
                 "version" => schema.version = Some(Token::parse(attr.value())?),
                 "finalDefault" => schema.final_default = Some(attr.value().parse()?),
-                "blockDefault" => schema.block_default = Some(BlockSet::parse(attr.value())?),
+                "blockDefault" => schema.block_default = Some(attr.value().parse()?),
                 "attributeFormDefault" => {
-                    schema.attribute_form_default = FormChoice::parse(attr.value())?
+                    schema.attribute_form_default = attr.value().parse()?
                 }
                 "elementFormDefault" => {
-                    schema.element_form_default = FormChoice::parse(attr.value())?
+                    schema.element_form_default = attr.value().parse()?
                 }
                 "id" => schema.id = Some(attr.value().parse()?),
                 "lang" => schema.lang = Some(attr.value().parse()?),

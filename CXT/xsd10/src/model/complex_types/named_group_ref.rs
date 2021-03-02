@@ -33,7 +33,7 @@ pub struct NamedGroupRef<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub ref_: QName<'a>,
+    pub ref_: QName,
     pub min_occurs: NonNegativeInteger,
     pub max_occurs: MaxOccurs,
 }

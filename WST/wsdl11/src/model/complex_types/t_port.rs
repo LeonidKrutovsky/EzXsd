@@ -29,5 +29,5 @@ pub struct Port<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub elements: Vec<RawElement<'a>>,
     pub name: xsd::NCName,
-    pub binding: xsd::QName<'a>,
+    pub binding: xsd::QName,
 }

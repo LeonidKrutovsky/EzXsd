@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 // xsd:formChoice
 // Whether local declarations are qualified (in a namespace), or unqualified (in no namespace).  This setting does not affect global declarations.
 // Simple type information
@@ -35,8 +37,10 @@ impl Default for FormChoice {
     }
 }
 
-impl FormChoice {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for FormChoice {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = match s {
             "qualified" => Self::Qualified,
             "unqualified" => Self::Unqualified,

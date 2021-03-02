@@ -1,7 +1,4 @@
 use crate::model::groups::element_model::ElementModel;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::form_choice::FormChoice;
-use crate::model::simple_types::qname::QName;
 use crate::model::LocalElement;
 use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
@@ -18,8 +15,8 @@ impl<'a> LocalElement<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
                 "name" => res.name = Some(attr.value().parse()?),
-                "ref" => res.ref_ = Some(QName::from(attr.value())),
-                "type" => res.type_ = Some(QName::from(attr.value())),
+                "ref" => res.ref_ = Some(attr.value().parse()?),
+                "type" => res.type_ = Some(attr.value().parse()?),
                 "minOccurs" => res.min_occurs = attr.value().parse()?,
                 "maxOccurs" => res.max_occurs = attr.value().parse()?,
                 "default" => res.default = Some(attr.value()),
@@ -29,8 +26,8 @@ impl<'a> LocalElement<'a> {
                         format!("Invalid 'nillable' attribute value: {}", attr.value())
                     })?
                 }
-                "block" => res.block = Some(BlockSet::parse(attr.value())?),
-                "form" => res.form = Some(FormChoice::parse(attr.value())?),
+                "block" => res.block = Some(attr.value().parse()?),
+                "form" => res.form = Some(attr.value().parse()?),
 
                 _ => res.attributes.push(attr.clone()),
             };

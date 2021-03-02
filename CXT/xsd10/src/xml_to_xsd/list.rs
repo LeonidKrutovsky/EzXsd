@@ -1,5 +1,4 @@
 use crate::model::elements::ElementType;
-use crate::model::simple_types::qname::QName;
 use crate::model::Annotation;
 use crate::model::List;
 use crate::model::LocalSimpleType;
@@ -25,7 +24,7 @@ impl<'a> List<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "itemType" => res.item_type = Some(QName::from(attr.value())),
+                "itemType" => res.item_type = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

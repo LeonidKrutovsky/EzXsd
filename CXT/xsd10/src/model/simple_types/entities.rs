@@ -48,6 +48,6 @@
 //                used in list xsd:ENTITIES
 
 use crate::model::simple_types::entity::Entity;
-use crate::model::simple_types::xsd_list::XsdList;
+use crate::model::simple_types::xsd_list::NotEmptyXsdList;
 
-pub type Entities = XsdList<Entity>;
+pub type Entities = NotEmptyXsdList<Entity>;

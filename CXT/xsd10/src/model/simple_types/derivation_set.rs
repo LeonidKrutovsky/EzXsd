@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 // xsd:derivationSet
 // #all or (possibly empty) subset of {extension, restriction}
 // Simple type information
@@ -25,12 +27,14 @@ pub enum DerivationSet {
     List(Vec<DerivationSubset>),
 }
 
-impl DerivationSet {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for DerivationSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(match s {
             "#all" => Self::All,
             _ => {
-                let s: Result<Vec<_>, String> = s.split(' ').map(DerivationSubset::parse).collect();
+                let s: Result<Vec<_>, String> = s.split(' ').map(DerivationSubset::from_str).collect();
                 Self::List(s?)
             }
         })
@@ -43,12 +47,14 @@ pub enum DerivationSubset {
     Restriction,
 }
 
-impl DerivationSubset {
-    pub fn parse(s: &str) -> Result<Self, String> {
-        Ok(match s {
-            "extension" => Self::Extension,
-            "restriction" => Self::Restriction,
-            _ => return Err(format!("Invalid value for xsd:derivationSet type: {}", s)),
-        })
+impl FromStr for DerivationSubset {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "extension" => Ok(Self::Extension),
+            "restriction" => Ok(Self::Restriction),
+            _ => Err(format!("Invalid value for xsd:derivationSet type: {}", s)),
+        }
     }
 }

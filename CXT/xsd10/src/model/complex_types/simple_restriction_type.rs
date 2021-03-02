@@ -53,6 +53,6 @@ pub struct SimpleRestrictionType<'a> {
     pub model: SimpleRestrictionModel<'a>,
     pub attr_decls: AttrDecls<'a>,
     pub id: Id,
-    pub base: QName<'a>,
+    pub base: QName,
     pub attributes: Vec<RawAttribute<'a>>,
 }

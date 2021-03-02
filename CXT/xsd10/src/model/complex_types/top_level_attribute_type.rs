@@ -39,7 +39,7 @@ pub struct TopLevelAttributeType<'a> {
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
     pub name: NCName,
-    pub type_: Option<QName<'a>>,
+    pub type_: Option<QName>,
     pub default: Option<&'a str>,
     pub fixed: Option<&'a str>,
 }

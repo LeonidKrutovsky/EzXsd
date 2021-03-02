@@ -24,65 +24,73 @@
 //  xsd:anySimpleType
 //      restricted by xsd:QName
 
-use crate::model::simple_types::any_simple_type::AnySimpleType;
-use crate::model::simple_types::white_space_facet::collapse;
-use crate::model::ToXml;
+use crate::model::{Parse};
 use core::fmt;
-use std::borrow::{Borrow, Cow};
+use crate::model::simple_types::NCName;
 
-#[derive(Default, Debug, PartialEq)]
-pub struct QName<'a>(AnySimpleType<'a>);
+#[derive(Default, Debug)]
+pub struct QName {
+    prefix: Option<NCName>,
+    name: NCName
+}
 
-impl<'a, T> From<T> for QName<'a>
-where
-    T: Into<Cow<'a, str>>,
-{
-    fn from(value: T) -> Self {
-        Self { 0: value.into() }
+impl Parse for QName {
+    fn parse(value: &str) -> Result<Self, String> where Self: Sized {
+        if let Some(index) = value.find(':') {
+            Ok(Self{
+                prefix: Some(value[0..index].parse()?),
+                name: value[index+1..].parse()?
+            })
+        } else {
+            Ok(Self{
+                prefix: None,
+                name: value.parse()?
+            })
+        }
+    }
+
+    fn create(value: String) -> Self where Self: Sized {
+        if let Some(index) = value.find(':') {
+            Self{
+                prefix: Some(value[0..index].to_string().into()),
+                name: value[index+1..].to_string().into()
+            }
+        } else {
+            Self{
+                prefix: None,
+                name: value.into()
+            }
+        }
+    }
+
+    fn text(&self) -> Result<String, String> {
+        if let Some(ref pref) = self.prefix {
+            Ok(format!("{}:{}", pref.text()?, self.name.text()?))
+        } else {
+            self.name.text()
+        }
     }
 }
 
-impl<'a> QName<'a> {
+impl_from_str!(QName);
+impl_from_string!(QName);
+
+impl QName {
     pub fn prefix(&self) -> Option<&str> {
-        if let Some(index) = self.0.find(':') {
-            Some(&self.0[0..index])
+        if let Some(ref pref) = self.prefix {
+            Some(pref.raw())
         } else {
             None
         }
     }
 
     pub fn name(&self) -> &str {
-        if let Some(index) = self.0.find(':') {
-            &self.0[index + 1..]
-        } else {
-            self.0.borrow()
-        }
+        self.name.raw()
     }
 }
 
-impl<'a> ToXml for QName<'a> {
-    fn to_xml(&self) -> Result<String, String> {
-        let raw = self.raw();
-        if raw.starts_with(':') {
-            Err(format!("A QName must not start with a colon: {}", raw))
-        } else if self.name().chars().next().unwrap().is_numeric() {
-            Err(format!(
-                "The local part must not start with a number; it must be a valid NCName: {}",
-                raw
-            ))
-        } else {
-            Ok(collapse(raw))
-        }
-    }
-}
 
-impl<'a> QName<'a> {
-    pub fn raw(&self) -> &str {
-        self.0.borrow()
-    }
-}
-
-impl fmt::Display for QName<'_> {
+impl fmt::Display for QName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if let Some(prefix) = self.prefix() {
             write!(f, "{}:{}", prefix, self.name())
@@ -95,12 +103,12 @@ impl fmt::Display for QName<'_> {
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::qname::QName;
-    use crate::model::ToXml;
+    use crate::model::Parse;
 
     #[test]
     fn test_valid_qname() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(QName::from(left).to_xml().unwrap(), right);
+            assert_eq!(QName::create(left.to_string()).text().unwrap(), right);
         }
 
         eq("pre:myElement", "pre:myElement");
@@ -111,12 +119,12 @@ mod test {
     #[test]
     fn test_invalid_qname() {
         assert_eq!(
-            QName::from(":myElement").to_xml(),
+            QName::create(":myElement".to_string()).text(),
             Err("A QName must not start with a colon: :myElement".to_string())
         );
 
         assert_eq!(
-        QName::from("pre:3rdElement").to_xml(),
+        QName::create("pre:3rdElement".to_string()).text(),
         Err("The local part must not start with a number; it must be a valid NCName: pre:3rdElement".to_string())
         );
     }

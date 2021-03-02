@@ -31,5 +31,5 @@ pub struct List<'a> {
     pub simple_type: Option<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub item_type: Option<QName<'a>>,
+    pub item_type: Option<QName>,
 }

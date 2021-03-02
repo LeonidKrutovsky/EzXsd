@@ -40,5 +40,5 @@ pub struct KeyRef<'a> {
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
     pub name: NCName,
-    pub refer: QName<'a>,
+    pub refer: QName,
 }

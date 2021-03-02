@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 // xsd:blockSet
 // #all or (possibly empty) subset of {substitution, extension, restriction}
 // Simple type information
@@ -33,8 +35,10 @@ pub enum BlockSetChoice {
     Substitution,
 }
 
-impl BlockSetChoice {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for BlockSetChoice {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = match s {
             "extension" => Self::Extension,
             "restriction" => Self::Restriction,
@@ -45,13 +49,15 @@ impl BlockSetChoice {
     }
 }
 
-impl BlockSet {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for BlockSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = if s == "#all" {
             Self::All
         } else {
             let res: Result<Vec<_>, String> =
-                s.split(' ').map(|v| BlockSetChoice::parse(v)).collect();
+                s.split(' ').map(BlockSetChoice::from_str).collect();
             Self::List(res?)
         };
         Ok(res)

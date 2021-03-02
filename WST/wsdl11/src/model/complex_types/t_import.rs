@@ -24,7 +24,7 @@ use xsd10::model::simple_types as xsd;
 #[derive(Default, Debug)]
 pub struct Import<'a> {
     pub documentation: Option<Documentation<'a>>,
-    pub namespace: xsd::AnyUri<'a>,
-    pub location: xsd::AnyUri<'a>,
+    pub namespace: xsd::AnyUri,
+    pub location: xsd::AnyUri,
     pub attributes: Vec<RawAttribute<'a>>,
 }

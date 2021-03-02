@@ -55,7 +55,7 @@ pub mod unsigned_long;
 pub mod unsigned_short;
 
 mod white_space_facet;
-mod xsd_list;
+pub mod xsd_list;
 
 
 pub use any_uri::AnyUri;

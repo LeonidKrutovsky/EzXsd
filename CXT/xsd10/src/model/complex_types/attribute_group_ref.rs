@@ -30,5 +30,5 @@ pub struct AttributeGroupRef<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub name: QName<'a>,
+    pub name: QName,
 }

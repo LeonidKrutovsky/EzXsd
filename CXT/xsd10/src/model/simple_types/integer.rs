@@ -1,4 +1,3 @@
-use crate::model::ToXml;
 use num_bigint::{BigInt, ToBigInt};
 use std::fmt;
 use std::str::FromStr;
@@ -69,11 +68,6 @@ impl FromStr for Integer {
     }
 }
 
-impl ToXml for Integer {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_string())
-    }
-}
 
 impl fmt::Display for Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

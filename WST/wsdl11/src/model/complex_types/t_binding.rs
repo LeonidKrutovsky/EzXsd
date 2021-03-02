@@ -29,5 +29,5 @@ pub struct Binding<'a> {
     pub elements: Vec<RawElement<'a>>,
     pub operations: Vec<BindingOperation<'a>>,
     pub name: xsd::NCName,
-    pub type_: xsd::QName<'a>,
+    pub type_: xsd::QName,
 }

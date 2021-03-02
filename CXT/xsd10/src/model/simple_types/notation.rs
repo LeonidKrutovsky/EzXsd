@@ -18,4 +18,4 @@
 
 use crate::model::simple_types::QName;
 
-pub type Notation<'a> = QName<'a>;
+pub type Notation = QName;

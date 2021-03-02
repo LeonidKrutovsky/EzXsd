@@ -1,5 +1,4 @@
 use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::simple_types::qname::QName;
 use crate::model::Restriction;
 use crate::xml_to_xsd::utils::annotation_first;
 use crate::xml_to_xsd::ElementChildren;
@@ -22,7 +21,7 @@ impl<'a> Restriction<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "base" => res.base = Some(QName::from(attr.value())),
+                "base" => res.base = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }

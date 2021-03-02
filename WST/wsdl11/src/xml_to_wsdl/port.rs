@@ -14,7 +14,7 @@ impl<'a> Port<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "name" => name = Some(attr.value().parse()?),
-                "binding" => binding = Some(QName::from(attr.value())),
+                "binding" => binding = Some(attr.value().parse()?),
                 _ => return Err(format!("Invalid attribute. {:?}", node)),
             }
         }

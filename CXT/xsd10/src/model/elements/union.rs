@@ -3,6 +3,7 @@ use crate::model::elements::simple_type::LocalSimpleType;
 use crate::model::simple_types::qname::QName;
 use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::simple_types::xsd_list::XsdList;
 
 // xsd:notation
 // Element information
@@ -30,5 +31,5 @@ pub struct Union<'a> {
     pub simple_type: Vec<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub member_types: Vec<QName<'a>>,
+    pub member_types: XsdList<QName>,
 }

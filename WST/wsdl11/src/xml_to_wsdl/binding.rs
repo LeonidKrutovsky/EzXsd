@@ -15,7 +15,7 @@ impl<'a> Binding<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "name" => name = Some(attr.value().parse()?),
-                "type" => type_ = Some(QName::from(attr.value())),
+                "type" => type_ = Some(attr.value().parse()?),
                 _ => return Err(format!("Invalid attribute. {:?}", node)),
             }
         }

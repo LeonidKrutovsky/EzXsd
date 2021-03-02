@@ -37,5 +37,5 @@ pub struct SimpleExtensionType<'a> {
     pub attr_decls: AttrDecls<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub base: QName<'a>,
+    pub base: QName,
 }

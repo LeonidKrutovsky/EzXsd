@@ -1,6 +1,5 @@
 use crate::model::complex_types::local_attribute_type::UseType;
 use crate::model::elements::ElementType;
-use crate::model::simple_types::form_choice::FormChoice;
 use crate::model::simple_types::ncname::NCName;
 use crate::model::simple_types::qname::QName;
 use crate::model::{Annotation, LocalAttribute, LocalSimpleType, TopLevelAttribute};
@@ -35,7 +34,7 @@ impl<'a> TopLevelAttribute<'a> {
             match attr.name() {
                 "id" => id = Some(attr.value().parse()?),
                 "name" => name = Some(attr.value().parse()?),
-                "type" => type_ = Some(QName::from(attr.value())),
+                "type" => type_ = Some(attr.value().parse()?),
                 "default" => default = Some(attr.value()),
                 "fixed" => fixed = Some(attr.value()),
                 _ => attributes.push(attr.clone()),
@@ -89,12 +88,12 @@ impl<'a> LocalAttribute<'a> {
             match attr.name() {
                 "id" => id = Some(attr.value().parse()?),
                 "name" => name = Some(attr.value().parse()?),
-                "ref" => ref_ = Some(QName::from(attr.value())),
-                "type" => type_ = Some(QName::from(attr.value())),
+                "ref" => ref_ = Some(attr.value().parse()?),
+                "type" => type_ = Some(attr.value().parse()?),
                 "use" => use_ = UseType::parse(attr.value())?,
                 "default" => default = Some(attr.value()),
                 "fixed" => fixed = Some(attr.value()),
-                "form" => form = Some(FormChoice::parse(attr.value())?),
+                "form" => form = Some(attr.value().parse()?),
                 _ => attributes.push(attr.clone()),
             };
         }

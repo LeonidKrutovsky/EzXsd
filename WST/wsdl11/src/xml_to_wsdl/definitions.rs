@@ -40,6 +40,7 @@ mod test {
     use super::*;
     use roxmltree::Document;
     use xsd10::model::simple_types::QName;
+    use std::str::FromStr;
 
     const TEXT: &str = r#"
 <wsdl:definitions
@@ -136,7 +137,7 @@ mod test {
                 .element
                 .as_ref()
                 .unwrap(),
-            &QName::from("tds:DeleteGeoLocationResponse")
+            &QName::from_str("tds:DeleteGeoLocationResponse").unwrap()
         );
 
         if let Some(pt) = def.content.port_types.get("Device") {

@@ -22,6 +22,6 @@
 //                      used in list xsd:NMTOKENS
 
 use crate::model::simple_types::nmtoken::NmToken;
-use crate::model::simple_types::xsd_list::XsdList;
+use crate::model::simple_types::xsd_list::NotEmptyXsdList;
 
-pub type NmTokens = XsdList<NmToken>;
+pub type NmTokens = NotEmptyXsdList<NmToken>;

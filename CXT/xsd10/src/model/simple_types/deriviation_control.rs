@@ -23,6 +23,8 @@
 //                      xsd:derivationControl
 //                          restricted by within xsd:simpleDerivationSet
 
+use std::str::FromStr;
+
 #[derive(Debug, PartialEq)]
 pub enum DeriviationControl {
     Substitution,
@@ -32,8 +34,10 @@ pub enum DeriviationControl {
     Union,
 }
 
-impl DeriviationControl {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for DeriviationControl {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(match s {
             "substitution" => Self::Substitution,
             "extension" => Self::Extension,
@@ -45,31 +49,34 @@ impl DeriviationControl {
     }
 }
 
+
 #[cfg(test)]
 mod test {
     use super::DeriviationControl;
+    use std::str::FromStr;
+
     #[test]
     fn test_parse() {
         assert_eq!(
-            DeriviationControl::parse("substitution").unwrap(),
+            DeriviationControl::from_str("substitution").unwrap(),
             DeriviationControl::Substitution
         );
         assert_eq!(
-            DeriviationControl::parse("extension").unwrap(),
+            DeriviationControl::from_str("extension").unwrap(),
             DeriviationControl::Extension
         );
         assert_eq!(
-            DeriviationControl::parse("restriction").unwrap(),
+            DeriviationControl::from_str("restriction").unwrap(),
             DeriviationControl::Restriction
         );
         assert_eq!(
-            DeriviationControl::parse("list").unwrap(),
+            DeriviationControl::from_str("list").unwrap(),
             DeriviationControl::List
         );
         assert_eq!(
-            DeriviationControl::parse("union").unwrap(),
+            DeriviationControl::from_str("union").unwrap(),
             DeriviationControl::Union
         );
-        assert!(DeriviationControl::parse("").is_err());
+        assert!(DeriviationControl::from_str("").is_err());
     }
 }

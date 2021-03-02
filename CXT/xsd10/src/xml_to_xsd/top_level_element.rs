@@ -1,7 +1,4 @@
 use crate::model::groups::element_model::ElementModel;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::derivation_set::DerivationSet;
-use crate::model::simple_types::qname::QName;
 use crate::model::TopLevelElement;
 use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
@@ -32,8 +29,8 @@ impl<'a> TopLevelElement<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
                 "name" => name = Some(attr.value().parse()?),
-                "type" => res.type_ = Some(QName::from(attr.value())),
-                "substitutionGroup" => res.substitution_group = Some(QName::from(attr.value())),
+                "type" => res.type_ = Some(attr.value().parse()?),
+                "substitutionGroup" => res.substitution_group = Some(attr.value().parse()?),
                 "default" => res.default = Some(attr.value()),
                 "fixed" => res.fixed = Some(attr.value()),
                 "nillable" => {
@@ -46,8 +43,8 @@ impl<'a> TopLevelElement<'a> {
                         format!("Invalid 'nillable' attribute value: {}", attr.value())
                     })?
                 }
-                "final" => res.final_ = Some(DerivationSet::parse(attr.value())?),
-                "block" => res.block = Some(BlockSet::parse(attr.value())?),
+                "final" => res.final_ = Some(attr.value().parse()?),
+                "block" => res.block = Some(attr.value().parse()?),
 
                 _ => res.attributes.push(attr.clone()),
             };

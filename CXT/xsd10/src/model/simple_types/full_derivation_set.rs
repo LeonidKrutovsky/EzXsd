@@ -1,5 +1,4 @@
-use crate::model::ToXml;
-use std::str::FromStr;
+use crate::model::{Parse};
 
 // xsd:fullDerivationSet
 // #all or (possibly empty) subset of {extension, restriction, list, union}
@@ -37,8 +36,8 @@ pub enum FullDerivationSubSet {
     Union,
 }
 
-impl FullDerivationSubSet {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl Parse for FullDerivationSubSet {
+    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
         let res = match s {
             "extension" => Self::Extension,
             "restriction" => Self::Restriction,
@@ -48,40 +47,12 @@ impl FullDerivationSubSet {
         };
         Ok(res)
     }
-}
 
-impl FromStr for FullDerivationSubSet {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let res = match s {
-            "extension" => Self::Extension,
-            "restriction" => Self::Restriction,
-            "list" => Self::List,
-            "union" => Self::Union,
-            _ => return Err(format!("Invalid value for FullDerivationSet: {}", s)),
-        };
-        Ok(res)
+    fn create(_value: String) -> Self where Self: Sized {
+        unimplemented!()
     }
-}
 
-impl FullDerivationSet {
-    pub fn parse(s: &str) -> Result<Self, String> {
-        let res = if s == "#all" {
-            Self::All
-        } else {
-            let res: Result<Vec<_>, String> = s
-                .split(' ')
-                .map(|v| FullDerivationSubSet::parse(v))
-                .collect();
-            Self::List(res?)
-        };
-        Ok(res)
-    }
-}
-
-impl ToXml for FullDerivationSubSet {
-    fn to_xml(&self) -> Result<String, String> {
+    fn text(&self) -> Result<String, String> {
         let res = match self {
             Self::Extension => "extension",
             Self::Restriction => "restriction",
@@ -92,30 +63,40 @@ impl ToXml for FullDerivationSubSet {
     }
 }
 
+impl_from_str!(FullDerivationSubSet);
+
 impl FromStr for FullDerivationSet {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::parse(s)
+    }
+}
+
+impl Parse for FullDerivationSet{
+    fn parse(s: &str) -> Result<Self, String> where Self: Sized {
         let res = if s == "#all" {
             Self::All
         } else {
             let res: Result<Vec<_>, String> = s
                 .split(' ')
-                .map(|v| FullDerivationSubSet::parse(v))
+                .map( FullDerivationSubSet::parse)
                 .collect();
             Self::List(res?)
         };
         Ok(res)
     }
-}
 
-impl ToXml for FullDerivationSet {
-    fn to_xml(&self) -> Result<String, String> {
+    fn create(_value: String) -> Self where Self: Sized {
+        unimplemented!()
+    }
+
+    fn text(&self) -> Result<String, String> {
         let res = match self {
             Self::All => "#all".to_string(),
             Self::List(x) => x
                 .iter()
-                .map(|x| x.to_xml())
+                .map(|v| v.text())
                 .collect::<Result<Vec<String>, String>>()?
                 .into_iter()
                 .fold(String::new(), |a, b| format!("{} {}", a, b)),
@@ -123,3 +104,4 @@ impl ToXml for FullDerivationSet {
         Ok(res)
     }
 }
+

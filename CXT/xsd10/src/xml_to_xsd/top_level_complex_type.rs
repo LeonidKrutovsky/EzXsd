@@ -1,5 +1,5 @@
 use crate::model::groups::complex_type_model::ComplexTypeModel;
-use crate::model::simple_types::derivation_set::DerivationSet;
+
 use crate::model::TopLevelComplexType;
 use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
@@ -27,8 +27,8 @@ impl<'a> TopLevelComplexType<'a> {
                         .parse()
                         .map_err(|err| format!("Invalid 'abstract' attribute value: {}", err))?
                 }
-                "final" => final_ = Some(DerivationSet::parse(attr.value())?),
-                "block" => block = Some(DerivationSet::parse(attr.value())?),
+                "final" => final_ = Some(attr.value().parse()?),
+                "block" => block = Some(attr.value().parse()?),
                 "mixed" => {
                     mixed = attr
                         .value()

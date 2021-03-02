@@ -45,7 +45,7 @@ pub struct Restriction<'a> {
     pub model: SimpleRestrictionModel<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub base: Option<QName<'a>>, // base attribute and simpleType child are mutually exclusive, but one or other is required
+    pub base: Option<QName>, // base attribute and simpleType child are mutually exclusive, but one or other is required
 }
 
 // Namespace: http://www.w3.org/2001/XMLSchema

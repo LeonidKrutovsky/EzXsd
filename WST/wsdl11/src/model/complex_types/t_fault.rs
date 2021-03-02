@@ -24,6 +24,6 @@ use xsd10::model::simple_types as xsd;
 pub struct Fault<'a> {
     pub documentation: Option<Documentation<'a>>,
     pub name: xsd::NCName,
-    pub message: xsd::QName<'a>,
+    pub message: xsd::QName,
     pub attributes: Vec<RawAttribute<'a>>,
 }
