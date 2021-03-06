@@ -54,31 +54,6 @@ pub type RawAttribute<'a> = roxmltree::Attribute<'a>;
 pub type RawElement<'a> = roxmltree::Node<'a, 'a>;
 pub type Namespace<'a> = roxmltree::Namespace<'a>;
 
-pub trait ToXml {
-    fn to_xml(&self) -> Result<String, String>;
-}
-
-pub(crate) trait Parse {
-    fn parse(value: &str) -> Result<Self, String>
-    where
-        Self: Sized;
-    fn create(value: String) -> Self
-    where
-        Self: Sized;
-    fn text(&self) -> Result<String, String>;
-}
-
-// impl<T> FromStr for T
-// where
-//     T: Parse,
-// {
-//     type Err = String;
-//
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         <Self as Parse>::parse(s)
-//     }
-// }
-
 #[derive(Debug, PartialEq)]
 pub enum MaxOccurs {
     Bounded(NonNegativeInteger),

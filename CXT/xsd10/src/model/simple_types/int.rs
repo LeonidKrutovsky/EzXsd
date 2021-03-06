@@ -17,7 +17,6 @@
 use std::fmt;
 use std::str::FromStr;
 
-
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct Int(pub i32);
 

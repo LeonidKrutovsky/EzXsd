@@ -20,14 +20,11 @@ macro_rules! impl_as_ref {
 
 macro_rules! impl_display {
     ($type_name:ident) => {
-    use std::fmt;
-    impl fmt::Display for $type_name {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
+        use std::fmt;
+        impl fmt::Display for $type_name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(f, "{}", self.0)
+            }
+        }
+    };
 }
-    }
-}
-
-
-

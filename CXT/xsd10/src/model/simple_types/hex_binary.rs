@@ -16,7 +16,6 @@
 
 use std::str::FromStr;
 
-
 pub struct HexBinary(Vec<u8>);
 
 impl FromStr for HexBinary {

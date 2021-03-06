@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 use chrono::FixedOffset;
 
-use crate::model::simple_types::parse_timezone;
+use crate::model::simple_types::utils::parse_timezone;
 
 // xsd:gMonth
 // The type xsd:gMonth represents a specific month that recurs every year. The letter g signifies "Gregorian." xsd:gMonth can be used to indicate, for example, that fiscal year-end processing occurs in September of every year. To represent a duration of months, use the duration type instead. The format of xsd:gMonth is --MM.
@@ -171,7 +171,7 @@ mod tests {
                 value: 3,
                 timezone: None,
             }
-                .to_string(),
+            .to_string(),
             "--03"
         );
 
@@ -181,7 +181,7 @@ mod tests {
                 value: 3,
                 timezone: Some(FixedOffset::east(0)),
             }
-                .to_string(),
+            .to_string(),
             "--03+00:00"
         );
 
@@ -191,7 +191,7 @@ mod tests {
                 value: 3,
                 timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-                .to_string(),
+            .to_string(),
             "--03+06:30"
         );
 
@@ -201,7 +201,7 @@ mod tests {
                 value: 3,
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-                .to_string(),
+            .to_string(),
             "--03-06:30"
         );
     }

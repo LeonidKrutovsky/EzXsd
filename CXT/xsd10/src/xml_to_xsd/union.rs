@@ -1,7 +1,7 @@
 use crate::model::elements::ElementType;
+use crate::model::Annotation;
 use crate::model::LocalSimpleType;
 use crate::model::Union;
-use crate::model::{Annotation};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 

@@ -36,7 +36,7 @@
 use std::str::FromStr;
 
 use crate::model::simple_types::normalized_string::NormalizedString;
-use crate::model::simple_types::white_space_facet::assert_collapsed;
+use crate::model::simple_types::utils::assert_collapsed;
 
 #[derive(Debug, Default, Clone)]
 pub struct Token(NormalizedString);

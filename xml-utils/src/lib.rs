@@ -5,19 +5,15 @@ use quote::quote;
 //use syn::spanned::Spanned;
 use syn::{parse_macro_input, DataEnum, DataUnion, DeriveInput, FieldsNamed, FieldsUnnamed, Item};
 
-
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-
-
     for i in _metadata {
         match i {
-        TokenTree::Literal(ref lit) => {
-
-            println!("***********{:#?}", lit);
-        },
-        _ => unreachable!()
-    }
+            TokenTree::Literal(ref lit) => {
+                println!("***********{:#?}", lit);
+            }
+            _ => unreachable!(),
+        }
     }
     //let z: syn::Meta =  syn::parse(_metadata).expect("failed to parse input");
 

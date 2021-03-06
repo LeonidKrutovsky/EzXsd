@@ -1,9 +1,9 @@
 use std::fmt;
 use std::str::FromStr;
 
-use chrono::{FixedOffset, format::strftime::StrftimeItems, NaiveTime};
+use chrono::{format::strftime::StrftimeItems, FixedOffset, NaiveTime};
 
-use crate::model::simple_types::parse_timezone;
+use crate::model::simple_types::utils::parse_timezone;
 
 // xsd:time
 // The type xsd:time represents a time of day in the format hh:mm:ss.sss where hh represents the hour, mm the minutes, and ss.sss the seconds. An unlimited number of additional digits can be used to increase the precision of fractional seconds if desired. The time is based on a 24-hour time period, so hours should be represented as 00 through 24. Either of the values 00:00:00 or 24:00:00 can be used to represent midnight.
@@ -176,7 +176,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: None,
             }
-                .to_string(),
+            .to_string(),
             "04:40:00"
         );
 
@@ -186,7 +186,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::east(0)),
             }
-                .to_string(),
+            .to_string(),
             "04:40:00+00:00"
         );
 
@@ -196,7 +196,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-                .to_string(),
+            .to_string(),
             "04:40:00+06:30"
         );
 
@@ -206,7 +206,7 @@ mod tests {
                 value: NaiveTime::from_hms(4, 40, 0),
                 timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-                .to_string(),
+            .to_string(),
             "04:40:00-06:30"
         );
     }

@@ -48,9 +48,9 @@ impl FromStr for Language {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         lazy_static! {
-            static ref RE: Regex = Regex::new("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*").unwrap();
+            static ref RE: Regex = Regex::new("[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*{1}").unwrap();
         }
-        if RE.is_match(s.as_bytes()) {
+        if RE.find_iter(s.as_bytes()).count() != 1 {
             Err(format!("Invalid value for Language: {}", s))
         } else {
             Ok(Self(s.parse()?))
@@ -61,7 +61,6 @@ impl FromStr for Language {
 impl_from_string!(Language);
 impl_as_ref!(Language);
 
-
 #[cfg(test)]
 mod test {
     use std::str::FromStr;
@@ -70,9 +69,11 @@ mod test {
 
     #[test]
     fn test_valid_values() {
+        #[inline]
         fn is_ok(s: &str) {
-            assert!(Language::from_str(s).is_ok());
+            Language::from_str(s).unwrap();
         }
+
         is_ok("en");
         is_ok("en-GB");
         is_ok("en-US");
@@ -82,11 +83,10 @@ mod test {
         is_ok("ja");
         is_ok("i-navajo");
         is_ok("x-Newspeak");
-        is_ok("any-value-with-short-parts");  //although a schema processor will consider this value valid, it does not follow RFC 3066 guidelines
-        is_ok("");
+        is_ok("any-value-with-short-parts"); //although a schema processor will consider this value valid, it does not follow RFC 3066 guidelines
     }
 
-        #[test]
+    #[test]
     fn test_invalid_values() {
         fn is_err(s: &str) {
             assert!(Language::from_str(s).is_err());

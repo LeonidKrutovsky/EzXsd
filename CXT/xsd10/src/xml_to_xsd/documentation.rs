@@ -1,6 +1,6 @@
 use roxmltree::Node;
 
-use crate::model::{Documentation};
+use crate::model::Documentation;
 
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Documentation<'a>, String> {

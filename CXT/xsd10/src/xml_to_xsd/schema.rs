@@ -1,9 +1,9 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
+use crate::model::Annotation;
 use crate::model::Import;
 use crate::model::Include;
 use crate::model::Schema;
-use crate::model::{Annotation};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
 

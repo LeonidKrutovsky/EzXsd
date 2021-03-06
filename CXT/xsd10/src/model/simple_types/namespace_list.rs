@@ -24,8 +24,8 @@
 use std::fmt;
 use std::str::FromStr;
 
-use crate::model::simple_types::AnyUri;
 use crate::model::simple_types::xsd_list::XsdList;
+use crate::model::simple_types::AnyUri;
 
 #[derive(Debug, PartialEq)]
 pub enum NamespaceList {
@@ -47,9 +47,7 @@ impl FromStr for NamespaceList {
         match s {
             "##any" => Ok(Self::Any),
             "##other" => Ok(Self::Other),
-            x => {
-                Ok(Self::ListOf(x.parse()?))
-            }
+            x => Ok(Self::ListOf(x.parse()?)),
         }
     }
 }
@@ -60,14 +58,14 @@ impl fmt::Display for NamespaceList {
             NamespaceList::Any => write!(f, "{}", "##any"),
             NamespaceList::Other => write!(f, "{}", "##other"),
             NamespaceList::ListOf(x) => {
-                let res = x.0
-                    .iter()
-                    .fold(String::new(), |a, b| format!("{} {}", a, b));
+                let res =
+                    x.0.iter()
+                        .fold(String::new(), |a, b| format!("{} {}", a, b));
                 write!(f, "{}", res)
-            }
             }
         }
     }
+}
 
 #[derive(Debug, PartialEq)]
 pub enum TargetOrLocal {

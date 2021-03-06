@@ -31,6 +31,6 @@ use crate::model::RawAttribute;
 pub struct NoFixedFacet<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub id: Id,
-    pub value: AnySimpleType<'a>,
+    pub value: AnySimpleType,
     pub attributes: Vec<RawAttribute<'a>>,
 }

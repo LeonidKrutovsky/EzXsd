@@ -45,7 +45,12 @@ impl PartialEq<f32> for Float {
 
 impl fmt::Display for Float {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
+        let res = if self.0.is_infinite() {
+            self.0.to_string().to_uppercase()
+        } else {
+            self.0.to_string()
+        };
+        write!(f, "{}", res)
     }
 }
 

@@ -55,7 +55,6 @@ impl From<bool> for Boolean {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;

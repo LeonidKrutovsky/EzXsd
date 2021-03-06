@@ -64,19 +64,18 @@ mod test {
         is_ok("12.5");
         is_ok("xsi:nil");
         is_ok("3&lt;4")
-
     }
 
     #[test]
     fn test_err_string() {
         assert_eq!(
             NmToken::from_str("name with spaces").err().unwrap(),
-            "NmToken must not contain a space: name with spaces"
+            "NMTOKEN must not contain a space: name with spaces"
         );
 
         assert_eq!(
             NmToken::from_str("").err().unwrap(),
-            "An empty value is not valid, unless xsi:nil is used"
+            "An empty value is not valid NMTOKEN, unless xsi:nil is used"
         );
     }
 }

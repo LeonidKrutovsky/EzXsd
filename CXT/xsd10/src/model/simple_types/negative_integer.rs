@@ -3,7 +3,6 @@ use std::str::FromStr;
 
 use num_bigint::{BigInt, ToBigInt};
 
-
 // xsd:negativeInteger
 // The type xsd:negativeInteger represents an arbitrarily large negative integer. An xsd:negativeInteger is a sequence of digits, preceded by a - sign. Leading zeros are permitted, but decimal points are not.
 //

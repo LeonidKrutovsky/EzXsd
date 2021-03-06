@@ -63,5 +63,3 @@ impl FromStr for BlockSetChoice {
         Ok(res)
     }
 }
-
-

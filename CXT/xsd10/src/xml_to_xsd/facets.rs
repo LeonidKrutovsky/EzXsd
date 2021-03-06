@@ -17,7 +17,7 @@ impl<'a> Facet<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "value" => res.value = attr.value(),
+                "value" => res.value = attr.value().into(),
                 "fixed" => {
                     res.fixed = attr
                         .value()
@@ -86,7 +86,7 @@ impl<'a> NoFixedFacet<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "value" => res.value = attr.value(),
+                "value" => res.value = attr.value().into(),
                 _ => res.attributes.push(attr.clone()),
             };
         }

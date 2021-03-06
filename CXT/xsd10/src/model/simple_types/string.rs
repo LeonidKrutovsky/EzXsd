@@ -125,8 +125,6 @@ is on two lines.
         eq("", "");
         eq("   3 spaces.   ", "   3 spaces.   ");
         eq(two_lines_str, two_lines_str);
-        eq("3 < 4", "3 &lt; 4");
-        eq("AT&T", "AT&amp;T");
     }
 
     #[test]

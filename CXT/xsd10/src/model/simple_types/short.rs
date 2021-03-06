@@ -18,7 +18,6 @@
 
 use std::str::FromStr;
 
-
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct Short(pub i16);
 

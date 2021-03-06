@@ -90,7 +90,10 @@ impl<'a> SchemaWrapper<'a> {
         if name.prefix().is_some() {
             self.node.lookup_namespace_uri(name.prefix())
         } else {
-            self.schema.target_namespace.as_ref().map(|val| val.as_ref())
+            self.schema
+                .target_namespace
+                .as_ref()
+                .map(|val| val.as_ref())
         }
         .unwrap_or("")
     }

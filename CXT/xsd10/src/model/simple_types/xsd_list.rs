@@ -10,7 +10,6 @@ impl<I: FromStr> FromStr for NotEmptyXsdList<I> {
         let res = XsdList::from_str(s)?.0;
 
         Ok(Self(res))
-
     }
 }
 
@@ -31,7 +30,6 @@ impl<I: AsRef<str>> NotEmptyXsdList<I> {
             .iter()
             .map(|x| x.as_ref())
             .fold(String::new(), |a, b| format!("{} {}", a, b))
-
     }
 }
 
@@ -68,6 +66,5 @@ impl<I: AsRef<str>> XsdList<I> {
             .iter()
             .map(|x| x.as_ref())
             .fold(String::new(), |a, b| format!("{} {}", a, b))
-
     }
 }

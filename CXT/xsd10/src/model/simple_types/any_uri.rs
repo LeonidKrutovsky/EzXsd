@@ -57,8 +57,8 @@
 // xsd:anySimpleType
 //  restricted by xsd:anyURI
 
-use std::str::FromStr;
 use crate::model::simple_types::any_simple_type::AnySimpleType;
+use std::str::FromStr;
 
 //TODO: need full validation
 

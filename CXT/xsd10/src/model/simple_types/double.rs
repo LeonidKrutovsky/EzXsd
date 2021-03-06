@@ -23,7 +23,6 @@
 use std::fmt;
 use std::str::FromStr;
 
-
 #[derive(Debug, PartialEq)]
 pub struct Double(pub f64);
 
@@ -53,7 +52,12 @@ impl PartialEq<f64> for Double {
 
 impl fmt::Display for Double {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
+        let res = if self.0.is_infinite() {
+            self.0.to_string().to_uppercase()
+        } else {
+            self.0.to_string()
+        };
+        write!(f, "{}", res)
     }
 }
 

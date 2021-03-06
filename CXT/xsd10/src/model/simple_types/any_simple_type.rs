@@ -6,6 +6,4 @@
 //
 // Schema Document: datatypes.xsd
 
-
 pub type AnySimpleType = String;
-

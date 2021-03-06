@@ -57,7 +57,6 @@ impl_from_string!(Name);
 impl_as_ref!(Name);
 impl_display!(Name);
 
-
 #[cfg(test)]
 mod test {
     use std::str::FromStr;

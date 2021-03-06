@@ -60,7 +60,6 @@ impl_from_string!(NCName);
 impl_as_ref!(NCName);
 impl_display!(NCName);
 
-
 #[cfg(test)]
 mod test {
     use std::str::FromStr;

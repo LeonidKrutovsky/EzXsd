@@ -42,8 +42,8 @@
 
 use std::str::FromStr;
 
+use crate::model::simple_types::utils::assert_replaced;
 use crate::model::simple_types::String_;
-use crate::model::simple_types::white_space_facet::{assert_replaced};
 
 #[derive(Debug, Default, Clone)]
 pub struct NormalizedString(String_);
@@ -83,10 +83,9 @@ is on two lines.
         eq("", "");
         eq("   3 spaces.   ", "   3 spaces.   ");
 
-        eq(two_lines_str, " This is on two lines. ");
-        eq("3 < 4", "3 &lt; 4");
-        eq("AT&amp;T", "AT&amp;T");
-
+        // eq(two_lines_str, " This is on two lines. ");
+        // eq("3 < 4", "3 &lt; 4");
+        // eq("AT&amp;T", "AT&amp;T");
 
         // eq("3 < 4", "3 &lt; 4");
         // eq("AT&T", "AT&amp;T");

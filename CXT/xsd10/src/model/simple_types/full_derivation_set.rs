@@ -49,9 +49,9 @@ impl fmt::Display for FullDerivationSet {
         match self {
             FullDerivationSet::All => write!(f, "{}", "#all"),
             FullDerivationSet::List(x) => {
-                let res = x.0
-                .iter()
-                .fold(String::new(), |a, b| format!("{} {}", a, b));
+                let res =
+                    x.0.iter()
+                        .fold(String::new(), |a, b| format!("{} {}", a, b));
                 write!(f, "{}", res)
             }
         }

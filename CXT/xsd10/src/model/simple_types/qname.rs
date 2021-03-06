@@ -42,12 +42,16 @@ impl QName {
     pub fn name(&self) -> &str {
         self.name.as_ref()
     }
+
 }
 
 impl FromStr for QName {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s.starts_with(':') {
+            return Err(format!("A QName must not start with a colon: {}", s));
+        }
         if let Some(index) = s.find(':') {
             Ok(Self {
                 prefix: Some(s[0..index].parse()?),
@@ -97,7 +101,7 @@ mod test {
 
         assert_eq!(
             QName::from_str("pre:3rdElement").err().unwrap(),
-            "The local part must not start with a number; it must be a valid NCName: pre:3rdElement"
+            "A Name must not start with a number: 3rdElement"
         );
     }
 }

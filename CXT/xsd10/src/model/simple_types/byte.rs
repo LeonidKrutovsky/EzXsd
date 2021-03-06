@@ -33,7 +33,6 @@ impl PartialEq<i8> for Byte {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::Byte;

@@ -46,6 +46,6 @@ pub struct Facet<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
-    pub value: AnySimpleType<'a>,
+    pub value: AnySimpleType,
     pub fixed: bool,
 }

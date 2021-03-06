@@ -35,9 +35,7 @@ impl FromStr for DerivationSet {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Ok(match s {
             "#all" => Self::All,
-            _ => {
-                Self::List(s.parse()?)
-            }
+            _ => Self::List(s.parse()?),
         })
     }
 }
