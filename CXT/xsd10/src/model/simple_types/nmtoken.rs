@@ -24,14 +24,20 @@
 //                  restricted by xsd:NMTOKEN
 //                      used in list xsd:NMTOKENS
 
+use std::str::FromStr;
+
 use crate::model::simple_types::Token;
-use crate::model::Parse;
 
 #[derive(Debug)]
 pub struct NmToken(Token);
 
-impl Parse for NmToken {
-    fn parse(value: &str) -> Result<Self, String> {
+impl_from_string!(NmToken);
+impl_as_ref!(NmToken);
+
+impl FromStr for NmToken {
+    type Err = String;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value.is_empty() {
             Err(format!(
                 "An empty value is not valid NMTOKEN, unless xsi:nil is used"
@@ -39,61 +45,38 @@ impl Parse for NmToken {
         } else if value.contains(" ") {
             Err(format!("NMTOKEN must not contain a space: {}", value))
         } else {
-            Ok(Self(Token::parse(value)?))
+            Ok(Self(value.parse()?))
         }
-    }
-
-    fn create(value: String) -> Self {
-        Self(Token::create(value))
-    }
-
-    fn text(&self) -> Result<String, String> {
-        let result = self.0.text()?;
-        if result.is_empty() {
-            Err(format!(
-                "An empty value is not valid, unless xsi:nil is used"
-            ))
-        } else if result.contains(" ") {
-            Err(format!("NmToken must not contain a space: {}", result))
-        } else {
-            Ok(result)
-        }
-    }
-}
-
-impl NmToken {
-    pub fn raw(&self) -> &str {
-        self.0.raw()
     }
 }
 
 #[cfg(test)]
 mod test {
+    use std::str::FromStr;
+
     use crate::model::simple_types::nmtoken::NmToken;
-    use crate::model::Parse;
 
     #[test]
     fn test_valid_string() {
-        fn eq(left: &str, right: &str) {
-            assert_eq!(NmToken::create(left.to_string()).text().unwrap(), right);
+        fn is_ok(s: &str) {
+            assert!(NmToken::from_str(s).is_ok());
         }
-        eq("12.5", "12.5");
-        eq("   trim_spaces.   ", "trim_spaces.");
-        eq("3<4", "3&lt;4");
-        eq("AT&T", "AT&amp;T");
-        eq("  WS:    ", "WS:");
+        is_ok("12.5");
+        is_ok("xsi:nil");
+        is_ok("3&lt;4")
+
     }
 
     #[test]
     fn test_err_string() {
         assert_eq!(
-            NmToken::create("name with spaces".to_string()).text(),
-            Err("NmToken must not contain a space: name with spaces".to_string())
+            NmToken::from_str("name with spaces").err().unwrap(),
+            "NmToken must not contain a space: name with spaces"
         );
 
         assert_eq!(
-            NmToken::create("".to_string()).text(),
-            Err("An empty value is not valid, unless xsi:nil is used".to_string())
+            NmToken::from_str("").err().unwrap(),
+            "An empty value is not valid, unless xsi:nil is used"
         );
     }
 }

@@ -57,35 +57,21 @@
 // xsd:anySimpleType
 //  restricted by xsd:anyURI
 
-use std::borrow::Borrow;
-
-use crate::model::simple_types::white_space_facet::{collapse, replace};
-use crate::model::Parse;
+use std::str::FromStr;
+use crate::model::simple_types::any_simple_type::AnySimpleType;
 
 //TODO: need full validation
 
 #[derive(Debug, Default, PartialEq)]
-pub struct AnyUri(String);
+pub struct AnyUri(AnySimpleType);
 
-impl Parse for AnyUri {
-    fn parse(value: &str) -> Result<Self, String> {
-        Ok(Self(value.to_string()))
-    }
-
-    fn create(value: String) -> Self {
-        Self(value)
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(collapse(replace(self.0.borrow()).as_str()))
-    }
-}
-
-impl_from_str!(AnyUri);
 impl_from_string!(AnyUri);
+impl_as_ref!(AnyUri);
 
-impl AnyUri {
-    pub fn raw(&self) -> &str {
-        self.0.as_str()
+impl FromStr for AnyUri {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self(s.into()))
     }
 }

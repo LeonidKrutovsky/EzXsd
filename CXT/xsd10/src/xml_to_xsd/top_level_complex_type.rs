@@ -79,8 +79,8 @@ mod test {
         let res = TopLevelComplexType::parse(root).unwrap();
         assert_eq!(res.annotation.as_ref().unwrap().doc_str(0), Some("DocText"));
         assert_eq!(res.attributes.len(), 1);
-        assert_eq!(res.id.as_ref().unwrap().raw(), "ID");
-        assert_eq!(res.name.raw(), "FloatRange");
+        assert_eq!(res.id.as_ref().unwrap().as_ref(), "ID");
+        assert_eq!(res.name.as_ref(), "FloatRange");
         if let TypeDefParticle::Sequence(val) = res.type_def_particle().unwrap() {
             assert_eq!(val.nested_particle.len(), 2);
         } else {

@@ -13,40 +13,29 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use crate::model::Parse;
+use std::fmt;
+use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Float(pub f32);
 
-impl Parse for Float {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
+impl FromStr for Float {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "-INF" => Ok(Self(f32::NEG_INFINITY)),
-            "INF" => Ok(Self(f32::INFINITY)),
-            _ => Ok(Self(s.parse::<f32>().map_err(|e| e.to_string())?)),
+            "-INF" => Ok(Float(f32::NEG_INFINITY)),
+            "INF" => Ok(Float(f32::INFINITY)),
+            _ => Ok(Float(s.parse::<f32>().map_err(|e| e.to_string())?)),
         }
-    }
-
-    fn create(s: String) -> Self
-    where
-        Self: Sized,
-    {
-        Self(s.parse::<f32>().unwrap_or(f32::NAN))
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(match self.0 {
-            f32::NEG_INFINITY => "-INF".into(),
-            f32::INFINITY => "INF".into(),
-            _ => self.0.to_string(),
-        })
     }
 }
 
-impl_from_str!(Float);
+impl From<f32> for Float {
+    fn from(v: f32) -> Self {
+        Self(v)
+    }
+}
 
 impl PartialEq<f32> for Float {
     fn eq(&self, other: &f32) -> bool {
@@ -54,11 +43,17 @@ impl PartialEq<f32> for Float {
     }
 }
 
+impl fmt::Display for Float {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::float::Float;
-    use crate::model::Parse;
     use std::str::FromStr;
+
+    use crate::model::simple_types::float::Float;
 
     #[test]
     fn test_valid_parse() {
@@ -86,7 +81,7 @@ mod test {
     #[test]
     fn test_to_xml() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Float::from_str(left).unwrap().text().unwrap(), right);
+            assert_eq!(Float::from_str(left).unwrap().to_string(), right);
         }
         eq("-3E2", "-300");
         eq("4268.22752E11", "426822740000000");

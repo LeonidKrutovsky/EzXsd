@@ -14,8 +14,16 @@ pub fn replace(value: &str) -> String {
         .collect()
 }
 
-pub fn is_replaced(value: &str) -> bool {
-    value.chars().any(|c| c.is_whitespace() && c != ' ')
+pub fn is_replaced<T: AsRef<str>>(value: T) -> bool {
+    value.as_ref().chars().any(|c| c.is_whitespace() && c != ' ')
+}
+
+pub fn assert_replaced<T: AsRef<str>>(value: T, name: T) -> Result<(), String> {
+    if is_replaced(value.as_ref()) {
+        Ok(())
+    } else {
+        Err(format!("Invalid value for {}. White space must be replaced: {}", name.as_ref(), value.as_ref()))
+    }
 }
 
 //After the processing implied by replace, contiguous sequences
@@ -23,9 +31,18 @@ pub fn is_replaced(value: &str) -> bool {
 // #x20's are removed.
 pub fn collapse(value: &str) -> String {
     let re = Regex::new(" {2,}").unwrap();
-    re.replace_all(value.trim(), " ").into()
+    re.replace_all(replace(value.trim()).as_str(), " ").into()
 }
 
-pub fn is_collapsed(value: &str) -> bool {
+pub fn is_collapsed<T: AsRef<str>>(value: T) -> bool {
+    let value = value.as_ref();
     !is_replaced(value) || value.starts_with(' ') || value.ends_with(' ') || value.contains("  ")
+}
+
+pub fn assert_collapsed<T: AsRef<str>>(value: T, name: T) -> Result<(), String> {
+    if is_collapsed(value.as_ref()) {
+        Ok(())
+    } else {
+        Err(format!("Invalid value for {}. White spaces must be collapsed: {}", name.as_ref(), value.as_ref()))
+    }
 }

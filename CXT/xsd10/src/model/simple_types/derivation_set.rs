@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use crate::model::simple_types::xsd_list::XsdList;
+
 // xsd:derivationSet
 // #all or (possibly empty) subset of {extension, restriction}
 // Simple type information
@@ -24,7 +26,7 @@ use std::str::FromStr;
 #[derive(Debug)]
 pub enum DerivationSet {
     All,
-    List(Vec<DerivationSubset>),
+    List(XsdList<DerivationSubset>),
 }
 
 impl FromStr for DerivationSet {
@@ -34,9 +36,7 @@ impl FromStr for DerivationSet {
         Ok(match s {
             "#all" => Self::All,
             _ => {
-                let s: Result<Vec<_>, String> =
-                    s.split(' ').map(DerivationSubset::from_str).collect();
-                Self::List(s?)
+                Self::List(s.parse()?)
             }
         })
     }

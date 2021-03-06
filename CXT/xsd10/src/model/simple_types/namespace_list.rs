@@ -21,15 +21,17 @@
 // Used by
 // Attribute namespace
 
-use crate::model::simple_types::AnyUri;
-use crate::model::Parse;
+use std::fmt;
 use std::str::FromStr;
+
+use crate::model::simple_types::AnyUri;
+use crate::model::simple_types::xsd_list::XsdList;
 
 #[derive(Debug, PartialEq)]
 pub enum NamespaceList {
     Any,
     Other,
-    ListOf(Vec<TargetOrLocal>),
+    ListOf(XsdList<TargetOrLocal>),
 }
 
 impl Default for NamespaceList {
@@ -42,9 +44,30 @@ impl FromStr for NamespaceList {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::parse(s)
+        match s {
+            "##any" => Ok(Self::Any),
+            "##other" => Ok(Self::Other),
+            x => {
+                Ok(Self::ListOf(x.parse()?))
+            }
+        }
     }
 }
+
+impl fmt::Display for NamespaceList {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            NamespaceList::Any => write!(f, "{}", "##any"),
+            NamespaceList::Other => write!(f, "{}", "##other"),
+            NamespaceList::ListOf(x) => {
+                let res = x.0
+                    .iter()
+                    .fold(String::new(), |a, b| format!("{} {}", a, b));
+                write!(f, "{}", res)
+            }
+            }
+        }
+    }
 
 #[derive(Debug, PartialEq)]
 pub enum TargetOrLocal {
@@ -57,85 +80,20 @@ impl FromStr for TargetOrLocal {
     type Err = String;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::parse(s)
-    }
-}
-
-impl Parse for TargetOrLocal {
-    fn parse(value: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
-        match value {
+        match s {
             "##targetNamespace" => Ok(Self::TargetNamespace),
             "##local" => Ok(Self::Local),
-            x => Ok(x.parse()?),
+            x => Ok(Self::Uri(x.parse()?)),
         }
-    }
-
-    fn create(value: String) -> Self
-    where
-        Self: Sized,
-    {
-        match value.as_str() {
-            "##targetNamespace" => Self::TargetNamespace,
-            "##local" => Self::Local,
-            x => Self::Uri(x.to_string().into()),
-        }
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(match self {
-            TargetOrLocal::TargetNamespace => "##targetNamespace".to_string(),
-            TargetOrLocal::Local => "##local".to_string(),
-            TargetOrLocal::Uri(uri) => uri.text()?,
-        })
     }
 }
 
-impl Parse for NamespaceList {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
-        match s {
-            "##any" => Ok(Self::Any),
-            "##other" => Ok(Self::Other),
-            x => {
-                let res: Result<Vec<_>, _> =
-                    x.split(' ').map(|v| v.parse::<TargetOrLocal>()).collect();
-                Ok(Self::ListOf(res?))
-            }
+impl fmt::Display for TargetOrLocal {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            TargetOrLocal::TargetNamespace => write!(f, "{}", "##targetNamespace"),
+            TargetOrLocal::Local => write!(f, "{}", "##local"),
+            TargetOrLocal::Uri(uri) => write!(f, "{}", uri.as_ref()),
         }
-    }
-
-    fn create(s: String) -> Self
-    where
-        Self: Sized,
-    {
-        match s.as_str() {
-            "##any" => Self::Any,
-            "##other" => Self::Other,
-            x => {
-                let res = x
-                    .split(' ')
-                    .map(|v| TargetOrLocal::create(v.to_string()))
-                    .collect();
-                Self::ListOf(res)
-            }
-        }
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(match self {
-            NamespaceList::Any => "##any".to_string(),
-            NamespaceList::Other => "##other".to_string(),
-            NamespaceList::ListOf(x) => x
-                .iter()
-                .map(|v| v.text())
-                .collect::<Result<Vec<String>, String>>()?
-                .into_iter()
-                .fold(String::new(), |a, b| format!("{} {}", a, b)),
-        })
     }
 }

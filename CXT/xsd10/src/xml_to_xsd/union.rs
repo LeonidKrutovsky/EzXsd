@@ -1,8 +1,7 @@
 use crate::model::elements::ElementType;
-use crate::model::simple_types::xsd_list::XsdList;
 use crate::model::LocalSimpleType;
 use crate::model::Union;
-use crate::model::{Annotation, Parse};
+use crate::model::{Annotation};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 
@@ -25,7 +24,7 @@ impl<'a> Union<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "memberTypes" => res.member_types = XsdList::parse(attr.value())?,
+                "memberTypes" => res.member_types = attr.value().parse()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -56,11 +55,11 @@ mod test {
         let res = Union::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().raw(), "ID");
+        assert_eq!(res.id.unwrap().as_ref(), "ID");
         assert_eq!(res.member_types.0.len(), 2);
-        assert_eq!(res.member_types.0[0].name(), "Type1");
-        assert_eq!(res.member_types.0[1].name(), "Type2");
-        assert_eq!(res.member_types.0[1].prefix().unwrap(), "xs");
+        assert_eq!(res.member_types.0[0].name.as_ref(), "Type1");
+        assert_eq!(res.member_types.0[1].name.as_ref(), "Type2");
+        assert_eq!(res.member_types.0[1].prefix(), Some("xs"));
         assert_eq!(res.simple_type.len(), 3);
     }
 }

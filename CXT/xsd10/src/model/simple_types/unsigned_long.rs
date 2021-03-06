@@ -14,7 +14,6 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-use crate::model::ToXml;
 use std::str::FromStr;
 
 #[derive(Debug, PartialOrd, PartialEq, Default)]
@@ -34,11 +33,7 @@ impl PartialEq<u64> for UnsignedLong {
     }
 }
 
-impl ToXml for UnsignedLong {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_string())
-    }
-}
+impl_display!(UnsignedLong);
 
 #[cfg(test)]
 mod test {

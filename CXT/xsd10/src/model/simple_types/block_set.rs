@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use crate::model::simple_types::xsd_list::XsdList;
+
 // xsd:blockSet
 // #all or (possibly empty) subset of {substitution, extension, restriction}
 // Simple type information
@@ -25,7 +27,20 @@ use std::str::FromStr;
 #[derive(Debug, PartialEq)]
 pub enum BlockSet {
     All,
-    List(Vec<BlockSetChoice>),
+    List(XsdList<BlockSetChoice>),
+}
+
+impl FromStr for BlockSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let res = if s == "#all" {
+            Self::All
+        } else {
+            Self::List(s.parse()?)
+        };
+        Ok(res)
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -49,16 +64,4 @@ impl FromStr for BlockSetChoice {
     }
 }
 
-impl FromStr for BlockSet {
-    type Err = String;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let res = if s == "#all" {
-            Self::All
-        } else {
-            let res: Result<Vec<_>, String> = s.split(' ').map(BlockSetChoice::from_str).collect();
-            Self::List(res?)
-        };
-        Ok(res)
-    }
-}

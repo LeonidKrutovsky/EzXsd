@@ -1,10 +1,11 @@
+use std::fmt;
+use std::str::FromStr;
+
+use chrono::FixedOffset;
+
 use crate::model::simple_types::gday::GDay;
 use crate::model::simple_types::gmonth::GMonth;
-use chrono::FixedOffset;
-use std::fmt;
-
 use crate::model::simple_types::parse_timezone;
-use std::str::FromStr;
 
 // xsd:gMonthDay
 // The type xsd:gMonthDay represents a specific day that recurs every year. The letter g signifies "Gregorian." xsd:gMonthDay can be used to say, for example, that your birthday is on the 14th of April every year. The format of xsd:gMonthDay is --MM-DD.
@@ -163,7 +164,7 @@ mod tests {
             Ok(GMonthDay {
                 month: 12,
                 day: 20,
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -173,7 +174,7 @@ mod tests {
             Ok(GMonthDay {
                 month: 12,
                 day: 20,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -183,7 +184,7 @@ mod tests {
             Ok(GMonthDay {
                 month: 12,
                 day: 20,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -193,7 +194,7 @@ mod tests {
             Ok(GMonthDay {
                 month: 12,
                 day: 20,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -219,9 +220,9 @@ mod tests {
             GMonthDay {
                 month: 3,
                 day: 2,
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "--03-02"
         );
 
@@ -230,9 +231,9 @@ mod tests {
             GMonthDay {
                 month: 3,
                 day: 2,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "--03-02+00:00"
         );
 
@@ -241,9 +242,9 @@ mod tests {
             GMonthDay {
                 month: 3,
                 day: 2,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "--03-02+06:30"
         );
 
@@ -252,9 +253,9 @@ mod tests {
             GMonthDay {
                 month: 3,
                 day: 2,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "--03-02-06:30"
         );
     }

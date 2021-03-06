@@ -51,8 +51,9 @@ impl FromStr for DeriviationControl {
 
 #[cfg(test)]
 mod test {
-    use super::DeriviationControl;
     use std::str::FromStr;
+
+    use super::DeriviationControl;
 
     #[test]
     fn test_parse() {

@@ -1,8 +1,9 @@
-use chrono::FixedOffset;
 use std::fmt;
+use std::str::FromStr;
+
+use chrono::FixedOffset;
 
 use crate::model::simple_types::parse_timezone;
-use std::str::FromStr;
 
 // xsd:gDay
 // The type xsd:gDay represents a day that recurs every month. The letter g signifies "Gregorian." xsd:gDay can be used to say, for example, that checks are paid on the 5th of each month. To represent a duration of days, use the duration type instead. The format of gDay is ---DD.
@@ -119,7 +120,7 @@ mod tests {
             GDay::from_str("---25"),
             Ok(GDay {
                 value: 25,
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -128,7 +129,7 @@ mod tests {
             GDay::from_str("---25Z"),
             Ok(GDay {
                 value: 25,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -137,7 +138,7 @@ mod tests {
             GDay::from_str("---25+06:30"),
             Ok(GDay {
                 value: 25,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -146,7 +147,7 @@ mod tests {
             GDay::from_str("---25-06:30"),
             Ok(GDay {
                 value: 25,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -166,9 +167,9 @@ mod tests {
         assert_eq!(
             GDay {
                 value: 3,
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "---03"
         );
 
@@ -176,9 +177,9 @@ mod tests {
         assert_eq!(
             GDay {
                 value: 3,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "---03+00:00"
         );
 
@@ -186,9 +187,9 @@ mod tests {
         assert_eq!(
             GDay {
                 value: 3,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "---03+06:30"
         );
 
@@ -196,9 +197,9 @@ mod tests {
         assert_eq!(
             GDay {
                 value: 3,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "---03-06:30"
         );
     }

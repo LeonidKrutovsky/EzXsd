@@ -61,7 +61,7 @@ mod test {
         let res = Restriction::parse(root).unwrap();
         assert!(res.annotation.is_some());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().raw(), "ID");
+        assert_eq!(res.id.unwrap().as_ref(), "ID");
         assert_eq!(res.base.as_ref().unwrap().name(), "Type1");
         assert_eq!(res.base.as_ref().unwrap().prefix().unwrap(), "xsd");
         let model = &res.model;

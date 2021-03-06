@@ -1,8 +1,9 @@
-use chrono::FixedOffset;
 use std::fmt;
+use std::str::FromStr;
+
+use chrono::FixedOffset;
 
 use crate::model::simple_types::parse_timezone;
-use std::str::FromStr;
 
 // xsd:gYear
 // The type xsd:gYear represents a specific calendar year. The letter g signifies "Gregorian." The format of xsd:gYear is CCYY. No left truncation is allowed. To represent years later than 9999, additional digits can be added to the left of the year value. To represent years before 0001, a preceding minus sign ("-") is allowed.
@@ -144,7 +145,7 @@ mod tests {
             GYear::from_str("2020"),
             Ok(GYear {
                 value: 2020,
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -153,7 +154,7 @@ mod tests {
             GYear::from_str("2020Z"),
             Ok(GYear {
                 value: 2020,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -162,7 +163,7 @@ mod tests {
             GYear::from_str("2020+06:30"),
             Ok(GYear {
                 value: 2020,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -171,7 +172,7 @@ mod tests {
             GYear::from_str("2020-06:30"),
             Ok(GYear {
                 value: 2020,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -180,7 +181,7 @@ mod tests {
             GYear::from_str("-0020-06:30"),
             Ok(GYear {
                 value: -20,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -189,7 +190,7 @@ mod tests {
             GYear::from_str("-20000-06:30"),
             Ok(GYear {
                 value: -20000,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -206,9 +207,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: 987,
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "0987"
         );
 
@@ -216,9 +217,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: 987,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "0987+00:00"
         );
 
@@ -226,9 +227,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: 987,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "0987+06:30"
         );
 
@@ -236,9 +237,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: 987,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "0987-06:30"
         );
 
@@ -246,9 +247,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: -987,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "-0987-06:30"
         );
 
@@ -256,9 +257,9 @@ mod tests {
         assert_eq!(
             GYear {
                 value: -98765,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "-98765-06:30"
         );
     }

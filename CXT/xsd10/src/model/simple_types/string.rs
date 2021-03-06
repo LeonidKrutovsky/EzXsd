@@ -35,13 +35,17 @@
 //              restricted by xsd:ENTITY
 //                used in list xsd:ENTITIES
 
-use crate::model::Parse;
+use std::str::FromStr;
+
+use crate::model::simple_types::any_simple_type::AnySimpleType;
 
 #[derive(Debug, Default, Clone)]
-pub struct String_(String);
+pub struct String_(AnySimpleType);
 
-impl Parse for String_ {
-    fn parse(value: &str) -> Result<Self, String> {
+impl FromStr for String_ {
+    type Err = String;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         for i in value.chars().enumerate() {
             match i {
                 (_, '<') => {
@@ -59,54 +63,56 @@ impl Parse for String_ {
             }
         }
 
-        Ok(Self(value.to_string()))
+        Ok(Self(value.into()))
     }
+}
 
-    fn create(value: String) -> Self {
-        Self(value)
-    }
+impl_from_string!(String_);
+impl_display!(String_);
 
-    fn text(&self) -> Result<String, String> {
+impl String_ {
+    pub fn escape<T: AsRef<str>>(s: T) -> String {
         let mut result = String::new();
         let mut start = 0;
-
-        self.0.chars().enumerate().for_each(|x| match x {
+        let s = s.as_ref();
+        s.chars().enumerate().for_each(|x| match x {
             (end, '<') => {
-                result.push_str(unsafe { self.0.get_unchecked(start..end) });
+                result.push_str(unsafe { s.get_unchecked(start..end) });
                 result.push_str("&lt;");
                 start = end + 1;
             }
             (end, '&') => {
-                result.push_str(unsafe { self.0.get_unchecked(start..end) });
+                result.push_str(unsafe { s.get_unchecked(start..end) });
                 result.push_str("&amp;");
                 start = end + 1;
             }
             _ => {}
         });
 
-        if start != self.0.len() {
-            result.push_str(unsafe { self.0.get_unchecked(start..) });
+        if start != s.len() {
+            result.push_str(unsafe { s.get_unchecked(start..) });
         }
 
-        Ok(result)
+        result
     }
 }
 
-impl String_ {
-    pub fn raw(&self) -> &str {
+impl AsRef<str> for String_ {
+    fn as_ref(&self) -> &str {
         self.0.as_str()
     }
 }
 
 #[cfg(test)]
 mod test {
+    use std::str::FromStr;
+
     use crate::model::simple_types::String_;
-    use crate::model::Parse;
 
     #[test]
     fn test_xml_conversation() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(String_::create(left.to_string()).text().unwrap(), right);
+            assert_eq!(String_::from(left).as_ref(), right);
         }
         let two_lines_str = r"
 This
@@ -126,7 +132,7 @@ is on two lines.
     #[test]
     fn test_parsing() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(String_::parse(left).unwrap().raw(), right);
+            assert_eq!(String_::from_str(left).unwrap().as_ref(), right);
         }
         let two_lines_str = r"
 This
@@ -142,10 +148,10 @@ is on two lines.
         eq("3 &lt; 4", "3 &lt; 4");
         eq("AT&amp;T", "AT&amp;T");
 
-        assert!(String_::parse("3 < 4").is_err());
-        assert!(String_::parse("AT&T").is_err());
+        assert!(String_::from_str("3 < 4").is_err());
+        assert!(String_::from_str("AT&T").is_err());
         assert_eq!(
-            String_::parse("&").err().unwrap(),
+            String_::from_str("&").err().unwrap(),
             "Symbol '&' must be escaped: &"
         );
     }

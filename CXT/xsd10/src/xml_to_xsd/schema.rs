@@ -1,11 +1,9 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::simple_types::token::Token;
-use crate::model::simple_types::AnyUri;
 use crate::model::Import;
 use crate::model::Include;
 use crate::model::Schema;
-use crate::model::{Annotation, Parse};
+use crate::model::{Annotation};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
 
@@ -20,8 +18,8 @@ impl<'a> Schema<'a> {
 
         for attr in schema_node.attributes() {
             match attr.name() {
-                "targetNamespace" => schema.target_namespace = Some(AnyUri::parse(attr.value())?),
-                "version" => schema.version = Some(Token::parse(attr.value())?),
+                "targetNamespace" => schema.target_namespace = Some(attr.value().parse()?),
+                "version" => schema.version = Some(attr.value().parse()?),
                 "finalDefault" => schema.final_default = Some(attr.value().parse()?),
                 "blockDefault" => schema.block_default = Some(attr.value().parse()?),
                 "attributeFormDefault" => schema.attribute_form_default = attr.value().parse()?,

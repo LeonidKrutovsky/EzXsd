@@ -20,42 +20,30 @@
 // Based on xsd:anySimpleType
 // White Space: collapse
 
-use crate::model::Parse;
-
+use std::fmt;
+use std::str::FromStr;
 
 
 #[derive(Debug, PartialEq)]
 pub struct Double(pub f64);
 
-impl Parse for Double {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
+impl FromStr for Double {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "-INF" => Ok(Double(f64::NEG_INFINITY)),
             "INF" => Ok(Double(f64::INFINITY)),
             _ => Ok(Double(s.parse::<f64>().map_err(|e| e.to_string())?)),
         }
     }
-
-    fn create(s: String) -> Self
-    where
-        Self: Sized,
-    {
-        Self(s.parse::<f64>().unwrap_or(f64::NAN))
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(match self.0 {
-            f64::NEG_INFINITY => "-INF".into(),
-            f64::INFINITY => "INF".into(),
-            _ => self.0.to_string(),
-        })
-    }
 }
 
-impl_from_str!(Double);
+impl From<f64> for Double {
+    fn from(v: f64) -> Self {
+        Self(v)
+    }
+}
 
 impl PartialEq<f64> for Double {
     fn eq(&self, other: &f64) -> bool {
@@ -63,11 +51,17 @@ impl PartialEq<f64> for Double {
     }
 }
 
+impl fmt::Display for Double {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::double::Double;
-    use crate::model::Parse;
     use std::str::FromStr;
+
+    use crate::model::simple_types::double::Double;
 
     #[test]
     fn test_valid_parse() {
@@ -95,7 +89,7 @@ mod test {
     #[test]
     fn test_to_xml() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(Double::from_str(left).unwrap().text().unwrap(), right);
+            assert_eq!(Double::from_str(left).unwrap().to_string(), right);
         }
         eq("-3E2", "-300");
         eq("4268.22752E11", "426822752000000");

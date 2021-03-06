@@ -25,27 +25,15 @@
 //  xsd:anySimpleType
 //      restricted by xsd:base64Binary
 
-use crate::model::simple_types::white_space_facet::{collapse, replace};
-use crate::model::Parse;
+use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Base64Binary(Vec<u8>);
 
-impl Base64Binary {
-    pub fn decoded(&self) -> &[u8] {
-        self.0.as_slice()
-    }
+impl FromStr for Base64Binary {
+    type Err = String;
 
-    pub fn encoded(&self) -> String {
-        base64::encode(self.0.as_slice())
-    }
-}
-
-impl Parse for Base64Binary {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s = s.replace(' ', "");
         if s.len() % 2 != 0 {
             Err(format!(
@@ -57,26 +45,30 @@ impl Parse for Base64Binary {
             Ok(Self(base64::decode(s).map_err(|e| e.to_string())?))
         }
     }
+}
 
-    fn create(value: String) -> Self
-    where
-        Self: Sized,
-    {
-        Self(value.into_bytes())
-    }
-
-    fn text(&self) -> Result<String, String> {
-        Ok(collapse(replace(self.encoded().as_str()).as_str()))
+impl<T: Into<Vec<u8>>> From<T> for Base64Binary {
+    fn from(v: T) -> Self {
+        Self(v.into())
     }
 }
 
-impl_from_str!(Base64Binary);
-impl_from_string!(Base64Binary);
+impl Base64Binary {
+    pub fn decoded(&self) -> &[u8] {
+        self.0.as_slice()
+    }
+
+    pub fn encoded(&self) -> String {
+        base64::encode(self.0.as_slice())
+    }
+}
+
 
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::Base64Binary;
     use std::str::FromStr;
+
+    use crate::model::simple_types::Base64Binary;
 
     #[test]
     pub fn test_decode() {

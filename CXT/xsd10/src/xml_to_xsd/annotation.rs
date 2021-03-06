@@ -51,6 +51,6 @@ mod test {
         assert_eq!(res.app_infos.len(), 2);
         assert_eq!(res.documentations.len(), 2);
         assert_eq!(res.attributes.len(), 3);
-        assert_eq!(res.id.unwrap().raw(), "ID");
+        assert_eq!(res.id.unwrap().as_ref(), "ID");
     }
 }

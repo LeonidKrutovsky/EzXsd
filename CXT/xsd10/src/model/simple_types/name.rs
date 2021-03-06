@@ -28,14 +28,17 @@
 //                          restricted by xsd:ENTITY
 //                              used in list xsd:ENTITIES
 
+use std::str::FromStr;
+
 use crate::model::simple_types::Token;
-use crate::model::Parse;
 
 #[derive(Debug, Default, Clone)]
 pub struct Name(Token);
 
-impl Parse for Name {
-    fn parse(value: &str) -> Result<Self, String> {
+impl FromStr for Name {
+    type Err = String;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value.is_empty() {
             Err(format!(
                 "An empty value is not valid, unless xsi:nil is used"
@@ -45,68 +48,49 @@ impl Parse for Name {
         } else if value.chars().nth(0).unwrap().is_digit(10) {
             Err(format!("A Name must not start with a number: {}", value))
         } else {
-            Ok(Self(Token::parse(value)?))
-        }
-    }
-
-    fn create(value: String) -> Self {
-        Self(Token::create(value))
-    }
-
-    fn text(&self) -> Result<String, String> {
-        let result: String = self.0.text()?;
-        if result.is_empty() {
-            Err(format!(
-                "An empty value is not valid, unless xsi:nil is used"
-            ))
-        } else if result.starts_with('-') {
-            Err(format!("A Name must not start with a hyphen: {}", result))
-        } else if result.chars().nth(0).unwrap().is_digit(10) {
-            Err(format!("A Name must not start with a number: {}", result))
-        } else {
-            Ok(result)
+            Ok(Self(value.parse()?))
         }
     }
 }
 
-impl Name {
-    pub fn raw(&self) -> &str {
-        self.0.raw()
-    }
-}
+impl_from_string!(Name);
+impl_as_ref!(Name);
+impl_display!(Name);
+
 
 #[cfg(test)]
 mod test {
+    use std::str::FromStr;
+
     use crate::model::simple_types::name::Name;
-    use crate::model::Parse;
 
     #[test]
     fn test_valid_name() {
-        fn eq(left: &str, right: &str) {
-            assert_eq!(Name::create(left.to_string()).text().unwrap(), right);
+        fn is_ok(s: &str) {
+            assert!(Name::from_str(s).is_ok());
         }
 
-        eq("myElement", "myElement");
-        eq("_my.Element", "_my.Element");
-        eq("my-element", "my-element");
-        eq("pre:myelement3", "pre:myelement3");
+        is_ok("myElement");
+        is_ok("_my.Element");
+        is_ok("my-element");
+        is_ok("pre:myelement3");
     }
 
     #[test]
     fn test_invalid_name() {
         assert_eq!(
-            Name::create("-myelement".to_string()).text(),
-            Err("A Name must not start with a hyphen: -myelement".to_string())
+            Name::from_str("-myelement").err().unwrap(),
+            "A Name must not start with a hyphen: -myelement"
         );
 
         assert_eq!(
-            Name::create("3myelement".to_string()).text(),
-            Err("A Name must not start with a number: 3myelement".to_string())
+            Name::from_str("3myelement").err().unwrap(),
+            "A Name must not start with a number: 3myelement"
         );
 
         assert_eq!(
-            Name::create(String::new()).text(),
-            Err("An empty value is not valid, unless xsi:nil is used".to_string())
+            Name::from_str("").err().unwrap(),
+            "An empty value is not valid, unless xsi:nil is used"
         );
     }
 }

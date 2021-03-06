@@ -1,4 +1,7 @@
-use crate::model::Parse;
+use std::fmt;
+use std::str::FromStr;
+
+use crate::model::simple_types::xsd_list::XsdList;
 
 // xsd:fullDerivationSet
 // #all or (possibly empty) subset of {extension, restriction, list, union}
@@ -25,7 +28,34 @@ use crate::model::Parse;
 #[derive(Debug, PartialEq)]
 pub enum FullDerivationSet {
     All,
-    List(Vec<FullDerivationSubSet>),
+    List(XsdList<FullDerivationSubSet>),
+}
+
+impl FromStr for FullDerivationSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let res = if s == "#all" {
+            Self::All
+        } else {
+            Self::List(s.parse()?)
+        };
+        Ok(res)
+    }
+}
+
+impl fmt::Display for FullDerivationSet {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FullDerivationSet::All => write!(f, "{}", "#all"),
+            FullDerivationSet::List(x) => {
+                let res = x.0
+                .iter()
+                .fold(String::new(), |a, b| format!("{} {}", a, b));
+                write!(f, "{}", res)
+            }
+        }
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -36,11 +66,10 @@ pub enum FullDerivationSubSet {
     Union,
 }
 
-impl Parse for FullDerivationSubSet {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
+impl FromStr for FullDerivationSubSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = match s {
             "extension" => Self::Extension,
             "restriction" => Self::Restriction,
@@ -50,67 +79,15 @@ impl Parse for FullDerivationSubSet {
         };
         Ok(res)
     }
-
-    fn create(_value: String) -> Self
-    where
-        Self: Sized,
-    {
-        unimplemented!()
-    }
-
-    fn text(&self) -> Result<String, String> {
-        let res = match self {
-            Self::Extension => "extension",
-            Self::Restriction => "restriction",
-            Self::List => "list",
-            Self::Union => "union",
-        };
-        Ok(res.into())
-    }
 }
 
-impl_from_str!(FullDerivationSubSet);
-
-impl FromStr for FullDerivationSet {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::parse(s)
-    }
-}
-
-impl Parse for FullDerivationSet {
-    fn parse(s: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
-        let res = if s == "#all" {
-            Self::All
-        } else {
-            let res: Result<Vec<_>, String> =
-                s.split(' ').map(FullDerivationSubSet::parse).collect();
-            Self::List(res?)
-        };
-        Ok(res)
-    }
-
-    fn create(_value: String) -> Self
-    where
-        Self: Sized,
-    {
-        unimplemented!()
-    }
-
-    fn text(&self) -> Result<String, String> {
-        let res = match self {
-            Self::All => "#all".to_string(),
-            Self::List(x) => x
-                .iter()
-                .map(|v| v.text())
-                .collect::<Result<Vec<String>, String>>()?
-                .into_iter()
-                .fold(String::new(), |a, b| format!("{} {}", a, b)),
-        };
-        Ok(res)
+impl fmt::Display for FullDerivationSubSet {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            FullDerivationSubSet::Extension => write!(f, "{}", "extension"),
+            FullDerivationSubSet::Restriction => write!(f, "{}", "restriction"),
+            FullDerivationSubSet::List => write!(f, "{}", "list"),
+            FullDerivationSubSet::Union => write!(f, "{}", "union"),
+        }
     }
 }

@@ -14,9 +14,8 @@
 //  xsd:anySimpleType
 //    restricted by xsd:hexBinary
 
-use crate::model::simple_types::white_space_facet::collapse;
-use crate::model::ToXml;
 use std::str::FromStr;
+
 
 pub struct HexBinary(Vec<u8>);
 
@@ -39,16 +38,11 @@ impl HexBinary {
     }
 }
 
-impl ToXml for HexBinary {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(collapse(self.encoded().as_str()))
-    }
-}
-
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::hex_binary::HexBinary;
     use std::str::FromStr;
+
+    use crate::model::simple_types::hex_binary::HexBinary;
 
     #[test]
     fn test_hex_binary() {

@@ -24,113 +24,80 @@
 //  xsd:anySimpleType
 //      restricted by xsd:QName
 
-use crate::model::simple_types::NCName;
-use crate::model::Parse;
 use core::fmt;
+use std::str::FromStr;
+
+use crate::model::simple_types::NCName;
 
 #[derive(Default, Debug)]
 pub struct QName {
-    prefix: Option<NCName>,
-    name: NCName,
+    pub prefix: Option<NCName>,
+    pub name: NCName,
 }
-
-impl Parse for QName {
-    fn parse(value: &str) -> Result<Self, String>
-    where
-        Self: Sized,
-    {
-        if let Some(index) = value.find(':') {
-            Ok(Self {
-                prefix: Some(value[0..index].parse()?),
-                name: value[index + 1..].parse()?,
-            })
-        } else {
-            Ok(Self {
-                prefix: None,
-                name: value.parse()?,
-            })
-        }
-    }
-
-    fn create(value: String) -> Self
-    where
-        Self: Sized,
-    {
-        if let Some(index) = value.find(':') {
-            Self {
-                prefix: Some(value[0..index].to_string().into()),
-                name: value[index + 1..].to_string().into(),
-            }
-        } else {
-            Self {
-                prefix: None,
-                name: value.into(),
-            }
-        }
-    }
-
-    fn text(&self) -> Result<String, String> {
-        if let Some(ref pref) = self.prefix {
-            Ok(format!("{}:{}", pref.text()?, self.name.text()?))
-        } else {
-            self.name.text()
-        }
-    }
-}
-
-impl_from_str!(QName);
-impl_from_string!(QName);
 
 impl QName {
     pub fn prefix(&self) -> Option<&str> {
-        if let Some(ref pref) = self.prefix {
-            Some(pref.raw())
-        } else {
-            None
-        }
+        self.prefix.as_ref().map(|v| v.as_ref())
     }
-
     pub fn name(&self) -> &str {
-        self.name.raw()
+        self.name.as_ref()
+    }
+}
+
+impl FromStr for QName {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if let Some(index) = s.find(':') {
+            Ok(Self {
+                prefix: Some(s[0..index].parse()?),
+                name: s[index + 1..].parse()?,
+            })
+        } else {
+            Ok(Self {
+                prefix: None,
+                name: s.parse()?,
+            })
+        }
     }
 }
 
 impl fmt::Display for QName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        if let Some(prefix) = self.prefix() {
-            write!(f, "{}:{}", prefix, self.name())
+        if let Some(ref prefix) = self.prefix {
+            write!(f, "{}:{}", prefix, self.name)
         } else {
-            write!(f, "{}", self.name())
+            write!(f, "{}", self.name)
         }
     }
 }
 
 #[cfg(test)]
 mod test {
+    use std::str::FromStr;
+
     use crate::model::simple_types::qname::QName;
-    use crate::model::Parse;
 
     #[test]
     fn test_valid_qname() {
         fn eq(left: &str, right: &str) {
-            assert_eq!(QName::create(left.to_string()).text().unwrap(), right);
+            assert_eq!(QName::from_str(left).unwrap().to_string(), right);
         }
 
         eq("pre:myElement", "pre:myElement");
         eq("myElement", "myElement");
-        eq("  myElement  ", "myElement");
     }
 
     #[test]
     fn test_invalid_qname() {
         assert_eq!(
-            QName::create(":myElement".to_string()).text(),
-            Err("A QName must not start with a colon: :myElement".to_string())
+            QName::from_str(":myElement").err().unwrap(),
+            "A QName must not start with a colon: :myElement"
         );
 
         assert_eq!(
-        QName::create("pre:3rdElement".to_string()).text(),
-        Err("The local part must not start with a number; it must be a valid NCName: pre:3rdElement".to_string())
+            QName::from_str("pre:3rdElement").err().unwrap(),
+            "The local part must not start with a number; it must be a valid NCName: pre:3rdElement"
         );
     }
 }

@@ -1,7 +1,7 @@
-use chrono::{format::strftime::StrftimeItems, FixedOffset, NaiveTime};
 use std::fmt;
-
 use std::str::FromStr;
+
+use chrono::{FixedOffset, format::strftime::StrftimeItems, NaiveTime};
 
 use crate::model::simple_types::parse_timezone;
 
@@ -136,7 +136,7 @@ mod tests {
             Time::from_str("04:40:00"),
             Ok(Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -145,7 +145,7 @@ mod tests {
             Time::from_str("04:40:00Z"),
             Ok(Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -154,7 +154,7 @@ mod tests {
             Time::from_str("04:40:00+06:30"),
             Ok(Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -163,7 +163,7 @@ mod tests {
             Time::from_str("04:40:00-06:30"),
             Ok(Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
     }
@@ -174,9 +174,9 @@ mod tests {
         assert_eq!(
             Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "04:40:00"
         );
 
@@ -184,9 +184,9 @@ mod tests {
         assert_eq!(
             Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "04:40:00+00:00"
         );
 
@@ -194,9 +194,9 @@ mod tests {
         assert_eq!(
             Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "04:40:00+06:30"
         );
 
@@ -204,9 +204,9 @@ mod tests {
         assert_eq!(
             Time {
                 value: NaiveTime::from_hms(4, 40, 0),
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "04:40:00-06:30"
         );
     }

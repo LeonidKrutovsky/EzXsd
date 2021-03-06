@@ -14,8 +14,9 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-use crate::model::ToXml;
+use std::fmt;
 use std::str::FromStr;
+
 
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct Int(pub i32);
@@ -34,9 +35,9 @@ impl PartialEq<i32> for Int {
     }
 }
 
-impl ToXml for Int {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_string())
+impl fmt::Display for Int {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
     }
 }
 

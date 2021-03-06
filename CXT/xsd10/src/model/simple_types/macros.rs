@@ -1,21 +1,33 @@
-macro_rules! impl_from_str {
+macro_rules! impl_from_string {
     ($type_name:ident) => {
-        use std::str::FromStr;
-        impl FromStr for $type_name {
-            type Err = String;
-            fn from_str(s: &str) -> Result<Self, Self::Err> {
-                Self::parse(s)
+        impl<T: Into<String>> From<T> for $type_name {
+            fn from(s: T) -> Self {
+                Self(s.into().into())
             }
         }
     };
 }
 
-macro_rules! impl_from_string {
+macro_rules! impl_as_ref {
     ($type_name:ident) => {
-        impl From<String> for $type_name {
-            fn from(s: String) -> Self {
-                Self::create(s)
+        impl AsRef<str> for $type_name {
+            fn as_ref(&self) -> &str {
+                self.0.as_ref()
             }
         }
     };
 }
+
+macro_rules! impl_display {
+    ($type_name:ident) => {
+    use std::fmt;
+    impl fmt::Display for $type_name {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+    }
+}
+
+
+

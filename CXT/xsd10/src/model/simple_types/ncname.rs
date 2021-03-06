@@ -37,80 +37,67 @@
 //                              restricted by xsd:ENTITY
 //                                  used in list xsd:ENTITIES
 
+use std::str::FromStr;
+
 use crate::model::simple_types::name::Name;
-use crate::model::Parse;
 
 #[derive(Debug, Default, Clone)]
 pub struct NCName(Name);
 
-impl Parse for NCName {
-    fn parse(value: &str) -> Result<Self, String> {
-        if value.contains(":") {
-            Err(format!("An NCName must not contain a colon: {}", value))
-        } else {
-            Ok(Self(Name::parse(value)?))
-        }
-    }
+impl FromStr for NCName {
+    type Err = String;
 
-    fn create(value: String) -> Self {
-        Self(Name::create(value))
-    }
-
-    fn text(&self) -> Result<String, String> {
-        let result = self.0.text()?;
-        if result.contains(":") {
-            Err(format!("An NCName must not contain a colon: {}", result))
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        if s.contains(":") {
+            Err(format!("An NCName must not contain a colon: {}", s))
         } else {
-            Ok(result)
+            Ok(Self(s.parse()?))
         }
     }
 }
 
-impl_from_str!(NCName);
 impl_from_string!(NCName);
+impl_as_ref!(NCName);
+impl_display!(NCName);
 
-impl NCName {
-    pub fn raw(&self) -> &str {
-        self.0.raw()
-    }
-}
 
 #[cfg(test)]
 mod test {
+    use std::str::FromStr;
+
     use crate::model::simple_types::ncname::NCName;
-    use crate::model::Parse;
 
     #[test]
     fn test_valid_name() {
-        fn eq(left: &str, right: &str) {
-            assert_eq!(NCName::create(left.to_string()).text().unwrap(), right);
+        fn is_ok(s: &str) {
+            assert!(NCName::from_str(s).is_ok());
         }
 
-        eq("myElement", "myElement");
-        eq("_my.Element", "_my.Element");
-        eq("my-element", "my-element");
+        is_ok("myElement");
+        is_ok("_my.Element");
+        is_ok("my-element");
     }
 
     #[test]
     fn test_invalid_name() {
         assert_eq!(
-            NCName::create("-myelement".to_string()).text(),
-            Err("A Name must not start with a hyphen: -myelement".to_string())
+            NCName::from_str("-myelement").err().unwrap(),
+            "A Name must not start with a hyphen: -myelement"
         );
 
         assert_eq!(
-            NCName::create("3myelement".to_string()).text(),
-            Err("A Name must not start with a number: 3myelement".to_string())
+            NCName::from_str("3myelement").err().unwrap(),
+            "A Name must not start with a number: 3myelement"
         );
 
         assert_eq!(
-            NCName::create("".to_string()).text(),
-            Err("An empty value is not valid, unless xsi:nil is used".to_string())
+            NCName::from_str("").err().unwrap(),
+            "An empty value is not valid, unless xsi:nil is used"
         );
 
         assert_eq!(
-            NCName::create("pre:myElement".to_string()).text(),
-            Err("An NCName must not contain a colon: pre:myElement".to_string())
+            NCName::from_str("pre:myElement").err().unwrap(),
+            "An NCName must not contain a colon: pre:myElement"
         );
     }
 }

@@ -1,6 +1,7 @@
-use chrono::{format::ParseError, DateTime as CDateTime, FixedOffset};
 use std::fmt;
 use std::str::FromStr;
+
+use chrono::{DateTime as CDateTime, FixedOffset, format::ParseError};
 
 // xsd:dateTime
 // The type xsd:dateTime represents a specific date and time in the format CCYY-MM-DDThh:mm:ss.sss, which is a concatenation of the date and time forms, separated by a literal letter "T". All of the same rules that apply to the date and time types are applicable to xsd:dateTime as well.
@@ -86,8 +87,9 @@ impl fmt::Display for DateTime {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use chrono::NaiveDate;
+
+    use super::*;
 
     #[test]
     fn datetime_parse_test() {

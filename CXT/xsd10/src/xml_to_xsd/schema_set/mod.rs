@@ -56,9 +56,7 @@ impl<'a> SchemaSet<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::groups::simple_derivation::SimpleDerivation;
-    use crate::model::simple_types::qname::QName;
     use crate::model::simple_types::SimpleType;
-    use crate::model::Parse;
     use crate::xml_to_xsd::schema_set::results::{AttributeBase, AttributeType};
     use crate::xml_to_xsd::schema_set::SchemaSet;
     use roxmltree::Document;
@@ -79,7 +77,7 @@ mod test {
         let schemas = schema_set.schemas();
         let schema_wrapper = schemas.first().unwrap();
         let st = schema_wrapper
-            .resolve_attribute_type(&QName::create("Name".to_string()))
+            .resolve_attribute_type(&"Name".parse().unwrap())
             .unwrap();
 
         if let AttributeType::Simple(v) = st {
@@ -113,11 +111,11 @@ mod test {
         let schemas = schema_set.schemas();
         let rules_schema_wrapper = &schemas[0];
         let base = rules_schema_wrapper
-            .resolve_base(&QName::create("tt:IntRange".to_string()))
+            .resolve_base(&"tt:IntRange".parse().unwrap())
             .unwrap();
 
         if let AttributeBase::Complex(v) = base {
-            assert_eq!(v.name.raw(), "IntRange");
+            assert_eq!(v.name.as_ref(), "IntRange");
             assert_eq!(
                 v.annotation.as_ref().unwrap().doc_str(0).unwrap(),
                 "Range of values greater equal Min value and less equal Max value."

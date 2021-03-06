@@ -43,7 +43,7 @@ impl Block {
 
     pub fn get_list(&self) -> Option<&[DerivationSubset]> {
         match self.0 {
-            DerivationSet::List(ref value) => Some(value.as_slice()),
+            DerivationSet::List(ref value) => Some(value.0.as_slice()),
             _ => None,
         }
     }

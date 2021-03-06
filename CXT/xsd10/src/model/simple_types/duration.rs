@@ -1,5 +1,4 @@
 use std::fmt;
-
 use std::str::FromStr;
 
 // xsd:duration
@@ -302,8 +301,10 @@ impl fmt::Display for Duration {
 }
 
 struct ParsingContext {
-    is_p_found: bool,           // Is 'P' found in the string.
-    is_t_found: bool,           // Is 'T' delimiter occurred.
+    is_p_found: bool,
+    // Is 'P' found in the string.
+    is_t_found: bool,
+    // Is 'T' delimiter occurred.
     last_filled_component: i32, // 1 to 6 for Year to Minute.
 
     number: u64,

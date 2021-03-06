@@ -36,6 +36,8 @@ impl PartialEq<i64> for Long {
     }
 }
 
+impl_display!(Long);
+
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::long::Long;

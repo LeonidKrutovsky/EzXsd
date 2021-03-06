@@ -1,7 +1,6 @@
 use roxmltree::Node;
 
-use crate::model::simple_types::language::Language;
-use crate::model::{Documentation, Parse};
+use crate::model::{Documentation};
 
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Documentation<'a>, String> {
@@ -11,7 +10,7 @@ impl<'a> Documentation<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "source" => res.source = Some(attr.value().parse()?),
-                "lang" => res.lang = Some(Language::parse(attr.value())?),
+                "lang" => res.lang = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -36,8 +35,8 @@ mod test {
         let root = doc.root_element();
         let res = Documentation::parse(root).unwrap();
         assert_eq!(res.text.unwrap().trim(), "A string");
-        assert_eq!(res.source.unwrap().raw(), "http://ya.com");
-        assert_eq!(res.lang.unwrap().raw(), "us");
+        assert_eq!(res.source.unwrap().as_ref(), "http://ya.com");
+        assert_eq!(res.lang.unwrap().as_ref(), "us");
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.elements.len(), 1);
         assert_eq!(res.elements[0].text().unwrap(), "Some element");

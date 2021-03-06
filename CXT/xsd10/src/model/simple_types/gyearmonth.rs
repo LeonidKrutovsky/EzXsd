@@ -1,11 +1,11 @@
-use crate::model::simple_types::gmonth::GMonth;
-use crate::model::simple_types::gyear::GYear;
+use std::fmt;
+use std::str::FromStr;
 
 use chrono::FixedOffset;
-use std::fmt;
 
+use crate::model::simple_types::gmonth::GMonth;
+use crate::model::simple_types::gyear::GYear;
 use crate::model::simple_types::parse_timezone;
-use std::str::FromStr;
 
 // xsd:gYearMonth
 // The type xsd:gYearMonth represents a specific month of a specific year. The letter g signifies "Gregorian." The format of xsd:gYearMonth is CCYY-MM. No left truncation is allowed on either part. To represents years later than 9999, additional digits can be added to the left of the year value. To represent years before 0001, a preceding minus sign ("-") is permitted.
@@ -185,7 +185,7 @@ mod tests {
             Ok(GYearMonth {
                 year: 2020,
                 month: 3,
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -195,7 +195,7 @@ mod tests {
             Ok(GYearMonth {
                 year: 2020,
                 month: 3,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -205,7 +205,7 @@ mod tests {
             Ok(GYearMonth {
                 year: 2020,
                 month: 3,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -215,7 +215,7 @@ mod tests {
             Ok(GYearMonth {
                 year: 2020,
                 month: 3,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -225,7 +225,7 @@ mod tests {
             Ok(GYearMonth {
                 year: -20,
                 month: 3,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -235,7 +235,7 @@ mod tests {
             Ok(GYearMonth {
                 year: -20000,
                 month: 3,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -258,9 +258,9 @@ mod tests {
             GYearMonth {
                 year: 987,
                 month: 6,
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "0987-06"
         );
 
@@ -269,9 +269,9 @@ mod tests {
             GYearMonth {
                 year: 987,
                 month: 6,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "0987-06+00:00"
         );
 
@@ -280,9 +280,9 @@ mod tests {
             GYearMonth {
                 year: 987,
                 month: 6,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "0987-06+06:30"
         );
 
@@ -291,9 +291,9 @@ mod tests {
             GYearMonth {
                 year: 987,
                 month: 6,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "0987-06-06:30"
         );
 
@@ -302,9 +302,9 @@ mod tests {
             GYearMonth {
                 year: -987,
                 month: 6,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "-0987-06-06:30"
         );
 
@@ -313,9 +313,9 @@ mod tests {
             GYearMonth {
                 year: -98765,
                 month: 6,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "-98765-06-06:30"
         );
     }

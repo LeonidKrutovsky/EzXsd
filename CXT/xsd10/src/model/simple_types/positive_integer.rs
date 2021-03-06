@@ -1,7 +1,7 @@
-use num_bigint::{BigUint, ToBigUint};
 use std::fmt;
-
 use std::str::FromStr;
+
+use num_bigint::{BigUint, ToBigUint};
 
 // xsd:positiveInteger
 // The type xsd:positiveInteger represents an arbitrarily large positive integer. An xsd:positiveInteger is a sequence of digits, optionally preceded by a + sign. Leading zeros are permitted, but decimal points are not.

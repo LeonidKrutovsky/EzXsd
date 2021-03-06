@@ -16,8 +16,8 @@
 // Pattern: [\-+]?[0-9]+ (Defined in type xsd:integer)
 // White Space: collapse (Defined in type xsd:decimal)
 
-use crate::model::ToXml;
 use std::str::FromStr;
+
 
 #[derive(Debug, PartialOrd, PartialEq, Default)]
 pub struct Short(pub i16);
@@ -36,11 +36,7 @@ impl PartialEq<i16> for Short {
     }
 }
 
-impl ToXml for Short {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_string())
-    }
-}
+impl_display!(Short);
 
 #[cfg(test)]
 mod test {

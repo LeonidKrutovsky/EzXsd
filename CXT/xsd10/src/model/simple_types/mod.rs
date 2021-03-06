@@ -1,3 +1,38 @@
+use chrono::FixedOffset;
+
+pub use any_uri::AnyUri;
+pub use base64binary::Base64Binary;
+pub use block_set::*;
+pub use boolean::*;
+pub use byte::*;
+pub use date::*;
+pub use datetime::*;
+pub use decimal::*;
+pub use derivation_set::*;
+pub use deriviation_control::*;
+pub use duration::*;
+pub use form_choice::*;
+pub use full_derivation_set::*;
+pub use gday::*;
+pub use gmonth::*;
+pub use gmonthday::*;
+pub use gyear::*;
+pub use gyearmonth::*;
+pub use id::*;
+pub use integer::*;
+pub use language::*;
+pub use ncname::*;
+pub use negative_integer::*;
+pub use non_negative_integer::*;
+pub use non_positive_integer::*;
+pub use positive_integer::*;
+pub use public::*;
+pub use qname::*;
+pub use simple_derivation_set::*;
+pub use string::*;
+pub use time::*;
+pub use token::*;
+
 #[macro_use]
 mod macros;
 
@@ -58,41 +93,6 @@ pub mod unsigned_short;
 
 mod white_space_facet;
 pub mod xsd_list;
-
-pub use any_uri::AnyUri;
-pub use base64binary::Base64Binary;
-pub use block_set::*;
-pub use boolean::*;
-pub use byte::*;
-pub use date::*;
-pub use datetime::*;
-pub use decimal::*;
-pub use derivation_set::*;
-pub use deriviation_control::*;
-pub use duration::*;
-pub use form_choice::*;
-pub use full_derivation_set::*;
-pub use gday::*;
-pub use gmonth::*;
-pub use gmonthday::*;
-pub use gyear::*;
-pub use gyearmonth::*;
-pub use id::*;
-pub use integer::*;
-pub use language::*;
-pub use ncname::*;
-pub use negative_integer::*;
-pub use non_negative_integer::*;
-pub use non_positive_integer::*;
-pub use positive_integer::*;
-pub use public::*;
-pub use qname::*;
-pub use simple_derivation_set::*;
-pub use string::*;
-pub use time::*;
-pub use token::*;
-
-use chrono::FixedOffset;
 
 pub type AnySimpleType<'a> = &'a str;
 pub type Id = Option<id::Id>;

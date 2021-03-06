@@ -25,7 +25,6 @@
 //  xsd:anySimpleType
 //      restricted by xsd:boolean
 
-use crate::model::ToXml;
 use std::str::FromStr;
 
 pub struct Boolean(pub bool);
@@ -50,16 +49,18 @@ impl PartialEq<bool> for Boolean {
     }
 }
 
-impl ToXml for Boolean {
-    fn to_xml(&self) -> Result<String, String> {
-        Ok(self.0.to_string())
+impl From<bool> for Boolean {
+    fn from(v: bool) -> Self {
+        Self(v)
     }
 }
 
+
 #[cfg(test)]
 mod tests {
-    use super::Boolean;
     use std::str::FromStr;
+
+    use super::Boolean;
 
     #[test]
     fn test_valid_values() {

@@ -1,8 +1,9 @@
-use chrono::FixedOffset;
 use std::fmt;
+use std::str::FromStr;
+
+use chrono::FixedOffset;
 
 use crate::model::simple_types::parse_timezone;
-use std::str::FromStr;
 
 // xsd:gMonth
 // The type xsd:gMonth represents a specific month that recurs every year. The letter g signifies "Gregorian." xsd:gMonth can be used to indicate, for example, that fiscal year-end processing occurs in September of every year. To represent a duration of months, use the duration type instead. The format of xsd:gMonth is --MM.
@@ -121,7 +122,7 @@ mod tests {
             GMonth::from_str("--12"),
             Ok(GMonth {
                 value: 12,
-                timezone: None
+                timezone: None,
             })
         );
 
@@ -130,7 +131,7 @@ mod tests {
             GMonth::from_str("--12Z"),
             Ok(GMonth {
                 value: 12,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             })
         );
 
@@ -139,7 +140,7 @@ mod tests {
             GMonth::from_str("--12+06:30"),
             Ok(GMonth {
                 value: 12,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -148,7 +149,7 @@ mod tests {
             GMonth::from_str("--12-06:30"),
             Ok(GMonth {
                 value: 12,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             })
         );
 
@@ -168,9 +169,9 @@ mod tests {
         assert_eq!(
             GMonth {
                 value: 3,
-                timezone: None
+                timezone: None,
             }
-            .to_string(),
+                .to_string(),
             "--03"
         );
 
@@ -178,9 +179,9 @@ mod tests {
         assert_eq!(
             GMonth {
                 value: 3,
-                timezone: Some(FixedOffset::east(0))
+                timezone: Some(FixedOffset::east(0)),
             }
-            .to_string(),
+                .to_string(),
             "--03+00:00"
         );
 
@@ -188,9 +189,9 @@ mod tests {
         assert_eq!(
             GMonth {
                 value: 3,
-                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::east(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "--03+06:30"
         );
 
@@ -198,9 +199,9 @@ mod tests {
         assert_eq!(
             GMonth {
                 value: 3,
-                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60))
+                timezone: Some(FixedOffset::west(6 * 3600 + 30 * 60)),
             }
-            .to_string(),
+                .to_string(),
             "--03-06:30"
         );
     }

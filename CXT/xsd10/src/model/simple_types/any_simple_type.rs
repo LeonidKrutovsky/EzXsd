@@ -6,6 +6,6 @@
 //
 // Schema Document: datatypes.xsd
 
-use std::borrow::Cow;
 
-pub type AnySimpleType<'a> = Cow<'a, str>;
+pub type AnySimpleType = String;
+

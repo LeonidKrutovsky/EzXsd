@@ -1,3 +1,7 @@
+use std::str::FromStr;
+
+use crate::model::simple_types::xsd_list::XsdList;
+
 // xsd:simpleDerivationSet
 //    #all or (possibly empty) subset of {restriction, union, list}
 //
@@ -24,19 +28,17 @@
 #[derive(Debug, PartialEq)]
 pub enum SimpleDerivationSet {
     All,
-    List(Vec<SimpleDerivationSubset>),
+    List(XsdList<SimpleDerivationSubset>),
 }
 
-impl SimpleDerivationSet {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for SimpleDerivationSet {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = match s {
             "#all" => Self::All,
             _ => {
-                let res: Result<Vec<_>, String> = s
-                    .split(' ')
-                    .map(|s| SimpleDerivationSubset::parse(s))
-                    .collect();
-                Self::List(res?)
+                Self::List(s.parse()?)
             }
         };
         Ok(res)
@@ -50,8 +52,10 @@ pub enum SimpleDerivationSubset {
     Restriction,
 }
 
-impl SimpleDerivationSubset {
-    pub fn parse(s: &str) -> Result<Self, String> {
+impl FromStr for SimpleDerivationSubset {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let res = match s {
             "list" => Self::List,
             "union" => Self::Union,
@@ -64,19 +68,22 @@ impl SimpleDerivationSubset {
 
 #[cfg(test)]
 mod test {
+    use crate::model::simple_types::xsd_list::XsdList;
+
     use super::SimpleDerivationSet;
     use super::SimpleDerivationSubset::*;
+    use std::str::FromStr;
 
     #[test]
     fn test() {
         assert_eq!(
-            SimpleDerivationSet::parse("#all").unwrap(),
+            SimpleDerivationSet::from_str("#all").unwrap(),
             SimpleDerivationSet::All
         );
         assert_eq!(
-            SimpleDerivationSet::parse("list union restriction").unwrap(),
-            SimpleDerivationSet::List(vec![List, Union, Restriction])
+            SimpleDerivationSet::from_str("list union restriction").unwrap(),
+            SimpleDerivationSet::List(XsdList(vec![List, Union, Restriction]))
         );
-        assert!(SimpleDerivationSet::parse("val").is_err());
+        assert!(SimpleDerivationSet::from_str("val").is_err());
     }
 }

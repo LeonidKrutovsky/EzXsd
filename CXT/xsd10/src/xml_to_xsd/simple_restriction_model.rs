@@ -49,7 +49,7 @@ mod test {
         let mut iter = root.element_children();
         let res = SimpleRestrictionModel::parse(&mut iter).unwrap();
 
-        assert_eq!(res.simple_type.unwrap().id.unwrap().raw(), "STN");
+        assert_eq!(res.simple_type.unwrap().id.unwrap().as_ref(), "STN");
         assert_eq!(res.facets.len(), 3);
         if let Facets::MinInclusive(val) = &res.facets[0] {
             assert_eq!(val.value, "1")
