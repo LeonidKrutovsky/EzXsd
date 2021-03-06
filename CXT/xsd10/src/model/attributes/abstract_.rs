@@ -18,8 +18,8 @@ use std::convert::TryFrom;
 extern crate xml_utils;
 use xml_utils::*;
 
-//#[derive(Attribute)]
-#[attribute("abstract")]
+//#[derive(XsdAttribute)]
+//#[attribute(name = "abstract")]
 pub struct Abstract(Boolean);
 
 impl Abstract {
@@ -40,7 +40,6 @@ mod test {
 
     #[test]
     pub fn test_name() {
-        //Abstract::describe();
-        assert_eq!(Abstract::NAME, "abstract");
+        //assert_eq!(Abstract::NAME, "abstract");
     }
 }

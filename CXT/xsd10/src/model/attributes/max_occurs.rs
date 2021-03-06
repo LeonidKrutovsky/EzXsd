@@ -17,7 +17,30 @@
 //  Type xsd:narrowMaxMin via reference to xsd:occurs (Element xsd:element)
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)
 
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::NonNegativeInteger;
 
+#[derive(Debug, PartialEq)]
+pub enum MaxOccurs {
+    Bounded(NonNegativeInteger),
+    Unbounded,
+}
+
+impl TryFrom<RawAttribute<'_>> for MaxOccurs {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(match attr.value() {
+            "unbounded" => Self::Unbounded,
+            _ => Self::Bounded(attr.value().parse()?),
+        })
+    }
+}
+
+impl MaxOccurs {
+    pub const NAME: &'static str = "maxOccurs";
+}
 
 
 
@@ -37,9 +60,33 @@
 // Used in
 // Type xsd:narrowMaxMin (Element xsd:element)
 
+#[derive(Debug, PartialEq)]
+pub enum MaxOccursBool {
+    Zero,
+    One,
+}
 
+impl Default for MaxOccursBool {
+    fn default() -> Self {
+        Self::One
+    }
+}
 
+impl TryFrom<RawAttribute<'_>> for MaxOccursBool {
+    type Error = String;
 
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(match attr.value() {
+            "0" => Self::Zero,
+            "1" => Self::One,
+            _ => return Err(format!("MaxOccurs: Invalid attribute value: {}", attr.value()))
+        })
+    }
+}
+
+impl MaxOccursBool {
+    pub const NAME: &'static str = "maxOccurs";
+}
 
 
 // maxOccurs
@@ -56,3 +103,21 @@
 // Used in
 // Type xsd:allType (Element xsd:all)
 //
+
+#[derive(Debug, PartialEq)]
+pub struct MaxOccursOne(u8);
+
+impl TryFrom<RawAttribute<'_>> for MaxOccursOne {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(match attr.value() {
+            "1" => Self(1),
+            _ => return Err(format!("MaxOccurs: Invalid attribute value: {}", attr.value()))
+        })
+    }
+}
+
+impl MaxOccursOne {
+    pub const NAME: &'static str = "maxOccurs";
+}

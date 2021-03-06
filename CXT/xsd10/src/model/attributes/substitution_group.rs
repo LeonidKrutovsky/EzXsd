@@ -10,3 +10,20 @@
 // Used in
 // Type xsd:topLevelElement (Element xsd:element)
 //
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::QName;
+
+pub struct SubstitutionGroup(QName);
+
+impl TryFrom<RawAttribute<'_>> for SubstitutionGroup {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl SubstitutionGroup {
+    pub const NAME: &'static str = "substitutionGroup";
+}

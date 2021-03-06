@@ -13,9 +13,23 @@
 //  Type xsd:narrowMaxMin via reference to xsd:occurs (Element xsd:element)
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)
 
+use crate::model::simple_types::NonNegativeInteger;
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
 
+pub struct MinOccurs(NonNegativeInteger);
 
+impl TryFrom<RawAttribute<'_>> for MinOccurs {
+    type Error = String;
 
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl MinOccurs {
+    pub const NAME: &'static str = "minOccurs";
+}
 
 // minOccurs
 // Namespace: None
@@ -32,3 +46,23 @@
 // Type xsd:allType (Element xsd:all)
 //  Type xsd:narrowMaxMin (Element xsd:element)
   
+pub enum MinOccursBool{
+    Zero,
+    One
+}
+
+impl TryFrom<RawAttribute<'_>> for MinOccursBool {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(match attr.value() {
+            "0" => Self::Zero,
+            "1" => Self::One,
+            _ => return Err(format!("MinOccurs: Invalid attribute value: {}", attr.value()))
+        })
+    }
+}
+
+impl MinOccursBool {
+    pub const NAME: &'static str = "minOccurs";
+}

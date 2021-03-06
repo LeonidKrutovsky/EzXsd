@@ -32,6 +32,6 @@ pub struct Notation<'a> {
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Id,
     pub name: NCName,
-    pub public: Option<Public<'a>>,
+    pub public: Option<Public>,
     pub system: Option<AnyUri>,
 }

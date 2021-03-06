@@ -14,4 +14,24 @@
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 
+use crate::model::simple_types::String_;
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::attributes::block_default::BlockDefault;
+
+pub struct Default(String_);
+
+impl TryFrom<RawAttribute<'_>> for Default {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Default {
+    pub const NAME: &'static str = "default";
+}
+
+
 

@@ -18,3 +18,21 @@
 //  Type xsd:keybase (Elements xsd:unique , xsd:key)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
+
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::NCName;
+
+pub struct Name(NCName);
+
+impl TryFrom<RawAttribute<'_>> for Name {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Name {
+    pub const NAME: &'static str = "name";
+}

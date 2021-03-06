@@ -15,3 +15,21 @@
 //  Type xsd:localElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
+
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::FormChoice;
+
+pub struct Form(FormChoice);
+
+impl TryFrom<RawAttribute<'_>> for Form {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Form {
+    pub const NAME: &'static str = "form";
+}

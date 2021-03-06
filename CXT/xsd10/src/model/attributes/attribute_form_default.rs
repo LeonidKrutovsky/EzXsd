@@ -17,11 +17,9 @@
 
 use crate::model::RawAttribute;
 use std::convert::TryFrom;
+use crate::model::simple_types::FormChoice;
 
-pub enum AttributeFormDefault {
-    Qualified,
-    Unqualified,
-}
+pub struct AttributeFormDefault(FormChoice);
 
 impl AttributeFormDefault {
     const NAME: &'static str = "attributeFormDefault";
@@ -30,11 +28,7 @@ impl AttributeFormDefault {
 impl TryFrom<RawAttribute<'_>> for AttributeFormDefault {
     type Error = String;
 
-    fn try_from(value: RawAttribute) -> Result<Self, Self::Error> {
-        match value.value() {
-            "qualified" => Ok(Self::Qualified),
-            "unqualified" => Ok(Self::Unqualified),
-            _ => Err(format!("Invalid attribute {:?}", value)),
-        }
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
     }
 }

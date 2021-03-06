@@ -14,3 +14,20 @@
 //  Type xsd:namedGroupRef (Element xsd:group)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::QName;
+
+pub struct Ref(QName);
+
+impl TryFrom<RawAttribute<'_>> for Ref {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Ref {
+    pub const NAME: &'static str = "ref";
+}

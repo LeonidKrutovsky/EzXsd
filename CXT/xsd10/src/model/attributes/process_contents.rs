@@ -5,8 +5,38 @@
 // Properties: Local, Unqualified
 //
 // Value:
-// Type based on xsd NMTOKEN Valid value skip lax strict
+// Type based on xsd NMTOKEN
+// Valid value
+//      skip
+//      lax
+//      strict
 //
 // Used in
 // Anonymous type of element xsd:any via derivation of xsd:wildcard Type xsd:wildcard (Element xsd:anyAttribute)
 //
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+
+pub enum ProcessContents{
+    Lax,
+    Skip,
+    Strict
+}
+
+impl TryFrom<RawAttribute<'_>> for ProcessContents {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(match attr.value() {
+            "skip" => Self::Skip,
+            "lax" => Self::Lax,
+            "strict" => Self::Strict,
+            _ => return Err(format!("ProcessContents: Invalid attribute value: {}", attr.value()))
+        })
+
+    }
+}
+
+impl ProcessContents {
+    pub const NAME: &'static str = "processContents";
+}

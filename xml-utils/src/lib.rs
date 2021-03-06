@@ -7,18 +7,30 @@ use syn::{parse_macro_input, DataEnum, DataUnion, DeriveInput, FieldsNamed, Fiel
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-    for i in _metadata {
-        match i {
-            TokenTree::Literal(ref lit) => {
-                println!("***********{:#?}", lit);
-            }
-            _ => unreachable!(),
-        }
+    for i in _metadata.into_iter() {
+        println!("{:#?}", i);
     }
+    //let ast: syn::Attribute = syn::parse(_metadata).unwrap();
+    //let name = &ast.ident;
+    //let attrs = &ast.attrs;
+    //let data = &ast.data;
+
+    //println!("{:#?}", ast);
+    //println!("{:#?}", attrs);
+    //println!("{:#?}", data);
+
+    // for i in _metadata {
+    //     match i {
+    //         TokenTree::Literal(ref lit) => {
+    //             println!("***********{:#?}", lit);
+    //         }
+    //         _ => unreachable!(),
+    //     }
+    // }
     //let z: syn::Meta =  syn::parse(_metadata).expect("failed to parse input");
 
     let item: syn::Item = syn::parse(input).expect("failed to parse input");
-    println!("***********{:#?}", item);
+    //println!("***********{:#?}", item);
     match item {
         Item::Struct(ref struct_item) => {
             println!("{:?}", struct_item);

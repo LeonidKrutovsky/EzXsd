@@ -56,3 +56,21 @@
 // Type xsd:facet via derivation of xsd:annotated (Elements xsd:minExclusive , xsd:minInclusive , xsd:maxExclusive , xsd:maxInclusive)
 // Type xsd:numFacet via derivation of xsd:annotated (Elements xsd:fractionDigits , xsd:length , xsd:minLength , xsd:maxLength)
 //
+
+use std::convert::TryFrom;
+use crate::model::RawAttribute;
+use crate::model::simple_types::id::Id as SimpleTypeId;
+
+pub struct Id(SimpleTypeId);
+
+impl TryFrom<RawAttribute<'_>> for Id {
+    type Error = String;
+
+    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+        Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Id {
+    pub const NAME: &'static str = "id";
+}
