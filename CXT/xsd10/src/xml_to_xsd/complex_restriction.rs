@@ -4,6 +4,7 @@ use crate::model::groups::type_def_particle::TypeDefParticle;
 use crate::model::{Annotation, ComplexRestriction};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> ComplexRestriction<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,7 +13,7 @@ impl<'a> ComplexRestriction<'a> {
         let mut base = None;
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
+                "id" => res.id = Some(attr.try_into()?),
                 "base" => base = Some(attr.value().parse()?),
                 _ => res.attributes.push(attr.clone()),
             };
@@ -68,7 +69,7 @@ mod test {
         assert_eq!(res.base.prefix(), Some("tns"));
         assert!(res.type_def_particle.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
         assert_eq!(res.attr_decls.attributes.len(), 0);
     }
 

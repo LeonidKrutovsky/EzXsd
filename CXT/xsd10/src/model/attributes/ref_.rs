@@ -18,6 +18,7 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::QName;
 
+#[derive(Debug)]
 pub struct Ref(QName);
 
 impl TryFrom<RawAttribute<'_>> for Ref {

@@ -17,13 +17,20 @@ use crate::model::simple_types::NonNegativeInteger;
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
-pub struct MinOccurs(NonNegativeInteger);
+#[derive(Debug)]
+pub struct MinOccurs(pub NonNegativeInteger);
 
-impl TryFrom<RawAttribute<'_>> for MinOccurs {
+impl TryFrom<&RawAttribute<'_>> for MinOccurs {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
+    }
+}
+
+impl Default for MinOccurs {
+    fn default() -> Self {
+        Self("1".parse().unwrap())
     }
 }
 
@@ -45,7 +52,8 @@ impl MinOccurs {
 // Used in
 // Type xsd:allType (Element xsd:all)
 //  Type xsd:narrowMaxMin (Element xsd:element)
-  
+
+#[derive(Debug)]
 pub enum MinOccursBool{
     Zero,
     One

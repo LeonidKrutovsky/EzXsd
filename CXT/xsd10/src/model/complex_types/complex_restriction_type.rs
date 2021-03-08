@@ -2,7 +2,7 @@ use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::type_def_particle::TypeDefParticle;
 use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
+use crate::model::attributes::id::Id;
 use crate::model::RawAttribute;
 
 // xsd:complexRestrictionType
@@ -43,6 +43,6 @@ pub struct ComplexRestrictionType<'a> {
     pub type_def_particle: Option<TypeDefParticle<'a>>,
     pub attr_decls: AttrDecls<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
+    pub id: Option<Id>,
     pub base: QName,
 }

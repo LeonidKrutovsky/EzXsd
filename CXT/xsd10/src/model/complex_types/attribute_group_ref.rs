@@ -1,7 +1,7 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
+use crate::model::attributes::id::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::ref_::Ref;
 
 // xsd:attributeGroupRef
 // Complex type information
@@ -29,6 +29,6 @@ use crate::model::RawAttribute;
 pub struct AttributeGroupRef<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: QName,
+    pub id: Option<Id>,
+    pub ref_: Ref,
 }

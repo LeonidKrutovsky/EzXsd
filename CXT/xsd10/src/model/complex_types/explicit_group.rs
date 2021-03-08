@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::nested_particle::NestedParticle;
-use crate::model::simple_types::non_negative_integer::NonNegativeInteger;
-use crate::model::simple_types::Id;
-use crate::model::{MaxOccurs, RawAttribute};
-use num_bigint::ToBigUint;
+use crate::model::simple_types::id::Id;
+use crate::model::{RawAttribute};
+use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::min_occurs::MinOccurs;
 
 // xsd:explicitGroup
 // group type for the three kinds of model group (sequence, choice, all)
@@ -37,27 +37,12 @@ use num_bigint::ToBigUint;
 // xsd:openAttrs
 // xsd:annotated
 // xsd:explicitGroup
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct ExplicitGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub nested_particle: Vec<NestedParticle<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub min_occurs: NonNegativeInteger,
+    pub id: Option<Id>,
+    pub min_occurs: MinOccurs,
     pub max_occurs: MaxOccurs,
-}
-
-impl<'a> Default for ExplicitGroup<'a> {
-    fn default() -> Self {
-        ExplicitGroup {
-            annotation: None,
-            nested_particle: vec![],
-            attributes: vec![],
-            id: None,
-            min_occurs: NonNegativeInteger::from_biguint(1.to_biguint().unwrap()),
-            max_occurs: MaxOccurs::Bounded(NonNegativeInteger::from_biguint(
-                1.to_biguint().unwrap(),
-            )),
-        }
-    }
 }

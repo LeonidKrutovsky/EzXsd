@@ -27,10 +27,16 @@ pub enum MaxOccurs {
     Unbounded,
 }
 
-impl TryFrom<RawAttribute<'_>> for MaxOccurs {
+impl Default for MaxOccurs {
+    fn default() -> Self {
+        Self::Bounded("1".parse().unwrap())
+    }
+}
+
+impl TryFrom<&RawAttribute<'_>> for MaxOccurs {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "unbounded" => Self::Unbounded,
             _ => Self::Bounded(attr.value().parse()?),

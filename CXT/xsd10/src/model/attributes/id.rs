@@ -61,12 +61,13 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::id::Id as SimpleTypeId;
 
-pub struct Id(SimpleTypeId);
+#[derive(Debug)]
+pub struct Id(pub SimpleTypeId);
 
-impl TryFrom<RawAttribute<'_>> for Id {
+impl TryFrom<&RawAttribute<'_>> for Id {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }

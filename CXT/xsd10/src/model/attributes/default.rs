@@ -17,7 +17,6 @@
 use crate::model::simple_types::String_;
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
-use crate::model::attributes::block_default::BlockDefault;
 
 pub struct Default(String_);
 

@@ -54,8 +54,9 @@ mod test {
     use crate::model::complex_types::local_attribute_type::UseType;
     use crate::model::groups::complex_type_model::ComplexTypeModel;
     use crate::model::groups::type_def_particle::TypeDefParticle;
-    use crate::model::{ComplexContentChoice, MaxOccurs, SimpleContentChoice};
+    use crate::model::{ComplexContentChoice, SimpleContentChoice};
     use num_bigint::ToBigUint;
+    use crate::model::attributes::max_occurs::MaxOccurs;
 
     #[test]
     fn test_parse_simple_content() {
@@ -170,9 +171,9 @@ mod test {
             ComplexTypeModel::parse(root).unwrap()
         {
             if let TypeDefParticle::Choice(ch) = type_def.unwrap() {
-                assert_eq!(ch.min_occurs.0, 2_i32.to_biguint().unwrap());
+                assert_eq!(ch.min_occurs.0, "2".parse().unwrap());
                 if let MaxOccurs::Bounded(x) = ch.max_occurs {
-                    assert_eq!(x.0, 5_i32.to_biguint().unwrap());
+                    assert_eq!(x.0, "5".parse().unwrap());
                 } else {
                     panic!()
                 }

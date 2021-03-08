@@ -6,6 +6,7 @@ use crate::xml_to_xsd::XsdNode;
 use crate::model::complex_types::explicit_group::ExplicitGroup;
 use crate::model::groups::nested_particle::NestedParticle;
 use crate::model::Annotation;
+use std::convert::TryInto;
 
 impl<'a> ExplicitGroup<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -21,8 +22,8 @@ impl<'a> ExplicitGroup<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
-                "minOccurs" => res.min_occurs = attr.value().parse()?,
-                "maxOccurs" => res.max_occurs = attr.value().parse()?,
+                "minOccurs" => res.min_occurs = attr.try_into()?,
+                "maxOccurs" => res.max_occurs = attr.try_into()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -34,8 +35,8 @@ impl<'a> ExplicitGroup<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::complex_types::explicit_group::ExplicitGroup;
-    use crate::model::MaxOccurs::Bounded;
     use num_bigint::ToBigUint;
+    use crate::model::attributes::max_occurs::MaxOccurs::Bounded;
 
     #[test]
     fn test_parse() {
@@ -56,9 +57,9 @@ mod test {
         assert_eq!(np.len(), 3);
 
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.min_occurs.0, 1_i32.to_biguint().unwrap());
+        assert_eq!(res.min_occurs.0, "1".parse().unwrap());
         match &res.max_occurs {
-            Bounded(x) => assert_eq!(x.0, 5_i32.to_biguint().unwrap()),
+            Bounded(x) => assert_eq!(x.0, "5".parse().unwrap()),
             _ => unreachable!(),
         }
     }
