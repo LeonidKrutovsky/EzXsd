@@ -8,7 +8,9 @@
 // A value of type xsd nonNegativeInteger
 //
 // Used in
-// Attribute group xsd:occurs Anonymous type of element xsd:any via reference to xsd:occurs Type xsd:localElement via reference to xsd:occurs (Element xsd:element)
+// Attribute group xsd:occurs
+// Anonymous type of element xsd:any via reference to xsd:occurs
+// Type xsd:localElement via reference to xsd:occurs (Element xsd:element)
 //  Type xsd:namedGroupRef via reference to xsd:occurs (Element xsd:group)
 //  Type xsd:narrowMaxMin via reference to xsd:occurs (Element xsd:element)
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)

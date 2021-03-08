@@ -35,7 +35,6 @@ impl<'a> ExplicitGroup<'a> {
 #[cfg(test)]
 mod test {
     use crate::model::complex_types::explicit_group::ExplicitGroup;
-    use num_bigint::ToBigUint;
     use crate::model::attributes::max_occurs::MaxOccurs::Bounded;
 
     #[test]

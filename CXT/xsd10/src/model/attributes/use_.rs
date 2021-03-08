@@ -17,16 +17,17 @@
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
+#[derive(Debug, PartialEq)]
 pub enum Use{
     Optional,
     Prohibited,
     Required
 }
 
-impl TryFrom<RawAttribute<'_>> for Use {
+impl TryFrom<&RawAttribute<'_>> for Use {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "prohibited" => Self::Prohibited,
             "optional" => Self::Optional,
@@ -38,4 +39,10 @@ impl TryFrom<RawAttribute<'_>> for Use {
 
 impl Use {
     pub const NAME: &'static str = "use";
+}
+
+impl Default for Use {
+    fn default() -> Self {
+        Self::Optional
+    }
 }

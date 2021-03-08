@@ -12,21 +12,23 @@
 //      strict
 //
 // Used in
-// Anonymous type of element xsd:any via derivation of xsd:wildcard Type xsd:wildcard (Element xsd:anyAttribute)
+// Anonymous type of element xsd:any via derivation of xsd:wildcard
+// Type xsd:wildcard (Element xsd:anyAttribute)
 //
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
+#[derive(Debug, PartialEq)]
 pub enum ProcessContents{
     Lax,
     Skip,
     Strict
 }
 
-impl TryFrom<RawAttribute<'_>> for ProcessContents {
+impl TryFrom<&RawAttribute<'_>> for ProcessContents {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "skip" => Self::Skip,
             "lax" => Self::Lax,
@@ -39,4 +41,10 @@ impl TryFrom<RawAttribute<'_>> for ProcessContents {
 
 impl ProcessContents {
     pub const NAME: &'static str = "processContents";
+}
+
+impl Default for ProcessContents {
+    fn default() -> Self {
+        Self::Strict
+    }
 }

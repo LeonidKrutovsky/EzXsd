@@ -1,10 +1,17 @@
-use crate::model::complex_types::local_attribute_type::UseType;
 use crate::model::elements::ElementType;
 use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
 use crate::model::{Annotation, LocalAttribute, LocalSimpleType, TopLevelAttribute};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use crate::model::attributes::use_::Use;
+use crate::model::attributes::id::Id;
+use std::convert::TryInto;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::ref_::Ref;
+use crate::model::attributes::type_::Type;
+use crate::model::attributes::default::Default_;
+use crate::model::attributes::fixed::Fixed;
+use crate::model::attributes::form::Form;
 
 impl<'a> TopLevelAttribute<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -63,10 +70,10 @@ impl<'a> LocalAttribute<'a> {
         let mut simple_type = None;
         let mut attributes = vec![];
         let mut id = None;
-        let mut name: Option<NCName> = None;
-        let mut ref_: Option<QName> = None;
-        let mut type_: Option<QName> = None;
-        let mut use_ = UseType::Optional;
+        let mut name: Option<Name> = None;
+        let mut ref_: Option<Ref> = None;
+        let mut type_: Option<Type> = None;
+        let mut use_ = Some(Use::Optional);
         let mut default = None;
         let mut fixed = None;
         let mut form = None;
@@ -86,14 +93,14 @@ impl<'a> LocalAttribute<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "name" => name = Some(attr.value().parse()?),
-                "ref" => ref_ = Some(attr.value().parse()?),
-                "type" => type_ = Some(attr.value().parse()?),
-                "use" => use_ = UseType::parse(attr.value())?,
-                "default" => default = Some(attr.value()),
-                "fixed" => fixed = Some(attr.value()),
-                "form" => form = Some(attr.value().parse()?),
+                Id::NAME => id = Some(attr.try_into()?),
+                Name::NAME => name = Some(attr.try_into()?),
+                Ref::NAME => ref_ = Some(attr.try_into()?),
+                Type::NAME => type_ = Some(attr.try_into()?),
+                Use::NAME => use_ = Some(attr.try_into()?),
+                Default_::NAME => default = Some(attr.try_into()?),
+                Fixed::NAME => fixed = Some(attr.try_into()?),
+                Form::NAME => form = Some(attr.try_into()?),
                 _ => attributes.push(attr.clone()),
             };
         }

@@ -26,12 +26,13 @@ use crate::model::RawAttribute;
 use crate::model::simple_types::namespace_list::NamespaceList;
 use crate::model::simple_types::AnyUri;
 
-pub struct Namespace(NamespaceList);
+#[derive(Debug, Default)]
+pub struct Namespace(pub NamespaceList);
 
-impl TryFrom<RawAttribute<'_>> for Namespace {
+impl TryFrom<&RawAttribute<'_>> for Namespace {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }

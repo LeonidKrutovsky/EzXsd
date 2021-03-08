@@ -8,6 +8,7 @@ use crate::model::groups::facets::Facets;
 use crate::model::{Pattern, TotalDigits, WhiteSpace};
 use crate::xml_to_xsd::utils::annotation_only;
 use std::str::ParseBoolError;
+use std::convert::TryInto;
 
 impl<'a> Facet<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -16,14 +17,10 @@ impl<'a> Facet<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
+                "id" => res.id = Some(attr.try_into()?),
                 "value" => res.value = attr.value().into(),
-                "fixed" => {
-                    res.fixed = attr
-                        .value()
-                        .parse()
-                        .map_err(|er: ParseBoolError| er.to_string())?
-                }
+                "fixed" => res.fixed = attr.value().parse()?,
+
                 _ => res.attributes.push(attr.clone()),
             };
         }

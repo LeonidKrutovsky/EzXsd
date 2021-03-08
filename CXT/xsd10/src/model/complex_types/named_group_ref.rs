@@ -1,8 +1,9 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::non_negative_integer::NonNegativeInteger;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
-use crate::model::{MaxOccurs, RawAttribute};
+use crate::model::{RawAttribute};
+use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::min_occurs::MinOccurs;
+use crate::model::attributes::ref_::Ref;
+use crate::model::attributes::id::Id;
 
 // xsd:namedGroupRef
 // Complex type information
@@ -32,8 +33,8 @@ use crate::model::{MaxOccurs, RawAttribute};
 pub struct NamedGroupRef<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub ref_: QName,
-    pub min_occurs: NonNegativeInteger,
+    pub id: Option<Id>,
+    pub ref_: Ref,
+    pub min_occurs: MinOccurs,
     pub max_occurs: MaxOccurs,
 }

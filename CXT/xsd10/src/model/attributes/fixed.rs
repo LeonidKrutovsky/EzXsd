@@ -19,12 +19,13 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::String_;
 
+#[derive(Debug)]
 pub struct Fixed(String_);
 
-impl TryFrom<RawAttribute<'_>> for Fixed {
+impl TryFrom<&RawAttribute<'_>> for Fixed {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }

@@ -1,33 +1,38 @@
 extern crate proc_macro;
 extern crate syn;
-use proc_macro::{TokenStream, TokenTree};
+use syn::{AttributeArgs, token,LitStr, Generics, Ident, Result, Token, TypeParamBound, parse_macro_input, Item};
+use syn::parse::{Parse, ParseStream};
+use syn::punctuated::Punctuated;
+use proc_macro::TokenStream;
 use quote::quote;
-//use syn::spanned::Spanned;
-use syn::{parse_macro_input, DataEnum, DataUnion, DeriveInput, FieldsNamed, FieldsUnnamed, Item};
+
+#[derive(Debug)]
+struct NameArgument {
+    pub name: Ident,
+    pub eq_token: Token![=],
+    pub value: LitStr
+}
+
+impl Parse for NameArgument {
+    fn parse(input: ParseStream) -> Result<Self> {
+        Ok(Self {
+            name: input.parse()?,
+            eq_token: input.parse()?,
+            value: input.parse()?,
+        })
+    }
+}
+
+
+
+
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-    for i in _metadata.into_iter() {
-        println!("{:#?}", i);
-    }
-    //let ast: syn::Attribute = syn::parse(_metadata).unwrap();
-    //let name = &ast.ident;
-    //let attrs = &ast.attrs;
-    //let data = &ast.data;
+    //let args = parse_macro_input!(_metadata as AttributeArgs);
+    let mut args = parse_macro_input!(_metadata as NameArgument);
+    println!("{:#?}", args);
 
-    //println!("{:#?}", ast);
-    //println!("{:#?}", attrs);
-    //println!("{:#?}", data);
-
-    // for i in _metadata {
-    //     match i {
-    //         TokenTree::Literal(ref lit) => {
-    //             println!("***********{:#?}", lit);
-    //         }
-    //         _ => unreachable!(),
-    //     }
-    // }
-    //let z: syn::Meta =  syn::parse(_metadata).expect("failed to parse input");
 
     let item: syn::Item = syn::parse(input).expect("failed to parse input");
     //println!("***********{:#?}", item);
@@ -40,52 +45,69 @@ pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
         }
     }
 
-    let output = quote! { #item };
-    output.into()
-}
+    let s = args.value;
 
-#[proc_macro_derive(Attribute)]
-pub fn same_name(input: TokenStream) -> TokenStream {
-    let DeriveInput { ident, data, .. } = parse_macro_input!(input);
+    let output = quote! (
+    #item
 
-    let description = match data {
-        syn::Data::Struct(s) => match s.fields {
-            syn::Fields::Named(FieldsNamed { named, .. }) => {
-                let idents = named.iter().map(|f| &f.ident);
-                format!(
-                    "a struct with these named fields: {}",
-                    quote! {#(#idents), *}
-                )
-            }
-            syn::Fields::Unnamed(FieldsUnnamed { unnamed, .. }) => {
-                let num_fields = unnamed.iter().count();
-                format!("a struct with {} unnamed fields", num_fields)
-            }
-            syn::Fields::Unit => format!("a unit struct"),
-        },
-        syn::Data::Enum(DataEnum { variants, .. }) => {
-            let vs = variants.iter().map(|v| &v.ident);
-            format!("an enum with these variants: {}", quote! {#(#vs),*})
-        }
-        syn::Data::Union(DataUnion {
-            fields: FieldsNamed { named, .. },
-            ..
-        }) => {
-            let idents = named.iter().map(|f| &f.ident);
-            format!("a union with these named fields: {}", quote! {#(#idents),*})
-        }
-    };
+    impl Abstract {
+        const NAME: &'static str = #s;
+    }
 
-    let output = quote! {
-    impl #ident {
-        fn describe() {
-        println!("{} is {}.", stringify!(#ident), #description);
+    impl TryFrom<&RawAttribute<'_>> for Abstract {
+        type Error = String;
+
+        fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+            Ok(Self(attr.value().parse()?))
         }
     }
-    };
 
+    );
     output.into()
 }
+
+// #[proc_macro_derive(Attribute)]
+// pub fn same_name(input: TokenStream) -> TokenStream {
+//     let DeriveInput { ident, data, .. } = parse_macro_input!(input);
+//
+//     let description = match data {
+//         syn::Data::Struct(s) => match s.fields {
+//             syn::Fields::Named(FieldsNamed { named, .. }) => {
+//                 let idents = named.iter().map(|f| &f.ident);
+//                 format!(
+//                     "a struct with these named fields: {}",
+//                     quote! {#(#idents), *}
+//                 )
+//             }
+//             syn::Fields::Unnamed(FieldsUnnamed { unnamed, .. }) => {
+//                 let num_fields = unnamed.iter().count();
+//                 format!("a struct with {} unnamed fields", num_fields)
+//             }
+//             syn::Fields::Unit => format!("a unit struct"),
+//         },
+//         syn::Data::Enum(DataEnum { variants, .. }) => {
+//             let vs = variants.iter().map(|v| &v.ident);
+//             format!("an enum with these variants: {}", quote! {#(#vs),*})
+//         }
+//         syn::Data::Union(DataUnion {
+//             fields: FieldsNamed { named, .. },
+//             ..
+//         }) => {
+//             let idents = named.iter().map(|f| &f.ident);
+//             format!("a union with these named fields: {}", quote! {#(#idents),*})
+//         }
+//     };
+//
+//     let output = quote! {
+//     impl #ident {
+//         fn describe() {
+//         println!("{} is {}.", stringify!(#ident), #description);
+//         }
+//     }
+//     };
+//
+//     output.into()
+// }
 
 #[cfg(test)]
 mod tests {

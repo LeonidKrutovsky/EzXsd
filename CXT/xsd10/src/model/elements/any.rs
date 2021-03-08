@@ -1,8 +1,10 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::non_negative_integer::NonNegativeInteger;
-use crate::model::simple_types::Id;
-use crate::model::{MaxOccurs, RawAttribute};
-use num_bigint::ToBigUint;
+use crate::model::{RawAttribute};
+use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::min_occurs::MinOccurs;
+use crate::model::attributes::process_contents::ProcessContents;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::namespace::Namespace;
 
 // xsd:any
 // See http://www.w3.org/TR/xmlschema-1/#element-any.
@@ -27,29 +29,13 @@ use num_bigint::ToBigUint;
 // Group xsd:nestedParticle
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Any<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub namespace: &'a str, //TODO: namespaceList
-    pub process_contents: &'a str,
-    pub min_occurs: NonNegativeInteger,
+    pub id: Option<Id>,
+    pub namespace: Namespace,
+    pub process_contents: ProcessContents,
+    pub min_occurs: MinOccurs,
     pub max_occurs: MaxOccurs,
-}
-
-impl<'a> Default for Any<'a> {
-    fn default() -> Self {
-        Any {
-            annotation: None,
-            attributes: vec![],
-            id: None,
-            namespace: "##any",
-            process_contents: "strict",
-            min_occurs: NonNegativeInteger::from_biguint(1.to_biguint().unwrap()),
-            max_occurs: MaxOccurs::Bounded(NonNegativeInteger::from_biguint(
-                1.to_biguint().unwrap(),
-            )),
-        }
-    }
 }

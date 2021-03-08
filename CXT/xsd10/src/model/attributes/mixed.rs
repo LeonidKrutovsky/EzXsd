@@ -16,12 +16,13 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::Boolean;
 
+#[derive(Default, Debug)]
 pub struct Mixed(Boolean);
 
-impl TryFrom<RawAttribute<'_>> for Mixed {
+impl TryFrom<&RawAttribute<'_>> for Mixed {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }
@@ -29,3 +30,4 @@ impl TryFrom<RawAttribute<'_>> for Mixed {
 impl Mixed {
     pub const NAME: &'static str = "mixed";
 }
+

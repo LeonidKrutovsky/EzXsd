@@ -54,6 +54,7 @@ impl<'a> ComplexRestriction<'a> {
 mod test {
     use crate::model::groups::type_def_particle::TypeDefParticle;
     use crate::model::ComplexRestriction;
+    use crate::model::attributes::process_contents::ProcessContents;
 
     #[test]
     fn test_empty() {
@@ -103,7 +104,7 @@ mod test {
 
         let attr = &res.attr_decls;
         assert_eq!(attr.attributes.len(), 3);
-        assert_eq!(attr.any_attribute.as_ref().unwrap().process_contents, "lax");
+        assert_eq!(attr.any_attribute.as_ref().unwrap().process_contents, ProcessContents::Lax);
     }
 
     #[test]
@@ -123,6 +124,6 @@ mod test {
         assert!(res.type_def_particle.is_none());
         let attr = &res.attr_decls;
         assert_eq!(attr.attributes.len(), 3);
-        assert_eq!(attr.any_attribute.as_ref().unwrap().process_contents, "lax");
+        assert_eq!(attr.any_attribute.as_ref().unwrap().process_contents, ProcessContents::Lax);
     }
 }

@@ -1,7 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::complex_type_model::ComplexTypeModel;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::mixed::Mixed;
 
 // xsd:localComplexType
 // Complex type information
@@ -42,7 +43,7 @@ use crate::model::RawAttribute;
 pub struct LocalComplexType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ComplexTypeModel<'a>,
-    pub id: Id,
-    pub mixed: bool,
+    pub id: Option<Id>,
+    pub mixed: Mixed,
     pub attributes: Vec<RawAttribute<'a>>,
 }

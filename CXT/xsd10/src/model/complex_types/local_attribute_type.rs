@@ -1,10 +1,14 @@
 use crate::model::complex_types::local_simple_type::LocalSimpleType;
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::form_choice::FormChoice;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::ref_::Ref;
+use crate::model::attributes::type_::Type;
+use crate::model::attributes::use_::Use;
+use crate::model::attributes::default::Default_;
+use crate::model::attributes::fixed::Fixed;
+use crate::model::attributes::form::Form;
 
 // xsd:localAttributeType
 // Complex type information
@@ -40,36 +44,12 @@ pub struct LocalAttributeType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Option<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: Option<NCName>,
-    pub ref_: Option<QName>,
-    pub type_: Option<QName>,
-    pub use_: UseType,
-    pub default: Option<&'a str>,
-    pub fixed: Option<&'a str>,
-    pub form: Option<FormChoice>,
-}
-
-#[derive(Debug, PartialEq)]
-pub enum UseType {
-    Optional,
-    Prohibited,
-    Required,
-}
-
-impl Default for UseType {
-    fn default() -> Self {
-        UseType::Optional
-    }
-}
-
-impl UseType {
-    pub fn parse(s: &str) -> Result<Self, String> {
-        Ok(match s {
-            "optional" => Self::Optional,
-            "prohibited" => Self::Prohibited,
-            "required" => Self::Required,
-            _ => return Err(format!("Error UseType parsing. Invalid value: {}", s)),
-        })
-    }
+    pub id: Option<Id>,
+    pub name: Option<Name>,
+    pub ref_: Option<Ref>,
+    pub type_: Option<Type>,
+    pub use_: Option<Use>,
+    pub default: Option<Default_>,
+    pub fixed: Option<Fixed>,
+    pub form: Option<Form>,
 }

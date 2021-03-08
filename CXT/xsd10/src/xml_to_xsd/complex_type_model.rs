@@ -51,12 +51,12 @@ impl<'a> ComplexTypeModel<'a> {
 
 #[cfg(test)]
 mod test {
-    use crate::model::complex_types::local_attribute_type::UseType;
     use crate::model::groups::complex_type_model::ComplexTypeModel;
     use crate::model::groups::type_def_particle::TypeDefParticle;
     use crate::model::{ComplexContentChoice, SimpleContentChoice};
-    use num_bigint::ToBigUint;
     use crate::model::attributes::max_occurs::MaxOccurs;
+    use crate::model::attributes::use_::Use;
+    use crate::model::attributes::process_contents::ProcessContents;
 
     #[test]
     fn test_parse_simple_content() {
@@ -182,7 +182,7 @@ mod test {
             }
 
             assert_eq!(attr_decls.attributes.len(), 3);
-            assert_eq!(attr_decls.any_attribute.unwrap().process_contents, "lax");
+            assert_eq!(attr_decls.any_attribute.unwrap().process_contents, ProcessContents::Lax);
         } else {
             panic!()
         }
@@ -265,10 +265,10 @@ mod test {
             assert_eq!(attr_decls.attribute_groups.len(), 0);
             assert_eq!(attr_decls.attributes.len(), 1);
             assert_eq!(
-                attr_decls.attributes[0].name.as_ref().unwrap().as_ref(),
+                attr_decls.attributes[0].name.as_ref().unwrap().0.as_ref(),
                 "token"
             );
-            assert_eq!(attr_decls.attributes[0].use_, UseType::Required);
+            assert_eq!(attr_decls.attributes[0].use_, Some(Use::Required));
         } else {
             panic!("Test failed!");
         }

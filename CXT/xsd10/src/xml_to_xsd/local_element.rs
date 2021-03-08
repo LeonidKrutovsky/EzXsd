@@ -2,6 +2,7 @@ use crate::model::groups::element_model::ElementModel;
 use crate::model::LocalElement;
 use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> LocalElement<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -17,8 +18,8 @@ impl<'a> LocalElement<'a> {
                 "name" => res.name = Some(attr.value().parse()?),
                 "ref" => res.ref_ = Some(attr.value().parse()?),
                 "type" => res.type_ = Some(attr.value().parse()?),
-                "minOccurs" => res.min_occurs = attr.value().parse()?,
-                "maxOccurs" => res.max_occurs = attr.value().parse()?,
+                "minOccurs" => res.min_occurs = attr.try_into()?,
+                "maxOccurs" => res.max_occurs = attr.try_into()?,
                 "default" => res.default = Some(attr.value()),
                 "fixed" => res.fixed = Some(attr.value()),
                 "nillable" => {

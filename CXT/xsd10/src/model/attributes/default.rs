@@ -18,17 +18,18 @@ use crate::model::simple_types::String_;
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
-pub struct Default(String_);
+#[derive(Debug)]
+pub struct Default_(String_);
 
-impl TryFrom<RawAttribute<'_>> for Default {
+impl TryFrom<&RawAttribute<'_>> for Default_ {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }
 
-impl Default {
+impl Default_ {
     pub const NAME: &'static str = "default";
 }
 

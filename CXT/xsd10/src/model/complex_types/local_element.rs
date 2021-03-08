@@ -3,11 +3,11 @@ use crate::model::groups::element_model::ElementModel;
 use crate::model::simple_types::block_set::BlockSet;
 use crate::model::simple_types::form_choice::FormChoice;
 use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::non_negative_integer::NonNegativeInteger;
 use crate::model::simple_types::qname::QName;
 use crate::model::simple_types::Id;
-use crate::model::{MaxOccurs, RawAttribute};
-use num_bigint::ToBigUint;
+use crate::model::{RawAttribute};
+use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::min_occurs::MinOccurs;
 
 // xsd:localElement
 // Complex type information
@@ -50,7 +50,7 @@ use num_bigint::ToBigUint;
 //          xsd:annotated
 //              xsd:localElement
 //                  restricted by xsd:narrowMaxMin
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct LocalElement<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
@@ -59,34 +59,11 @@ pub struct LocalElement<'a> {
     pub name: Option<NCName>,
     pub ref_: Option<QName>,
     pub type_: Option<QName>,
-    pub min_occurs: NonNegativeInteger,
+    pub min_occurs: MinOccurs,
     pub max_occurs: MaxOccurs,
     pub default: Option<&'a str>,
     pub fixed: Option<&'a str>,
     pub nillable: bool,
     pub block: Option<BlockSet>,
     pub form: Option<FormChoice>,
-}
-
-impl Default for LocalElement<'_> {
-    fn default() -> Self {
-        Self {
-            annotation: None,
-            model: Default::default(),
-            attributes: vec![],
-            id: None,
-            name: None,
-            ref_: None,
-            type_: None,
-            min_occurs: NonNegativeInteger::from_biguint(1.to_biguint().unwrap()),
-            max_occurs: MaxOccurs::Bounded(NonNegativeInteger::from_biguint(
-                1.to_biguint().unwrap(),
-            )),
-            default: None,
-            fixed: None,
-            nillable: false,
-            block: None,
-            form: None,
-        }
-    }
 }

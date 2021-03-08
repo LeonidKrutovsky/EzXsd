@@ -18,12 +18,13 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::QName;
 
+#[derive(Debug)]
 pub struct Type(QName);
 
-impl TryFrom<RawAttribute<'_>> for Type {
+impl TryFrom<&RawAttribute<'_>> for Type {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }

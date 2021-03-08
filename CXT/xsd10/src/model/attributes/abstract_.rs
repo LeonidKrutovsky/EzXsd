@@ -18,21 +18,11 @@ use std::convert::TryFrom;
 extern crate xml_utils;
 use xml_utils::*;
 
-//#[derive(XsdAttribute)]
-//#[attribute(name = "abstract")]
+
+#[attribute(name = "abstract")]
 pub struct Abstract(Boolean);
 
-impl Abstract {
-    const NAME: &'static str = "abstract";
-}
 
-impl TryFrom<RawAttribute<'_>> for Abstract {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
 
 #[cfg(test)]
 mod test {
@@ -40,6 +30,6 @@ mod test {
 
     #[test]
     pub fn test_name() {
-        //assert_eq!(Abstract::NAME, "abstract");
+        assert_eq!(Abstract::NAME, "abstract");
     }
 }

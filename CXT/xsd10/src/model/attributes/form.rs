@@ -20,12 +20,13 @@ use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::FormChoice;
 
+#[derive(Debug)]
 pub struct Form(FormChoice);
 
-impl TryFrom<RawAttribute<'_>> for Form {
+impl TryFrom<&RawAttribute<'_>> for Form {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(Self(attr.value().parse()?))
     }
 }

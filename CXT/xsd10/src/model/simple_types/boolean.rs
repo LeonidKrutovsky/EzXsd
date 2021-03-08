@@ -27,6 +27,7 @@
 
 use std::str::FromStr;
 
+#[derive(Default, Debug)]
 pub struct Boolean(pub bool);
 
 impl FromStr for Boolean {
