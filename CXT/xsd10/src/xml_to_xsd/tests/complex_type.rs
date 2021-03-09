@@ -28,7 +28,7 @@ mod test {
     }
 
     fn test_1(ct: &Rc<TopLevelComplexType<'_>>) {
-        assert_eq!(ct.name.as_ref(), "IntRange");
+        assert_eq!(ct.name.0.as_ref(), "IntRange");
         assert_eq!(
             ct.annotation.as_ref().unwrap().doc_str(0).unwrap(),
             "Doc Text"

@@ -4,6 +4,7 @@ use crate::model::simple_types::ncname::NCName;
 use crate::model::simple_types::simple_derivation_set::SimpleDerivationSet;
 use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::name::Name;
 
 // xsd:topLevelSimpleType
 // Complex type information
@@ -39,6 +40,6 @@ pub struct TopLevelSimpleType<'a> {
     pub content_choice: SimpleDerivation<'a>,
     pub id: Id,
     pub final_: Option<SimpleDerivationSet>,
-    pub name: NCName,
+    pub name: Name,
     pub attributes: Vec<RawAttribute<'a>>,
 }

@@ -1,118 +1,18 @@
+mod attribute;
+mod named_argument;
+
 extern crate proc_macro;
 extern crate syn;
-use syn::{AttributeArgs, token,LitStr, Generics, Ident, Result, Token, TypeParamBound, parse_macro_input, Item};
-use syn::parse::{Parse, ParseStream};
-use syn::punctuated::Punctuated;
+use syn::{parse_macro_input};
 use proc_macro::TokenStream;
-use quote::quote;
 
-#[derive(Debug)]
-struct NameArgument {
-    pub name: Ident,
-    pub eq_token: Token![=],
-    pub value: LitStr
-}
-
-impl Parse for NameArgument {
-    fn parse(input: ParseStream) -> Result<Self> {
-        Ok(Self {
-            name: input.parse()?,
-            eq_token: input.parse()?,
-            value: input.parse()?,
-        })
-    }
-}
-
-
-
-
+use crate::attribute::xsd_attribute;
+use crate::named_argument::NamedArgument;
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-    //let args = parse_macro_input!(_metadata as AttributeArgs);
-    let mut args = parse_macro_input!(_metadata as NameArgument);
-    println!("{:#?}", args);
+    let args = parse_macro_input!(_metadata as NamedArgument);
+    let item = parse_macro_input!(input as syn::ItemStruct);
 
-
-    let item: syn::Item = syn::parse(input).expect("failed to parse input");
-    //println!("***********{:#?}", item);
-    match item {
-        Item::Struct(ref struct_item) => {
-            println!("{:?}", struct_item);
-        }
-        _ => {
-            unreachable!()
-        }
-    }
-
-    let s = args.value;
-
-    let output = quote! (
-    #item
-
-    impl Abstract {
-        const NAME: &'static str = #s;
-    }
-
-    impl TryFrom<&RawAttribute<'_>> for Abstract {
-        type Error = String;
-
-        fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
-            Ok(Self(attr.value().parse()?))
-        }
-    }
-
-    );
-    output.into()
-}
-
-// #[proc_macro_derive(Attribute)]
-// pub fn same_name(input: TokenStream) -> TokenStream {
-//     let DeriveInput { ident, data, .. } = parse_macro_input!(input);
-//
-//     let description = match data {
-//         syn::Data::Struct(s) => match s.fields {
-//             syn::Fields::Named(FieldsNamed { named, .. }) => {
-//                 let idents = named.iter().map(|f| &f.ident);
-//                 format!(
-//                     "a struct with these named fields: {}",
-//                     quote! {#(#idents), *}
-//                 )
-//             }
-//             syn::Fields::Unnamed(FieldsUnnamed { unnamed, .. }) => {
-//                 let num_fields = unnamed.iter().count();
-//                 format!("a struct with {} unnamed fields", num_fields)
-//             }
-//             syn::Fields::Unit => format!("a unit struct"),
-//         },
-//         syn::Data::Enum(DataEnum { variants, .. }) => {
-//             let vs = variants.iter().map(|v| &v.ident);
-//             format!("an enum with these variants: {}", quote! {#(#vs),*})
-//         }
-//         syn::Data::Union(DataUnion {
-//             fields: FieldsNamed { named, .. },
-//             ..
-//         }) => {
-//             let idents = named.iter().map(|f| &f.ident);
-//             format!("a union with these named fields: {}", quote! {#(#idents),*})
-//         }
-//     };
-//
-//     let output = quote! {
-//     impl #ident {
-//         fn describe() {
-//         println!("{} is {}.", stringify!(#ident), #description);
-//         }
-//     }
-//     };
-//
-//     output.into()
-// }
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+    xsd_attribute(args, item)
 }

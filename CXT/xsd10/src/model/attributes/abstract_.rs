@@ -13,15 +13,11 @@
 // Type xsd:topLevelElement (Element xsd:element)
 
 use crate::model::simple_types::Boolean;
-use crate::model::RawAttribute;
-use std::convert::TryFrom;
-extern crate xml_utils;
 use xml_utils::*;
 
-
 #[attribute(name = "abstract")]
+#[derive(Default)]
 pub struct Abstract(Boolean);
-
 
 
 #[cfg(test)]

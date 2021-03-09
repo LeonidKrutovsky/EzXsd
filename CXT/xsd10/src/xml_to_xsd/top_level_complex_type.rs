@@ -3,6 +3,9 @@ use crate::model::groups::complex_type_model::ComplexTypeModel;
 use crate::model::TopLevelComplexType;
 use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
+use std::convert::TryInto;
+use crate::model::attributes::abstract_::Abstract;
+use crate::model::attributes::mixed::Mixed;
 
 impl<'a> TopLevelComplexType<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,29 +15,19 @@ impl<'a> TopLevelComplexType<'a> {
         let mut attributes = vec![];
         let mut id = None;
         let mut name = None;
-        let mut abstract_ = false;
+        let mut abstract_= Abstract::default();
         let mut final_ = None;
         let mut block = None;
-        let mut mixed = false;
+        let mut mixed= Mixed::default() ;
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "name" => name = Some(attr.value().parse()?),
-                "abstract" => {
-                    abstract_ = attr
-                        .value()
-                        .parse()
-                        .map_err(|err| format!("Invalid 'abstract' attribute value: {}", err))?
-                }
-                "final" => final_ = Some(attr.value().parse()?),
-                "block" => block = Some(attr.value().parse()?),
-                "mixed" => {
-                    mixed = attr
-                        .value()
-                        .parse()
-                        .map_err(|err| format!("Invalid 'mixed' attribute value: {}", err))?
-                }
+                "id" => id = Some(attr.try_into()?),
+                "name" => name = Some(attr.try_into()?),
+                "abstract" => abstract_ = attr.try_into()?,
+                "final" => final_ = Some(attr.try_into()?),
+                "block" => block = Some(attr.try_into()?),
+                "mixed" => mixed = attr.try_into()?,
                 _ => attributes.push(attr.clone()),
             };
         }
@@ -79,8 +72,8 @@ mod test {
         let res = TopLevelComplexType::parse(root).unwrap();
         assert_eq!(res.annotation.as_ref().unwrap().doc_str(0), Some("DocText"));
         assert_eq!(res.attributes.len(), 1);
-        assert_eq!(res.id.as_ref().unwrap().as_ref(), "ID");
-        assert_eq!(res.name.as_ref(), "FloatRange");
+        assert_eq!(res.id.as_ref().unwrap().0.as_ref(), "ID");
+        assert_eq!(res.name.0.as_ref(), "FloatRange");
         if let TypeDefParticle::Sequence(val) = res.type_def_particle().unwrap() {
             assert_eq!(val.nested_particle.len(), 2);
         } else {

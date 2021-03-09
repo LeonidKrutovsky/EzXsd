@@ -115,7 +115,7 @@ mod test {
             .unwrap();
 
         if let AttributeBase::Complex(v) = base {
-            assert_eq!(v.name.as_ref(), "IntRange");
+            assert_eq!(v.name.0.as_ref(), "IntRange");
             assert_eq!(
                 v.annotation.as_ref().unwrap().doc_str(0).unwrap(),
                 "Range of values greater equal Min value and less equal Max value."

@@ -21,22 +21,14 @@
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 
 use crate::model::simple_types::{DerivationSet, DerivationSubset};
-use crate::model::RawAttribute;
-use std::convert::TryFrom;
 
+use xml_utils::*;
+
+#[attribute(name = "block")]
 pub struct Block(DerivationSet);
 
-impl TryFrom<RawAttribute<'_>> for Block {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
 
 impl Block {
-    pub const NAME: &'static str = "block";
-
     pub fn is_all(&self) -> bool {
         match self.0 {
             DerivationSet::All => true,

@@ -15,20 +15,9 @@
 // Used in
 // Anonymous type of element xsd:schema
 
-use crate::model::RawAttribute;
-use std::convert::TryFrom;
 use crate::model::simple_types::FormChoice;
+use xml_utils::*;
 
+#[attribute(name = "attributeFormDefault")]
 pub struct AttributeFormDefault(FormChoice);
 
-impl AttributeFormDefault {
-    const NAME: &'static str = "attributeFormDefault";
-}
-
-impl TryFrom<RawAttribute<'_>> for AttributeFormDefault {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}

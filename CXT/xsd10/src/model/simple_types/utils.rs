@@ -8,6 +8,7 @@ use chrono::FixedOffset;
 
 //All occurrences of #x9 (tab), #xA (line feed) and #xD (carriage return)
 // are replaced with #x20 (space)
+#[allow(dead_code)]
 pub fn replace(value: &str) -> String {
     value
         .chars()
@@ -37,6 +38,7 @@ pub fn assert_replaced<T: AsRef<str>>(value: T, name: T) -> Result<(), String> {
 //After the processing implied by replace, contiguous sequences
 // of #x20's are collapsed to a single #x20, and leading and trailing
 // #x20's are removed.
+#[allow(dead_code)]
 pub fn collapse(value: &str) -> String {
     let re = Regex::new(" {2,}").unwrap();
     re.replace_all(replace(value.trim()).as_str(), " ").into()

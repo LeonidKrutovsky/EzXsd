@@ -2,10 +2,13 @@ use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::complex_type_model::ComplexTypeModel;
 use crate::model::groups::type_def_particle::TypeDefParticle;
-use crate::model::simple_types::derivation_set::DerivationSet;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::Id;
 use crate::model::{ComplexContent, RawAttribute, SimpleContent};
+use crate::model::attributes::name::Name;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::final_::Final;
+use crate::model::attributes::block::Block;
+use crate::model::attributes::mixed::Mixed;
+use crate::model::attributes::abstract_::Abstract;
 
 // xsd:topLevelComplexType
 // Complex type information
@@ -52,12 +55,12 @@ pub struct TopLevelComplexType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ComplexTypeModel<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
-    pub abstract_: bool,
-    pub final_: Option<DerivationSet>,
-    pub block: Option<DerivationSet>,
-    pub mixed: bool,
+    pub id: Option<Id>,
+    pub name: Name,
+    pub abstract_: Abstract,
+    pub final_: Option<Final>,
+    pub block: Option<Block>,
+    pub mixed: Mixed,
 }
 
 impl<'a> TopLevelComplexType<'a> {

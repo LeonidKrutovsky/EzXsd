@@ -23,17 +23,8 @@
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 use crate::model::simple_types::DerivationSet;
+use xml_utils::*;
 
+
+#[attribute(name = "final")]
 pub struct Final(DerivationSet);
-
-impl TryFrom<RawAttribute<'_>> for Final {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl Final {
-    pub const NAME: &'static str = "final";
-}
