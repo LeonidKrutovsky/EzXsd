@@ -20,11 +20,12 @@
 //  Type xsd:topLevelElement (Element xsd:element)
 //
 
-use std::convert::TryFrom;
-use crate::model::RawAttribute;
-use crate::model::simple_types::DerivationSet;
+use crate::model::simple_types::{DerivationSet, SimpleDerivationSet};
 use xml_utils::*;
 
 
 #[attribute(name = "final")]
 pub struct Final(DerivationSet);
+
+#[attribute(name = "final")]
+pub struct SimpleFinal(SimpleDerivationSet);

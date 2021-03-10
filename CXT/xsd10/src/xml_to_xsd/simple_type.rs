@@ -1,13 +1,12 @@
 use crate::model::elements::ElementType;
 use crate::model::groups::simple_derivation::SimpleDerivation;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::simple_derivation_set::SimpleDerivationSet;
 use crate::model::{Annotation, Restriction};
 use crate::model::{List, LocalSimpleType, TopLevelSimpleType, Union};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 use crate::model::attributes::name::Name;
 use std::convert::TryInto;
+use crate::model::attributes::final_::SimpleFinal;
 
 impl<'a> LocalSimpleType<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<LocalSimpleType<'a>, String> {
@@ -44,7 +43,7 @@ impl<'a> TopLevelSimpleType<'a> {
         let mut annotation = None;
         let mut content_choice = None;
         let mut id = None;
-        let mut final_: Option<SimpleDerivationSet> = None;
+        let mut final_: Option<SimpleFinal> = None;
         let mut name: Option<Name> = None;
         let mut attributes = vec![];
 
@@ -64,8 +63,8 @@ impl<'a> TopLevelSimpleType<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "final" => final_ = Some(attr.value().parse()?),
+                "id" => id = Some(attr.try_into()?),
+                "final" => final_ = Some(attr.try_into()?),
                 "name" => name = Some(attr.try_into()?),
                 _ => attributes.push(attr.clone()),
             }
@@ -123,7 +122,7 @@ mod test {
         let res = TopLevelSimpleType::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
         assert_eq!(res.name.0.as_ref(), "Type1");
         match &res.content_choice {
             SimpleDerivation::List(x) => {

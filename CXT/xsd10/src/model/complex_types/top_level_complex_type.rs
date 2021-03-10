@@ -6,7 +6,7 @@ use crate::model::{ComplexContent, RawAttribute, SimpleContent};
 use crate::model::attributes::name::Name;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::final_::Final;
-use crate::model::attributes::block::Block;
+use crate::model::attributes::block::DerivationBlock;
 use crate::model::attributes::mixed::Mixed;
 use crate::model::attributes::abstract_::Abstract;
 
@@ -59,7 +59,7 @@ pub struct TopLevelComplexType<'a> {
     pub name: Name,
     pub abstract_: Abstract,
     pub final_: Option<Final>,
-    pub block: Option<Block>,
+    pub block: Option<DerivationBlock>,
     pub mixed: Mixed,
 }
 

@@ -15,23 +15,8 @@
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 
 use crate::model::simple_types::String_;
-use std::convert::TryFrom;
-use crate::model::RawAttribute;
 
-#[derive(Debug)]
+use xml_utils::*;
+
+#[attribute(name = "abstract")]
 pub struct Default_(String_);
-
-impl TryFrom<&RawAttribute<'_>> for Default_ {
-    type Error = String;
-
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl Default_ {
-    pub const NAME: &'static str = "default";
-}
-
-
-

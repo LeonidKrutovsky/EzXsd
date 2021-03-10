@@ -19,7 +19,6 @@ use xml_utils::*;
 #[derive(Default)]
 pub struct Abstract(Boolean);
 
-
 #[cfg(test)]
 mod test {
     use crate::model::attributes::abstract_::Abstract;

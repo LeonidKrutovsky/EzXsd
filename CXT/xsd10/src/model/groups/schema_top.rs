@@ -46,7 +46,7 @@ impl<'a> SchemaTop<'a> {
             SchemaTop::ComplexType(val) => val.name.0.clone(),
             SchemaTop::Group(val) => val.name.clone(),
             SchemaTop::AttributeGroup(val) => val.name.clone(),
-            SchemaTop::Element(val) => val.name.clone(),
+            SchemaTop::Element(val) => val.name.0.clone(),
             SchemaTop::Attribute(val) => val.name.clone(),
             SchemaTop::Notation(val) => val.name.clone(),
         }

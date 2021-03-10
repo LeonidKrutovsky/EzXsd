@@ -1,11 +1,16 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::element_model::ElementModel;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::derivation_set::DerivationSet;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::type_::Type;
+use crate::model::attributes::substitution_group::SubstitutionGroup;
+use crate::model::attributes::default::Default_;
+use crate::model::attributes::fixed::Fixed;
+use crate::model::attributes::nillable::Nillable;
+use crate::model::attributes::abstract_::Abstract;
+use crate::model::attributes::final_::Final;
+use crate::model::attributes::block::Block;
 
 // xsd:topLevelElement
 // Complex type information
@@ -45,19 +50,19 @@ use crate::model::RawAttribute;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelElement
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct TopLevelElement<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
-    pub type_: Option<QName>,
-    pub substitution_group: Option<QName>,
-    pub default: Option<&'a str>,
-    pub fixed: Option<&'a str>,
-    pub nillable: bool,
-    pub abstract_: bool,
-    pub final_: Option<DerivationSet>,
-    pub block: Option<BlockSet>,
+    pub id: Option<Id>,
+    pub name: Name,
+    pub type_: Option<Type>,
+    pub substitution_group: Option<SubstitutionGroup>,
+    pub default: Option<Default_>,
+    pub fixed: Option<Fixed>,
+    pub nillable: Nillable,
+    pub abstract_: Abstract,
+    pub final_: Option<Final>,
+    pub block: Option<Block>,
 }

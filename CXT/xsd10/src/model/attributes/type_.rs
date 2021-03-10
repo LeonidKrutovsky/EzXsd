@@ -14,21 +14,10 @@
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
-use std::convert::TryFrom;
-use crate::model::RawAttribute;
+
+
+use xml_utils::*;
 use crate::model::simple_types::QName;
 
-#[derive(Debug)]
+#[attribute(name = "type")]
 pub struct Type(QName);
-
-impl TryFrom<&RawAttribute<'_>> for Type {
-    type Error = String;
-
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl Type {
-    pub const NAME: &'static str = "type";
-}
