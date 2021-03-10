@@ -1,6 +1,7 @@
 use std::str::FromStr;
 
 use crate::model::simple_types::xsd_list::XsdList;
+use std::fmt;
 
 // xsd:blockSet
 // #all or (possibly empty) subset of {substitution, extension, restriction}
@@ -43,6 +44,15 @@ impl FromStr for BlockSet {
     }
 }
 
+impl fmt::Display for BlockSet {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            BlockSet::All => write!(f, "{}", "#all"),
+            BlockSet::List(x) => write!(f, "{}", x)
+        }
+    }
+}
+
 #[derive(Debug, PartialEq)]
 pub enum BlockSetChoice {
     Extension,
@@ -61,5 +71,15 @@ impl FromStr for BlockSetChoice {
             _ => return Err(format!("Invalid value for BlockSet: {}", s)),
         };
         Ok(res)
+    }
+}
+
+impl fmt::Display for BlockSetChoice {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            BlockSetChoice::Extension => write!(f, "{}", "extension"),
+            BlockSetChoice::Restriction => write!(f, "{}", "restriction"),
+            BlockSetChoice::Substitution => write!(f, "{}", "substitution"),
+        }
     }
 }

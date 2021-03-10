@@ -17,14 +17,4 @@ use xml_utils::*;
 
 #[attribute(name = "abstract")]
 #[derive(Default)]
-pub struct Abstract(Boolean);
-
-#[cfg(test)]
-mod test {
-    use crate::model::attributes::abstract_::Abstract;
-
-    #[test]
-    pub fn test_name() {
-        assert_eq!(Abstract::NAME, "abstract");
-    }
-}
+pub struct Abstract(pub Boolean);

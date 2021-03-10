@@ -14,4 +14,4 @@ use crate::model::simple_types::QName;
 use xml_utils::*;
 
 #[attribute(name = "substitutionGroup")]
-pub struct SubstitutionGroup(QName);
+pub struct SubstitutionGroup(pub QName);

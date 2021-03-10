@@ -19,4 +19,4 @@ use xml_utils::*;
 
 #[attribute(name = "nillable")]
 #[derive(Default)]
-pub struct Nillable(Boolean);
+pub struct Nillable(pub Boolean);

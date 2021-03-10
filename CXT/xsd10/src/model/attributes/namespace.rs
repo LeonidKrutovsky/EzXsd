@@ -21,25 +21,14 @@
 // Used in
 // Anonymous type of element xsd:any via derivation of xsd:wildcard Type xsd:wildcard (Element xsd:anyAttribute)
 
-use std::convert::TryFrom;
-use crate::model::RawAttribute;
 use crate::model::simple_types::namespace_list::NamespaceList;
 use crate::model::simple_types::AnyUri;
 
-#[derive(Debug, Default)]
+use xml_utils::*;
+
+#[attribute(name = "namespace")]
+#[derive(Default)]
 pub struct Namespace(pub NamespaceList);
-
-impl TryFrom<&RawAttribute<'_>> for Namespace {
-    type Error = String;
-
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl Namespace {
-    pub const NAME: &'static str = "namespace";
-}
 
 
 
@@ -56,16 +45,5 @@ impl Namespace {
 // Used in
 // Anonymous type of element xsd:import
 
+#[attribute(name = "namespace")]
 pub struct NamespaceUri(AnyUri);
-
-impl TryFrom<RawAttribute<'_>> for NamespaceUri {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl NamespaceUri {
-    pub const NAME: &'static str = "namespace";
-}

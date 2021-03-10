@@ -1,6 +1,7 @@
 use std::str::FromStr;
 
 use crate::model::simple_types::xsd_list::XsdList;
+use std::fmt;
 
 // xsd:derivationSet
 // #all or (possibly empty) subset of {extension, restriction}
@@ -40,6 +41,15 @@ impl FromStr for DerivationSet {
     }
 }
 
+impl fmt::Display for DerivationSet {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            DerivationSet::All => write!(f, "{}", "#all"),
+            DerivationSet::List(x) => write!(f, "{}", x)
+        }
+    }
+}
+
 #[derive(Debug)]
 pub enum DerivationSubset {
     Extension,
@@ -54,6 +64,16 @@ impl FromStr for DerivationSubset {
             "extension" => Ok(Self::Extension),
             "restriction" => Ok(Self::Restriction),
             _ => Err(format!("Invalid value for xsd:derivationSet type: {}", s)),
+        }
+    }
+}
+
+
+impl fmt::Display for DerivationSubset {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            DerivationSubset::Extension => write!(f, "{}", "extension"),
+            DerivationSubset::Restriction => write!(f, "{}", "restriction")
         }
     }
 }

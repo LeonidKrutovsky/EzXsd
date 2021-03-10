@@ -10,20 +10,8 @@
 // Used in
 // Anonymous type of element xsd:schema
 
-use std::convert::TryFrom;
-use crate::model::RawAttribute;
 use crate::model::simple_types::Token;
+use xml_utils::*;
 
+#[attribute(name = "version")]
 pub struct Version(Token);
-
-impl TryFrom<RawAttribute<'_>> for Version {
-    type Error = String;
-
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
-
-impl Version {
-    pub const NAME: &'static str = "version";
-}

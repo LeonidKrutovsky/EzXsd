@@ -25,7 +25,7 @@ use xml_utils::*;
 
 
 #[attribute(name = "final")]
-pub struct Final(DerivationSet);
+pub struct Final(pub DerivationSet);
 
 #[attribute(name = "final")]
-pub struct SimpleFinal(SimpleDerivationSet);
+pub struct SimpleFinal(pub SimpleDerivationSet);

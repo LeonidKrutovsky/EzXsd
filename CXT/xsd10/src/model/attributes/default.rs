@@ -18,5 +18,5 @@ use crate::model::simple_types::String_;
 
 use xml_utils::*;
 
-#[attribute(name = "abstract")]
-pub struct Default_(String_);
+#[attribute(name = "default")]
+pub struct Default_(pub String_);

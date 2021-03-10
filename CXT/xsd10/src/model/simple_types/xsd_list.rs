@@ -1,4 +1,6 @@
 use std::str::FromStr;
+use std::fmt;
+
 
 #[derive(Debug)]
 pub struct NotEmptyXsdList<I>(pub Vec<I>);
@@ -12,17 +14,6 @@ impl<I: FromStr> FromStr for NotEmptyXsdList<I> {
         Ok(Self(res))
     }
 }
-
-// impl<I: Into<String>, T: Into<String>> From<T> for NotEmptyXsdList<I> {
-//     fn from(s: T) -> Self {
-//         Self (
-//             s.into()
-//             .split_whitespace()
-//             .map(|v| v.into())
-//             .collect(),
-//         )
-//     }
-// }
 
 impl<I: AsRef<str>> NotEmptyXsdList<I> {
     pub fn text(&self) -> String {
@@ -49,16 +40,17 @@ impl<I: FromStr> FromStr for XsdList<I> {
     }
 }
 
-// impl<I: Into<String>, T: Into<String>> From<T> for XsdList<I> {
-//     fn from(s: T) -> Self {
-//         Self (
-//             s.into()
-//             .split_whitespace()
-//             .map(|v| v.into())
-//             .collect(),
-//         )
-//     }
-// }
+impl<I: fmt::Display> fmt::Display for XsdList<I> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if self.0.len() == 1 {
+            write!(f, "{}", self.0[0])
+        } else {
+            write!(f, "{}", self.0.iter().fold(String::new(), |a, b| format!("{} {}", a, b)))
+        }
+
+    }
+}
+
 
 impl<I: AsRef<str>> XsdList<I> {
     pub fn text(&self) -> String {

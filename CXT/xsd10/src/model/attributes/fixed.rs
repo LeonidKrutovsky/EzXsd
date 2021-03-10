@@ -20,4 +20,4 @@ use crate::model::simple_types::String_;
 use xml_utils::*;
 
 #[attribute(name = "fixed")]
-pub struct Fixed(String_);
+pub struct Fixed(pub String_);
