@@ -1,3 +1,6 @@
+use crate::model::simple_types::QName;
+use crate::model::attributes::AnyAttributes;
+
 pub mod all;
 pub mod annotation;
 pub mod any;
@@ -137,4 +140,9 @@ pub fn xsd_element_type(name: &str) -> Result<ElementType, String> {
         _ => return Err(format!("Invalid xsd element name: {}", name)),
     };
     Ok(element)
+}
+
+pub struct RawElement {
+    name: QName,
+    attributes: AnyAttributes
 }
