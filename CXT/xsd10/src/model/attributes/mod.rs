@@ -32,3 +32,53 @@ pub mod base;
 pub mod value;
 pub mod item_type;
 pub mod member_types;
+
+
+use crate::model::simple_types::{QName, AnySimpleType};
+use roxmltree::Attribute;
+use std::convert::{TryFrom};
+
+pub struct RawAttribute {
+    name: QName,
+    value: AnySimpleType
+}
+
+impl RawAttribute {
+    pub fn name(&self) -> &str {
+        self.name.name()
+    }
+
+    pub fn namespace(&self) -> Option<&str> {
+        self.name.prefix()
+    }
+
+    pub fn value(&self) -> &str {
+        self.value.as_str()
+    }
+}
+
+impl TryFrom<roxmltree::Attribute<'_>> for RawAttribute {
+    type Error = String;
+
+    fn try_from(attr: Attribute) -> Result<Self, Self::Error> {
+        let mut ns = None;
+        if let Some(namespace) = attr.namespace() {
+            ns = Some(namespace.parse()?)
+        }
+        Ok(Self{
+            name: QName{
+                prefix: ns,
+                name: attr.name().parse()?
+            },
+            value: attr.value().to_string()
+        })
+    }
+}
+
+pub struct AnyAttributes(pub Vec<RawAttribute>);
+
+impl AnyAttributes {
+    pub fn push(&mut self, attr: RawAttribute) {
+        self.0.push(attr);
+    }
+}
