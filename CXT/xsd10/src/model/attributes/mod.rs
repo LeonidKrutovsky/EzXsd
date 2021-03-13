@@ -35,9 +35,9 @@ pub mod member_types;
 
 
 use crate::model::simple_types::{QName, AnySimpleType};
-use roxmltree::Attribute;
 use std::convert::{TryFrom};
 
+#[derive(Debug, Default)]
 pub struct RawAttribute {
     name: QName,
     value: AnySimpleType
@@ -57,10 +57,10 @@ impl RawAttribute {
     }
 }
 
-impl TryFrom<roxmltree::Attribute<'_>> for RawAttribute {
+impl TryFrom<&roxmltree::Attribute<'_>> for RawAttribute {
     type Error = String;
 
-    fn try_from(attr: Attribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         let mut ns = None;
         if let Some(namespace) = attr.namespace() {
             ns = Some(namespace.parse()?)
@@ -75,10 +75,15 @@ impl TryFrom<roxmltree::Attribute<'_>> for RawAttribute {
     }
 }
 
+#[derive(Debug, Default)]
 pub struct AnyAttributes(pub Vec<RawAttribute>);
 
 impl AnyAttributes {
     pub fn push(&mut self, attr: RawAttribute) {
         self.0.push(attr);
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
     }
 }

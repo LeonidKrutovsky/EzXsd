@@ -13,13 +13,14 @@ use crate::model::attributes::nillable::Nillable;
 use crate::model::attributes::abstract_::Abstract;
 use crate::model::attributes::final_::Final;
 use crate::model::attributes::block::Block;
+use crate::model::attributes::AnyAttributes;
 
 
 impl<'a> TopLevelElement<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         let annotation = annotation_first(node)?;
         let model = ElementModel::parse(node)?;
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
         let mut id = None;
         let mut name = None;
         let mut type_ = None;
@@ -44,7 +45,7 @@ impl<'a> TopLevelElement<'a> {
                 Final::NAME => final_ = Some(attr.try_into()?),
                 Block::NAME => block = Some(attr.try_into()?),
 
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 

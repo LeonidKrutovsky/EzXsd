@@ -7,16 +7,17 @@ use roxmltree::Node;
 use crate::model::attributes::name::Name;
 use std::convert::TryInto;
 use crate::model::attributes::final_::SimpleFinal;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> LocalSimpleType<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<LocalSimpleType<'a>, String> {
         let mut annotation = None;
         let mut id = None;
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                _ => attributes.push(attr.clone()),
+                "id" => id = Some(attr.try_into()?),
+                _ => attributes.push(attr.try_into()?),
             }
         }
 
@@ -45,7 +46,7 @@ impl<'a> TopLevelSimpleType<'a> {
         let mut id = None;
         let mut final_: Option<SimpleFinal> = None;
         let mut name: Option<Name> = None;
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
 
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.xsd_type()? {
@@ -66,7 +67,7 @@ impl<'a> TopLevelSimpleType<'a> {
                 "id" => id = Some(attr.try_into()?),
                 "final" => final_ = Some(attr.try_into()?),
                 "name" => name = Some(attr.try_into()?),
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             }
         }
 

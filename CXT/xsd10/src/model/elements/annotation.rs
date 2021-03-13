@@ -1,7 +1,7 @@
 use crate::model::elements::app_info::AppInfo;
 use crate::model::elements::documentation::Documentation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:annotation
 // See http://www.w3.org/TR/xmlschema-1/#element-annotation.
@@ -71,7 +71,7 @@ use crate::model::attributes::id::Id;
 pub struct Annotation<'a> {
     pub app_infos: Vec<AppInfo<'a>>,
     pub documentations: Vec<Documentation<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }
 

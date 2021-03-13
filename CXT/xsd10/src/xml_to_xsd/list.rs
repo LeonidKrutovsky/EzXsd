@@ -4,6 +4,7 @@ use crate::model::List;
 use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> List<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<List<'a>, String> {
@@ -23,9 +24,9 @@ impl<'a> List<'a> {
         }
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "itemType" => res.item_type = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "id" => res.id = Some(attr.try_into()?),
+                "itemType" => res.item_type = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         Ok(res)

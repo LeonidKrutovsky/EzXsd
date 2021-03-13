@@ -1,8 +1,8 @@
 use crate::model::complex_types::all_type;
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::element::Element;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:all
 // An "all" group that allows elements to appear in any order. Unlike other group types, does not allow other groups as children, only elements. This declaration is for an "all" group that is a child of xsd:group; its type disallows minOccurs and maxOccurs
@@ -31,7 +31,7 @@ use crate::model::attributes::id::Id;
 pub struct All<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub elements: Vec<Element<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }
 

@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::base::Base;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:simpleExtensionType
 // attrs only
@@ -35,7 +35,7 @@ use crate::model::attributes::base::Base;
 pub struct SimpleExtensionType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attr_decls: AttrDecls<'a>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub base: Base,
 }

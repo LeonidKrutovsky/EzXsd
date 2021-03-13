@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::namespace::NamespaceUri;
 use crate::model::attributes::schema_location::SchemaLocation;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:import
 // See http://www.w3.org/TR/xmlschema-1/#element-import.
@@ -30,7 +30,7 @@ use crate::model::attributes::schema_location::SchemaLocation;
 #[derive(Debug, Default)]
 pub struct Import<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub namespace: Option<NamespaceUri>,
     pub schema_location: Option<SchemaLocation>,

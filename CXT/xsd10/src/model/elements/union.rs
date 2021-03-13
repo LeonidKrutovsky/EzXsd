@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::simple_type::LocalSimpleType;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::member_types::MemberTypes;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:notation
 // Element information
@@ -28,7 +28,7 @@ use crate::model::attributes::member_types::MemberTypes;
 pub struct Union<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Vec<LocalSimpleType<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub member_types: MemberTypes,
 }

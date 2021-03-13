@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::simple_derivation::SimpleDerivation;
-use crate::model::RawAttribute;
 use crate::model::attributes::name::Name;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::final_::SimpleFinal;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:topLevelSimpleType
 // Complex type information
@@ -40,5 +40,5 @@ pub struct TopLevelSimpleType<'a> {
     pub id: Option<Id>,
     pub final_: Option<SimpleFinal>,
     pub name: Name,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

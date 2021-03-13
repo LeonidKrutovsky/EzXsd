@@ -6,13 +6,14 @@ use roxmltree::Node;
 use std::convert::TryInto;
 use crate::model::attributes::abstract_::Abstract;
 use crate::model::attributes::mixed::Mixed;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> TopLevelComplexType<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         let annotation = annotation_first(node)?;
         let model = ComplexTypeModel::parse(node)?;
 
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
         let mut id = None;
         let mut name = None;
         let mut abstract_= Abstract::default();
@@ -28,7 +29,7 @@ impl<'a> TopLevelComplexType<'a> {
                 "final" => final_ = Some(attr.try_into()?),
                 "block" => block = Some(attr.try_into()?),
                 "mixed" => mixed = attr.try_into()?,
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 

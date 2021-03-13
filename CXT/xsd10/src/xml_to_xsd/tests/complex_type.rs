@@ -35,7 +35,7 @@ mod test {
         );
 
         assert_eq!(ct.attributes.len(), 1);
-        assert_eq!(ct.attributes[0].value(), "Whatever!");
+        assert_eq!(ct.attributes.0[0].value(), "Whatever!");
 
         if let TypeDefParticle::Sequence(seq) = ct.type_def_particle().unwrap() {
             assert_eq!(seq.nested_particle.len(), 2);

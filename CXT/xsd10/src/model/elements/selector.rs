@@ -1,7 +1,7 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::{RawAttribute};
 use crate::model::attributes::id::Id;
 use crate::model::attributes::xpath::XPath;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:selector
 // See http://www.w3.org/TR/xmlschema-1/#element-selector.
@@ -25,7 +25,7 @@ use crate::model::attributes::xpath::XPath;
 #[derive(Debug, Default)]
 pub struct Selector<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub xpath: XPath,
 }

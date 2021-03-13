@@ -1,6 +1,5 @@
 use crate::model::complex_types::local_simple_type::LocalSimpleType;
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::name::Name;
 use crate::model::attributes::ref_::Ref;
@@ -9,6 +8,7 @@ use crate::model::attributes::use_::Use;
 use crate::model::attributes::default::Default_;
 use crate::model::attributes::fixed::Fixed;
 use crate::model::attributes::form::Form;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:localAttributeType
 // Complex type information
@@ -43,7 +43,7 @@ use crate::model::attributes::form::Form;
 pub struct LocalAttributeType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Option<LocalSimpleType<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Option<Name>,
     pub ref_: Option<Ref>,

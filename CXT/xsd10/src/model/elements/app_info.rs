@@ -1,5 +1,6 @@
-use crate::model::{RawAttribute, RawElement};
+use crate::model::{RawElement};
 use crate::model::attributes::source::Source;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:appinfo
 // See http://www.w3.org/TR/xmlschema-1/#element-appinfo.
@@ -24,5 +25,5 @@ pub struct AppInfo<'a> {
     pub text: Option<&'a str>,
     pub elements: Vec<RawElement<'a>>,
     pub source: Option<Source>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

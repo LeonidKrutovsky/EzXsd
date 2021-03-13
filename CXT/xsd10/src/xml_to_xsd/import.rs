@@ -1,6 +1,7 @@
 use crate::model::Import;
 use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> Import<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Import<'a>, String> {
@@ -9,10 +10,10 @@ impl<'a> Import<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "schemaLocation" => res.schema_location = Some(attr.value().parse()?),
-                "id" => res.id = Some(attr.value().parse()?),
-                "namespace" => res.namespace = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "schemaLocation" => res.schema_location = Some(attr.try_into()?),
+                "id" => res.id = Some(attr.try_into()?),
+                "namespace" => res.namespace = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

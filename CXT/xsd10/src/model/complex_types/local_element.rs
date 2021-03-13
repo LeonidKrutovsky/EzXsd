@@ -1,6 +1,5 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::element_model::ElementModel;
-use crate::model::{RawAttribute};
 use crate::model::attributes::max_occurs::MaxOccurs;
 use crate::model::attributes::min_occurs::MinOccurs;
 use crate::model::attributes::id::Id;
@@ -12,6 +11,7 @@ use crate::model::attributes::nillable::Nillable;
 use crate::model::attributes::block::Block;
 use crate::model::attributes::form::Form;
 use crate::model::attributes::default::Default_;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:localElement
 // Complex type information
@@ -58,7 +58,7 @@ use crate::model::attributes::default::Default_;
 pub struct LocalElement<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Option<Name>,
     pub ref_: Option<Ref>,

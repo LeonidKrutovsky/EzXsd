@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::process_contents::ProcessContents;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::namespace::Namespace;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:wildcard
 // Complex type information
@@ -30,7 +30,7 @@ use crate::model::attributes::namespace::Namespace;
 #[derive(Debug, Default)]
 pub struct Wildcard<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub namespace: Namespace,
     pub process_contents: ProcessContents,

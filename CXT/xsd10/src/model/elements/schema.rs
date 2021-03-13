@@ -3,7 +3,6 @@ use crate::model::elements::import::Import;
 use crate::model::elements::include::Include;
 use crate::model::elements::redefine::Redefine;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::simple_types::Language;
 use crate::model::attributes::target_namespace::TargetNamespace;
@@ -12,6 +11,7 @@ use crate::model::attributes::final_default::FinalDefault;
 use crate::model::attributes::block_default::BlockDefault;
 use crate::model::attributes::attribute_form_default::AttributeFormDefault;
 use crate::model::attributes::element_form_default::ElementFormDefault;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:schema
 // See http://www.w3.org/TR/xmlschema-1/#element-schema.
@@ -67,7 +67,7 @@ pub struct Schema<'a> {
     pub redefines: Vec<Redefine<'a>>,
     pub annotations: Vec<Annotation<'a>>,
     pub content: Vec<(SchemaTop<'a>, Vec<Annotation<'a>>)>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub target_namespace: Option<TargetNamespace>,
     pub version: Option<Version>,
     pub final_default: FinalDefault,

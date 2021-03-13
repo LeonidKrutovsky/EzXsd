@@ -4,6 +4,7 @@ use crate::model::groups::nested_particle::NestedParticle;
 use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> SimpleExplicitGroup<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -18,8 +19,8 @@ impl<'a> SimpleExplicitGroup<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "id" => res.id = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

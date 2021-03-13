@@ -26,7 +26,7 @@ impl<'a> LocalElement<'a> {
                 "block" => res.block = Some(attr.try_into()?),
                 "form" => res.form = Some(attr.try_into()?),
 
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::fixed::FixedBool;
 use crate::model::attributes::value::Value;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:facet
 // Complex type information
@@ -45,7 +45,7 @@ use crate::model::attributes::value::Value;
 #[derive(Default, Debug)]
 pub struct Facet<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub value: Value,
     pub fixed: FixedBool,

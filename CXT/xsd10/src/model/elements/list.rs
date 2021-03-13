@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::simple_type::LocalSimpleType;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::item_type::ItemType;
+use crate::model::attributes::AnyAttributes;
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -29,7 +29,7 @@ use crate::model::attributes::item_type::ItemType;
 pub struct List<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Option<LocalSimpleType<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub item_type: Option<ItemType>,
 }

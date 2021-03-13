@@ -1,6 +1,5 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::element_model::ElementModel;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::name::Name;
 use crate::model::attributes::type_::Type;
@@ -11,6 +10,7 @@ use crate::model::attributes::nillable::Nillable;
 use crate::model::attributes::abstract_::Abstract;
 use crate::model::attributes::final_::Final;
 use crate::model::attributes::block::Block;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:topLevelElement
 // Complex type information
@@ -54,7 +54,7 @@ use crate::model::attributes::block::Block;
 pub struct TopLevelElement<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,
     pub type_: Option<Type>,

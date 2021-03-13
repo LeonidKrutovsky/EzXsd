@@ -4,6 +4,7 @@ use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
 use crate::model::attributes::mixed::Mixed;
 use std::convert::TryInto;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> LocalComplexType<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,14 +13,14 @@ impl<'a> LocalComplexType<'a> {
             model: ComplexTypeModel::parse(node)?,
             id: None,
             mixed: Mixed::default(),
-            attributes: vec![],
+            attributes: AnyAttributes::default()
         };
 
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.try_into()?),
                 "mixed" => res.mixed = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

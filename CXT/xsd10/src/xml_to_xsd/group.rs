@@ -5,12 +5,13 @@ use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 use std::convert::TryInto;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> NamedGroup<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut content_choice = None;
-        let mut attributes = vec![];
+        let mut attributes = AnyAttributes::default();
         let mut id = None;
         let mut name = None;
 
@@ -28,7 +29,7 @@ impl<'a> NamedGroup<'a> {
             match attr.name() {
                 "id" => id = Some(attr.try_into()?),
                 "name" => name = Some(attr.try_into()?),
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 

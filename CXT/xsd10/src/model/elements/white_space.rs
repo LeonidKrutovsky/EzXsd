@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::fixed::FixedBool;
 use crate::model::attributes::value::WhiteSpaceValue;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:whiteSpace
 // See http://www.w3.org/TR/xmlschema-2/#element-whiteSpace.
@@ -32,5 +32,5 @@ pub struct WhiteSpace<'a> {
     pub id: Option<Id>,
     pub fixed: FixedBool,
     pub value: WhiteSpaceValue,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

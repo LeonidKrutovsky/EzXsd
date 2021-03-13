@@ -1,5 +1,6 @@
 use crate::model::elements::app_info::AppInfo;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> AppInfo<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<AppInfo<'a>, String> {
@@ -8,8 +9,8 @@ impl<'a> AppInfo<'a> {
         res.elements = node.children().filter(|n| n.is_element()).collect();
         for attr in node.attributes() {
             match attr.name() {
-                "source" => res.source = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "source" => res.source = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

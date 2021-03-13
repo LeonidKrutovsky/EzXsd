@@ -4,6 +4,7 @@ use crate::model::LocalSimpleType;
 use crate::model::Union;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> Union<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Union<'a>, String> {
@@ -23,9 +24,9 @@ impl<'a> Union<'a> {
         }
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "memberTypes" => res.member_types = attr.value().parse()?,
-                _ => res.attributes.push(attr.clone()),
+                "id" => res.id = Some(attr.try_into()?),
+                "memberTypes" => res.member_types = attr.try_into()?,
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         Ok(res)

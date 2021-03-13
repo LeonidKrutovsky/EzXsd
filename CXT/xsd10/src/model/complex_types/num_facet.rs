@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::fixed::FixedBool;
 use crate::model::attributes::value::NonNegativeValue;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:numFacet
 // Complex type information
@@ -38,5 +38,5 @@ pub struct NumFacet<'a> {
     pub id: Option<Id>,
     pub fixed: FixedBool,
     pub value: NonNegativeValue,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

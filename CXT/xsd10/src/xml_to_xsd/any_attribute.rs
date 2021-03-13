@@ -13,7 +13,7 @@ impl<'a> AnyAttribute<'a> {
                 "id" => res.id = Some(attr.try_into()?),
                 "namespace" => res.namespace = attr.try_into()?,
                 "processContents" => res.process_contents = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         Ok(res)

@@ -4,6 +4,8 @@ use crate::model::{
 };
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> SimpleContent<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -18,13 +20,13 @@ impl<'a> SimpleContent<'a> {
 
         let content =
             content.ok_or_else(|| format!("Content required for xsd:simpleContent: {:?}", node))?;
-        let mut attributes = vec![];
+        let mut attributes = AnyAttributes::default();
         let mut id = None;
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                _ => attributes.push(attr.clone()),
+                "id" => id = Some(attr.try_into()?),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 

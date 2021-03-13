@@ -4,6 +4,7 @@ use crate::model::groups::type_def_particle::TypeDefParticle;
 use crate::model::{Annotation, Extension};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> Extension<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,9 +13,9 @@ impl<'a> Extension<'a> {
         let mut base = None;
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "base" => base = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "id" => res.id = Some(attr.try_into()?),
+                "base" => base = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         res.base =

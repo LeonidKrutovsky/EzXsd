@@ -3,6 +3,7 @@ use crate::model::SimpleExtension;
 use crate::xml_to_xsd::utils::annotation_first;
 use crate::xml_to_xsd::ElementChildren;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> SimpleExtension<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -16,9 +17,9 @@ impl<'a> SimpleExtension<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "base" => base = Some(attr.value().parse()?),
-                "id" => res.id = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "base" => base = Some(attr.try_into()?),
+                "id" => res.id = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

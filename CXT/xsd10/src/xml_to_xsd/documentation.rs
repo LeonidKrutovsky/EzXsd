@@ -1,6 +1,7 @@
 use roxmltree::Node;
 
 use crate::model::Documentation;
+use std::convert::TryInto;
 
 impl<'a> Documentation<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Documentation<'a>, String> {
@@ -9,9 +10,9 @@ impl<'a> Documentation<'a> {
         res.elements = node.children().filter(|n| n.is_element()).collect();
         for attr in node.attributes() {
             match attr.name() {
-                "source" => res.source = Some(attr.value().parse()?),
+                "source" => res.source = Some(attr.try_into()?),
                 "lang" => res.lang = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

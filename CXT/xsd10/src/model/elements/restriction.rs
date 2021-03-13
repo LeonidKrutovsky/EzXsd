@@ -2,9 +2,9 @@ use crate::model::complex_types::complex_restriction_type::ComplexRestrictionTyp
 use crate::model::complex_types::simple_restriction_type::SimpleRestrictionType;
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::base::Base;
+use crate::model::attributes::AnyAttributes;
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: datatypes.xsd
@@ -43,7 +43,7 @@ use crate::model::attributes::base::Base;
 pub struct Restriction<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: SimpleRestrictionModel<'a>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub base: Option<Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required
 }

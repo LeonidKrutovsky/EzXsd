@@ -27,7 +27,7 @@ impl<'a> Schema<'a> {
                 "elementFormDefault" => schema.element_form_default = attr.try_into()?,
                 "id" => schema.id = Some(attr.try_into()?),
                 "lang" => schema.lang = Some(attr.value().parse()?),
-                _ => schema.attributes.push(attr.clone()),
+                _ => schema.attributes.push(attr.try_into()?),
             };
         }
 

@@ -4,6 +4,8 @@ use crate::model::{
 };
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> ComplexContent<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -33,7 +35,7 @@ impl<'a> ComplexContent<'a> {
         let content = content
             .ok_or_else(|| format!("Content required for xsd:complexType element: {:?}", node))?;
 
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
         let mut id = None;
         let mut mixed = None;
 
@@ -44,8 +46,8 @@ impl<'a> ComplexContent<'a> {
                         format!("Invalid 'mixed' attribute value: {}", attr.value())
                     })?)
                 }
-                "id" => id = Some(attr.value().parse()?),
-                _ => attributes.push(attr.clone()),
+                "id" => id = Some(attr.try_into()?),
+                _ => attributes.push(attr.try_into()?),
             };
         }
         Ok(Self {

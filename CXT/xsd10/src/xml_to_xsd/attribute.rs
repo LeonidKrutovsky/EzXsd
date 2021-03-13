@@ -11,12 +11,13 @@ use crate::model::attributes::type_::Type;
 use crate::model::attributes::default::Default_;
 use crate::model::attributes::fixed::Fixed;
 use crate::model::attributes::form::Form;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> TopLevelAttribute<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut simple_type = None;
-        let mut attributes = vec![];
+        let mut attributes = AnyAttributes::default();
         let mut id = None;
         let mut name: Option<Name> = None;
         let mut type_ = None;
@@ -43,7 +44,7 @@ impl<'a> TopLevelAttribute<'a> {
                 "type" => type_ = Some(attr.try_into()?),
                 "default" => default = Some(attr.try_into()?),
                 "fixed" => fixed = Some(attr.try_into()?),
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 
@@ -67,7 +68,7 @@ impl<'a> LocalAttribute<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut simple_type = None;
-        let mut attributes = vec![];
+        let mut attributes= AnyAttributes::default();
         let mut id = None;
         let mut name: Option<Name> = None;
         let mut ref_: Option<Ref> = None;
@@ -100,7 +101,7 @@ impl<'a> LocalAttribute<'a> {
                 Default_::NAME => default = Some(attr.try_into()?),
                 Fixed::NAME => fixed = Some(attr.try_into()?),
                 Form::NAME => form = Some(attr.try_into()?),
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 

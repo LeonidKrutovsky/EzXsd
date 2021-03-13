@@ -1,7 +1,7 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::nested_particle::NestedParticle;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:simpleExplicitGroup
 // Complex type information
@@ -36,6 +36,6 @@ use crate::model::attributes::id::Id;
 pub struct SimpleExplicitGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub nested_particle: Vec<NestedParticle<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }

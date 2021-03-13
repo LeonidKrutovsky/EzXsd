@@ -1,6 +1,5 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::element_model::ElementModel;
-use crate::model::{RawAttribute};
 use crate::model::attributes::id::Id;
 use crate::model::attributes::name::Name;
 use crate::model::attributes::ref_::Ref;
@@ -12,6 +11,7 @@ use crate::model::attributes::block::Block;
 use crate::model::attributes::form::Form;
 use crate::model::attributes::min_occurs::MinOccurs;
 use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:narrowMaxMin
 // restricted max/min
@@ -69,5 +69,5 @@ pub struct NarrowMaxMin<'a> {
     pub form: Option<Form>,
     pub min_occurs: MinOccurs, //Anonymous in doc, probably mistake
     pub max_occurs: MaxOccurs,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

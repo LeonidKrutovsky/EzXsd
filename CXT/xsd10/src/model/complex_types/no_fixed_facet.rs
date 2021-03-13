@@ -1,7 +1,7 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::value::Value;
 use crate::model::attributes::id::Id;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:noFixedFacet
 // Complex type information
@@ -32,5 +32,5 @@ pub struct NoFixedFacet<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub id: Option<Id>,
     pub value: Value,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

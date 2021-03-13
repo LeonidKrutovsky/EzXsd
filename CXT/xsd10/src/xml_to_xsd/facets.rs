@@ -9,6 +9,7 @@ use crate::model::{Pattern, TotalDigits, WhiteSpace};
 use crate::xml_to_xsd::utils::annotation_only;
 use std::convert::TryInto;
 use crate::model::attributes::fixed::FixedBool;
+use crate::model::attributes::AnyAttributes;
 
 impl<'a> Facet<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -21,7 +22,7 @@ impl<'a> Facet<'a> {
                 "value" => res.value = attr.try_into()?,
                 "fixed" => res.fixed = attr.try_into()?,
 
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 
@@ -39,7 +40,7 @@ impl<'a> TotalDigits<'a> {
                 "id" => res.id = Some(attr.try_into()?),
                 "value" => res.value = attr.try_into()?,
                 "fixed" => res.fixed = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 
@@ -57,7 +58,7 @@ impl<'a> NumFacet<'a> {
                 "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value().parse()?,
                 "fixed" => res.fixed = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 
@@ -74,7 +75,7 @@ impl<'a> NoFixedFacet<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.try_into()?),
                 "value" => res.value = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 
@@ -89,13 +90,13 @@ impl<'a> WhiteSpace<'a> {
         let mut id = None;
         let mut value = None;
         let mut fixed= FixedBool::default() ;
-        let mut attributes = vec![];
+        let mut attributes = AnyAttributes::default();
         for attr in node.attributes() {
             match attr.name() {
                 "id" => id = Some(attr.try_into()?),
                 "value" => value = Some(attr.try_into()?),
                 "fixed" => fixed = attr.try_into()?,
-                _ => attributes.push(attr.clone()),
+                _ => attributes.push(attr.try_into()?),
             };
         }
 
@@ -121,7 +122,7 @@ impl<'a> Pattern<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.try_into()?),
                 "value" => res.value = attr.try_into()?,
-                _ => res.attributes.push(attr.clone()),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
 

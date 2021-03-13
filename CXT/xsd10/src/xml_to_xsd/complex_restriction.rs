@@ -14,8 +14,8 @@ impl<'a> ComplexRestriction<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.try_into()?),
-                "base" => base = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "base" => base = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         res.base =

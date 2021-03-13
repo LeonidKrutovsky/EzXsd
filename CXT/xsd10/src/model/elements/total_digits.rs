@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::RawAttribute;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::fixed::FixedBool;
 use crate::model::attributes::value::PositiveValue;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:totalDigits
 // See http://www.w3.org/TR/xmlschema-2/#element-totalDigits.
@@ -32,5 +32,5 @@ pub struct TotalDigits<'a> {
     pub id: Option<Id>,
     pub fixed: FixedBool,
     pub value: PositiveValue,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
 }

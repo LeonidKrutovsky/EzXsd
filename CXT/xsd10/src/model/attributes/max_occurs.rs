@@ -80,10 +80,10 @@ impl Default for MaxOccursBool {
     }
 }
 
-impl TryFrom<RawAttribute<'_>> for MaxOccursBool {
+impl TryFrom<&RawAttribute<'_>> for MaxOccursBool {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,

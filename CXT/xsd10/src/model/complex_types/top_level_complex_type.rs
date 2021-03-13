@@ -2,13 +2,14 @@ use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::complex_type_model::ComplexTypeModel;
 use crate::model::groups::type_def_particle::TypeDefParticle;
-use crate::model::{ComplexContent, RawAttribute, SimpleContent};
+use crate::model::{ComplexContent, SimpleContent};
 use crate::model::attributes::name::Name;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::final_::Final;
 use crate::model::attributes::block::DerivationBlock;
 use crate::model::attributes::mixed::Mixed;
 use crate::model::attributes::abstract_::Abstract;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:topLevelComplexType
 // Complex type information
@@ -54,7 +55,7 @@ use crate::model::attributes::abstract_::Abstract;
 pub struct TopLevelComplexType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ComplexTypeModel<'a>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,
     pub abstract_: Abstract,

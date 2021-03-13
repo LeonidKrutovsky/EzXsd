@@ -29,7 +29,7 @@ mod test {
         assert_eq!(schema.version.as_ref().unwrap().0.as_ref(), "1.0");
         assert_eq!(schema.id.as_ref().unwrap().0.as_ref(), "ID");
         assert_eq!(schema.attributes.len(), 3);
-        assert_eq!(schema.attributes[2].value(), "C");
+        assert_eq!(schema.attributes.0[2].value(), "C");
     }
 
     fn test_includes(schema: &Schema) {

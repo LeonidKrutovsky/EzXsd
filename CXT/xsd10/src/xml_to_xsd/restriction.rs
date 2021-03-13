@@ -3,6 +3,7 @@ use crate::model::Restriction;
 use crate::xml_to_xsd::utils::annotation_first;
 use crate::xml_to_xsd::ElementChildren;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> Restriction<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -20,9 +21,9 @@ impl<'a> Restriction<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "base" => res.base = Some(attr.value().parse()?),
-                _ => res.attributes.push(attr.clone()),
+                "id" => res.id = Some(attr.try_into()?),
+                "base" => res.base = Some(attr.try_into()?),
+                _ => res.attributes.push(attr.try_into()?),
             };
         }
         Ok(res)

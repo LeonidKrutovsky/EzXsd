@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::element::Element;
-use crate::model::{RawAttribute};
 use crate::model::attributes::min_occurs::MinOccursBool;
 use crate::model::attributes::max_occurs::MaxOccursOne;
 use crate::model::attributes::id::Id;
+use crate::model::attributes::AnyAttributes;
 
 // xsd:allType
 // An "all" group that allows elements to appear in any order.
@@ -39,7 +39,7 @@ use crate::model::attributes::id::Id;
 pub struct AllType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub elements: Vec<Element<'a>>,
-    pub attributes: Vec<RawAttribute<'a>>,
+    pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub min_occurs: Option<MinOccursBool>,
     pub max_occurs: Option<MaxOccursOne>,
