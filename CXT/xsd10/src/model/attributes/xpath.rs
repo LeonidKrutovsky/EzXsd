@@ -30,3 +30,6 @@ pub struct XPath(Token);
 //
 // Used in
 // Anonymous type of element xsd:field
+
+#[attribute(name = "xpath")]
+pub struct FieldXPath(Token);

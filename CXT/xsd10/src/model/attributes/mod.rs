@@ -30,3 +30,5 @@ pub mod version;
 pub mod xpath;
 pub mod base;
 pub mod value;
+pub mod item_type;
+pub mod member_types;

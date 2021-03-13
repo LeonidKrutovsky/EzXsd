@@ -14,21 +14,17 @@ impl<'a> LocalElement<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "name" => res.name = Some(attr.value().parse()?),
-                "ref" => res.ref_ = Some(attr.value().parse()?),
-                "type" => res.type_ = Some(attr.value().parse()?),
+                "id" => res.id = Some(attr.try_into()?),
+                "name" => res.name = Some(attr.try_into()?),
+                "ref" => res.ref_ = Some(attr.try_into()?),
+                "type" => res.type_ = Some(attr.try_into()?),
                 "minOccurs" => res.min_occurs = attr.try_into()?,
                 "maxOccurs" => res.max_occurs = attr.try_into()?,
-                "default" => res.default = Some(attr.value()),
-                "fixed" => res.fixed = Some(attr.value()),
-                "nillable" => {
-                    res.nillable = attr.value().parse().map_err(|_| {
-                        format!("Invalid 'nillable' attribute value: {}", attr.value())
-                    })?
-                }
-                "block" => res.block = Some(attr.value().parse()?),
-                "form" => res.form = Some(attr.value().parse()?),
+                "default" => res.default = Some(attr.try_into()?),
+                "fixed" => res.fixed = Some(attr.try_into()?),
+                "nillable" => res.nillable = attr.try_into()?,
+                "block" => res.block = Some(attr.try_into()?),
+                "form" => res.form = Some(attr.try_into()?),
 
                 _ => res.attributes.push(attr.clone()),
             };

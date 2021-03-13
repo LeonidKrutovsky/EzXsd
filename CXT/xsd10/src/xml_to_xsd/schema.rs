@@ -6,6 +6,7 @@ use crate::model::Include;
 use crate::model::Schema;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
+use std::convert::TryInto;
 
 pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
     let schema_node = doc.root_element();
@@ -18,13 +19,13 @@ impl<'a> Schema<'a> {
 
         for attr in schema_node.attributes() {
             match attr.name() {
-                "targetNamespace" => schema.target_namespace = Some(attr.value().parse()?),
-                "version" => schema.version = Some(attr.value().parse()?),
-                "finalDefault" => schema.final_default = Some(attr.value().parse()?),
-                "blockDefault" => schema.block_default = Some(attr.value().parse()?),
-                "attributeFormDefault" => schema.attribute_form_default = attr.value().parse()?,
-                "elementFormDefault" => schema.element_form_default = attr.value().parse()?,
-                "id" => schema.id = Some(attr.value().parse()?),
+                "targetNamespace" => schema.target_namespace = Some(attr.try_into()?),
+                "version" => schema.version = Some(attr.try_into()?),
+                "finalDefault" => schema.final_default = attr.try_into()?,
+                "blockDefault" => schema.block_default = attr.try_into()?,
+                "attributeFormDefault" => schema.attribute_form_default = attr.try_into()?,
+                "elementFormDefault" => schema.element_form_default = attr.try_into()?,
+                "id" => schema.id = Some(attr.try_into()?),
                 "lang" => schema.lang = Some(attr.value().parse()?),
                 _ => schema.attributes.push(attr.clone()),
             };

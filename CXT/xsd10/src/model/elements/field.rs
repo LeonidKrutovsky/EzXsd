@@ -1,6 +1,7 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::Id;
-use crate::model::{RawAttribute, XPath};
+use crate::model::{RawAttribute};
+use crate::model::attributes::id::Id;
+use crate::model::attributes::xpath::FieldXPath;
 
 // xsd:field
 // See http://www.w3.org/TR/xmlschema-1/#element-field.
@@ -25,6 +26,6 @@ use crate::model::{RawAttribute, XPath};
 pub struct Field<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub xpath: XPath<'a>,
+    pub id:  Option<Id>,
+    pub xpath: FieldXPath,
 }

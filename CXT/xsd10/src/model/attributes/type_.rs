@@ -20,4 +20,4 @@ use xml_utils::*;
 use crate::model::simple_types::QName;
 
 #[attribute(name = "type")]
-pub struct Type(QName);
+pub struct Type(pub(crate) QName);

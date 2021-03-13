@@ -1,5 +1,5 @@
-use crate::model::simple_types::any_uri::AnyUri;
 use crate::model::{RawAttribute, RawElement};
+use crate::model::attributes::source::Source;
 
 // xsd:appinfo
 // See http://www.w3.org/TR/xmlschema-1/#element-appinfo.
@@ -23,6 +23,6 @@ use crate::model::{RawAttribute, RawElement};
 pub struct AppInfo<'a> {
     pub text: Option<&'a str>,
     pub elements: Vec<RawElement<'a>>,
-    pub source: Option<AnyUri>,
+    pub source: Option<Source>,
     pub attributes: Vec<RawAttribute<'a>>,
 }

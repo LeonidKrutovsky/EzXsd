@@ -14,4 +14,4 @@ use crate::model::simple_types::AnyUri;
 use xml_utils::*;
 
 #[attribute(name = "source")]
-pub struct Source(AnyUri);
+pub struct Source(pub AnyUri);

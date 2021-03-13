@@ -1,6 +1,6 @@
-use crate::model::simple_types::any_uri::AnyUri;
-use crate::model::simple_types::language::Language;
 use crate::model::{RawAttribute, RawElement};
+use crate::model::attributes::source::Source;
+use crate::model::simple_types::Language;
 
 // xsd:documentation
 // See http://www.w3.org/TR/xmlschema-1/#element-documentation.
@@ -25,7 +25,7 @@ use crate::model::{RawAttribute, RawElement};
 pub struct Documentation<'a> {
     pub text: Option<&'a str>,
     pub elements: Vec<RawElement<'a>>,
-    pub source: Option<AnyUri>,
+    pub source: Option<Source>,
     pub lang: Option<Language>,
     pub attributes: Vec<RawAttribute<'a>>,
 }

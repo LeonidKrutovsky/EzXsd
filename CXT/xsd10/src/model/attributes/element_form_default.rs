@@ -17,4 +17,4 @@ use crate::model::simple_types::FormChoice;
 use xml_utils::*;
 
 #[attribute(name = "elementFormDefault")]
-pub struct ElementFormDefault(FormChoice);
+pub struct ElementFormDefault(pub(crate) FormChoice);

@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::extension::Extension;
 use crate::model::elements::restriction::ComplexRestriction;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
 
 // xsd:complexContent
 // See http://www.w3.org/TR/xmlschema-1/#element-complexContent.
@@ -34,7 +34,7 @@ pub struct ComplexContent<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content: ComplexContentChoice<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
+    pub id: Option<Id>,
     pub mixed: Option<bool>,
 }
 

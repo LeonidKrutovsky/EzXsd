@@ -15,4 +15,4 @@ use crate::model::simple_types::AnyUri;
 use xml_utils::*;
 
 #[attribute(name = "schemaLocation")]
-pub struct SchemaLocation(AnyUri);
+pub struct SchemaLocation(pub AnyUri);

@@ -1,10 +1,10 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::field::Field;
 use crate::model::elements::selector::Selector;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::refer::Refer;
 
 // xsd:keyref
 // See http://www.w3.org/TR/xmlschema-1/#element-keyref.
@@ -38,7 +38,7 @@ pub struct KeyRef<'a> {
     pub selector: Selector<'a>,
     pub fields: Vec<Field<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
-    pub refer: QName,
+    pub id: Option<Id>,
+    pub name: Name,
+    pub refer: Refer,
 }

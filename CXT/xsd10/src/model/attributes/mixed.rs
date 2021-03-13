@@ -16,5 +16,4 @@ use crate::model::simple_types::Boolean;
 use xml_utils::*;
 
 #[attribute(name = "mixed")]
-#[derive(Default)]
 pub struct Mixed(Boolean);

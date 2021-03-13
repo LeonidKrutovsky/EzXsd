@@ -1,5 +1,4 @@
 use crate::model::elements::ElementType;
-use crate::model::simple_types::ncname::NCName;
 use crate::model::{Annotation, LocalAttribute, LocalSimpleType, TopLevelAttribute};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
@@ -19,7 +18,7 @@ impl<'a> TopLevelAttribute<'a> {
         let mut simple_type = None;
         let mut attributes = vec![];
         let mut id = None;
-        let mut name: Option<NCName> = None;
+        let mut name: Option<Name> = None;
         let mut type_ = None;
         let mut default = None;
         let mut fixed = None;
@@ -39,11 +38,11 @@ impl<'a> TopLevelAttribute<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "name" => name = Some(attr.value().parse()?),
-                "type" => type_ = Some(attr.value().parse()?),
-                "default" => default = Some(attr.value()),
-                "fixed" => fixed = Some(attr.value()),
+                "id" => id = Some(attr.try_into()?),
+                "name" => name = Some(attr.try_into()?),
+                "type" => type_ = Some(attr.try_into()?),
+                "default" => default = Some(attr.try_into()?),
+                "fixed" => fixed = Some(attr.try_into()?),
                 _ => attributes.push(attr.clone()),
             };
         }

@@ -1,7 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
-use std::str::FromStr;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::fixed::FixedBool;
+use crate::model::attributes::value::WhiteSpaceValue;
 
 // xsd:whiteSpace
 // See http://www.w3.org/TR/xmlschema-2/#element-whiteSpace.
@@ -28,32 +29,8 @@ use std::str::FromStr;
 #[derive(Debug)]
 pub struct WhiteSpace<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id,
-    pub fixed: bool,
-    pub value: WhiteSpaceChoice,
+    pub id: Option<Id>,
+    pub fixed: FixedBool,
+    pub value: WhiteSpaceValue,
     pub attributes: Vec<RawAttribute<'a>>,
-}
-#[derive(Debug, PartialEq)]
-pub enum WhiteSpaceChoice {
-    Collapse,
-    Preserve,
-    Replace,
-}
-
-impl FromStr for WhiteSpaceChoice {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(match s {
-            "collapse" => Self::Collapse,
-            "preserve" => Self::Preserve,
-            "replace" => Self::Replace,
-            _ => {
-                return Err(format!(
-                "Invalid xsd:whiteSpace:value type: {}. Anonymous (collapse | preserve | replace)",
-                s
-            ))
-            }
-        })
-    }
 }

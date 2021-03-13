@@ -14,4 +14,4 @@ use crate::model::simple_types::Token;
 use xml_utils::*;
 
 #[attribute(name = "version")]
-pub struct Version(Token);
+pub struct Version(pub(crate) Token);

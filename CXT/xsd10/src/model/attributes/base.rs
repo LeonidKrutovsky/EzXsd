@@ -21,5 +21,4 @@ use crate::model::simple_types::QName;
 use xml_utils::*;
 
 #[attribute(name = "base")]
-#[derive(Default)]
 pub struct Base(pub QName);

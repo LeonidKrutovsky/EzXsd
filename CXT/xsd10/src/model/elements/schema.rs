@@ -3,14 +3,15 @@ use crate::model::elements::import::Import;
 use crate::model::elements::include::Include;
 use crate::model::elements::redefine::Redefine;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::simple_types::any_uri::AnyUri;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::form_choice::FormChoice;
-use crate::model::simple_types::full_derivation_set::FullDerivationSet;
-use crate::model::simple_types::language::Language;
-use crate::model::simple_types::token::Token;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::simple_types::Language;
+use crate::model::attributes::target_namespace::TargetNamespace;
+use crate::model::attributes::version::Version;
+use crate::model::attributes::final_default::FinalDefault;
+use crate::model::attributes::block_default::BlockDefault;
+use crate::model::attributes::attribute_form_default::AttributeFormDefault;
+use crate::model::attributes::element_form_default::ElementFormDefault;
 
 // xsd:schema
 // See http://www.w3.org/TR/xmlschema-1/#element-schema.
@@ -67,12 +68,12 @@ pub struct Schema<'a> {
     pub annotations: Vec<Annotation<'a>>,
     pub content: Vec<(SchemaTop<'a>, Vec<Annotation<'a>>)>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub target_namespace: Option<AnyUri>,
-    pub version: Option<Token>,
-    pub final_default: Option<FullDerivationSet>,
-    pub block_default: Option<BlockSet>,
-    pub attribute_form_default: FormChoice,
-    pub element_form_default: FormChoice,
-    pub id: Id,
+    pub target_namespace: Option<TargetNamespace>,
+    pub version: Option<Version>,
+    pub final_default: FinalDefault,
+    pub block_default: BlockDefault,
+    pub attribute_form_default: AttributeFormDefault,
+    pub element_form_default: ElementFormDefault,
+    pub id: Option<Id>,
     pub lang: Option<Language>,
 }

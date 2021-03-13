@@ -7,8 +7,8 @@ use crate::model::elements::ElementType;
 use crate::model::groups::facets::Facets;
 use crate::model::{Pattern, TotalDigits, WhiteSpace};
 use crate::xml_to_xsd::utils::annotation_only;
-use std::str::ParseBoolError;
 use std::convert::TryInto;
+use crate::model::attributes::fixed::FixedBool;
 
 impl<'a> Facet<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -18,8 +18,8 @@ impl<'a> Facet<'a> {
         for attr in node.attributes() {
             match attr.name() {
                 "id" => res.id = Some(attr.try_into()?),
-                "value" => res.value = attr.value().into(),
-                "fixed" => res.fixed = attr.value().parse()?,
+                "value" => res.value = attr.try_into()?,
+                "fixed" => res.fixed = attr.try_into()?,
 
                 _ => res.attributes.push(attr.clone()),
             };
@@ -36,14 +36,9 @@ impl<'a> TotalDigits<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "value" => res.value = attr.value().parse()?,
-                "fixed" => {
-                    res.fixed = attr
-                        .value()
-                        .parse()
-                        .map_err(|er: ParseBoolError| er.to_string())?
-                }
+                "id" => res.id = Some(attr.try_into()?),
+                "value" => res.value = attr.try_into()?,
+                "fixed" => res.fixed = attr.try_into()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -61,12 +56,7 @@ impl<'a> NumFacet<'a> {
             match attr.name() {
                 "id" => res.id = Some(attr.value().parse()?),
                 "value" => res.value = attr.value().parse()?,
-                "fixed" => {
-                    res.fixed = attr
-                        .value()
-                        .parse()
-                        .map_err(|er: ParseBoolError| er.to_string())?
-                }
+                "fixed" => res.fixed = attr.try_into()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -82,8 +72,8 @@ impl<'a> NoFixedFacet<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "value" => res.value = attr.value().into(),
+                "id" => res.id = Some(attr.try_into()?),
+                "value" => res.value = attr.try_into()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }
@@ -98,18 +88,13 @@ impl<'a> WhiteSpace<'a> {
 
         let mut id = None;
         let mut value = None;
-        let mut fixed = false;
+        let mut fixed= FixedBool::default() ;
         let mut attributes = vec![];
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "value" => value = Some(attr.value().parse()?),
-                "fixed" => {
-                    fixed = attr
-                        .value()
-                        .parse()
-                        .map_err(|er: ParseBoolError| er.to_string())?
-                }
+                "id" => id = Some(attr.try_into()?),
+                "value" => value = Some(attr.try_into()?),
+                "fixed" => fixed = attr.try_into()?,
                 _ => attributes.push(attr.clone()),
             };
         }
@@ -134,8 +119,8 @@ impl<'a> Pattern<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => res.id = Some(attr.value().parse()?),
-                "value" => res.value = attr.value(),
+                "id" => res.id = Some(attr.try_into()?),
+                "value" => res.value = attr.try_into()?,
                 _ => res.attributes.push(attr.clone()),
             };
         }

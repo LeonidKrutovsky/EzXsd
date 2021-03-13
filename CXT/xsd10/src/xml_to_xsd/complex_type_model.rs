@@ -91,8 +91,8 @@ mod test {
             );
 
             if let SimpleContentChoice::Extension(ext) = sc.content {
-                assert_eq!(ext.base.name.as_ref(), "string");
-                assert_eq!(ext.base.prefix.unwrap().as_ref(), "xs");
+                assert_eq!(ext.base.0.name(), "string");
+                assert_eq!(ext.base.0.prefix().unwrap(), "xs");
                 assert_eq!(ext.attributes.len(), 2);
                 assert_eq!(ext.attr_decls.attributes.len(), 1);
             } else {
@@ -139,8 +139,8 @@ mod test {
             );
 
             if let ComplexContentChoice::Restriction(restr) = cc.content {
-                assert_eq!(restr.base.name.as_ref(), "anyType");
-                assert_eq!(restr.base.prefix.unwrap().as_ref(), "xs");
+                assert_eq!(restr.base.0.name.as_ref(), "anyType");
+                assert_eq!(restr.base.0.prefix.unwrap().as_ref(), "xs");
                 assert_eq!(restr.attributes.len(), 1);
                 assert_eq!(restr.attr_decls.attributes.len(), 3);
             } else {
@@ -227,8 +227,8 @@ mod test {
             );
 
             if let ComplexContentChoice::Restriction(restr) = cc.content {
-                assert_eq!(restr.base.name.as_ref(), "anyType");
-                assert_eq!(restr.base.prefix.unwrap().as_ref(), "xs");
+                assert_eq!(restr.base.0.name.as_ref(), "anyType");
+                assert_eq!(restr.base.0.prefix.unwrap().as_ref(), "xs");
                 assert_eq!(restr.attributes.len(), 1);
                 assert_eq!(restr.attr_decls.attributes.len(), 3);
             } else {

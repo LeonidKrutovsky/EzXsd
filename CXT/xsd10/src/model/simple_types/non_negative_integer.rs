@@ -40,7 +40,7 @@ use num_bigint::{BigUint, ToBigUint};
 //                          restricted by xsd:unsignedByte
 //          restricted by xsd:positiveInteger
 
-#[derive(Default, PartialEq, PartialOrd, Debug)]
+#[derive(PartialEq, PartialOrd, Debug)]
 pub struct NonNegativeInteger(pub BigUint);
 
 impl NonNegativeInteger {
@@ -65,6 +65,12 @@ impl FromStr for NonNegativeInteger {
         } else {
             Ok(NonNegativeInteger(value))
         }
+    }
+}
+
+impl Default for NonNegativeInteger {
+    fn default() -> Self {
+        "1".parse().unwrap()
     }
 }
 

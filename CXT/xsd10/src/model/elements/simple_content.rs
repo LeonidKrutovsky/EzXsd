@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::extension::SimpleExtension;
 use crate::model::elements::restriction::SimpleRestriction;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
 
 // xsd:simpleContent
 // See http://www.w3.org/TR/xmlschema-1/#element-simpleContent.
@@ -33,7 +33,7 @@ pub struct SimpleContent<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content: SimpleContentChoice<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
+    pub id: Option<Id>,
 }
 
 #[derive(Debug)]

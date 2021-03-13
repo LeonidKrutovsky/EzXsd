@@ -3,8 +3,8 @@ use crate::model::{RawAttribute};
 use crate::model::attributes::max_occurs::MaxOccurs;
 use crate::model::attributes::min_occurs::MinOccurs;
 use crate::model::attributes::process_contents::ProcessContents;
-use crate::model::attributes::id::Id;
 use crate::model::attributes::namespace::Namespace;
+use crate::model::attributes::id::Id;
 
 // xsd:any
 // See http://www.w3.org/TR/xmlschema-1/#element-any.

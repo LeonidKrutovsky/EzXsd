@@ -49,22 +49,22 @@ mod test {
         let mut iter = root.element_children();
         let res = SimpleRestrictionModel::parse(&mut iter).unwrap();
 
-        assert_eq!(res.simple_type.unwrap().id.unwrap().as_ref(), "STN");
+        assert_eq!(res.simple_type.unwrap().id.unwrap().0.as_ref(), "STN");
         assert_eq!(res.facets.len(), 3);
         if let Facets::MinInclusive(val) = &res.facets[0] {
-            assert_eq!(val.value, "1")
+            assert_eq!(val.value.0, "1")
         } else {
             panic!()
         }
 
         if let Facets::MaxInclusive(val) = &res.facets[1] {
-            assert_eq!(val.value, "5")
+            assert_eq!(val.value.0, "5")
         } else {
             panic!()
         }
 
         if let Facets::Pattern(val) = &res.facets[2] {
-            assert_eq!(val.value, "[0-9]")
+            assert_eq!(val.value.0.as_ref(), "[0-9]")
         } else {
             panic!()
         }

@@ -93,7 +93,7 @@ impl<'a> SchemaWrapper<'a> {
             self.schema
                 .target_namespace
                 .as_ref()
-                .map(|val| val.as_ref())
+                .map(|val| val.0.as_ref())
         }
         .unwrap_or("")
     }

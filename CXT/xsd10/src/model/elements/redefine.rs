@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::redefinable::Redefinable;
-use crate::model::simple_types::any_uri::AnyUri;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::schema_location::SchemaLocation;
+use crate::model::attributes::id::Id;
 
 // xsd:redefine
 // See http://www.w3.org/TR/xmlschema-1/#element-redefine.
@@ -33,6 +33,6 @@ pub struct Redefine<'a> {
     pub annotations: Vec<Annotation<'a>>,
     pub content: Vec<Redefinable<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub schema_location: AnyUri,
-    pub id: Id,
+    pub schema_location: SchemaLocation,
+    pub id: Option<Id>,
 }

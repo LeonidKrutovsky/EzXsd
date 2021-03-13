@@ -27,7 +27,6 @@ use crate::model::simple_types::AnyUri;
 use xml_utils::*;
 
 #[attribute(name = "namespace")]
-#[derive(Default)]
 pub struct Namespace(pub NamespaceList);
 
 
@@ -46,4 +45,4 @@ pub struct Namespace(pub NamespaceList);
 // Anonymous type of element xsd:import
 
 #[attribute(name = "namespace")]
-pub struct NamespaceUri(AnyUri);
+pub struct NamespaceUri(pub AnyUri);

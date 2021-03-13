@@ -44,6 +44,12 @@ impl FromStr for BlockSet {
     }
 }
 
+impl Default for BlockSet {
+    fn default() -> Self {
+        Self::List(XsdList(vec![]))
+    }
+}
+
 impl fmt::Display for BlockSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {

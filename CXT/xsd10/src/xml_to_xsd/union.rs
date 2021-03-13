@@ -55,11 +55,11 @@ mod test {
         let res = Union::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
-        assert_eq!(res.member_types.0.len(), 2);
-        assert_eq!(res.member_types.0[0].name.as_ref(), "Type1");
-        assert_eq!(res.member_types.0[1].name.as_ref(), "Type2");
-        assert_eq!(res.member_types.0[1].prefix(), Some("xs"));
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert_eq!(res.member_types.0.0.len(), 2);
+        assert_eq!(res.member_types.0.0[0].name.as_ref(), "Type1");
+        assert_eq!(res.member_types.0.0[1].name.as_ref(), "Type2");
+        assert_eq!(res.member_types.0.0[1].prefix(), Some("xs"));
         assert_eq!(res.simple_type.len(), 3);
     }
 }

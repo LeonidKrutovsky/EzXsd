@@ -18,9 +18,28 @@ use std::str::FromStr;
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
-#[attribute(name = "value")]
+#[derive(Default, Debug)]
 pub struct Value(pub AnySimpleType);
 
+impl FromStr for Value {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(Self(s.to_string()))
+    }
+}
+
+impl Value {
+    pub const NAME: &'static str = "value";
+}
+
+impl TryFrom<&RawAttribute<'_>> for Value {
+    type Error = String;
+
+    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+        attr.value().parse()
+    }
+}
 
 // value
 // Attribute information

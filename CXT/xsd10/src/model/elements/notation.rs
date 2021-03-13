@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::any_uri::AnyUri;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::public::Public;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::public::Public;
+use crate::model::attributes::system::System;
 
 // xsd:notation
 // See http://www.w3.org/TR/xmlschema-1/#element-notation.
@@ -30,8 +30,8 @@ use crate::model::RawAttribute;
 pub struct Notation<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
+    pub id: Option<Id>,
+    pub name: Name,
     pub public: Option<Public>,
-    pub system: Option<AnyUri>,
+    pub system: Option<System>,
 }

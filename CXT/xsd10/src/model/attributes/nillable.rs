@@ -18,5 +18,4 @@ use crate::model::simple_types::Boolean;
 use xml_utils::*;
 
 #[attribute(name = "nillable")]
-#[derive(Default)]
 pub struct Nillable(pub Boolean);

@@ -65,11 +65,11 @@ mod test {
         let root = doc.root_element();
         let res = Extension::parse(root).unwrap();
         assert!(res.annotation.is_none());
-        assert_eq!(res.base.name.as_ref(), "BarType");
-        assert_eq!(res.base.prefix(), Some("tns"));
+        assert_eq!(res.base.0.name(), "BarType");
+        assert_eq!(res.base.0.prefix(), Some("tns"));
         assert!(res.type_def_particle.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
         assert_eq!(res.attr_decls.attributes.len(), 0);
     }
 

@@ -39,8 +39,8 @@ mod test {
         assert_eq!(res.annotation.as_ref().unwrap().documentations.len(), 1);
         assert_eq!(res.annotation.unwrap().app_infos.len(), 1);
         assert_eq!(res.attributes.len(), 1);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
-        assert_eq!(res.schema_location.unwrap().as_ref(), "http://uri");
-        assert_eq!(res.namespace.unwrap().as_ref(), "xsd");
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert_eq!(res.schema_location.unwrap().0.as_ref(), "http://uri");
+        assert_eq!(res.namespace.unwrap().0.as_ref(), "xsd");
     }
 }

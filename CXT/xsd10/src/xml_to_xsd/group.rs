@@ -1,10 +1,10 @@
 use crate::model::complex_types::named_group::{ContentChoice, NamedGroup};
 use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
 use crate::model::elements::ElementType;
-use crate::model::simple_types::ncname::NCName;
 use crate::model::Annotation;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
+use std::convert::TryInto;
 
 impl<'a> NamedGroup<'a> {
     pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
@@ -12,7 +12,7 @@ impl<'a> NamedGroup<'a> {
         let mut content_choice = None;
         let mut attributes = vec![];
         let mut id = None;
-        let mut name: Option<NCName> = None;
+        let mut name = None;
 
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.xsd_type()? {
@@ -26,8 +26,8 @@ impl<'a> NamedGroup<'a> {
 
         for attr in node.attributes() {
             match attr.name() {
-                "id" => id = Some(attr.value().parse()?),
-                "name" => name = Some(attr.value().parse()?),
+                "id" => id = Some(attr.try_into()?),
+                "name" => name = Some(attr.try_into()?),
                 _ => attributes.push(attr.clone()),
             };
         }

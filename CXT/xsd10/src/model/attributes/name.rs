@@ -25,4 +25,5 @@ use crate::model::simple_types::NCName;
 use xml_utils::*;
 
 #[attribute(name = "name")]
+#[derive(Clone)]
 pub struct Name(pub NCName);

@@ -44,11 +44,11 @@ impl<'a> SchemaTop<'a> {
         match self {
             SchemaTop::SimpleType(val) => val.name.0.clone(),
             SchemaTop::ComplexType(val) => val.name.0.clone(),
-            SchemaTop::Group(val) => val.name.clone(),
-            SchemaTop::AttributeGroup(val) => val.name.clone(),
+            SchemaTop::Group(val) => val.name.0.clone(),
+            SchemaTop::AttributeGroup(val) => val.name.0.clone(),
             SchemaTop::Element(val) => val.name.0.clone(),
-            SchemaTop::Attribute(val) => val.name.clone(),
-            SchemaTop::Notation(val) => val.name.clone(),
+            SchemaTop::Attribute(val) => val.name.0.clone(),
+            SchemaTop::Notation(val) => val.name.0.clone(),
         }
     }
 }

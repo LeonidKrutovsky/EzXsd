@@ -14,4 +14,4 @@ use crate::model::simple_types::AnyUri;
 use xml_utils::*;
 
 #[attribute(name = "targetNamespace")]
-pub struct TargetNamespace(AnyUri);
+pub struct TargetNamespace(pub AnyUri);

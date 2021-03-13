@@ -23,11 +23,6 @@ use crate::model::RawAttribute;
 #[attribute(name = "minOccurs")]
 pub struct MinOccurs(pub NonNegativeInteger);
 
-impl Default for MinOccurs {
-    fn default() -> Self {
-        Self("1".parse().unwrap())
-    }
-}
 
 // minOccurs
 // Namespace: None

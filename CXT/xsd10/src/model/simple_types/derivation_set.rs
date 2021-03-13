@@ -41,6 +41,12 @@ impl FromStr for DerivationSet {
     }
 }
 
+impl Default for DerivationSet{
+    fn default() -> Self {
+        Self::List(XsdList(vec![]))
+    }
+}
+
 impl fmt::Display for DerivationSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {

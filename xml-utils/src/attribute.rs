@@ -8,7 +8,7 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let struct_name = &item.ident;
 
     let output = quote! (
-        #[derive(Debug)]
+        #[derive(Debug, Default)]
         #item
 
         impl #struct_name {

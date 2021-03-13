@@ -49,8 +49,8 @@ mod test {
         let res = List::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.attributes.len(), 2);
-        assert_eq!(res.id.unwrap().as_ref(), "ID");
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
         assert!(res.item_type.is_none());
-        assert_eq!(res.simple_type.unwrap().id.unwrap().as_ref(), "STN");
+        assert_eq!(res.simple_type.unwrap().id.unwrap().0.as_ref(), "STN");
     }
 }

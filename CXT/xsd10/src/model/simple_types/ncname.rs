@@ -42,7 +42,7 @@ use std::str::FromStr;
 use crate::model::simple_types::name::Name;
 
 #[derive(Debug, Default, Clone)]
-pub struct NCName(Name);
+pub struct NCName(pub Name);
 
 impl FromStr for NCName {
     type Err = String;

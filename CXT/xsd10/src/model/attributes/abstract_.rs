@@ -16,5 +16,4 @@ use crate::model::simple_types::Boolean;
 use xml_utils::*;
 
 #[attribute(name = "abstract")]
-#[derive(Default)]
 pub struct Abstract(pub Boolean);

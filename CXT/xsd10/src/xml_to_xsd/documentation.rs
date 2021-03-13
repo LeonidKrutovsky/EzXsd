@@ -35,7 +35,7 @@ mod test {
         let root = doc.root_element();
         let res = Documentation::parse(root).unwrap();
         assert_eq!(res.text.unwrap().trim(), "A string");
-        assert_eq!(res.source.unwrap().as_ref(), "http://ya.com");
+        assert_eq!(res.source.unwrap().0.as_ref(), "http://ya.com");
         assert_eq!(res.lang.unwrap().as_ref(), "us");
         assert_eq!(res.attributes.len(), 2);
         assert_eq!(res.elements.len(), 1);

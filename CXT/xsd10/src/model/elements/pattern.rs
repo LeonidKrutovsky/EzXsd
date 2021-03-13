@@ -1,6 +1,7 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::value::PatternValue;
 
 // xsd:pattern
 // See http://www.w3.org/TR/xmlschema-2/#element-pattern.
@@ -25,7 +26,7 @@ use crate::model::RawAttribute;
 #[derive(Default, Debug)]
 pub struct Pattern<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id,
-    pub value: &'a str,
+    pub id: Option<Id>,
+    pub value: PatternValue,
     pub attributes: Vec<RawAttribute<'a>>,
 }

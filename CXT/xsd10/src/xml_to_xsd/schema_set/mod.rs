@@ -83,7 +83,7 @@ mod test {
         if let AttributeType::Simple(v) = st {
             if let SimpleDerivation::Restriction(ref r) = v.content_choice {
                 if let AttributeBase::Builtin(st) = schema_wrapper
-                    .resolve_base(r.base.as_ref().unwrap())
+                    .resolve_base(&r.base.as_ref().unwrap().0)
                     .unwrap()
                 {
                     assert_eq!(st, SimpleType::String);

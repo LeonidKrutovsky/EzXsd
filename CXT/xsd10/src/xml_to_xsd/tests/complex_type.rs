@@ -40,17 +40,17 @@ mod test {
         if let TypeDefParticle::Sequence(seq) = ct.type_def_particle().unwrap() {
             assert_eq!(seq.nested_particle.len(), 2);
             if let NestedParticle::Element(el) = &seq.nested_particle[0] {
-                assert_eq!(el.name.as_ref().unwrap().as_ref(), "Min");
-                assert_eq!(el.type_.as_ref().unwrap().name(), "int");
-                assert_eq!(el.type_.as_ref().unwrap().prefix(), Some("xs"));
+                assert_eq!(el.name.as_ref().unwrap().0.as_ref(), "Min");
+                assert_eq!(el.type_.as_ref().unwrap().0.name(), "int");
+                assert_eq!(el.type_.as_ref().unwrap().0.prefix(), Some("xs"));
             } else {
                 panic!()
             }
 
             if let NestedParticle::Element(el) = &seq.nested_particle[1] {
-                assert_eq!(el.name.as_ref().unwrap().as_ref(), "Max");
-                assert_eq!(el.type_.as_ref().unwrap().name(), "int");
-                assert_eq!(el.type_.as_ref().unwrap().prefix(), Some("xs"));
+                assert_eq!(el.name.as_ref().unwrap().0.as_ref(), "Max");
+                assert_eq!(el.type_.as_ref().unwrap().0.name(), "int");
+                assert_eq!(el.type_.as_ref().unwrap().0.prefix(), Some("xs"));
             } else {
                 panic!()
             }

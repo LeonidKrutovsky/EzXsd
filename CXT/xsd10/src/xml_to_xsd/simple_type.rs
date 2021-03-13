@@ -126,7 +126,7 @@ mod test {
         assert_eq!(res.name.0.as_ref(), "Type1");
         match &res.content_choice {
             SimpleDerivation::List(x) => {
-                assert_eq!(x.item_type.as_ref().unwrap().name(), "itemType")
+                assert_eq!(x.item_type.as_ref().unwrap().0.name(), "itemType")
             }
             _ => unreachable!("test failed!"),
         }
