@@ -1,13 +1,17 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::element_model::ElementModel;
-use crate::model::simple_types::block_set::BlockSet;
-use crate::model::simple_types::form_choice::FormChoice;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::{RawAttribute};
 use crate::model::attributes::max_occurs::MaxOccurs;
 use crate::model::attributes::min_occurs::MinOccurs;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::ref_::Ref;
+use crate::model::attributes::type_::Type;
+use crate::model::attributes::fixed::Fixed;
+use crate::model::attributes::nillable::Nillable;
+use crate::model::attributes::block::Block;
+use crate::model::attributes::form::Form;
+use crate::model::attributes::default::Default_;
 
 // xsd:localElement
 // Complex type information
@@ -55,15 +59,15 @@ pub struct LocalElement<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: ElementModel<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: Option<NCName>,
-    pub ref_: Option<QName>,
-    pub type_: Option<QName>,
+    pub id: Option<Id>,
+    pub name: Option<Name>,
+    pub ref_: Option<Ref>,
+    pub type_: Option<Type>,
     pub min_occurs: MinOccurs,
     pub max_occurs: MaxOccurs,
-    pub default: Option<&'a str>,
-    pub fixed: Option<&'a str>,
-    pub nillable: bool,
-    pub block: Option<BlockSet>,
-    pub form: Option<FormChoice>,
+    pub default: Option<Default_>,
+    pub fixed: Option<Fixed>,
+    pub nillable: Nillable,
+    pub block: Option<Block>,
+    pub form: Option<Form>,
 }

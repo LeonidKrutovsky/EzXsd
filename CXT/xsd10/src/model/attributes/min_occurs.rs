@@ -16,28 +16,17 @@
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)
 
 use crate::model::simple_types::NonNegativeInteger;
+use xml_utils::*;
 use std::convert::TryFrom;
 use crate::model::RawAttribute;
 
-#[derive(Debug)]
+#[attribute(name = "minOccurs")]
 pub struct MinOccurs(pub NonNegativeInteger);
-
-impl TryFrom<&RawAttribute<'_>> for MinOccurs {
-    type Error = String;
-
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
-        Ok(Self(attr.value().parse()?))
-    }
-}
 
 impl Default for MinOccurs {
     fn default() -> Self {
         Self("1".parse().unwrap())
     }
-}
-
-impl MinOccurs {
-    pub const NAME: &'static str = "minOccurs";
 }
 
 // minOccurs

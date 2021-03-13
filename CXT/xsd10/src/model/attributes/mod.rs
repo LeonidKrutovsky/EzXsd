@@ -28,3 +28,5 @@ pub mod type_;
 pub mod use_;
 pub mod version;
 pub mod xpath;
+pub mod base;
+pub mod value;

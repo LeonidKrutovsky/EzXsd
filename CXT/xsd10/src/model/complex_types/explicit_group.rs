@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::nested_particle::NestedParticle;
-use crate::model::simple_types::id::Id;
 use crate::model::{RawAttribute};
 use crate::model::attributes::max_occurs::MaxOccurs;
 use crate::model::attributes::min_occurs::MinOccurs;
+use crate::model::attributes::id::Id;
 
 // xsd:explicitGroup
 // group type for the three kinds of model group (sequence, choice, all)

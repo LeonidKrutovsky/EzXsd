@@ -21,4 +21,4 @@ use crate::model::simple_types::FormChoice;
 use xml_utils::*;
 
 #[attribute(name = "form")]
-pub struct Form(FormChoice);
+pub struct Form(pub FormChoice);
