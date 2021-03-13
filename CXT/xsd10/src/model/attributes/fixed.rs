@@ -20,6 +20,7 @@ use crate::model::simple_types::{String_, Boolean};
 use xml_utils::*;
 
 #[attribute(name = "fixed")]
+#[derive(Default)]
 pub struct Fixed(pub String_);
 
 
@@ -44,4 +45,5 @@ pub struct Fixed(pub String_);
 // Type xsd:numFacet via derivation of xsd:facet (Elements xsd:fractionDigits, xsd:length, xsd:minLength, xsd:maxLength)
 
 #[attribute(name = "fixed")]
+#[derive(Default)]
 pub struct FixedBool(pub Boolean);

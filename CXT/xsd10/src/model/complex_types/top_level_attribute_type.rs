@@ -1,9 +1,11 @@
 use crate::model::complex_types::local_simple_type::LocalSimpleType;
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::type_::Type;
+use crate::model::attributes::default::Default_;
+use crate::model::attributes::fixed::Fixed;
 
 // xsd:topLevelAttributeType
 // Complex type information
@@ -37,9 +39,9 @@ pub struct TopLevelAttributeType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub simple_type: Option<LocalSimpleType<'a>>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
-    pub type_: Option<QName>,
-    pub default: Option<&'a str>,
-    pub fixed: Option<&'a str>,
+    pub id: Option<Id>,
+    pub name: Name,
+    pub type_: Option<Type>,
+    pub default: Option<Default_>,
+    pub fixed: Option<Fixed>,
 }

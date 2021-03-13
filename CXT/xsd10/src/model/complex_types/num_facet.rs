@@ -1,7 +1,8 @@
 use crate::model::elements::annotation::Annotation;
-use crate::model::simple_types::non_negative_integer::NonNegativeInteger;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::fixed::FixedBool;
+use crate::model::attributes::value::NonNegativeValue;
 
 // xsd:numFacet
 // Complex type information
@@ -34,8 +35,8 @@ use crate::model::RawAttribute;
 #[derive(Default, Debug)]
 pub struct NumFacet<'a> {
     pub annotation: Option<Annotation<'a>>,
-    pub id: Id,
-    pub fixed: bool,
-    pub value: NonNegativeInteger,
+    pub id: Option<Id>,
+    pub fixed: FixedBool,
+    pub value: NonNegativeValue,
     pub attributes: Vec<RawAttribute<'a>>,
 }

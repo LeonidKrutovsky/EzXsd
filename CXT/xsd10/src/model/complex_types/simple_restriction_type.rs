@@ -1,9 +1,9 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::simple_types::qname::QName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::base::Base;
 
 // xsd:simpleRestrictionType
 // Complex type information
@@ -52,7 +52,7 @@ pub struct SimpleRestrictionType<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub model: SimpleRestrictionModel<'a>,
     pub attr_decls: AttrDecls<'a>,
-    pub id: Id,
-    pub base: QName,
+    pub id: Option<Id>,
+    pub base: Base,
     pub attributes: Vec<RawAttribute<'a>>,
 }

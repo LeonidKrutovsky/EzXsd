@@ -2,9 +2,9 @@ use crate::model::elements::all::All;
 use crate::model::elements::annotation::Annotation;
 use crate::model::elements::choice::SimpleChoice;
 use crate::model::elements::sequence::SimpleSequence;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::id::Id;
+use crate::model::attributes::name::Name;
 
 // xsd:namedGroup
 // Complex type information
@@ -38,8 +38,8 @@ pub struct NamedGroup<'a> {
     pub annotation: Option<Annotation<'a>>,
     pub content_choice: ContentChoice<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
-    pub id: Id,
-    pub name: NCName,
+    pub id: Option<Id>,
+    pub name: Name,
 }
 
 #[derive(Debug)]

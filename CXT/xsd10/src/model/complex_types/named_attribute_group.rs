@@ -1,8 +1,8 @@
 use crate::model::elements::annotation::Annotation;
 use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::simple_types::ncname::NCName;
-use crate::model::simple_types::Id;
 use crate::model::RawAttribute;
+use crate::model::attributes::name::Name;
+use crate::model::attributes::id::Id;
 
 // xsd:namedAttributeGroup
 // Complex type information
@@ -37,5 +37,5 @@ pub struct NamedAttributeGroup<'a> {
     pub content: AttrDecls<'a>,
     pub attributes: Vec<RawAttribute<'a>>,
     pub id: Option<Id>,
-    pub name: NCName,
+    pub name: Name,
 }
