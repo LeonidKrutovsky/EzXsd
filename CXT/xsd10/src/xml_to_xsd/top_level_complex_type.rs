@@ -8,8 +8,8 @@ use crate::model::attributes::abstract_::Abstract;
 use crate::model::attributes::mixed::Mixed;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> TopLevelComplexType<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl TopLevelComplexType {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let annotation = annotation_first(node)?;
         let model = ComplexTypeModel::parse(node)?;
 
@@ -71,10 +71,12 @@ mod test {
         .unwrap();
         let root = doc.root_element();
         let res = TopLevelComplexType::parse(root).unwrap();
-        assert_eq!(res.annotation.as_ref().unwrap().doc_str(0), Some("DocText"));
+        assert_eq!(res.annotation.as_ref().unwrap().documentations[0].text.as_ref().unwrap(), "DocText");
         assert_eq!(res.attributes.len(), 1);
         assert_eq!(res.id.as_ref().unwrap().0.as_ref(), "ID");
         assert_eq!(res.name.0.as_ref(), "FloatRange");
+        //let res = TopLevelComplexType::parse(root).unwrap();
+
         if let TypeDefParticle::Sequence(val) = res.type_def_particle().unwrap() {
             assert_eq!(val.nested_particle.len(), 2);
         } else {

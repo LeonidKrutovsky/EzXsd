@@ -8,13 +8,13 @@ use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::{Document, Node};
 use std::convert::TryInto;
 
-pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema<'a>, String> {
+pub fn parse_document<'a>(doc: &'a Document) -> Result<Schema, String> {
     let schema_node = doc.root_element();
     Schema::parse(schema_node)
 }
 
-impl<'a> Schema<'a> {
-    pub fn parse(schema_node: Node<'a, '_>) -> Result<Self, String> {
+impl Schema {
+    pub fn parse(schema_node: Node<'_, '_>) -> Result<Self, String> {
         let mut schema = Schema::default();
 
         for attr in schema_node.attributes() {

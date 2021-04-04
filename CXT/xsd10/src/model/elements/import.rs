@@ -28,8 +28,8 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Anonymous type of element xsd:schema
 #[derive(Debug, Default)]
-pub struct Import<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Import {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub namespace: Option<NamespaceUri>,

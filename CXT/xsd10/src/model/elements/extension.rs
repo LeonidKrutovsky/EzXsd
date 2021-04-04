@@ -9,7 +9,7 @@ use crate::model::complex_types::simple_extension_type::SimpleExtensionType;
 //
 // Used in
 // Anonymous type of element xsd:simpleContent
-pub type SimpleExtension<'a> = SimpleExtensionType<'a>;
+pub type SimpleExtension = SimpleExtensionType;
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -24,4 +24,4 @@ pub type SimpleExtension<'a> = SimpleExtensionType<'a>;
 //
 // Used in
 // Anonymous type of element xsd:complexContent
-pub type Extension<'a> = ExtensionType<'a>;
+pub type Extension = ExtensionType;

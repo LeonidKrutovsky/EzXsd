@@ -15,7 +15,6 @@
 // Type xsd:localAttributeType (Element xsd:attribute)
 //
 use std::convert::TryFrom;
-use crate::model::RawAttribute;
 
 #[derive(Debug, PartialEq)]
 pub enum Use{
@@ -24,10 +23,10 @@ pub enum Use{
     Required
 }
 
-impl TryFrom<&RawAttribute<'_>> for Use {
+impl TryFrom<&roxmltree::Attribute<'_>> for Use {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "prohibited" => Self::Prohibited,
             "optional" => Self::Optional,

@@ -19,7 +19,7 @@ use crate::model::complex_types::named_attribute_group;
 // Type xsd:simpleExtensionType via reference to xsd:attrDecls (Element xsd:extension)
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-pub type AttributeGroupRef<'a> = attribute_group_ref::AttributeGroupRef<'a>;
+pub type AttributeGroupRef = attribute_group_ref::AttributeGroupRef;
 
 // xsd:attributeGroup
 // See http://www.w3.org/TR/xmlschema-1/#element-attributeGroup.
@@ -34,4 +34,4 @@ pub type AttributeGroupRef<'a> = attribute_group_ref::AttributeGroupRef<'a>;
 // Anonymous type of element xsd:redefine via reference to xsd:redefinable
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
-pub type AttributeGroup<'a> = named_attribute_group::NamedAttributeGroup<'a>;
+pub type AttributeGroup = named_attribute_group::NamedAttributeGroup;

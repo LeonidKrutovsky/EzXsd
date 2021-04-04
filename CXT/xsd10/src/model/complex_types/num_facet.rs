@@ -33,8 +33,8 @@ use crate::model::attributes::AnyAttributes;
 //                  xsd:numFacet
 //                      restricted by Anonymous type of element xsd:totalDigits
 #[derive(Default, Debug)]
-pub struct NumFacet<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct NumFacet {
+    pub annotation: Option<Annotation>,
     pub id: Option<Id>,
     pub fixed: FixedBool,
     pub value: NonNegativeValue,

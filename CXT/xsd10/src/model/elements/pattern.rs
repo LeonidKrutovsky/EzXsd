@@ -24,8 +24,8 @@ use crate::model::attributes::AnyAttributes;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[derive(Default, Debug)]
-pub struct Pattern<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Pattern {
+    pub annotation: Option<Annotation>,
     pub id: Option<Id>,
     pub value: PatternValue,
     pub attributes: AnyAttributes,

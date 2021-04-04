@@ -29,17 +29,17 @@ use std::rc::Rc;
 // Used in
 // Anonymous type of element xsd:schema
 #[derive(Debug)]
-pub enum SchemaTop<'a> {
-    SimpleType(Rc<TopLevelSimpleType<'a>>),
-    ComplexType(Rc<TopLevelComplexType<'a>>),
-    Group(Rc<Group<'a>>),
-    AttributeGroup(Rc<AttributeGroup<'a>>),
-    Element(Rc<TopLevelElement<'a>>),
-    Attribute(Rc<TopLevelAttribute<'a>>),
-    Notation(Rc<Notation<'a>>),
+pub enum SchemaTop {
+    SimpleType(Rc<TopLevelSimpleType>),
+    ComplexType(Rc<TopLevelComplexType>),
+    Group(Rc<Group>),
+    AttributeGroup(Rc<AttributeGroup>),
+    Element(Rc<TopLevelElement>),
+    Attribute(Rc<TopLevelAttribute>),
+    Notation(Rc<Notation>),
 }
 
-impl<'a> SchemaTop<'a> {
+impl SchemaTop {
     pub fn name(&self) -> NCName {
         match self {
             SchemaTop::SimpleType(val) => val.name.0.clone(),

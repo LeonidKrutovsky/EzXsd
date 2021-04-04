@@ -33,10 +33,10 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
 #[derive(Debug)]
-pub struct KeyRef<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub selector: Selector<'a>,
-    pub fields: Vec<Field<'a>>,
+pub struct KeyRef {
+    pub annotation: Option<Annotation>,
+    pub selector: Selector,
+    pub fields: Vec<Field>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,

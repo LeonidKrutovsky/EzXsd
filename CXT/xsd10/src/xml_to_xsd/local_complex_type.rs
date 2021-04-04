@@ -6,8 +6,8 @@ use crate::model::attributes::mixed::Mixed;
 use std::convert::TryInto;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> LocalComplexType<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl LocalComplexType {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self {
             annotation: annotation_first(node)?,
             model: ComplexTypeModel::parse(node)?,

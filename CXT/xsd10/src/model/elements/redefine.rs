@@ -29,9 +29,9 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Anonymous type of element xsd:schema
 #[derive(Debug)]
-pub struct Redefine<'a> {
-    pub annotations: Vec<Annotation<'a>>,
-    pub content: Vec<Redefinable<'a>>,
+pub struct Redefine {
+    pub annotations: Vec<Annotation>,
+    pub content: Vec<Redefinable>,
     pub attributes: AnyAttributes,
     pub schema_location: SchemaLocation,
     pub id: Option<Id>,

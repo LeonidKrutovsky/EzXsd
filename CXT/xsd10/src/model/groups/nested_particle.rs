@@ -22,10 +22,10 @@ use crate::model::elements::sequence::Sequence;
 // Type xsd:explicitGroup (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup (Elements xsd:choice, xsd:sequence)
 #[derive(Debug)]
-pub enum NestedParticle<'a> {
-    Element(Box<LocalElement<'a>>),
-    Group(NamedGroupRef<'a>),
-    Choice(Choice<'a>),
-    Sequence(Sequence<'a>),
-    Any(Any<'a>),
+pub enum NestedParticle {
+    Element(Box<LocalElement>),
+    Group(NamedGroupRef),
+    Choice(Choice),
+    Sequence(Sequence),
+    Any(Any),
 }

@@ -27,8 +27,8 @@ use crate::model::attributes::AnyAttributes;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[derive(Debug)]
-pub struct WhiteSpace<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct WhiteSpace {
+    pub annotation: Option<Annotation>,
     pub id: Option<Id>,
     pub fixed: FixedBool,
     pub value: WhiteSpaceValue,

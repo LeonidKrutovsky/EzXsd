@@ -6,8 +6,8 @@ use crate::model::{ComplexContent, SimpleContent};
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
 
-impl<'a> ComplexTypeModel<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl ComplexTypeModel {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut iter = node.element_children().peekable();
         let mut first_child = iter.peek();
         if let Some(val) = first_child {
@@ -85,7 +85,7 @@ mod test {
                     .documentations
                     .first()
                     .unwrap()
-                    .text
+                    .text.as_ref()
                     .unwrap(),
                 "Text"
             );
@@ -133,7 +133,7 @@ mod test {
                     .documentations
                     .first()
                     .unwrap()
-                    .text
+                    .text.as_ref()
                     .unwrap(),
                 "Text"
             );
@@ -221,7 +221,7 @@ mod test {
                     .documentations
                     .first()
                     .unwrap()
-                    .text
+                    .text.as_ref()
                     .unwrap(),
                 "Text"
             );

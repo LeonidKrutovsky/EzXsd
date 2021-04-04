@@ -30,8 +30,8 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:namedGroupRef
 #[derive(Debug)]
-pub struct NamedGroupRef<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct NamedGroupRef {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub ref_: Ref,

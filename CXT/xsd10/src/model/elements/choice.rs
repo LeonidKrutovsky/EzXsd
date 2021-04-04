@@ -19,7 +19,7 @@ use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type Choice<'a> = ExplicitGroup<'a>;
+pub type Choice = ExplicitGroup;
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: xmlschema.xsd
@@ -28,4 +28,4 @@ pub type Choice<'a> = ExplicitGroup<'a>;
 //
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
-pub type SimpleChoice<'a> = SimpleExplicitGroup<'a>;
+pub type SimpleChoice = SimpleExplicitGroup;

@@ -21,8 +21,8 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Anonymous type of element xsd:schema
 #[derive(Debug, Default)]
-pub struct Include<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Include {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub schema_location: SchemaLocation,

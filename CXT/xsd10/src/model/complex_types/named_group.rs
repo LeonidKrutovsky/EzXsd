@@ -34,17 +34,17 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:namedGroup
 #[derive(Debug)]
-pub struct NamedGroup<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content_choice: ContentChoice<'a>,
+pub struct NamedGroup {
+    pub annotation: Option<Annotation>,
+    pub content_choice: ContentChoice,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,
 }
 
 #[derive(Debug)]
-pub enum ContentChoice<'a> {
-    All(All<'a>),
-    Choice(SimpleChoice<'a>),
-    Sequence(SimpleSequence<'a>),
+pub enum ContentChoice {
+    All(All),
+    Choice(SimpleChoice),
+    Sequence(SimpleSequence),
 }

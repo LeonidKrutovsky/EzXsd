@@ -7,8 +7,8 @@ use roxmltree::Node;
 use std::convert::TryInto;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> SimpleContent<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl SimpleContent {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut content = None;
         for ch in node.children().filter(|n| n.is_element()) {
@@ -39,8 +39,8 @@ impl<'a> SimpleContent<'a> {
     }
 }
 
-impl<'a> SimpleContentChoice<'a> {
-    pub fn parse(node: Node<'a, '_>, element_type: ElementType) -> Result<Self, String> {
+impl SimpleContentChoice {
+    pub fn parse(node: Node<'_, '_>, element_type: ElementType) -> Result<Self, String> {
         Ok(match element_type {
             ElementType::Extension => {
                 SimpleContentChoice::Extension(Box::new(SimpleExtension::parse(node)?))

@@ -16,7 +16,6 @@ use xml_utils::*;
 use crate::model::simple_types::{AnySimpleType, NonNegativeInteger, PositiveInteger, String_};
 use std::str::FromStr;
 use std::convert::TryFrom;
-use crate::model::RawAttribute;
 
 #[derive(Default, Debug)]
 pub struct Value(pub AnySimpleType);
@@ -33,10 +32,10 @@ impl Value {
     pub const NAME: &'static str = "value";
 }
 
-impl TryFrom<&RawAttribute<'_>> for Value {
+impl TryFrom<&roxmltree::Attribute<'_>> for Value {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         attr.value().parse()
     }
 }
@@ -120,10 +119,10 @@ impl WhiteSpaceValue {
     pub const NAME: &'static str = "value";
 }
 
-impl TryFrom<&RawAttribute<'_>> for WhiteSpaceValue {
+impl TryFrom<&roxmltree::Attribute<'_>> for WhiteSpaceValue {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         attr.value().parse()
     }
 }

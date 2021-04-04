@@ -40,9 +40,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:localAttributeType
 #[derive(Debug)]
-pub struct LocalAttributeType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub simple_type: Option<LocalSimpleType<'a>>,
+pub struct LocalAttributeType {
+    pub annotation: Option<Annotation>,
+    pub simple_type: Option<LocalSimpleType>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Option<Name>,

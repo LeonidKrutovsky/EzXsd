@@ -48,10 +48,10 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:simpleRestrictionType
 #[derive(Debug, Default)]
-pub struct SimpleRestrictionType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: SimpleRestrictionModel<'a>,
-    pub attr_decls: AttrDecls<'a>,
+pub struct SimpleRestrictionType {
+    pub annotation: Option<Annotation>,
+    pub model: SimpleRestrictionModel,
+    pub attr_decls: AttrDecls,
     pub id: Option<Id>,
     pub base: Base,
     pub attributes: AnyAttributes,

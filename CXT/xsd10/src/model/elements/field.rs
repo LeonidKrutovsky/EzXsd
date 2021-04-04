@@ -23,8 +23,8 @@ use crate::model::attributes::AnyAttributes;
 // Anonymous type of element xsd:keyref via extension of xsd:keybase
 // Type xsd:keybase (Elements xsd:unique, xsd:key)
 #[derive(Debug, Default)]
-pub struct Field<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Field {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id:  Option<Id>,
     pub xpath: FieldXPath,

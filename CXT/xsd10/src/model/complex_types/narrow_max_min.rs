@@ -9,8 +9,8 @@ use crate::model::attributes::fixed::Fixed;
 use crate::model::attributes::nillable::Nillable;
 use crate::model::attributes::block::Block;
 use crate::model::attributes::form::Form;
-use crate::model::attributes::min_occurs::MinOccurs;
-use crate::model::attributes::max_occurs::MaxOccurs;
+use crate::model::attributes::min_occurs::MinOccursBool;
+use crate::model::attributes::max_occurs::MaxOccursBool;
 use crate::model::attributes::AnyAttributes;
 
 // xsd:narrowMaxMin
@@ -55,9 +55,9 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:localElement
 //                  xsd:narrowMaxMin
 #[derive(Debug)]
-pub struct NarrowMaxMin<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: ElementModel<'a>,
+pub struct NarrowMaxMin {
+    pub annotation: Option<Annotation>,
+    pub model: ElementModel,
     pub id: Option<Id>,
     pub name: Option<Name>,
     pub ref_: Option<Ref>,
@@ -67,7 +67,7 @@ pub struct NarrowMaxMin<'a> {
     pub nillable: Nillable,
     pub block: Option<Block>,
     pub form: Option<Form>,
-    pub min_occurs: MinOccurs, //Anonymous in doc, probably mistake
-    pub max_occurs: MaxOccurs,
+    pub min_occurs: MinOccursBool,
+    pub max_occurs: MaxOccursBool,
     pub attributes: AnyAttributes,
 }

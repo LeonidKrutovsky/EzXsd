@@ -52,9 +52,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:topLevelComplexType
 #[derive(Debug)]
-pub struct TopLevelComplexType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: ComplexTypeModel<'a>,
+pub struct TopLevelComplexType {
+    pub annotation: Option<Annotation>,
+    pub model: ComplexTypeModel,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,
@@ -64,29 +64,29 @@ pub struct TopLevelComplexType<'a> {
     pub mixed: Mixed,
 }
 
-impl<'a> TopLevelComplexType<'a> {
-    pub fn simple_content(&self) -> Option<&SimpleContent<'a>> {
+impl TopLevelComplexType {
+    pub fn simple_content(&self) -> Option<&SimpleContent> {
         match &self.model {
             ComplexTypeModel::SimpleContent(sc) => Some(sc),
             _ => None,
         }
     }
 
-    pub fn complex_content(&self) -> Option<&ComplexContent<'a>> {
+    pub fn complex_content(&self) -> Option<&ComplexContent> {
         match &self.model {
             ComplexTypeModel::ComplexContent(sc) => Some(sc),
             _ => None,
         }
     }
 
-    pub fn type_def_particle(&self) -> Option<&TypeDefParticle<'a>> {
+    pub fn type_def_particle(&self) -> Option<&TypeDefParticle> {
         match &self.model {
             ComplexTypeModel::Content(tdp, _) => tdp.as_ref(),
             _ => None,
         }
     }
 
-    pub fn attr_decls(&self) -> Option<&AttrDecls<'a>> {
+    pub fn attr_decls(&self) -> Option<&AttrDecls> {
         match &self.model {
             ComplexTypeModel::Content(_, attr_decls) => Some(attr_decls),
             _ => None,

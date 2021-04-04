@@ -11,8 +11,8 @@ use std::convert::TryInto;
 use crate::model::attributes::fixed::FixedBool;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> Facet<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl Facet {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "facet")?;
 
@@ -30,8 +30,8 @@ impl<'a> Facet<'a> {
     }
 }
 
-impl<'a> TotalDigits<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl TotalDigits {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "totalDigits")?;
 
@@ -48,8 +48,8 @@ impl<'a> TotalDigits<'a> {
     }
 }
 
-impl<'a> NumFacet<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl NumFacet {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "numFacet")?;
 
@@ -66,8 +66,8 @@ impl<'a> NumFacet<'a> {
     }
 }
 
-impl<'a> NoFixedFacet<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl NoFixedFacet {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "noFixedFacet")?;
 
@@ -83,8 +83,8 @@ impl<'a> NoFixedFacet<'a> {
     }
 }
 
-impl<'a> WhiteSpace<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl WhiteSpace {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let annotation = annotation_only(node, "whiteSpace")?;
 
         let mut id = None;
@@ -113,8 +113,8 @@ impl<'a> WhiteSpace<'a> {
     }
 }
 
-impl<'a> Pattern<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl Pattern {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "whiteSpace")?;
 
@@ -130,8 +130,8 @@ impl<'a> Pattern<'a> {
     }
 }
 
-impl<'a> Facets<'a> {
-    pub fn parse(node: Node<'a, '_>, element_type: ElementType) -> Result<Option<Self>, String> {
+impl Facets {
+    pub fn parse(node: Node<'_, '_>, element_type: ElementType) -> Result<Option<Self>, String> {
         Ok(Some(match element_type {
             ElementType::MinExclusive => Self::MinExclusive(Facet::parse(node)?),
             ElementType::MinInclusive => Self::MinInclusive(Facet::parse(node)?),

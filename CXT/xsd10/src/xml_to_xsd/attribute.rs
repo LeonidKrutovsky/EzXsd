@@ -13,8 +13,8 @@ use crate::model::attributes::fixed::Fixed;
 use crate::model::attributes::form::Form;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> TopLevelAttribute<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl TopLevelAttribute {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut simple_type = None;
         let mut attributes = AnyAttributes::default();
@@ -64,8 +64,8 @@ impl<'a> TopLevelAttribute<'a> {
     }
 }
 
-impl<'a> LocalAttribute<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl LocalAttribute {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut simple_type = None;
         let mut attributes= AnyAttributes::default();

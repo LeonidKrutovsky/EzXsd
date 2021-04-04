@@ -1,5 +1,7 @@
 use crate::model::simple_types::QName;
 use crate::model::attributes::AnyAttributes;
+use roxmltree::Node;
+use std::convert::{TryFrom, TryInto};
 
 pub mod all;
 pub mod annotation;
@@ -142,7 +144,34 @@ pub fn xsd_element_type(name: &str) -> Result<ElementType, String> {
     Ok(element)
 }
 
+#[derive(Debug, Default)]
 pub struct RawElement {
     name: QName,
-    attributes: AnyAttributes
+    attributes: AnyAttributes,
+    text: Option<String>,
 }
+
+impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
+    type Error = String;
+
+    fn try_from(value: Node<'_, '_>) -> Result<Self, Self::Error> {
+        let name = value.tag_name().name().parse()?;
+        let prefix = if let Some(p) = value.tag_name().namespace() {
+            Some(p.parse()?)
+        } else {
+            None
+        };
+        Ok(
+            Self {
+            name: QName{
+                prefix,
+                name,
+            },
+            attributes: AnyAttributes(value.attributes().iter().map(|a| a.try_into()).collect::<Result<Vec<_>, _>>()?),
+            text: value.text().map(String::from)
+        }
+        )
+    }
+}
+
+

@@ -30,16 +30,16 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[derive(Debug)]
-pub struct ComplexContent<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content: ComplexContentChoice<'a>,
+pub struct ComplexContent {
+    pub annotation: Option<Annotation>,
+    pub content: ComplexContentChoice,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub mixed: Option<bool>,
 }
 
 #[derive(Debug)]
-pub enum ComplexContentChoice<'a> {
-    Restriction(Box<ComplexRestriction<'a>>),
-    Extension(Box<Extension<'a>>),
+pub enum ComplexContentChoice {
+    Restriction(Box<ComplexRestriction>),
+    Extension(Box<Extension>),
 }

@@ -32,9 +32,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:namedAttributeGroup
 #[derive(Debug)]
-pub struct NamedAttributeGroup<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content: AttrDecls<'a>,
+pub struct NamedAttributeGroup {
+    pub annotation: Option<Annotation>,
+    pub content: AttrDecls,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,

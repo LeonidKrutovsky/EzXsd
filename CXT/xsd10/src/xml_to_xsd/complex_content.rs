@@ -7,8 +7,8 @@ use roxmltree::Node;
 use std::convert::TryInto;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> ComplexContent<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl ComplexContent {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut content = None;
         for ch in node.children().filter(|n| n.is_element()) {

@@ -9,8 +9,8 @@ use std::convert::TryInto;
 use crate::model::attributes::final_::SimpleFinal;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> LocalSimpleType<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<LocalSimpleType<'a>, String> {
+impl LocalSimpleType {
+    pub fn parse(node: Node<'_, '_>) -> Result<LocalSimpleType, String> {
         let mut annotation = None;
         let mut id = None;
         let mut attributes= AnyAttributes::default();
@@ -39,8 +39,8 @@ impl<'a> LocalSimpleType<'a> {
     }
 }
 
-impl<'a> TopLevelSimpleType<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl TopLevelSimpleType {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut content_choice = None;
         let mut id = None;
@@ -89,11 +89,11 @@ impl<'a> TopLevelSimpleType<'a> {
     }
 }
 
-impl<'a> SimpleDerivation<'a> {
+impl SimpleDerivation {
     pub fn parse(
-        node: Node<'a, '_>,
+        node: Node<'_, '_>,
         element_type: ElementType,
-    ) -> Result<SimpleDerivation<'a>, String> {
+    ) -> Result<SimpleDerivation, String> {
         let res = match element_type {
             ElementType::Union => Self::Union(Box::new(Union::parse(node)?)),
             ElementType::Restriction => Self::Restriction(Box::new(Restriction::parse(node)?)),

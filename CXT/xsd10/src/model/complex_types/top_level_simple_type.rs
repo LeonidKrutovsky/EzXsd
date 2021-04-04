@@ -34,9 +34,9 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:simpleType
 //                  xsd:topLevelSimpleType
 #[derive(Debug)]
-pub struct TopLevelSimpleType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content_choice: SimpleDerivation<'a>,
+pub struct TopLevelSimpleType {
+    pub annotation: Option<Annotation>,
+    pub content_choice: SimpleDerivation,
     pub id: Option<Id>,
     pub final_: Option<SimpleFinal>,
     pub name: Name,

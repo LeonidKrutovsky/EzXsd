@@ -16,7 +16,6 @@
 // Type xsd:wildcard (Element xsd:anyAttribute)
 //
 use std::convert::TryFrom;
-use crate::model::RawAttribute;
 
 #[derive(Debug, PartialEq)]
 pub enum ProcessContents{
@@ -25,10 +24,10 @@ pub enum ProcessContents{
     Strict
 }
 
-impl TryFrom<&RawAttribute<'_>> for ProcessContents {
+impl TryFrom<&roxmltree::Attribute<'_>> for ProcessContents {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "skip" => Self::Skip,
             "lax" => Self::Lax,

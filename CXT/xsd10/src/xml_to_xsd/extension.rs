@@ -6,8 +6,8 @@ use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Extension<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl Extension {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
 
         let mut base = None;

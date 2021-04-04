@@ -4,8 +4,8 @@ use crate::xml_to_xsd::utils::annotation_first;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> LocalElement<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl LocalElement {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self {
             annotation: annotation_first(node)?,
             model: ElementModel::parse(node)?,

@@ -27,8 +27,8 @@ use crate::model::attributes::AnyAttributes;
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 #[derive(Debug, Default)]
-pub struct Notation<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Notation {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,

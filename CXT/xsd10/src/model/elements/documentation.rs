@@ -1,4 +1,4 @@
-use crate::model::{RawElement};
+use crate::model::elements::RawElement;
 use crate::model::attributes::source::Source;
 use crate::model::simple_types::Language;
 use crate::model::attributes::AnyAttributes;
@@ -23,9 +23,9 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Anonymous type of element xsd:annotation
 #[derive(Default, Debug)]
-pub struct Documentation<'a> {
-    pub text: Option<&'a str>,
-    pub elements: Vec<RawElement<'a>>,
+pub struct Documentation {
+    pub text: Option<String>,
+    pub elements: Vec<RawElement>,
     pub source: Option<Source>,
     pub lang: Option<Language>,
     pub attributes: AnyAttributes,

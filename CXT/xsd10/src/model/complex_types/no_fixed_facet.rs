@@ -28,8 +28,8 @@ use crate::model::attributes::AnyAttributes;
 //                  xsd:noFixedFacet
 //                      restricted by Anonymous type of element xsd:pattern
 #[derive(Default, Debug)]
-pub struct NoFixedFacet<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct NoFixedFacet {
+    pub annotation: Option<Annotation>,
     pub id: Option<Id>,
     pub value: Value,
     pub attributes: AnyAttributes,

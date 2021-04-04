@@ -3,8 +3,8 @@ use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Import<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Import<'a>, String> {
+impl Import {
+    pub fn parse(node: Node<'_, '_>) -> Result<Import, String> {
         let mut res = Import::default();
         res.annotation = annotation_only(node, "import")?;
 

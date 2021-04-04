@@ -2,11 +2,11 @@ use crate::model::elements::app_info::AppInfo;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> AppInfo<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<AppInfo<'a>, String> {
+impl AppInfo {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = AppInfo::default();
-        res.text = node.text();
-        res.elements = node.children().filter(|n| n.is_element()).collect();
+        res.text = node.text().map(String::from);
+        res.elements = node.children().try_into()?;
         for attr in node.attributes() {
             match attr.name() {
                 "source" => res.source = Some(attr.try_into()?),

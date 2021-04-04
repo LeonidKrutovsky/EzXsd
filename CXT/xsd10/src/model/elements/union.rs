@@ -25,9 +25,9 @@ use crate::model::attributes::AnyAttributes;
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 #[derive(Default, Debug)]
-pub struct Union<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub simple_type: Vec<LocalSimpleType<'a>>,
+pub struct Union {
+    pub annotation: Option<Annotation>,
+    pub simple_type: Vec<LocalSimpleType>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub member_types: MemberTypes,

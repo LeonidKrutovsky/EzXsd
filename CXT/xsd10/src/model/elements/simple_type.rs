@@ -19,7 +19,7 @@ use crate::model::complex_types::{local_simple_type, top_level_simple_type};
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
-pub type LocalSimpleType<'a> = local_simple_type::LocalSimpleType<'a>;
+pub type LocalSimpleType = local_simple_type::LocalSimpleType;
 
 // xsd:simpleType
 // See http://www.w3.org/TR/xmlschema-2/#element-simpleType.
@@ -34,4 +34,4 @@ pub type LocalSimpleType<'a> = local_simple_type::LocalSimpleType<'a>;
 // Anonymous type of element xsd:redefine via reference to xsd:redefinable
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
-pub type TopLevelSimpleType<'a> = top_level_simple_type::TopLevelSimpleType<'a>;
+pub type TopLevelSimpleType = top_level_simple_type::TopLevelSimpleType;

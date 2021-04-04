@@ -26,8 +26,8 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:attributeGroupRef
 #[derive(Debug)]
-pub struct AttributeGroupRef<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct AttributeGroupRef {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub ref_: Ref,

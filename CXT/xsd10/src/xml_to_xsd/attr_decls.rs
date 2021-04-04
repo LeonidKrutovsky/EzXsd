@@ -4,8 +4,8 @@ use crate::model::{AnyAttribute, LocalAttribute};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 
-impl<'a> AttrDecls<'a> {
-    pub fn parse(iter: impl Iterator<Item = Node<'a, 'a>>) -> Result<Self, String> {
+impl AttrDecls {
+    pub fn parse(iter: impl Iterator<Item = Node>) -> Result<Self, String> {
         let mut res = Self::default();
         for ch in iter {
             match ch.xsd_type()? {

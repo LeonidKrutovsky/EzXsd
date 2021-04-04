@@ -6,8 +6,8 @@ use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> List<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<List<'a>, String> {
+impl List {
+    pub fn parse(node: Node<'_, '_>) -> Result<List, String> {
         let mut res = List::default();
 
         for ch in node.children().filter(|n| n.is_element()) {

@@ -5,8 +5,8 @@ use crate::model::{TopLevelAttribute, TopLevelComplexType, TopLevelElement, TopL
 use roxmltree::Node;
 use std::rc::Rc;
 
-impl<'a> SchemaTop<'a> {
-    pub fn parse(node: Node<'a, '_>, element_type: ElementType) -> Result<Self, String> {
+impl SchemaTop {
+    pub fn parse(node: Node<'_, '_>, element_type: ElementType) -> Result<Self, String> {
         let res = match element_type {
             ElementType::SimpleType => {
                 SchemaTop::SimpleType(Rc::new(TopLevelSimpleType::parse(node)?))

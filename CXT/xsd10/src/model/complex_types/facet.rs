@@ -43,8 +43,8 @@ use crate::model::attributes::AnyAttributes;
 //                      restricted by Anonymous type of element xsd:totalDigits
 //                  restricted by Anonymous type of element xsd:whiteSpace
 #[derive(Default, Debug)]
-pub struct Facet<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Facet {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub value: Value,

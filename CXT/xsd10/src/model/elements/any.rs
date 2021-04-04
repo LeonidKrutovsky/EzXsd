@@ -30,8 +30,8 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 #[derive(Debug, Default)]
-pub struct Any<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Any {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub namespace: Namespace,

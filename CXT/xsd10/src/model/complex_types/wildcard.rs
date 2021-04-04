@@ -28,8 +28,8 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:wildcard
 //                  extended by Anonymous type of element xsd:any
 #[derive(Debug, Default)]
-pub struct Wildcard<'a> {
-    pub annotation: Option<Annotation<'a>>,
+pub struct Wildcard {
+    pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub namespace: Namespace,

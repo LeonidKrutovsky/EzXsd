@@ -33,9 +33,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:simpleExplicitGroup
 #[derive(Debug, Default)]
-pub struct SimpleExplicitGroup<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub nested_particle: Vec<NestedParticle<'a>>,
+pub struct SimpleExplicitGroup {
+    pub annotation: Option<Annotation>,
+    pub nested_particle: Vec<NestedParticle>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }

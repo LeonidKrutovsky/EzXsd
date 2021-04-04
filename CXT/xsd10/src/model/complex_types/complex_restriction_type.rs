@@ -38,10 +38,10 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:complexRestrictionType
 #[derive(Debug, Default)]
-pub struct ComplexRestrictionType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub type_def_particle: Option<TypeDefParticle<'a>>,
-    pub attr_decls: AttrDecls<'a>,
+pub struct ComplexRestrictionType {
+    pub annotation: Option<Annotation>,
+    pub type_def_particle: Option<TypeDefParticle>,
+    pub attr_decls: AttrDecls,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub base: Base,

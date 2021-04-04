@@ -46,8 +46,3 @@ pub use elements::total_digits::*;
 pub use elements::union::*;
 pub use elements::unique::*;
 pub use elements::white_space::*;
-
-pub type RawAttribute<'a> = roxmltree::Attribute<'a>;
-pub type RawElement<'a> = roxmltree::Node<'a, 'a>;
-pub type Namespace<'a> = roxmltree::Namespace<'a>;
-

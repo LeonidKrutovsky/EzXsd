@@ -13,7 +13,7 @@ use crate::model::complex_types::top_level_element;
 // Used in
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
-pub type TopLevelElement<'a> = top_level_element::TopLevelElement<'a>;
+pub type TopLevelElement = top_level_element::TopLevelElement;
 
 // xsd:element
 // Element information
@@ -26,7 +26,7 @@ pub type TopLevelElement<'a> = top_level_element::TopLevelElement<'a>;
 // Group xsd:nestedParticle
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type LocalElement<'a> = local_element::LocalElement<'a>;
+pub type LocalElement = local_element::LocalElement;
 
 // xsd:element
 // Element information
@@ -40,4 +40,4 @@ pub type LocalElement<'a> = local_element::LocalElement<'a>;
 // Group xsd:allModel
 // Anonymous type of element xsd:all via reference to xsd:allModel
 // Type xsd:allType via reference to xsd:allModel (Element xsd:all)
-pub type Element<'a> = NarrowMaxMin<'a>;
+pub type Element = NarrowMaxMin;

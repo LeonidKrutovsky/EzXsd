@@ -5,8 +5,8 @@ use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::{ElementChildren, XsdNode};
 use roxmltree::Node;
 
-impl<'a> ElementModel<'a> {
-    pub fn parse(node: Node<'a, 'a>) -> Result<Self, String> {
+impl ElementModel {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         for ch in node.element_children() {
             match ch.xsd_type()? {

@@ -6,8 +6,8 @@ use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Annotation<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Annotation<'a>, String> {
+impl Annotation {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Annotation::default();
 
         for ch in node.children().filter(|n| n.is_element()) {

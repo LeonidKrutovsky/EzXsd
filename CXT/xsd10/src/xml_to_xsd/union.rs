@@ -6,8 +6,8 @@ use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Union<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Union<'a>, String> {
+impl Union {
+    pub fn parse(node: Node<'_, '_>) -> Result<Union, String> {
         let mut res = Union::default();
 
         for ch in node.children().filter(|n| n.is_element()) {

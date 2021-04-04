@@ -4,8 +4,8 @@ use crate::model::elements::ElementType;
 use crate::model::groups::type_def_particle::TypeDefParticle;
 use roxmltree::Node;
 
-impl<'a> TypeDefParticle<'a> {
-    pub fn parse(node: Node<'a, '_>, element_type: ElementType) -> Result<Option<Self>, String> {
+impl TypeDefParticle {
+    pub fn parse(node: Node<'_, '_>, element_type: ElementType) -> Result<Option<Self>, String> {
         Ok(Some(match element_type {
             ElementType::Group => TypeDefParticle::Group(NamedGroup::parse(node)?),
             ElementType::All => unimplemented!("Not presented in ONVIF"), //TypeDefParticle::All(),

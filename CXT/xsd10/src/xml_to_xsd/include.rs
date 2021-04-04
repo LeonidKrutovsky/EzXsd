@@ -3,8 +3,8 @@ use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Include<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Include<'a>, String> {
+impl Include {
+    pub fn parse(node: Node<'_, '_>) -> Result<Include, String> {
         let mut res = Include::default();
         res.annotation = annotation_only(node, "include")?;
 

@@ -32,9 +32,9 @@ use crate::model::attributes::AnyAttributes;
 // xsd:annotated
 // xsd:simpleExtensionType
 #[derive(Debug, Default)]
-pub struct SimpleExtensionType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub attr_decls: AttrDecls<'a>,
+pub struct SimpleExtensionType {
+    pub annotation: Option<Annotation>,
+    pub attr_decls: AttrDecls,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub base: Base,

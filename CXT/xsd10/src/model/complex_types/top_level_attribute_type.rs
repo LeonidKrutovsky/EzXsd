@@ -35,9 +35,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:topLevelAttributeType
 #[derive(Debug)]
-pub struct TopLevelAttributeType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub simple_type: Option<LocalSimpleType<'a>>,
+pub struct TopLevelAttributeType {
+    pub annotation: Option<Annotation>,
+    pub simple_type: Option<LocalSimpleType>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,

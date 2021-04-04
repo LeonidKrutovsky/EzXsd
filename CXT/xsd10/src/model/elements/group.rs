@@ -13,7 +13,7 @@ use crate::model::complex_types::named_group_ref::NamedGroupRef;
 // Anonymous type of element xsd:redefine via reference to xsd:redefinable
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
-pub type Group<'a> = NamedGroup<'a>;
+pub type Group = NamedGroup;
 
 // xsd:group
 // Element information
@@ -34,4 +34,4 @@ pub type Group<'a> = NamedGroup<'a>;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type GroupRef<'a> = NamedGroupRef<'a>;
+pub type GroupRef = NamedGroupRef;

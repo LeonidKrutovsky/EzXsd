@@ -13,4 +13,4 @@ use crate::model::complex_types::key_base::KeyBase;
 // Type xsd:localElement via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
-pub type Key<'a> = KeyBase<'a>;
+pub type Key = KeyBase;

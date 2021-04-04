@@ -61,12 +61,12 @@ use crate::model::attributes::AnyAttributes;
 // key	notation	        xs:notation	                        @name
 // key	identityConstraint	.//xs:key|.//xs:unique|.//xs:keyref	@name
 #[derive(Default, Debug)]
-pub struct Schema<'a> {
-    pub includes: Vec<Include<'a>>,
-    pub imports: Vec<Import<'a>>,
-    pub redefines: Vec<Redefine<'a>>,
-    pub annotations: Vec<Annotation<'a>>,
-    pub content: Vec<(SchemaTop<'a>, Vec<Annotation<'a>>)>,
+pub struct Schema {
+    pub includes: Vec<Include>,
+    pub imports: Vec<Import>,
+    pub redefines: Vec<Redefine>,
+    pub annotations: Vec<Annotation>,
+    pub content: Vec<(SchemaTop, Vec<Annotation>)>,
     pub attributes: AnyAttributes,
     pub target_namespace: Option<TargetNamespace>,
     pub version: Option<Version>,

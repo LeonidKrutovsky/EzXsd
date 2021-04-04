@@ -23,8 +23,8 @@ use crate::model::elements::attribute_group::AttributeGroupRef;
 // Type xsd:simpleExtensionType (Element xsd:extension)
 // Type xsd:simpleRestrictionType (Element xsd:restriction)
 #[derive(Debug, Default)]
-pub struct AttrDecls<'a> {
-    pub attributes: Vec<LocalAttribute<'a>>,
-    pub attribute_groups: Vec<AttributeGroupRef<'a>>,
-    pub any_attribute: Option<AnyAttribute<'a>>,
+pub struct AttrDecls {
+    pub attributes: Vec<LocalAttribute>,
+    pub attribute_groups: Vec<AttributeGroupRef>,
+    pub any_attribute: Option<AnyAttribute>,
 }

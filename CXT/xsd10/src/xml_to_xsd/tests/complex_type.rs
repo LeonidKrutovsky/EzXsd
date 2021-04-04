@@ -19,18 +19,18 @@ mod test {
     }
 
     fn next_complex_type<'a>(
-        iter: &mut impl Iterator<Item = &'a (SchemaTop<'a>, Vec<Annotation<'a>>)>,
-    ) -> &'a Rc<TopLevelComplexType<'a>> {
+        iter: &mut impl Iterator<Item = &'a (SchemaTop, Vec<Annotation>)>,
+    ) -> &'a Rc<TopLevelComplexType> {
         match &iter.next().unwrap().0 {
             SchemaTop::ComplexType(ct) => ct,
             _ => panic!("Test failed!"),
         }
     }
 
-    fn test_1(ct: &Rc<TopLevelComplexType<'_>>) {
+    fn test_1(ct: &Rc<TopLevelComplexType>) {
         assert_eq!(ct.name.0.as_ref(), "IntRange");
         assert_eq!(
-            ct.annotation.as_ref().unwrap().doc_str(0).unwrap(),
+            ct.annotation.as_ref().unwrap().documentations[0].text.as_ref().unwrap(),
             "Doc Text"
         );
 

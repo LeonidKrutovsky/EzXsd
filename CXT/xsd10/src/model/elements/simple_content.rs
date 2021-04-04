@@ -29,15 +29,15 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[derive(Debug)]
-pub struct SimpleContent<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content: SimpleContentChoice<'a>,
+pub struct SimpleContent {
+    pub annotation: Option<Annotation>,
+    pub content: SimpleContentChoice,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }
 
 #[derive(Debug)]
-pub enum SimpleContentChoice<'a> {
-    Restriction(Box<SimpleRestriction<'a>>),
-    Extension(Box<SimpleExtension<'a>>),
+pub enum SimpleContentChoice {
+    Restriction(Box<SimpleRestriction>),
+    Extension(Box<SimpleExtension>),
 }

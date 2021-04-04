@@ -8,8 +8,8 @@ use crate::model::groups::nested_particle::NestedParticle;
 use crate::model::Annotation;
 use std::convert::TryInto;
 
-impl<'a> ExplicitGroup<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl ExplicitGroup {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
 
         for ch in node.children().filter(|n| n.is_element()) {

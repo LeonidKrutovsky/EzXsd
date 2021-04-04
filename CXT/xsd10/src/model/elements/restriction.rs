@@ -40,9 +40,9 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:localSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 // Type xsd:topLevelSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 #[derive(Default, Debug)]
-pub struct Restriction<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: SimpleRestrictionModel<'a>,
+pub struct Restriction {
+    pub annotation: Option<Annotation>,
+    pub model: SimpleRestrictionModel,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub base: Option<Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required
@@ -55,7 +55,7 @@ pub struct Restriction<'a> {
 //
 // Used in
 // Anonymous type of element xsd:simpleContent
-pub type SimpleRestriction<'a> = SimpleRestrictionType<'a>;
+pub type SimpleRestriction = SimpleRestrictionType;
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -66,4 +66,4 @@ pub type SimpleRestriction<'a> = SimpleRestrictionType<'a>;
 // Used in
 // Anonymous type of element xsd:complexContent
 
-pub type ComplexRestriction<'a> = ComplexRestrictionType<'a>;
+pub type ComplexRestriction = ComplexRestrictionType;

@@ -19,7 +19,7 @@ use crate::model::complex_types::top_level_attribute_type::TopLevelAttributeType
 // Type xsd:simpleExtensionType via reference to xsd:attrDecls (Element xsd:extension)
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-pub type LocalAttribute<'a> = LocalAttributeType<'a>;
+pub type LocalAttribute = LocalAttributeType;
 
 // xsd:attribute
 // See http://www.w3.org/TR/xmlschema-1/#element-attribute.
@@ -32,4 +32,4 @@ pub type LocalAttribute<'a> = LocalAttributeType<'a>;
 // Used in
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
-pub type TopLevelAttribute<'a> = TopLevelAttributeType<'a>;
+pub type TopLevelAttribute = TopLevelAttributeType;

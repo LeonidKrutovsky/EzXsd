@@ -3,10 +3,10 @@ use roxmltree::Node;
 use crate::model::Documentation;
 use std::convert::TryInto;
 
-impl<'a> Documentation<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Documentation<'a>, String> {
+impl Documentation {
+    pub fn parse(node: Node<'_, '_>) -> Result<Documentation, String> {
         let mut res = Documentation::default();
-        res.text = node.text();
+        res.text = node.text().map(|v| v.to_string());
         res.elements = node.children().filter(|n| n.is_element()).collect();
         for attr in node.attributes() {
             match attr.name() {

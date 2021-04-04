@@ -21,8 +21,6 @@ pub mod local_element;
 pub mod nested_particle;
 pub mod restriction;
 pub mod schema;
-#[allow(dead_code)]
-pub mod schema_set;
 pub mod schema_top;
 pub mod simple_content;
 pub mod simple_explicit_group;
@@ -35,8 +33,6 @@ pub mod top_level_element;
 pub mod type_def_particle;
 pub mod union;
 pub mod utils;
-
-pub mod attributes;
 
 mod tests;
 

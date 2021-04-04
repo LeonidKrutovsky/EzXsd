@@ -20,7 +20,6 @@
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)
 
 use std::convert::TryFrom;
-use crate::model::RawAttribute;
 use crate::model::simple_types::NonNegativeInteger;
 
 #[derive(Debug, PartialEq)]
@@ -35,10 +34,10 @@ impl Default for MaxOccurs {
     }
 }
 
-impl TryFrom<&RawAttribute<'_>> for MaxOccurs {
+impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccurs {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "unbounded" => Self::Unbounded,
             _ => Self::Bounded(attr.value().parse()?),
@@ -80,10 +79,10 @@ impl Default for MaxOccursBool {
     }
 }
 
-impl TryFrom<&RawAttribute<'_>> for MaxOccursBool {
+impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccursBool {
     type Error = String;
 
-    fn try_from(attr: &RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,
@@ -115,10 +114,10 @@ impl MaxOccursBool {
 #[derive(Debug, PartialEq)]
 pub struct MaxOccursOne(u8);
 
-impl TryFrom<RawAttribute<'_>> for MaxOccursOne {
+impl TryFrom<roxmltree::Attribute<'_>> for MaxOccursOne {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "1" => Self(1),
             _ => return Err(format!("MaxOccurs: Invalid attribute value: {}", attr.value()))

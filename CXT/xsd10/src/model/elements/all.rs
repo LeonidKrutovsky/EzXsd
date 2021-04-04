@@ -28,9 +28,9 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
 #[derive(Debug)]
-pub struct All<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub elements: Vec<Element<'a>>,
+pub struct All {
+    pub annotation: Option<Annotation>,
+    pub elements: Vec<Element>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }
@@ -54,4 +54,4 @@ pub struct All<'a> {
 // Type xsd:extensionType via reference to xsd:typeDefParticle (Element xsd:extension)
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-pub type AllType<'a> = all_type::AllType<'a>;
+pub type AllType = all_type::AllType;

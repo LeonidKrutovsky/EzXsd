@@ -3,8 +3,8 @@ use crate::xml_to_xsd::utils::annotation_only;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> AnyAttribute<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl AnyAttribute {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_only(node, "any")?;
 

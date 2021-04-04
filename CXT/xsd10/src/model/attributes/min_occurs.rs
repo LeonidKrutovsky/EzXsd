@@ -18,7 +18,6 @@
 use crate::model::simple_types::NonNegativeInteger;
 use xml_utils::*;
 use std::convert::TryFrom;
-use crate::model::RawAttribute;
 
 #[attribute(name = "minOccurs")]
 pub struct MinOccurs(pub NonNegativeInteger);
@@ -45,10 +44,16 @@ pub enum MinOccursBool{
     One
 }
 
-impl TryFrom<RawAttribute<'_>> for MinOccursBool {
+impl Default for MinOccursBool {
+    fn default() -> Self {
+        Self::One
+    }
+}
+
+impl TryFrom<roxmltree::Attribute<'_>> for MinOccursBool {
     type Error = String;
 
-    fn try_from(attr: RawAttribute) -> Result<Self, Self::Error> {
+    fn try_from(attr: roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,

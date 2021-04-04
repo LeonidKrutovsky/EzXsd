@@ -30,9 +30,9 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:simpleType
 //                  xsd:localSimpleType
 #[derive(Debug)]
-pub struct LocalSimpleType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub content_choice: SimpleDerivation<'a>,
+pub struct LocalSimpleType {
+    pub annotation: Option<Annotation>,
+    pub content_choice: SimpleDerivation,
     pub id: Option<Id>,
     pub attributes: AnyAttributes,
 }

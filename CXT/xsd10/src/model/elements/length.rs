@@ -22,4 +22,4 @@ use crate::model::complex_types::num_facet::NumFacet;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-pub type Length<'a> = NumFacet<'a>;
+pub type Length = NumFacet;

@@ -5,8 +5,8 @@ use crate::model::LocalSimpleType;
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 
-impl<'a> SimpleRestrictionModel<'a> {
-    pub fn parse(iter: &mut impl Iterator<Item = Node<'a, 'a>>) -> Result<Self, String> {
+impl SimpleRestrictionModel {
+    pub fn parse<'a>(iter: &mut impl Iterator<Item = Node<'a, 'a>>) -> Result<Self, String> {
         let mut res = Self::default();
         for ch in iter {
             match ch.xsd_type()? {

@@ -40,9 +40,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:localComplexType
 #[derive(Debug)]
-pub struct LocalComplexType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: ComplexTypeModel<'a>,
+pub struct LocalComplexType {
+    pub annotation: Option<Annotation>,
+    pub model: ComplexTypeModel,
     pub id: Option<Id>,
     pub mixed: Mixed,
     pub attributes: AnyAttributes,

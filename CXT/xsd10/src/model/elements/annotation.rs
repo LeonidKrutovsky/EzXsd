@@ -68,16 +68,14 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:numFacet (Elements xsd:fractionDigits, xsd:length, xsd:minLength, xsd:maxLength)
 // Type xsd:facet via extension of xsd:annotated (Elements xsd:minExclusive, xsd:minInclusive, xsd:maxExclusive, xsd:maxInclusive)
 #[derive(Debug, Default)]
-pub struct Annotation<'a> {
-    pub app_infos: Vec<AppInfo<'a>>,
-    pub documentations: Vec<Documentation<'a>>,
+pub struct Annotation {
+    pub app_infos: Vec<AppInfo>,
+    pub documentations: Vec<Documentation>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
 }
 
-impl<'a> Annotation<'a> {
+impl Annotation {
     pub const TOKEN: &'static str = "annotation";
-    pub fn doc_str(&self, index: usize) -> Option<&'a str> {
-        self.documentations.get(index).and_then(|d| d.text)
-    }
+
 }

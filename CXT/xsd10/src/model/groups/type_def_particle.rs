@@ -22,9 +22,9 @@ use crate::model::elements::sequence::Sequence;
 // Type xsd:complexRestrictionType (Element xsd:restriction)
 // Type xsd:extensionType (Element xsd:extension)
 #[derive(Debug)]
-pub enum TypeDefParticle<'a> {
-    Group(Group<'a>),
-    All(AllType<'a>),
-    Choice(Choice<'a>),
-    Sequence(Sequence<'a>),
+pub enum TypeDefParticle {
+    Group(Group),
+    All(AllType),
+    Choice(Choice),
+    Sequence(Sequence),
 }

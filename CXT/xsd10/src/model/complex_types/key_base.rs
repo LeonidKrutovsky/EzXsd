@@ -34,10 +34,10 @@ use crate::model::attributes::AnyAttributes;
 // xsd:keybase
 // extended by Anonymous type of element xsd:keyref
 #[derive(Debug)]
-pub struct KeyBase<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub selector: Selector<'a>,
-    pub fields: Vec<Field<'a>>,
+pub struct KeyBase {
+    pub annotation: Option<Annotation>,
+    pub selector: Selector,
+    pub fields: Vec<Field>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Name,

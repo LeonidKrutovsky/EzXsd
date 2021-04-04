@@ -5,8 +5,8 @@ use crate::model::{Any, LocalElement};
 use crate::xml_to_xsd::XsdNode;
 use roxmltree::Node;
 
-impl<'a> NestedParticle<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl NestedParticle {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let res = match node.xsd_type()? {
             ElementType::Element => NestedParticle::Element(Box::new(LocalElement::parse(node)?)),
             // ElementType::Group => Self::Group(::parse(node)?),

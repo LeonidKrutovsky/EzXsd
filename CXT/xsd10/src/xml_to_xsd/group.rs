@@ -7,8 +7,8 @@ use roxmltree::Node;
 use std::convert::TryInto;
 use crate::model::attributes::AnyAttributes;
 
-impl<'a> NamedGroup<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl NamedGroup {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut annotation = None;
         let mut content_choice = None;
         let mut attributes = AnyAttributes::default();
@@ -46,8 +46,8 @@ impl<'a> NamedGroup<'a> {
     }
 }
 
-impl<'a> ContentChoice<'a> {
-    pub fn parse(node: Node<'a, '_>, xsd_type: ElementType) -> Result<Self, String> {
+impl ContentChoice {
+    pub fn parse(node: Node<'_, '_>, xsd_type: ElementType) -> Result<Self, String> {
         Ok(match xsd_type {
             ElementType::All => unimplemented!("Not present in ONVIF"), //Self::All(All::parse(node)?),
             ElementType::Choice => Self::Choice(SimpleExplicitGroup::parse(node)?),

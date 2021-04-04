@@ -26,9 +26,9 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:localSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 // Type xsd:topLevelSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 #[derive(Default, Debug)]
-pub struct List<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub simple_type: Option<LocalSimpleType<'a>>,
+pub struct List {
+    pub annotation: Option<Annotation>,
+    pub simple_type: Option<LocalSimpleType>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub item_type: Option<ItemType>,

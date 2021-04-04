@@ -15,10 +15,10 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             pub const NAME: &'static str = #attr_name;
         }
 
-        impl std::convert::TryFrom<&crate::model::RawAttribute<'_>> for #struct_name {
+        impl std::convert::TryFrom<&roxmltree::Attribute<'_>> for #struct_name {
         type Error = String;
 
-        fn try_from(attr: &crate::model::RawAttribute) -> Result<Self, Self::Error> {
+        fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
             Ok(Self(attr.value().parse()?))
             }
         }

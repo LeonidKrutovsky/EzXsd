@@ -5,8 +5,8 @@ use crate::xml_to_xsd::ElementChildren;
 use roxmltree::Node;
 use std::convert::TryInto;
 
-impl<'a> Restriction<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl Restriction {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let mut res = Self::default();
         res.annotation = annotation_first(node)?;
         let skip = if res.annotation.is_some() { 1 } else { 0 };

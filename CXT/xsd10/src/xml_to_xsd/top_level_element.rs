@@ -16,8 +16,8 @@ use crate::model::attributes::block::Block;
 use crate::model::attributes::AnyAttributes;
 
 
-impl<'a> TopLevelElement<'a> {
-    pub fn parse(node: Node<'a, '_>) -> Result<Self, String> {
+impl TopLevelElement {
+    pub fn parse(node: Node<'_, '_>) -> Result<Self, String> {
         let annotation = annotation_first(node)?;
         let model = ElementModel::parse(node)?;
         let mut attributes= AnyAttributes::default();

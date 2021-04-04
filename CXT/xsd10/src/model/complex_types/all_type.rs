@@ -36,9 +36,9 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:allType
 #[derive(Debug)]
-pub struct AllType<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub elements: Vec<Element<'a>>,
+pub struct AllType {
+    pub annotation: Option<Annotation>,
+    pub elements: Vec<Element>,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub min_occurs: Option<MinOccursBool>,

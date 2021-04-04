@@ -39,17 +39,17 @@ use crate::model::elements::white_space::WhiteSpace;
 // Used in
 // Group xsd:simpleRestrictionModel
 #[derive(Debug)]
-pub enum Facets<'a> {
-    MinExclusive(MinExclusive<'a>),
-    MinInclusive(MinInclusive<'a>),
-    MaxExclusive(MaxExclusive<'a>),
-    MaxInclusive(MaxInclusive<'a>),
-    TotalDigits(TotalDigits<'a>),
-    FractionDigits(FractionDigits<'a>),
-    Length(Length<'a>),
-    MinLength(MinLength<'a>),
-    MaxLength(MaxLength<'a>),
-    Enumeration(Enumeration<'a>),
-    WhiteSpace(WhiteSpace<'a>),
-    Pattern(Pattern<'a>),
+pub enum Facets {
+    MinExclusive(MinExclusive),
+    MinInclusive(MinInclusive),
+    MaxExclusive(MaxExclusive),
+    MaxInclusive(MaxInclusive),
+    TotalDigits(TotalDigits),
+    FractionDigits(FractionDigits),
+    Length(Length),
+    MinLength(MinLength),
+    MaxLength(MaxLength),
+    Enumeration(Enumeration),
+    WhiteSpace(WhiteSpace),
+    Pattern(Pattern),
 }

@@ -55,9 +55,9 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:localElement
 //                  restricted by xsd:narrowMaxMin
 #[derive(Debug, Default)]
-pub struct LocalElement<'a> {
-    pub annotation: Option<Annotation<'a>>,
-    pub model: ElementModel<'a>,
+pub struct LocalElement {
+    pub annotation: Option<Annotation>,
+    pub model: ElementModel,
     pub attributes: AnyAttributes,
     pub id: Option<Id>,
     pub name: Option<Name>,
