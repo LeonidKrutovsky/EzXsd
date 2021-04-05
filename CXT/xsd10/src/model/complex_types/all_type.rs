@@ -35,7 +35,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:allType
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct AllType {
     pub annotation: Option<Annotation>,
     pub elements: Vec<Element>,

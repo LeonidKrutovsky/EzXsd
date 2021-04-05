@@ -1,3 +1,8 @@
+use crate::model::simple_types::namespace_list::NamespaceList;
+use crate::model::simple_types::AnyUri;
+
+use xml_utils::attribute;
+
 // namespace
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -20,12 +25,6 @@
 //
 // Used in
 // Anonymous type of element xsd:any via derivation of xsd:wildcard Type xsd:wildcard (Element xsd:anyAttribute)
-
-use crate::model::simple_types::namespace_list::NamespaceList;
-use crate::model::simple_types::AnyUri;
-
-use xml_utils::*;
-
 #[attribute(name = "namespace")]
 pub struct Namespace(pub NamespaceList);
 

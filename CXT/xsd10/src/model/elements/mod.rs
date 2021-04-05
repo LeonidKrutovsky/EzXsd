@@ -1,8 +1,3 @@
-use crate::model::simple_types::QName;
-use crate::model::attributes::AnyAttributes;
-use roxmltree::Node;
-use std::convert::{TryFrom, TryInto};
-
 pub mod all;
 pub mod annotation;
 pub mod any;
@@ -45,6 +40,20 @@ pub mod total_digits;
 pub mod union;
 pub mod unique;
 pub mod white_space;
+
+use crate::model::simple_types::QName;
+use crate::model::attributes::AnyAttributes;
+use roxmltree::Node;
+use std::convert::{TryFrom, TryInto};
+
+pub use annotation::Annotation;
+pub use element::Element;
+pub use app_info::AppInfo;
+pub use documentation::Documentation;
+pub use complex_content::ComplexContent;
+pub use complex_content::ComplexContentChoice;
+pub use restriction::ComplexRestriction;
+pub use extension::Extension;
 
 #[derive(Debug, PartialEq)]
 pub enum ElementType {
@@ -98,7 +107,7 @@ pub fn xsd_element_type(name: &str) -> Result<ElementType, String> {
     use ElementType::*;
     let element = match name {
         "all" => All,
-        annotation::Annotation::TOKEN => Annotation,
+        "annotation" => Annotation,
         "any" => Any,
         "anyAttribute" => AnyAttribute,
         "appInfo" => AppInfo,

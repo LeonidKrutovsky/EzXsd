@@ -1,12 +1,9 @@
 use crate::model::complex_types::all_type;
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::element::Element;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
 
 use xml_utils::element;
-use std::convert::{TryInto, TryFrom};
-use roxmltree::Node;
+
 
 // xsd:all
 // An "all" group that allows elements to appear in any order. Unlike other group types, does not allow other groups as children, only elements. This declaration is for an "all" group that is a child of xsd:group; its type disallows minOccurs and maxOccurs
@@ -33,10 +30,10 @@ use roxmltree::Node;
 // Type xsd:namedGroup (Element xsd:group)
 #[element(name = "all")]
 pub struct All {
-    pub annotation: Option<Annotation>,
-    pub elements: Vec<Element>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
+    pub annotation: Option<elements::Annotation>,
+    pub elements: Vec<elements::Element>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
 }
 
 // xsd:all
@@ -58,4 +55,6 @@ pub struct All {
 // Type xsd:extensionType via reference to xsd:typeDefParticle (Element xsd:extension)
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-pub type AllType = all_type::AllType;
+
+#[element(name = "all")]
+pub struct AllType(pub all_type::AllType);

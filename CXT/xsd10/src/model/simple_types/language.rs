@@ -58,10 +58,6 @@ impl FromStr for Language {
     }
 }
 
-impl Language {
-    pub const NAME: &'static str = "lang";
-}
-
 impl_from_string!(Language);
 impl_as_ref!(Language);
 

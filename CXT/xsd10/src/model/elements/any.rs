@@ -1,10 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::max_occurs::MaxOccurs;
-use crate::model::attributes::min_occurs::MinOccurs;
-use crate::model::attributes::process_contents::ProcessContents;
-use crate::model::attributes::namespace::Namespace;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
+
 
 // xsd:any
 // See http://www.w3.org/TR/xmlschema-1/#element-any.
@@ -29,13 +26,13 @@ use crate::model::attributes::AnyAttributes;
 // Group xsd:nestedParticle
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-#[derive(Debug, Default)]
+#[element(name = "any")]
 pub struct Any {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub namespace: Namespace,
-    pub process_contents: ProcessContents,
-    pub min_occurs: MinOccurs,
-    pub max_occurs: MaxOccurs,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub namespace: attributes::Namespace,
+    pub process_contents: attributes::ProcessContents,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
 }

@@ -1,5 +1,6 @@
 use crate::model::complex_types::explicit_group::ExplicitGroup;
 use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use xml_utils::element;
 
 // See http://www.w3.org/TR/xmlschema-1/#element-choice.
 // Element information
@@ -19,7 +20,9 @@ use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type Choice = ExplicitGroup;
+#[element(name = "choice")]
+pub struct Choice(pub ExplicitGroup);
+
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: xmlschema.xsd
@@ -28,4 +31,5 @@ pub type Choice = ExplicitGroup;
 //
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
-pub type SimpleChoice = SimpleExplicitGroup;
+#[element(name = "choice")]
+pub struct SimpleChoice(pub SimpleExplicitGroup);

@@ -18,5 +18,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
 
 
     );
+
+    //println!("{:#?}", item);
     output.into()
 }

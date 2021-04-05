@@ -1,6 +1,6 @@
-use crate::model::elements::RawElement;
-use crate::model::attributes::source::Source;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:appinfo
 // See http://www.w3.org/TR/xmlschema-1/#element-appinfo.
@@ -20,10 +20,10 @@ use crate::model::attributes::AnyAttributes;
 //
 // Used in
 // Anonymous type of element xsd:annotation
-#[derive(Debug, Default)]
+#[element(name = "appinfo")]
 pub struct AppInfo {
     pub text: Option<String>,
-    pub elements: Vec<RawElement>,
-    pub source: Option<Source>,
-    pub attributes: AnyAttributes,
+    pub elements: Vec<elements::RawElement>,
+    pub source: Option<attributes::Source>,
+    pub attributes: attributes::AnyAttributes,
 }

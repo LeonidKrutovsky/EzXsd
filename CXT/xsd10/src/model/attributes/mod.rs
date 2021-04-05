@@ -38,6 +38,12 @@ pub use abstract_::Abstract;
 pub use attribute_form_default::AttributeFormDefault;
 pub use source::Source;
 pub use language::Language;
+pub use id::Id;
+pub use namespace::Namespace;
+pub use process_contents::ProcessContents;
+pub use min_occurs::MinOccurs;
+pub use max_occurs::MaxOccurs;
+pub use mixed::Mixed;
 
 
 use crate::model::simple_types::{QName, AnySimpleType};

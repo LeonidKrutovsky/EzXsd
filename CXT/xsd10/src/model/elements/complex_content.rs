@@ -1,8 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::extension::Extension;
-use crate::model::elements::restriction::ComplexRestriction;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:complexContent
 // See http://www.w3.org/TR/xmlschema-1/#element-complexContent.
@@ -31,15 +29,15 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[derive(Debug)]
 pub struct ComplexContent {
-    pub annotation: Option<Annotation>,
-    pub content: ComplexContentChoice,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub mixed: Option<bool>,
+    pub annotation: Option<elements::Annotation>,
+    pub content: elements::ComplexContentChoice,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub mixed: Option<attributes::Mixed>,
 }
 
 #[derive(Debug)]
 pub enum ComplexContentChoice {
-    Restriction(Box<ComplexRestriction>),
-    Extension(Box<Extension>),
+    Restriction(Box<elements::ComplexRestriction>),
+    Extension(Box<elements::Extension>),
 }

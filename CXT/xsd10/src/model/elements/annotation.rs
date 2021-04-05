@@ -1,7 +1,6 @@
-use crate::model::elements::app_info::AppInfo;
-use crate::model::elements::documentation::Documentation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:annotation
 // See http://www.w3.org/TR/xmlschema-1/#element-annotation.
@@ -67,15 +66,10 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:simpleExplicitGroup via extension of xsd:annotated (Elements xsd:choice, xsd:sequence)
 // Type xsd:numFacet (Elements xsd:fractionDigits, xsd:length, xsd:minLength, xsd:maxLength)
 // Type xsd:facet via extension of xsd:annotated (Elements xsd:minExclusive, xsd:minInclusive, xsd:maxExclusive, xsd:maxInclusive)
-#[derive(Debug, Default)]
+#[element(name = "annotation")]
 pub struct Annotation {
-    pub app_infos: Vec<AppInfo>,
-    pub documentations: Vec<Documentation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-}
-
-impl Annotation {
-    pub const TOKEN: &'static str = "annotation";
-
+    pub app_infos: Vec<elements::AppInfo>,
+    pub documentations: Vec<elements::Documentation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
 }

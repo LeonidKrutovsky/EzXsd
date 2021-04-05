@@ -1,5 +1,5 @@
 use crate::model::complex_types::wildcard::Wildcard;
-
+use xml_utils::element;
 // xsd:anyAttribute
 // See http://www.w3.org/TR/xmlschema-1/#element-anyAttribute.
 // Element information
@@ -19,4 +19,7 @@ use crate::model::complex_types::wildcard::Wildcard;
 // Type xsd:simpleExtensionType via reference to xsd:attrDecls (Element xsd:extension)
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-pub type AnyAttribute = Wildcard;
+
+
+#[element(name = "anyAttribute")]
+pub struct AnyAttribute(pub Wildcard);
