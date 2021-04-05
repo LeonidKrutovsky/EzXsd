@@ -40,7 +40,7 @@ use crate::model::simple_types::Token;
 //              restricted by xsd:token
 //                  restricted by xsd:language
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Language(Token);
 
 impl FromStr for Language {

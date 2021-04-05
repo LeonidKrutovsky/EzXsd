@@ -4,6 +4,10 @@ use crate::model::elements::element::Element;
 use crate::model::attributes::id::Id;
 use crate::model::attributes::AnyAttributes;
 
+use xml_utils::element;
+use std::convert::{TryInto, TryFrom};
+use roxmltree::Node;
+
 // xsd:all
 // An "all" group that allows elements to appear in any order. Unlike other group types, does not allow other groups as children, only elements. This declaration is for an "all" group that is a child of xsd:group; its type disallows minOccurs and maxOccurs
 // See http://www.w3.org/TR/xmlschema-1/#element-all.
@@ -27,7 +31,7 @@ use crate::model::attributes::AnyAttributes;
 //
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
-#[derive(Debug)]
+#[element(name = "all")]
 pub struct All {
     pub annotation: Option<Annotation>,
     pub elements: Vec<Element>,

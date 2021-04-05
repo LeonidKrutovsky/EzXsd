@@ -32,6 +32,12 @@ pub mod base;
 pub mod value;
 pub mod item_type;
 pub mod member_types;
+pub mod language;
+
+pub use abstract_::Abstract;
+pub use attribute_form_default::AttributeFormDefault;
+pub use source::Source;
+pub use language::Language;
 
 
 use crate::model::simple_types::{QName, AnySimpleType};
@@ -87,3 +93,4 @@ impl AnyAttributes {
         self.0.len()
     }
 }
+

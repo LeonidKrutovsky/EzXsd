@@ -174,4 +174,29 @@ impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
     }
 }
 
+#[derive(Debug, Default)]
+pub struct AnyElements(pub Vec<RawElement>);
 
+impl AnyElements {
+    pub fn push(&mut self, elem: RawElement) {
+        self.0.push(elem);
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+}
+
+impl TryFrom<roxmltree::Children<'_, '_>> for AnyElements{
+    type Error = String;
+
+    fn try_from(value: roxmltree::Children<'_, '_>) -> Result<Self, Self::Error> {
+        Ok(
+            AnyElements(
+                value
+                    .map(|n| n.try_into())
+                    .collect::<Result<Vec<_>, _>>()?
+            )
+        )
+    }
+}
