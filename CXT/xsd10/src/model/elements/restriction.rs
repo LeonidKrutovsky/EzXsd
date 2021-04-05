@@ -2,7 +2,7 @@ use crate::model::attributes;
 use crate::model::complex_types::complex_restriction_type::ComplexRestrictionType;
 use crate::model::complex_types::simple_restriction_type::SimpleRestrictionType;
 use crate::model::elements;
-use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
+use crate::model::groups;
 use xml_utils::element;
 
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -41,7 +41,7 @@ use xml_utils::element;
 #[element(name = "restriction")]
 pub struct Restriction {
     pub annotation: Option<elements::Annotation>,
-    pub model: SimpleRestrictionModel,
+    pub model: groups::SimpleRestrictionModel,
     pub attributes: attributes::AnyAttributes,
     pub id: Option<attributes::Id>,
     pub base: Option<attributes::Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required

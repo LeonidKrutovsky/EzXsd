@@ -1,4 +1,5 @@
 use crate::model::elements;
+use crate::model::groups;
 use crate::model::attributes;
 use xml_utils::element;
 
@@ -30,20 +31,8 @@ use xml_utils::element;
 #[element(name = "complexContent")]
 pub struct ComplexContent {
     pub annotation: Option<elements::Annotation>,
-    pub content: elements::ComplexContentChoice,
+    pub content: groups::ComplexContentChoice,
     pub attributes: attributes::AnyAttributes,
     pub id: Option<attributes::Id>,
     pub mixed: Option<attributes::Mixed>,
-}
-
-#[derive(Debug)]
-pub enum ComplexContentChoice {
-    Restriction(Box<elements::ComplexRestriction>),
-    Extension(Box<elements::Extension>),
-}
-
-impl Default for ComplexContentChoice {
-    fn default() -> Self {
-        Self::Restriction(Box::new(elements::ComplexRestriction::default()))
-    }
 }

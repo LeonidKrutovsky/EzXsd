@@ -1,5 +1,6 @@
 use crate::model::elements;
 use crate::model::attributes;
+use crate::model::groups;
 use xml_utils::element;
 
 // xsd:simpleContent
@@ -29,19 +30,7 @@ use xml_utils::element;
 #[element(name = "simpleContent")]
 pub struct SimpleContent {
     pub annotation: Option<elements::Annotation>,
-    pub content: SimpleContentChoice,
+    pub content: groups::SimpleContentChoice,
     pub attributes: attributes::AnyAttributes,
     pub id: Option<attributes::Id>,
-}
-
-#[derive(Debug)]
-pub enum SimpleContentChoice {
-    Restriction(Box<elements::SimpleRestriction>),
-    Extension(Box<elements::SimpleExtension>),
-}
-
-impl Default for SimpleContentChoice {
-    fn default() -> Self {
-        unimplemented!()
-    }
 }

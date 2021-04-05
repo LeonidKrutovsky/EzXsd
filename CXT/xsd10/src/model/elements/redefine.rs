@@ -1,6 +1,6 @@
 use crate::model::elements;
 use crate::model::attributes;
-use crate::model::groups::redefinable::Redefinable;
+use crate::model::groups;
 use xml_utils::element;
 
 // xsd:redefine
@@ -30,7 +30,7 @@ use xml_utils::element;
 #[element(name = "redefine")]
 pub struct Redefine {
     pub annotations: Vec<elements::Annotation>,
-    pub content: Vec<Redefinable>,
+    pub content: Vec<groups::Redefinable>,
     pub attributes: attributes::AnyAttributes,
     pub schema_location: attributes::SchemaLocation,
     pub id: Option<attributes::Id>,

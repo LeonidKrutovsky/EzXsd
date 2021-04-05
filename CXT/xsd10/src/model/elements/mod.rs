@@ -47,21 +47,20 @@ use roxmltree::Node;
 use std::convert::{TryFrom, TryInto};
 
 pub use annotation::Annotation;
-pub use element::Element;
 pub use app_info::AppInfo;
-pub use documentation::Documentation;
 pub use complex_content::ComplexContent;
-pub use complex_content::ComplexContentChoice;
-pub use restriction::ComplexRestriction;
+pub use documentation::Documentation;
+pub use element::Element;
 pub use extension::Extension;
 pub use extension::SimpleExtension;
-pub use selector::Selector;
 pub use field::Field;
-pub use simple_type::LocalSimpleType;
-pub use redefine::Redefine;
-pub use include::Include;
 pub use import::Import;
+pub use include::Include;
+pub use redefine::Redefine;
+pub use restriction::ComplexRestriction;
 pub use restriction::SimpleRestriction;
+pub use selector::Selector;
+pub use simple_type::LocalSimpleType;
 
 
 #[derive(Debug, PartialEq)]
