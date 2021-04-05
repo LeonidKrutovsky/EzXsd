@@ -42,7 +42,7 @@ pub enum SchemaTop {
 impl SchemaTop {
     pub fn name(&self) -> NCName {
         match self {
-            SchemaTop::SimpleType(val) => val.name.0.clone(),
+            SchemaTop::SimpleType(val) => val.0.name.0.clone(),
             SchemaTop::ComplexType(val) => val.0.name.0.clone(),
             SchemaTop::Group(val) => val.0.name.0.clone(),
             SchemaTop::AttributeGroup(val) => val.0.name.0.clone(),

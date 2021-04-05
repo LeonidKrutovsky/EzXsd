@@ -24,3 +24,9 @@ pub enum SimpleDerivation {
     List(Box<List>),
     Union(Box<Union>),
 }
+
+impl Default for SimpleDerivation {
+    fn default() -> Self {
+        unimplemented!()
+    }
+}

@@ -63,6 +63,7 @@ pub use element_form_default::ElementFormDefault;
 pub use xpath::XPath;
 pub use fixed::FixedBool;
 pub use member_types::MemberTypes;
+pub use base::Base;
 
 use crate::model::simple_types::{QName, AnySimpleType};
 use std::convert::{TryFrom};

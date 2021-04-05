@@ -1,7 +1,7 @@
 use crate::model::elements;
 use crate::model::attributes;
 use crate::model::groups::redefinable::Redefinable;
-
+use xml_utils::element;
 
 // xsd:redefine
 // See http://www.w3.org/TR/xmlschema-1/#element-redefine.

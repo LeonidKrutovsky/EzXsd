@@ -1,9 +1,8 @@
+use crate::model::attributes;
 use crate::model::complex_types::complex_restriction_type::ComplexRestrictionType;
 use crate::model::complex_types::simple_restriction_type::SimpleRestrictionType;
-use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::groups::redefinable::Redefinable;
 use crate::model::elements;
-use crate::model::attributes;
+use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
 use xml_utils::element;
 
 // Namespace: http://www.w3.org/2001/XMLSchema

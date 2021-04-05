@@ -115,6 +115,12 @@ impl FromStr for WhiteSpaceValue {
     }
 }
 
+impl Default for WhiteSpaceValue {
+    fn default() -> Self {
+        unimplemented!()
+    }
+}
+
 impl WhiteSpaceValue {
     pub const NAME: &'static str = "value";
 }
