@@ -54,6 +54,9 @@ pub use complex_content::ComplexContent;
 pub use complex_content::ComplexContentChoice;
 pub use restriction::ComplexRestriction;
 pub use extension::Extension;
+pub use selector::Selector;
+pub use field::Field;
+pub use simple_type::LocalSimpleType;
 
 #[derive(Debug, PartialEq)]
 pub enum ElementType {

@@ -1,5 +1,6 @@
 use crate::model::complex_types::named_group::NamedGroup;
 use crate::model::complex_types::named_group_ref::NamedGroupRef;
+use xml_utils::element;
 
 // See http://www.w3.org/TR/xmlschema-1/#element-group.
 // Element information
@@ -13,7 +14,9 @@ use crate::model::complex_types::named_group_ref::NamedGroupRef;
 // Anonymous type of element xsd:redefine via reference to xsd:redefinable
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
-pub type Group = NamedGroup;
+#[element(name = "group")]
+pub struct Group(pub NamedGroup);
+
 
 // xsd:group
 // Element information
@@ -34,4 +37,5 @@ pub type Group = NamedGroup;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type GroupRef = NamedGroupRef;
+#[element(name = "group")]
+pub struct GroupRef(pub NamedGroupRef);

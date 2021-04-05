@@ -27,7 +27,7 @@ use xml_utils::element;
 // Type xsd:complexType via reference to xsd:complexTypeModel
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-#[derive(Debug)]
+#[element(name = "complexContent")]
 pub struct ComplexContent {
     pub annotation: Option<elements::Annotation>,
     pub content: elements::ComplexContentChoice,
@@ -40,4 +40,10 @@ pub struct ComplexContent {
 pub enum ComplexContentChoice {
     Restriction(Box<elements::ComplexRestriction>),
     Extension(Box<elements::Extension>),
+}
+
+impl Default for ComplexContentChoice {
+    fn default() -> Self {
+        Self::Restriction(Box::new(elements::ComplexRestriction::default()))
+    }
 }

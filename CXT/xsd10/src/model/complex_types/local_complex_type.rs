@@ -39,7 +39,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:localComplexType
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct LocalComplexType {
     pub annotation: Option<Annotation>,
     pub model: ComplexTypeModel,

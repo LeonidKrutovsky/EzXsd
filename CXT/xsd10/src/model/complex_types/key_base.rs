@@ -33,7 +33,7 @@ use crate::model::attributes::AnyAttributes;
 // xsd:annotated
 // xsd:keybase
 // extended by Anonymous type of element xsd:keyref
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct KeyBase {
     pub annotation: Option<Annotation>,
     pub selector: Selector,

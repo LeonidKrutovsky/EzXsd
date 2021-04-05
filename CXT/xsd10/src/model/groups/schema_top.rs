@@ -43,11 +43,11 @@ impl SchemaTop {
     pub fn name(&self) -> NCName {
         match self {
             SchemaTop::SimpleType(val) => val.name.0.clone(),
-            SchemaTop::ComplexType(val) => val.name.0.clone(),
-            SchemaTop::Group(val) => val.name.0.clone(),
-            SchemaTop::AttributeGroup(val) => val.name.0.clone(),
-            SchemaTop::Element(val) => val.name.0.clone(),
-            SchemaTop::Attribute(val) => val.name.0.clone(),
+            SchemaTop::ComplexType(val) => val.0.name.0.clone(),
+            SchemaTop::Group(val) => val.0.name.0.clone(),
+            SchemaTop::AttributeGroup(val) => val.0.name.0.clone(),
+            SchemaTop::Element(val) => val.0.name.0.clone(),
+            SchemaTop::Attribute(val) => val.0.name.0.clone(),
             SchemaTop::Notation(val) => val.name.0.clone(),
         }
     }

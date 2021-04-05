@@ -28,7 +28,7 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:complexType via reference to xsd:complexTypeModel
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct SimpleContent {
     pub annotation: Option<Annotation>,
     pub content: SimpleContentChoice,
@@ -40,4 +40,10 @@ pub struct SimpleContent {
 pub enum SimpleContentChoice {
     Restriction(Box<SimpleRestriction>),
     Extension(Box<SimpleExtension>),
+}
+
+impl Default for SimpleContentChoice {
+    fn default() -> Self {
+        Self::Restriction(Box::new(SimpleRestriction::default()))
+    }
 }

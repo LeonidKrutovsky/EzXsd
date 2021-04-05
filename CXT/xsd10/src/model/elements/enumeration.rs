@@ -1,4 +1,5 @@
 use crate::model::complex_types::no_fixed_facet::NoFixedFacet;
+use xml_utils::element;
 
 // xsd:enumeration
 // See http://www.w3.org/TR/xmlschema-2/#element-enumeration.
@@ -21,4 +22,5 @@ use crate::model::complex_types::no_fixed_facet::NoFixedFacet;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-pub type Enumeration = NoFixedFacet;
+#[element(name = "enumeration")]
+pub struct Enumeration(pub NoFixedFacet);

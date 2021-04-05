@@ -1,5 +1,8 @@
 use crate::model::elements;
 use crate::model::attributes;
+use xml_utils::element;
+use std::convert::{TryFrom, TryInto};
+use roxmltree::Node;
 
 // xsd:documentation
 // See http://www.w3.org/TR/xmlschema-1/#element-documentation.
@@ -20,11 +23,6 @@ use crate::model::attributes;
 //
 // Used in
 // Anonymous type of element xsd:annotation
-
-use xml_utils::element;
-use std::convert::{TryFrom, TryInto};
-use roxmltree::Node;
-
 #[element(name = "documentation")]
 pub struct Documentation {
     pub text: Option<String>,

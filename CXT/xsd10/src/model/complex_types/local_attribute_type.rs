@@ -39,7 +39,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:localAttributeType
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct LocalAttributeType {
     pub annotation: Option<Annotation>,
     pub simple_type: Option<LocalSimpleType>,

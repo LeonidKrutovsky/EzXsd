@@ -40,10 +40,19 @@ pub use source::Source;
 pub use language::Language;
 pub use id::Id;
 pub use namespace::Namespace;
+pub use namespace::NamespaceUri;
 pub use process_contents::ProcessContents;
 pub use min_occurs::MinOccurs;
 pub use max_occurs::MaxOccurs;
 pub use mixed::Mixed;
+pub use xpath::FieldXPath;
+pub use schema_location::SchemaLocation;
+pub use name::Name;
+pub use refer::Refer;
+pub use item_type::ItemType;
+pub use public::Public;
+pub use system::System;
+pub use value::PatternValue;
 
 
 use crate::model::simple_types::{QName, AnySimpleType};

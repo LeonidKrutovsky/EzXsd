@@ -25,7 +25,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:attributeGroupRef
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct AttributeGroupRef {
     pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,

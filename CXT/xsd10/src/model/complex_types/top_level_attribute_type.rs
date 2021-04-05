@@ -34,7 +34,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelAttributeType
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TopLevelAttributeType {
     pub annotation: Option<Annotation>,
     pub simple_type: Option<LocalSimpleType>,

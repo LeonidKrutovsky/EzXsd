@@ -33,7 +33,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:namedGroup
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct NamedGroup {
     pub annotation: Option<Annotation>,
     pub content_choice: ContentChoice,
@@ -47,4 +47,10 @@ pub enum ContentChoice {
     All(All),
     Choice(SimpleChoice),
     Sequence(SimpleSequence),
+}
+
+impl Default for ContentChoice {
+    fn default() -> Self {
+        unimplemented!()
+    }
 }

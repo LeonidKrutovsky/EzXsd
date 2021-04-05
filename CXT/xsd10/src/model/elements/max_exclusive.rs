@@ -1,4 +1,5 @@
 use crate::model::complex_types::facet::Facet;
+use xml_utils::element;
 
 // xsd:maxExclusive
 // See http://www.w3.org/TR/xmlschema-2/#element-maxExclusive.
@@ -13,4 +14,6 @@ use crate::model::complex_types::facet::Facet;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-pub type MaxExclusive = Facet;
+#[element(name = "maxExclusive")]
+pub struct MaxExclusive(pub Facet);
+

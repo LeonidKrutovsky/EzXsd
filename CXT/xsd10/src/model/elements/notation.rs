@@ -1,9 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::public::Public;
-use crate::model::attributes::system::System;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
+
 
 // xsd:notation
 // See http://www.w3.org/TR/xmlschema-1/#element-notation.
@@ -26,12 +24,12 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
-#[derive(Debug, Default)]
+#[element(name = "notation")]
 pub struct Notation {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
-    pub public: Option<Public>,
-    pub system: Option<System>,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub public: Option<attributes::Public>,
+    pub system: Option<attributes::System>,
 }

@@ -1,7 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::schema_location::SchemaLocation;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:include
 // See http://www.w3.org/TR/xmlschema-1/#element-include.
@@ -20,10 +19,10 @@ use crate::model::attributes::AnyAttributes;
 //
 // Used in
 // Anonymous type of element xsd:schema
-#[derive(Debug, Default)]
+#[element(name = "include")]
 pub struct Include {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub schema_location: SchemaLocation,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub schema_location: attributes::SchemaLocation,
 }

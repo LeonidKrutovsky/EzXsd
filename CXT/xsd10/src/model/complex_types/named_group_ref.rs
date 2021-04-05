@@ -29,7 +29,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:namedGroupRef
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct NamedGroupRef {
     pub annotation: Option<Annotation>,
     pub attributes: AnyAttributes,

@@ -1,4 +1,6 @@
 use crate::model::complex_types::num_facet::NumFacet;
+use xml_utils::element;
+
 
 // xsd:length
 // See http://www.w3.org/TR/xmlschema-2/#element-length.
@@ -22,4 +24,5 @@ use crate::model::complex_types::num_facet::NumFacet;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-pub type Length = NumFacet;
+#[element(name = "length")]
+pub struct Length(pub NumFacet);

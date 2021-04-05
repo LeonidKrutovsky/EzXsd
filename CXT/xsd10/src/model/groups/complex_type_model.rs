@@ -34,3 +34,9 @@ pub enum ComplexTypeModel {
     ComplexContent(ComplexContent),
     Content(Option<TypeDefParticle>, Box<AttrDecls>),
 }
+
+impl Default for ComplexTypeModel {
+    fn default() -> Self {
+        Self::SimpleContent(SimpleContent::default())
+    }
+}

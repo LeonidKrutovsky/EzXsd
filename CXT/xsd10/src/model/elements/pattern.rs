@@ -1,7 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::value::PatternValue;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:pattern
 // See http://www.w3.org/TR/xmlschema-2/#element-pattern.
@@ -23,10 +22,10 @@ use crate::model::attributes::AnyAttributes;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-#[derive(Default, Debug)]
+#[element(name = "pattern")]
 pub struct Pattern {
-    pub annotation: Option<Annotation>,
-    pub id: Option<Id>,
-    pub value: PatternValue,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub value: attributes::PatternValue,
+    pub attributes: attributes::AnyAttributes,
 }

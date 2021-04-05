@@ -51,7 +51,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelComplexType
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TopLevelComplexType {
     pub annotation: Option<Annotation>,
     pub model: ComplexTypeModel,

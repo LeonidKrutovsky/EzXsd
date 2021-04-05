@@ -1,5 +1,6 @@
 use crate::model::complex_types::extension_type::ExtensionType;
 use crate::model::complex_types::simple_extension_type::SimpleExtensionType;
+use xml_utils::element;
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -9,7 +10,8 @@ use crate::model::complex_types::simple_extension_type::SimpleExtensionType;
 //
 // Used in
 // Anonymous type of element xsd:simpleContent
-pub type SimpleExtension = SimpleExtensionType;
+#[element(name = "extension")]
+pub struct SimpleExtension(pub SimpleExtensionType);
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -24,4 +26,5 @@ pub type SimpleExtension = SimpleExtensionType;
 //
 // Used in
 // Anonymous type of element xsd:complexContent
-pub type Extension = ExtensionType;
+#[element(name = "extension")]
+pub struct Extension(pub ExtensionType);

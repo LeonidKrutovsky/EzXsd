@@ -54,7 +54,7 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:localElement
 //                  xsd:narrowMaxMin
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct NarrowMaxMin {
     pub annotation: Option<Annotation>,
     pub model: ElementModel,

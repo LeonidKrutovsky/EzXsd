@@ -1,10 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::field::Field;
-use crate::model::elements::selector::Selector;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::refer::Refer;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:keyref
 // See http://www.w3.org/TR/xmlschema-1/#element-keyref.
@@ -32,13 +28,13 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:localElement via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
-#[derive(Debug)]
+#[element(name = "keyref")]
 pub struct KeyRef {
-    pub annotation: Option<Annotation>,
-    pub selector: Selector,
-    pub fields: Vec<Field>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
-    pub refer: Refer,
+    pub annotation: Option<elements::Annotation>,
+    pub selector: elements::Selector,
+    pub fields: Vec<elements::Field>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub refer: attributes::Refer,
 }

@@ -50,7 +50,7 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelElement
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TopLevelElement {
     pub annotation: Option<Annotation>,
     pub model: ElementModel,

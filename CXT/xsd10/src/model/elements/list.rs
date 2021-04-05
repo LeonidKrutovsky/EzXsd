@@ -1,8 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::simple_type::LocalSimpleType;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::item_type::ItemType;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
+
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -25,11 +24,11 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:simpleType via reference to xsd:simpleDerivation
 // Type xsd:localSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 // Type xsd:topLevelSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
-#[derive(Default, Debug)]
+#[element(name = "list")]
 pub struct List {
-    pub annotation: Option<Annotation>,
-    pub simple_type: Option<LocalSimpleType>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub item_type: Option<ItemType>,
+    pub annotation: Option<elements::Annotation>,
+    pub simple_type: Option<elements::LocalSimpleType>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub item_type: Option<attributes::ItemType>,
 }
