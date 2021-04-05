@@ -1,8 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:namedAttributeGroup
 // Complex type information
@@ -31,11 +30,11 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:namedAttributeGroup
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct NamedAttributeGroup {
-    pub annotation: Option<Annotation>,
-    pub content: AttrDecls,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
+    pub annotation: Option<elements::Annotation>,
+    pub content: groups::AttrDecls,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
 }

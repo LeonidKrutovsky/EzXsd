@@ -1,14 +1,6 @@
-use crate::model::complex_types::local_simple_type::LocalSimpleType;
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::ref_::Ref;
-use crate::model::attributes::type_::Type;
-use crate::model::attributes::use_::Use;
-use crate::model::attributes::default::Default_;
-use crate::model::attributes::fixed::Fixed;
-use crate::model::attributes::form::Form;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:localAttributeType
 // Complex type information
@@ -39,17 +31,17 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:localAttributeType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct LocalAttributeType {
-    pub annotation: Option<Annotation>,
-    pub simple_type: Option<LocalSimpleType>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Option<Name>,
-    pub ref_: Option<Ref>,
-    pub type_: Option<Type>,
-    pub use_: Option<Use>,
-    pub default: Option<Default_>,
-    pub fixed: Option<Fixed>,
-    pub form: Option<Form>,
+    pub annotation: Option<elements::Annotation>,
+    pub simple_type: Option<elements::LocalSimpleType>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: Option<attributes::Name>,
+    pub ref_: Option<attributes::Ref>,
+    pub type_: Option<attributes::Type>,
+    pub use_: Option<attributes::Use>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub form: Option<attributes::Form>,
 }

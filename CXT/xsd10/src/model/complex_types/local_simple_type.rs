@@ -1,7 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::simple_derivation::SimpleDerivation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: datatypes.xsd
@@ -29,10 +29,10 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:simpleType
 //                  xsd:localSimpleType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct LocalSimpleType {
-    pub annotation: Option<Annotation>,
-    pub content_choice: SimpleDerivation,
-    pub id: Option<Id>,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub content_choice: groups::SimpleDerivation,
+    pub id: Option<attributes::Id>,
+    pub attributes: attributes::AnyAttributes,
 }

@@ -1,7 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::value::Value;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:noFixedFacet
 // Complex type information
@@ -27,10 +26,10 @@ use crate::model::attributes::AnyAttributes;
 //              xsd:facet
 //                  xsd:noFixedFacet
 //                      restricted by Anonymous type of element xsd:pattern
-#[derive(Default, Debug)]
+#[complex_type()]
 pub struct NoFixedFacet {
-    pub annotation: Option<Annotation>,
-    pub id: Option<Id>,
-    pub value: Value,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub value: attributes::Value,
+    pub attributes: attributes::AnyAttributes,
 }

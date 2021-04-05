@@ -1,3 +1,7 @@
+use crate::model::simple_types::NonNegativeInteger;
+use xml_utils::*;
+use std::convert::TryFrom;
+
 // minOccurs
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -14,11 +18,6 @@
 //  Type xsd:namedGroupRef via reference to xsd:occurs (Element xsd:group)
 //  Type xsd:narrowMaxMin via reference to xsd:occurs (Element xsd:element)
 //  Type xsd:explicitGroup via reference to xsd:occurs (Elements xsd:choice , xsd:sequence)
-
-use crate::model::simple_types::NonNegativeInteger;
-use xml_utils::*;
-use std::convert::TryFrom;
-
 #[attribute(name = "minOccurs")]
 pub struct MinOccurs(pub NonNegativeInteger);
 

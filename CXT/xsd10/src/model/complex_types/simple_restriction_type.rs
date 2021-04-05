@@ -1,9 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::base::Base;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:simpleRestrictionType
 // Complex type information
@@ -47,12 +45,12 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:simpleRestrictionType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct SimpleRestrictionType {
-    pub annotation: Option<Annotation>,
-    pub model: SimpleRestrictionModel,
-    pub attr_decls: AttrDecls,
-    pub id: Option<Id>,
-    pub base: Base,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::SimpleRestrictionModel,
+    pub attr_decls: groups::AttrDecls,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
+    pub attributes: attributes::AnyAttributes,
 }

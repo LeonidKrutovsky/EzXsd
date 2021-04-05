@@ -1,8 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::fixed::FixedBool;
-use crate::model::attributes::value::Value;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:facet
 // Complex type information
@@ -42,11 +40,11 @@ use crate::model::attributes::AnyAttributes;
 //                  restricted by xsd:numFacet
 //                      restricted by Anonymous type of element xsd:totalDigits
 //                  restricted by Anonymous type of element xsd:whiteSpace
-#[derive(Default, Debug)]
+#[complex_type()]
 pub struct Facet {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub value: Value,
-    pub fixed: FixedBool,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub value: attributes::Value,
+    pub fixed: attributes::FixedBool,
 }

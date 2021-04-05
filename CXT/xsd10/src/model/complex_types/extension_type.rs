@@ -1,9 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::groups::type_def_particle::TypeDefParticle;
-use crate::model::attributes::base::Base;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:extensionType
 // Complex type information
@@ -31,12 +29,12 @@ use crate::model::attributes::AnyAttributes;
 //
 // Used by
 // Element xsd:extension
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct ExtensionType {
-    pub annotation: Option<Annotation>,
-    pub type_def_particle: Option<TypeDefParticle>,
-    pub attr_decls: AttrDecls,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub base: Base,
+    pub annotation: Option<elements::Annotation>,
+    pub type_def_particle: Option<groups::TypeDefParticle>,
+    pub attr_decls: groups::AttrDecls,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
 }

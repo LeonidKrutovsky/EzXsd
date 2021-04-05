@@ -1,16 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::element_model::ElementModel;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::type_::Type;
-use crate::model::attributes::substitution_group::SubstitutionGroup;
-use crate::model::attributes::default::Default_;
-use crate::model::attributes::fixed::Fixed;
-use crate::model::attributes::nillable::Nillable;
-use crate::model::attributes::abstract_::Abstract;
-use crate::model::attributes::final_::Final;
-use crate::model::attributes::block::Block;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:topLevelElement
 // Complex type information
@@ -50,19 +41,19 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelElement
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct TopLevelElement {
-    pub annotation: Option<Annotation>,
-    pub model: ElementModel,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
-    pub type_: Option<Type>,
-    pub substitution_group: Option<SubstitutionGroup>,
-    pub default: Option<Default_>,
-    pub fixed: Option<Fixed>,
-    pub nillable: Nillable,
-    pub abstract_: Abstract,
-    pub final_: Option<Final>,
-    pub block: Option<Block>,
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ElementModel,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub type_: Option<attributes::Type>,
+    pub substitution_group: Option<attributes::SubstitutionGroup>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub nillable: attributes::Nillable,
+    pub abstract_: attributes::Abstract,
+    pub final_: Option<attributes::Final>,
+    pub block: Option<attributes::Block>,
 }

@@ -1,7 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::ref_::Ref;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+
+use xml_utils::complex_type;
 
 // xsd:attributeGroupRef
 // Complex type information
@@ -25,10 +25,10 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:attributeGroupRef
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct AttributeGroupRef {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub ref_: Ref,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes:attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub ref_: attributes::Ref,
 }

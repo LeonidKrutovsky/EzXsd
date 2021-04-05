@@ -1,11 +1,6 @@
-use crate::model::complex_types::local_simple_type::LocalSimpleType;
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::type_::Type;
-use crate::model::attributes::default::Default_;
-use crate::model::attributes::fixed::Fixed;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:topLevelAttributeType
 // Complex type information
@@ -34,14 +29,14 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelAttributeType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct TopLevelAttributeType {
-    pub annotation: Option<Annotation>,
-    pub simple_type: Option<LocalSimpleType>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
-    pub type_: Option<Type>,
-    pub default: Option<Default_>,
-    pub fixed: Option<Fixed>,
+    pub annotation: Option<elements::Annotation>,
+    pub simple_type: Option<elements::TopLevelSimpleType>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub type_: Option<attributes::Type>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
 }

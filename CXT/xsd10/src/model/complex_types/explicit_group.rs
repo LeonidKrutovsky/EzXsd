@@ -1,9 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::nested_particle::NestedParticle;
-use crate::model::attributes::max_occurs::MaxOccurs;
-use crate::model::attributes::min_occurs::MinOccurs;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:explicitGroup
 // group type for the three kinds of model group (sequence, choice, all)
@@ -37,12 +35,12 @@ use crate::model::attributes::AnyAttributes;
 // xsd:openAttrs
 // xsd:annotated
 // xsd:explicitGroup
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct ExplicitGroup {
-    pub annotation: Option<Annotation>,
-    pub nested_particle: Vec<NestedParticle>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub min_occurs: MinOccurs,
-    pub max_occurs: MaxOccurs,
+    pub annotation: Option<elements::Annotation>,
+    pub nested_particle: Vec<groups::NestedParticle>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
 }

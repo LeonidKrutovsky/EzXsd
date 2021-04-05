@@ -1,8 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::complex_type_model::ComplexTypeModel;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::mixed::Mixed;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:localComplexType
 // Complex type information
@@ -39,11 +38,11 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:localComplexType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct LocalComplexType {
-    pub annotation: Option<Annotation>,
-    pub model: ComplexTypeModel,
-    pub id: Option<Id>,
-    pub mixed: Mixed,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ComplexTypeModel,
+    pub id: Option<attributes::Id>,
+    pub mixed: attributes::Mixed,
+    pub attributes: attributes::AnyAttributes,
 }

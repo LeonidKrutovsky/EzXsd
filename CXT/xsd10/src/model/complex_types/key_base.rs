@@ -1,10 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::field::Field;
-use crate::model::elements::selector::Selector;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
-
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 // xsd:keybase
 // Complex type information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -33,12 +29,12 @@ use crate::model::attributes::AnyAttributes;
 // xsd:annotated
 // xsd:keybase
 // extended by Anonymous type of element xsd:keyref
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct KeyBase {
-    pub annotation: Option<Annotation>,
-    pub selector: Selector,
-    pub fields: Vec<Field>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
+    pub annotation: Option<elements::Annotation>,
+    pub selector: elements::Selector,
+    pub fields: Vec<elements::Field>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
 }

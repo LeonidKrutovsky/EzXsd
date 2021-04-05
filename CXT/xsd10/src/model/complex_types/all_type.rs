@@ -1,9 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::element::Element;
-use crate::model::attributes::min_occurs::MinOccursBool;
-use crate::model::attributes::max_occurs::MaxOccursOne;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:allType
 // An "all" group that allows elements to appear in any order.
@@ -35,12 +32,12 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:allType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct AllType {
-    pub annotation: Option<Annotation>,
-    pub elements: Vec<Element>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub min_occurs: Option<MinOccursBool>,
-    pub max_occurs: Option<MaxOccursOne>,
+    pub annotation: Option<elements::Annotation>,
+    pub elements: Vec<elements::Element>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub min_occurs: Option<attributes::MinOccursBool>,
+    pub max_occurs: Option<attributes::MaxOccursOne>,
 }

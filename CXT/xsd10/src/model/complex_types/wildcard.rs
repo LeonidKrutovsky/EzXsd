@@ -1,8 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::process_contents::ProcessContents;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::namespace::Namespace;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:wildcard
 // Complex type information
@@ -27,11 +25,11 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:wildcard
 //                  extended by Anonymous type of element xsd:any
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct Wildcard {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub namespace: Namespace,
-    pub process_contents: ProcessContents,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub namespace: attributes::Namespace,
+    pub process_contents: attributes::ProcessContents,
 }

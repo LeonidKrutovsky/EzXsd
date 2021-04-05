@@ -61,6 +61,13 @@ pub use restriction::ComplexRestriction;
 pub use restriction::SimpleRestriction;
 pub use selector::Selector;
 pub use simple_type::LocalSimpleType;
+pub use all::All;
+pub use choice::Choice;
+pub use choice::SimpleChoice;
+pub use sequence::Sequence;
+pub use sequence::SimpleSequence;
+pub use simple_content::SimpleContent;
+pub use simple_type::TopLevelSimpleType;
 
 
 #[derive(Debug, PartialEq)]

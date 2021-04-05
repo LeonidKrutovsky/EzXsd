@@ -1,17 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::element_model::ElementModel;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::ref_::Ref;
-use crate::model::attributes::type_::Type;
-use crate::model::attributes::default::Default_;
-use crate::model::attributes::fixed::Fixed;
-use crate::model::attributes::nillable::Nillable;
-use crate::model::attributes::block::Block;
-use crate::model::attributes::form::Form;
-use crate::model::attributes::min_occurs::MinOccursBool;
-use crate::model::attributes::max_occurs::MaxOccursBool;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:narrowMaxMin
 // restricted max/min
@@ -54,20 +44,20 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:localElement
 //                  xsd:narrowMaxMin
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct NarrowMaxMin {
-    pub annotation: Option<Annotation>,
-    pub model: ElementModel,
-    pub id: Option<Id>,
-    pub name: Option<Name>,
-    pub ref_: Option<Ref>,
-    pub type_: Option<Type>,
-    pub default: Option<Default_>,
-    pub fixed: Option<Fixed>,
-    pub nillable: Nillable,
-    pub block: Option<Block>,
-    pub form: Option<Form>,
-    pub min_occurs: MinOccursBool,
-    pub max_occurs: MaxOccursBool,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ElementModel,
+    pub id: Option<attributes::Id>,
+    pub name: Option<attributes::Name>,
+    pub ref_: Option<attributes::Ref>,
+    pub type_: Option<attributes::Type>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub nillable: attributes::Nillable,
+    pub block: Option<attributes::Block>,
+    pub form: Option<attributes::Form>,
+    pub min_occurs: attributes::MinOccursBool,
+    pub max_occurs: attributes::MaxOccursBool,
+    pub attributes: attributes::AnyAttributes,
 }

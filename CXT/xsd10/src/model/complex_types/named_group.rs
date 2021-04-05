@@ -1,10 +1,6 @@
-use crate::model::elements::all::All;
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::choice::SimpleChoice;
-use crate::model::elements::sequence::SimpleSequence;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:namedGroup
 // Complex type information
@@ -33,20 +29,20 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:namedGroup
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct NamedGroup {
-    pub annotation: Option<Annotation>,
+    pub annotation: Option<elements::Annotation>,
     pub content_choice: ContentChoice,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
 }
 
 #[derive(Debug)]
 pub enum ContentChoice {
-    All(All),
-    Choice(SimpleChoice),
-    Sequence(SimpleSequence),
+    All(elements::All),
+    Choice(elements::SimpleChoice),
+    Sequence(elements::SimpleSequence),
 }
 
 impl Default for ContentChoice {

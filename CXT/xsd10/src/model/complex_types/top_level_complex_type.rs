@@ -1,15 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::attr_decls::AttrDecls;
-use crate::model::groups::complex_type_model::ComplexTypeModel;
-use crate::model::groups::type_def_particle::TypeDefParticle;
-use crate::model::{ComplexContent, SimpleContent};
-use crate::model::attributes::name::Name;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::final_::Final;
-use crate::model::attributes::block::DerivationBlock;
-use crate::model::attributes::mixed::Mixed;
-use crate::model::attributes::abstract_::Abstract;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:topLevelComplexType
 // Complex type information
@@ -51,44 +43,44 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:topLevelComplexType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct TopLevelComplexType {
-    pub annotation: Option<Annotation>,
-    pub model: ComplexTypeModel,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub name: Name,
-    pub abstract_: Abstract,
-    pub final_: Option<Final>,
-    pub block: Option<DerivationBlock>,
-    pub mixed: Mixed,
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ComplexTypeModel,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub abstract_: attributes::Abstract,
+    pub final_: Option<attributes::Final>,
+    pub block: Option<attributes::DerivationBlock>,
+    pub mixed: attributes::Mixed,
 }
 
 impl TopLevelComplexType {
-    pub fn simple_content(&self) -> Option<&SimpleContent> {
+    pub fn simple_content(&self) -> Option<&elements::SimpleContent> {
         match &self.model {
-            ComplexTypeModel::SimpleContent(sc) => Some(sc),
+            groups::ComplexTypeModel::SimpleContent(sc) => Some(sc),
             _ => None,
         }
     }
 
-    pub fn complex_content(&self) -> Option<&ComplexContent> {
+    pub fn complex_content(&self) -> Option<&elements::ComplexContent> {
         match &self.model {
-            ComplexTypeModel::ComplexContent(sc) => Some(sc),
+            groups::ComplexTypeModel::ComplexContent(sc) => Some(sc),
             _ => None,
         }
     }
 
-    pub fn type_def_particle(&self) -> Option<&TypeDefParticle> {
+    pub fn type_def_particle(&self) -> Option<&groups::TypeDefParticle> {
         match &self.model {
-            ComplexTypeModel::Content(tdp, _) => tdp.as_ref(),
+            groups::ComplexTypeModel::Content(tdp, _) => tdp.as_ref(),
             _ => None,
         }
     }
 
-    pub fn attr_decls(&self) -> Option<&AttrDecls> {
+    pub fn attr_decls(&self) -> Option<&groups::AttrDecls> {
         match &self.model {
-            ComplexTypeModel::Content(_, attr_decls) => Some(attr_decls),
+            groups::ComplexTypeModel::Content(_, attr_decls) => Some(attr_decls),
             _ => None,
         }
     }

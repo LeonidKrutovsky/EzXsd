@@ -1,9 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::max_occurs::MaxOccurs;
-use crate::model::attributes::min_occurs::MinOccurs;
-use crate::model::attributes::ref_::Ref;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:namedGroupRef
 // Complex type information
@@ -29,12 +26,12 @@ use crate::model::attributes::AnyAttributes;
 //      xsd:openAttrs
 //          xsd:annotated
 //              xsd:namedGroupRef
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct NamedGroupRef {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub ref_: Ref,
-    pub min_occurs: MinOccurs,
-    pub max_occurs: MaxOccurs,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub ref_: attributes::Ref,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
 }

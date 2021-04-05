@@ -1,9 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::groups::simple_derivation::SimpleDerivation;
-use crate::model::attributes::name::Name;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::final_::SimpleFinal;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::complex_type;
 
 // xsd:topLevelSimpleType
 // Complex type information
@@ -33,12 +31,12 @@ use crate::model::attributes::AnyAttributes;
 //          xsd:annotated
 //              xsd:simpleType
 //                  xsd:topLevelSimpleType
-#[derive(Debug, Default)]
+#[complex_type()]
 pub struct TopLevelSimpleType {
-    pub annotation: Option<Annotation>,
-    pub content_choice: SimpleDerivation,
-    pub id: Option<Id>,
-    pub final_: Option<SimpleFinal>,
-    pub name: Name,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub content_choice: groups::SimpleDerivation,
+    pub id: Option<attributes::Id>,
+    pub final_: Option<attributes::SimpleFinal>,
+    pub name: attributes::Name,
+    pub attributes: attributes::AnyAttributes,
 }
