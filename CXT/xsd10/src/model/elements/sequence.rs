@@ -1,5 +1,6 @@
 use crate::model::complex_types::explicit_group::ExplicitGroup;
 use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use xml_utils::element;
 
 // xsd:sequence
 // Element information
@@ -10,7 +11,8 @@ use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
 //
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
-pub type SimpleSequence = SimpleExplicitGroup;
+#[element(name = "sequence")]
+pub struct SimpleSequence(pub SimpleExplicitGroup);
 
 // xsd:sequence
 // See http://www.w3.org/TR/xmlschema-1/#element-sequence.
@@ -32,4 +34,5 @@ pub type SimpleSequence = SimpleExplicitGroup;
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
-pub type Sequence = ExplicitGroup;
+#[element(name = "sequence")]
+pub struct Sequence(pub ExplicitGroup);

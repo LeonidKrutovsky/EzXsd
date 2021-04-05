@@ -1,8 +1,7 @@
-use crate::model::elements::annotation::Annotation;
+use crate::model::elements;
+use crate::model::attributes;
 use crate::model::groups::redefinable::Redefinable;
-use crate::model::attributes::schema_location::SchemaLocation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+
 
 // xsd:redefine
 // See http://www.w3.org/TR/xmlschema-1/#element-redefine.
@@ -15,11 +14,11 @@ use crate::model::attributes::AnyAttributes;
 // Content
 //  Choice [0..*]
 //      xsd:annotation
-//              from group xsd:redefinable
-//      xsd:simpleType
-//      xsd:complexType
-//      xsd:group
-//      xsd:attributeGroup
+//         from group xsd:redefinable
+//              xsd:simpleType
+//              xsd:complexType
+//              xsd:group
+//              xsd:attributeGroup
 //
 // Attributes
 // Any attribute	[0..*]		        Namespace: ##other, Process Contents: lax	from type xsd:openAttrs
@@ -28,11 +27,11 @@ use crate::model::attributes::AnyAttributes;
 //
 // Used in
 // Anonymous type of element xsd:schema
-#[derive(Debug)]
+#[element(name = "redefine")]
 pub struct Redefine {
-    pub annotations: Vec<Annotation>,
+    pub annotations: Vec<elements::Annotation>,
     pub content: Vec<Redefinable>,
-    pub attributes: AnyAttributes,
-    pub schema_location: SchemaLocation,
-    pub id: Option<Id>,
+    pub attributes: attributes::AnyAttributes,
+    pub schema_location: attributes::SchemaLocation,
+    pub id: Option<attributes::Id>,
 }

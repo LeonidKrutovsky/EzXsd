@@ -1,17 +1,7 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::import::Import;
-use crate::model::elements::include::Include;
-use crate::model::elements::redefine::Redefine;
+use crate::model::elements;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::attributes::id::Id;
-use crate::model::simple_types::Language;
-use crate::model::attributes::target_namespace::TargetNamespace;
-use crate::model::attributes::version::Version;
-use crate::model::attributes::final_default::FinalDefault;
-use crate::model::attributes::block_default::BlockDefault;
-use crate::model::attributes::attribute_form_default::AttributeFormDefault;
-use crate::model::attributes::element_form_default::ElementFormDefault;
-use crate::model::attributes::AnyAttributes;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:schema
 // See http://www.w3.org/TR/xmlschema-1/#element-schema.
@@ -60,20 +50,20 @@ use crate::model::attributes::AnyAttributes;
 // key	attributeGroup 	    xs:attributeGroup	                @name
 // key	notation	        xs:notation	                        @name
 // key	identityConstraint	.//xs:key|.//xs:unique|.//xs:keyref	@name
-#[derive(Default, Debug)]
+#[element(name = "schema")]
 pub struct Schema {
-    pub includes: Vec<Include>,
-    pub imports: Vec<Import>,
-    pub redefines: Vec<Redefine>,
-    pub annotations: Vec<Annotation>,
-    pub content: Vec<(SchemaTop, Vec<Annotation>)>,
-    pub attributes: AnyAttributes,
-    pub target_namespace: Option<TargetNamespace>,
-    pub version: Option<Version>,
-    pub final_default: FinalDefault,
-    pub block_default: BlockDefault,
-    pub attribute_form_default: AttributeFormDefault,
-    pub element_form_default: ElementFormDefault,
-    pub id: Option<Id>,
-    pub lang: Option<Language>,
+    pub includes: Vec<elements::Include>,
+    pub imports: Vec<elements::Import>,
+    pub redefines: Vec<elements::Redefine>,
+    pub annotations: Vec<elements::Annotation>,
+    pub content: Vec<(SchemaTop, Vec<elements::Annotation>)>,
+    pub attributes: attributes::AnyAttributes,
+    pub target_namespace: Option<attributes::TargetNamespace>,
+    pub version: Option<attributes::Version>,
+    pub final_default: attributes::FinalDefault,
+    pub block_default: attributes::BlockDefault,
+    pub attribute_form_default: attributes::AttributeFormDefault,
+    pub element_form_default: attributes::ElementFormDefault,
+    pub id: Option<attributes::Id>,
+    pub lang: Option<attributes::Language>,
 }

@@ -1,7 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::xpath::XPath;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:selector
 // See http://www.w3.org/TR/xmlschema-1/#element-selector.
@@ -22,10 +21,10 @@ use crate::model::attributes::AnyAttributes;
 // Used in
 // Anonymous type of element xsd:keyref via extension of xsd:keybase
 // Type xsd:keybase (Elements xsd:unique, xsd:key)
-#[derive(Debug, Default)]
+#[element(name = "selector")]
 pub struct Selector {
-    pub annotation: Option<Annotation>,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub xpath: XPath,
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub xpath: attributes::XPath,
 }

@@ -1,10 +1,10 @@
 use crate::model::complex_types::complex_restriction_type::ComplexRestrictionType;
 use crate::model::complex_types::simple_restriction_type::SimpleRestrictionType;
-use crate::model::elements::annotation::Annotation;
 use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::base::Base;
-use crate::model::attributes::AnyAttributes;
+use crate::model::groups::redefinable::Redefinable;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: datatypes.xsd
@@ -39,13 +39,13 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:simpleType via reference to xsd:simpleDerivation
 // Type xsd:localSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
 // Type xsd:topLevelSimpleType via reference to xsd:simpleDerivation (Element xsd:simpleType)
-#[derive(Default, Debug)]
+#[element(name = "restriction")]
 pub struct Restriction {
-    pub annotation: Option<Annotation>,
+    pub annotation: Option<elements::Annotation>,
     pub model: SimpleRestrictionModel,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
-    pub base: Option<Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub base: Option<attributes::Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required
 }
 
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -55,7 +55,8 @@ pub struct Restriction {
 //
 // Used in
 // Anonymous type of element xsd:simpleContent
-pub type SimpleRestriction = SimpleRestrictionType;
+#[element(name = "restriction")]
+pub struct SimpleRestriction(pub SimpleRestrictionType);
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -65,5 +66,5 @@ pub type SimpleRestriction = SimpleRestrictionType;
 //
 // Used in
 // Anonymous type of element xsd:complexContent
-
-pub type ComplexRestriction = ComplexRestrictionType;
+#[element(name = "restriction")]
+pub struct ComplexRestriction(pub ComplexRestrictionType);

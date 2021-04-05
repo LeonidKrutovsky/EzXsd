@@ -27,3 +27,9 @@ pub enum Redefinable {
     Group(Box<Group>),
     AttributeGroup(Box<AttributeGroup>),
 }
+
+impl Default for Redefinable {
+    fn default() -> Self {
+        unimplemented!()
+    }
+}

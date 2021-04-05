@@ -1,8 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::elements::extension::SimpleExtension;
-use crate::model::elements::restriction::SimpleRestriction;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:simpleContent
 // See http://www.w3.org/TR/xmlschema-1/#element-simpleContent.
@@ -28,22 +26,22 @@ use crate::model::attributes::AnyAttributes;
 // Type xsd:complexType via reference to xsd:complexTypeModel
 // Type xsd:localComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
-#[derive(Debug, Default)]
+#[element(name = "simpleContent")]
 pub struct SimpleContent {
-    pub annotation: Option<Annotation>,
+    pub annotation: Option<elements::Annotation>,
     pub content: SimpleContentChoice,
-    pub attributes: AnyAttributes,
-    pub id: Option<Id>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
 }
 
 #[derive(Debug)]
 pub enum SimpleContentChoice {
-    Restriction(Box<SimpleRestriction>),
-    Extension(Box<SimpleExtension>),
+    Restriction(Box<elements::SimpleRestriction>),
+    Extension(Box<elements::SimpleExtension>),
 }
 
 impl Default for SimpleContentChoice {
     fn default() -> Self {
-        Self::Restriction(Box::new(SimpleRestriction::default()))
+        unimplemented!()
     }
 }

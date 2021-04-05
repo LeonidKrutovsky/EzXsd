@@ -1,3 +1,6 @@
+use crate::model::simple_types::Token;
+use xml_utils::*;
+
 // xpath
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -10,11 +13,6 @@
 //
 // Used in
 // Anonymous type of element xsd:selector
-
-
-use crate::model::simple_types::Token;
-use xml_utils::*;
-
 #[attribute(name = "xpath")]
 pub struct XPath(Token);
 
@@ -30,6 +28,5 @@ pub struct XPath(Token);
 //
 // Used in
 // Anonymous type of element xsd:field
-
 #[attribute(name = "xpath")]
 pub struct FieldXPath(Token);

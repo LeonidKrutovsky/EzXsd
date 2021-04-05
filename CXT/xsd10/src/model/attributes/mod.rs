@@ -53,7 +53,16 @@ pub use item_type::ItemType;
 pub use public::Public;
 pub use system::System;
 pub use value::PatternValue;
-
+pub use value::PositiveValue;
+pub use value::WhiteSpaceValue;
+pub use target_namespace::TargetNamespace;
+pub use version::Version;
+pub use final_default::FinalDefault;
+pub use block_default::BlockDefault;
+pub use element_form_default::ElementFormDefault;
+pub use xpath::XPath;
+pub use fixed::FixedBool;
+pub use member_types::MemberTypes;
 
 use crate::model::simple_types::{QName, AnySimpleType};
 use std::convert::{TryFrom};

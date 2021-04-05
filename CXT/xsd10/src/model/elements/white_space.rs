@@ -1,8 +1,6 @@
-use crate::model::elements::annotation::Annotation;
-use crate::model::attributes::id::Id;
-use crate::model::attributes::fixed::FixedBool;
-use crate::model::attributes::value::WhiteSpaceValue;
-use crate::model::attributes::AnyAttributes;
+use crate::model::elements;
+use crate::model::attributes;
+use xml_utils::element;
 
 // xsd:whiteSpace
 // See http://www.w3.org/TR/xmlschema-2/#element-whiteSpace.
@@ -26,11 +24,11 @@ use crate::model::attributes::AnyAttributes;
 // Anonymous type of element xsd:restriction via reference to xsd:simpleRestrictionModel
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
-#[derive(Debug)]
+#[element(name = "whiteSpace")]
 pub struct WhiteSpace {
-    pub annotation: Option<Annotation>,
-    pub id: Option<Id>,
-    pub fixed: FixedBool,
-    pub value: WhiteSpaceValue,
-    pub attributes: AnyAttributes,
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub fixed: attributes::FixedBool,
+    pub value: attributes::WhiteSpaceValue,
+    pub attributes: attributes::AnyAttributes,
 }
