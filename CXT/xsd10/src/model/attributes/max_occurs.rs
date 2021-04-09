@@ -128,3 +128,9 @@ impl TryFrom<roxmltree::Attribute<'_>> for MaxOccursOne {
 impl MaxOccursOne {
     pub const NAME: &'static str = "maxOccurs";
 }
+
+impl Default for MaxOccursOne {
+    fn default() -> Self {
+        Self(1)
+    }
+}

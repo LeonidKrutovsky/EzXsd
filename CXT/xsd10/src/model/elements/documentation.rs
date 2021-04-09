@@ -37,7 +37,12 @@ impl TryFrom<roxmltree::Node<'_, '_>> for Documentation {
 
     fn try_from(node: Node<'_, '_>) -> Result<Self, Self::Error> {
         let text = node.text().map(|s| s.to_string());
-        let elements =node.children().try_into()?;
+        let mut elements = elements::AnyElements::default();
+        for ch in node.children().filter(|n| n.is_element()) {
+            match ch.tag_name().name() {
+                _ => elements.push(ch.try_into()?)
+            }
+        }
         let mut source: Option<attributes::Source> = None;
         let mut lang: Option<attributes::Language> = None;
         let mut attributes = attributes::AnyAttributes::default();

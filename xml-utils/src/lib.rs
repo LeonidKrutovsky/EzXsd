@@ -2,6 +2,7 @@ mod attribute;
 mod named_argument;
 mod element;
 mod complex_type;
+mod fields;
 
 extern crate proc_macro;
 extern crate syn;
