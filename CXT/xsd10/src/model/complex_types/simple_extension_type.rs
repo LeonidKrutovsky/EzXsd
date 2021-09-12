@@ -1,6 +1,6 @@
-use crate::model::groups;
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
+use crate::model::groups;
 use xml_utils::complex_type;
 
 // xsd:simpleExtensionType
@@ -34,7 +34,7 @@ use xml_utils::complex_type;
 pub struct SimpleExtensionType {
     pub annotation: Option<elements::Annotation>,
     pub attr_decls: groups::AttrDecls,
-    pub attributes:attributes::AnyAttributes,
+    pub attributes: attributes::AnyAttributes,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
 }

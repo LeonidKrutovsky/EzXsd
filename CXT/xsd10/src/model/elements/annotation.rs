@@ -1,5 +1,5 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
 
 // xsd:annotation

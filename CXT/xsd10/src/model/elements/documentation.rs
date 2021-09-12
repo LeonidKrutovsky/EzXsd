@@ -1,8 +1,8 @@
-use crate::model::elements;
 use crate::model::attributes;
-use xml_utils::element;
-use std::convert::{TryFrom, TryInto};
+use crate::model::elements;
 use roxmltree::Node;
+use std::convert::{TryFrom, TryInto};
+use xml_utils::element;
 
 // xsd:documentation
 // See http://www.w3.org/TR/xmlschema-1/#element-documentation.
@@ -40,7 +40,7 @@ impl TryFrom<roxmltree::Node<'_, '_>> for Documentation {
         let mut elements = elements::AnyElements::default();
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.tag_name().name() {
-                _ => elements.push(ch.try_into()?)
+                _ => elements.push(ch.try_into()?),
             }
         }
         let mut source: Option<attributes::Source> = None;

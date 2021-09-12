@@ -1,5 +1,5 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
 
 // xsd:field
@@ -25,6 +25,6 @@ use xml_utils::element;
 pub struct Field {
     pub annotation: Option<elements::Annotation>,
     pub attributes: attributes::AnyAttributes,
-    pub id:  Option<attributes::Id>,
+    pub id: Option<attributes::Id>,
     pub xpath: attributes::FieldXPath,
 }

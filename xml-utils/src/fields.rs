@@ -2,10 +2,10 @@ use proc_macro2::Ident;
 use syn::{Field, GenericArgument, Path, PathArguments, Type};
 
 #[derive(Debug)]
-pub enum StructField{
+pub enum StructField {
     Option(Ident),
     Vec(Ident),
-    Raw(Ident)
+    Raw(Ident),
 }
 
 impl StructField {
@@ -37,11 +37,11 @@ fn unpack_generic_argument(arguments: &PathArguments) -> Option<&Path> {
 }
 
 #[derive(Default, Debug)]
-pub struct StructFields{
+pub struct StructFields {
     pub attributes: Vec<StructField>,
     pub elements: Vec<StructField>,
     pub groups: Vec<StructField>,
-    pub texts: Vec<StructField>
+    pub texts: Vec<StructField>,
 }
 
 impl StructFields {
@@ -53,8 +53,7 @@ impl StructFields {
             if &segment.ident == "Option" {
                 let path = unpack_generic_argument(&segment.arguments).unwrap();
                 self.push(path, &segment.ident);
-            }
-            else if &segment.ident == "Vec" {
+            } else if &segment.ident == "Vec" {
                 let path = unpack_generic_argument(&segment.arguments).unwrap();
                 self.push(path, &segment.ident);
             } else {
@@ -65,11 +64,14 @@ impl StructFields {
     fn push(&mut self, path: &Path, ident: &Ident) {
         let first_ident = &path.segments[0].ident;
         if first_ident == "attributes" {
-            self.attributes.push(StructField::new(&path.segments[1].ident, ident))
+            self.attributes
+                .push(StructField::new(&path.segments[1].ident, ident))
         } else if first_ident == "elements" {
-            self.elements.push(StructField::new(&path.segments[1].ident, ident))
+            self.elements
+                .push(StructField::new(&path.segments[1].ident, ident))
         } else if first_ident == "groups" {
-            self.groups.push(StructField::new(&path.segments[1].ident, ident))
+            self.groups
+                .push(StructField::new(&path.segments[1].ident, ident))
         } else if first_ident == "String" {
             self.texts.push(StructField::new(first_ident, ident))
         }

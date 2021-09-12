@@ -23,7 +23,6 @@ use xml_utils::element;
 #[element(name = "simpleType")]
 pub struct LocalSimpleType(pub local_simple_type::LocalSimpleType);
 
-
 // xsd:simpleType
 // See http://www.w3.org/TR/xmlschema-2/#element-simpleType.
 // Element information

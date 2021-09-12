@@ -1,5 +1,5 @@
-use regex::Regex;
 use chrono::FixedOffset;
+use regex::Regex;
 
 //No normalization is done, the value is not changed
 // (this is the behavior required by [XML 1.0 (Second Edition)]
@@ -53,7 +53,6 @@ pub fn is_collapsed<T: AsRef<str>>(value: T) -> bool {
         || value.contains("  ");
 
     !res
-
 }
 
 pub fn assert_collapsed<T: AsRef<str>>(value: T, name: T) -> Result<(), String> {

@@ -10,7 +10,6 @@
 // Used in
 // Anonymous type of element xsd:keyref
 
-
 use crate::model::simple_types::QName;
 
 use xml_utils::*;

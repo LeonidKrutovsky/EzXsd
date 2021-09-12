@@ -1,7 +1,6 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
-
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema

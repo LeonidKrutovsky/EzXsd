@@ -17,7 +17,6 @@ use xml_utils::element;
 #[element(name = "group")]
 pub struct Group(pub NamedGroup);
 
-
 // xsd:group
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema

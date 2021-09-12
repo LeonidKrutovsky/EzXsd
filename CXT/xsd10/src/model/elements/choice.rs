@@ -23,7 +23,6 @@ use xml_utils::element;
 #[element(name = "choice")]
 pub struct Choice(pub ExplicitGroup);
 
-
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: xmlschema.xsd
 // Type: xsd:simpleExplicitGroup

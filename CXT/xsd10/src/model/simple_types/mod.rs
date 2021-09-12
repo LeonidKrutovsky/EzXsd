@@ -197,5 +197,3 @@ pub fn xsd_simple_type(name: &str) -> Result<SimpleType, String> {
         _ => return Err(format!("Invalid xs:simpleType name: {}", name)),
     })
 }
-
-

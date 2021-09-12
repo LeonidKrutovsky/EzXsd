@@ -1,6 +1,6 @@
-use syn::ItemStruct;
 use proc_macro::TokenStream;
 use quote::quote;
+use syn::ItemStruct;
 //use crate::named_argument::NamedArgument;
 
 pub fn xsd_complex_type(item: ItemStruct) -> TokenStream {

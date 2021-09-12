@@ -1,18 +1,18 @@
 mod attribute;
-mod named_argument;
-mod element;
 mod complex_type;
+mod element;
 mod fields;
+mod named_argument;
 
 extern crate proc_macro;
 extern crate syn;
-use syn::{parse_macro_input};
 use proc_macro::TokenStream;
+use syn::parse_macro_input;
 
 use crate::attribute::xsd_attribute;
-use crate::named_argument::NamedArgument;
-use crate::element::xsd_element;
 use crate::complex_type::xsd_complex_type;
+use crate::element::xsd_element;
+use crate::named_argument::NamedArgument;
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {

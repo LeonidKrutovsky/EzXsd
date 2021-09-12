@@ -1,7 +1,6 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
-
 
 // xsd:any
 // See http://www.w3.org/TR/xmlschema-1/#element-any.

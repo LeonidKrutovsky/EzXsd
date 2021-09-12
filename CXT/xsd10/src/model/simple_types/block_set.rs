@@ -54,7 +54,7 @@ impl fmt::Display for BlockSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             BlockSet::All => write!(f, "{}", "#all"),
-            BlockSet::List(x) => write!(f, "{}", x)
+            BlockSet::List(x) => write!(f, "{}", x),
         }
     }
 }

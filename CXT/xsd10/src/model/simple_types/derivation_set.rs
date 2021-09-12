@@ -41,7 +41,7 @@ impl FromStr for DerivationSet {
     }
 }
 
-impl Default for DerivationSet{
+impl Default for DerivationSet {
     fn default() -> Self {
         Self::List(XsdList(vec![]))
     }
@@ -51,7 +51,7 @@ impl fmt::Display for DerivationSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             DerivationSet::All => write!(f, "{}", "#all"),
-            DerivationSet::List(x) => write!(f, "{}", x)
+            DerivationSet::List(x) => write!(f, "{}", x),
         }
     }
 }
@@ -74,12 +74,11 @@ impl FromStr for DerivationSubset {
     }
 }
 
-
 impl fmt::Display for DerivationSubset {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             DerivationSubset::Extension => write!(f, "{}", "extension"),
-            DerivationSubset::Restriction => write!(f, "{}", "restriction")
+            DerivationSubset::Restriction => write!(f, "{}", "restriction"),
         }
     }
 }

@@ -36,4 +36,3 @@ use xml_utils::element;
 // </xsd:unique>
 #[element(name = "unique")]
 pub struct Unique(pub KeyBase);
-

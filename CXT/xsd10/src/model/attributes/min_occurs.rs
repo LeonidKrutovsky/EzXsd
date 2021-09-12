@@ -1,6 +1,6 @@
 use crate::model::simple_types::NonNegativeInteger;
-use xml_utils::*;
 use std::convert::TryFrom;
+use xml_utils::*;
 
 // minOccurs
 // Namespace: None
@@ -21,7 +21,6 @@ use std::convert::TryFrom;
 #[attribute(name = "minOccurs")]
 pub struct MinOccurs(pub NonNegativeInteger);
 
-
 // minOccurs
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -38,9 +37,9 @@ pub struct MinOccurs(pub NonNegativeInteger);
 //  Type xsd:narrowMaxMin (Element xsd:element)
 
 #[derive(Debug)]
-pub enum MinOccursBool{
+pub enum MinOccursBool {
     Zero,
-    One
+    One,
 }
 
 impl Default for MinOccursBool {
@@ -56,7 +55,12 @@ impl TryFrom<roxmltree::Attribute<'_>> for MinOccursBool {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,
-            _ => return Err(format!("MinOccurs: Invalid attribute value: {}", attr.value()))
+            _ => {
+                return Err(format!(
+                    "MinOccurs: Invalid attribute value: {}",
+                    attr.value()
+                ))
+            }
         })
     }
 }

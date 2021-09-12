@@ -18,10 +18,10 @@
 use std::convert::TryFrom;
 
 #[derive(Debug, PartialEq)]
-pub enum ProcessContents{
+pub enum ProcessContents {
     Lax,
     Skip,
-    Strict
+    Strict,
 }
 
 impl TryFrom<&roxmltree::Attribute<'_>> for ProcessContents {
@@ -32,9 +32,13 @@ impl TryFrom<&roxmltree::Attribute<'_>> for ProcessContents {
             "skip" => Self::Skip,
             "lax" => Self::Lax,
             "strict" => Self::Strict,
-            _ => return Err(format!("ProcessContents: Invalid attribute value: {}", attr.value()))
+            _ => {
+                return Err(format!(
+                    "ProcessContents: Invalid attribute value: {}",
+                    attr.value()
+                ))
+            }
         })
-
     }
 }
 

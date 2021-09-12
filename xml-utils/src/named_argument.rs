@@ -1,12 +1,11 @@
-use syn::{LitStr, Ident, Result, Token};
 use syn::parse::{Parse, ParseStream};
-
+use syn::{Ident, LitStr, Result, Token};
 
 #[derive(Debug)]
 pub struct NamedArgument {
     pub name: Ident,
     pub eq_token: Token![=],
-    pub value: LitStr
+    pub value: LitStr,
 }
 
 impl Parse for NamedArgument {

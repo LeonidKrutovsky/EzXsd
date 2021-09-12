@@ -23,7 +23,6 @@
 use crate::model::simple_types::{DerivationSet, SimpleDerivationSet};
 use xml_utils::*;
 
-
 #[attribute(name = "final")]
 pub struct Final(pub DerivationSet);
 

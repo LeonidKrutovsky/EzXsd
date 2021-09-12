@@ -10,14 +10,14 @@ pub mod simple_derivation;
 pub mod simple_restriction_model;
 pub mod type_def_particle;
 
-pub use redefinable::Redefinable;
-pub use simple_restriction_model::SimpleRestrictionModel;
-pub use type_def_particle::TypeDefParticle;
 pub use attr_decls::AttrDecls;
-pub use nested_particle::NestedParticle;
 pub use complex_type_model::ComplexTypeModel;
 pub use element_model::ElementModel;
+pub use nested_particle::NestedParticle;
+pub use redefinable::Redefinable;
 pub use simple_derivation::SimpleDerivation;
+pub use simple_restriction_model::SimpleRestrictionModel;
+pub use type_def_particle::TypeDefParticle;
 
 use crate::model::elements;
 
@@ -32,7 +32,6 @@ impl Default for ComplexContentChoice {
         unimplemented!()
     }
 }
-
 
 #[derive(Debug)]
 pub enum SimpleContentChoice {

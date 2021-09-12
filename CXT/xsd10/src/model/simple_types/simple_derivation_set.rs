@@ -31,7 +31,7 @@ pub enum SimpleDerivationSet {
     List(XsdList<SimpleDerivationSubset>),
 }
 
-impl Default for SimpleDerivationSet{
+impl Default for SimpleDerivationSet {
     fn default() -> Self {
         Self::List(XsdList(vec![]))
     }

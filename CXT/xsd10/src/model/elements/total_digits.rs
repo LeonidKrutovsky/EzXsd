@@ -1,7 +1,6 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
-
 
 // xsd:totalDigits
 // See http://www.w3.org/TR/xmlschema-2/#element-totalDigits.

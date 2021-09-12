@@ -1,6 +1,6 @@
+use crate::model::attributes;
 use crate::model::elements;
 use crate::model::groups;
-use crate::model::attributes;
 use xml_utils::element;
 
 // xsd:complexContent

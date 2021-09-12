@@ -1,6 +1,6 @@
-use crate::model::groups;
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
+use crate::model::groups;
 use xml_utils::complex_type;
 
 // xsd:explicitGroup

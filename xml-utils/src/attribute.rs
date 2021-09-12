@@ -1,9 +1,7 @@
-use syn::ItemStruct;
+use crate::named_argument::NamedArgument;
 use proc_macro::TokenStream;
 use quote::quote;
-use crate::named_argument::NamedArgument;
-
-
+use syn::ItemStruct;
 
 pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let attr_name = arg.value;

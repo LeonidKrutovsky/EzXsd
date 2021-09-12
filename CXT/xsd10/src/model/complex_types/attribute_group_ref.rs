@@ -1,5 +1,5 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 
 use xml_utils::complex_type;
 
@@ -28,7 +28,7 @@ use xml_utils::complex_type;
 #[complex_type()]
 pub struct AttributeGroupRef {
     pub annotation: Option<elements::Annotation>,
-    pub attributes:attributes::AnyAttributes,
+    pub attributes: attributes::AnyAttributes,
     pub id: Option<attributes::Id>,
     pub ref_: attributes::Ref,
 }

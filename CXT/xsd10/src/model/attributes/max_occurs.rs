@@ -1,6 +1,5 @@
-use std::convert::TryFrom;
 use crate::model::simple_types::NonNegativeInteger;
-
+use std::convert::TryFrom;
 
 // maxOccurs
 // Namespace: None
@@ -49,10 +48,6 @@ impl MaxOccurs {
     pub const NAME: &'static str = "maxOccurs";
 }
 
-
-
-
-
 // maxOccurs
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -86,7 +81,12 @@ impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccursBool {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,
-            _ => return Err(format!("MaxOccurs: Invalid attribute value: {}", attr.value()))
+            _ => {
+                return Err(format!(
+                    "MaxOccurs: Invalid attribute value: {}",
+                    attr.value()
+                ))
+            }
         })
     }
 }
@@ -94,7 +94,6 @@ impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccursBool {
 impl MaxOccursBool {
     pub const NAME: &'static str = "maxOccurs";
 }
-
 
 // maxOccurs
 // Namespace: None
@@ -120,7 +119,12 @@ impl TryFrom<roxmltree::Attribute<'_>> for MaxOccursOne {
     fn try_from(attr: roxmltree::Attribute) -> Result<Self, Self::Error> {
         Ok(match attr.value() {
             "1" => Self(1),
-            _ => return Err(format!("MaxOccurs: Invalid attribute value: {}", attr.value()))
+            _ => {
+                return Err(format!(
+                    "MaxOccurs: Invalid attribute value: {}",
+                    attr.value()
+                ))
+            }
         })
     }
 }

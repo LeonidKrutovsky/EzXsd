@@ -10,7 +10,6 @@
 // Used in
 // Anonymous type of element xsd:import Anonymous type of element xsd:include Anonymous type of element xsd:redefine
 
-
 use crate::model::simple_types::AnyUri;
 use xml_utils::*;
 

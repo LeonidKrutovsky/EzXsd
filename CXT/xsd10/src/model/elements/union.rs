@@ -1,5 +1,5 @@
-use crate::model::elements;
 use crate::model::attributes;
+use crate::model::elements;
 use xml_utils::element;
 
 // xsd:union
@@ -39,7 +39,6 @@ use xml_utils::element;
 //       </xsd:restriction>
 //    </xsd:simpleType>
 // </xsd:union>
-
 
 #[element(name = "union")]
 pub struct Union {

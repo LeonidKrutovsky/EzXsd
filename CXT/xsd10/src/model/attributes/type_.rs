@@ -15,9 +15,8 @@
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
 
-
-use xml_utils::*;
 use crate::model::simple_types::QName;
+use xml_utils::*;
 
 #[attribute(name = "type")]
 pub struct Type(pub(crate) QName);

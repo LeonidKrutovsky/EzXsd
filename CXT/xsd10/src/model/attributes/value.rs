@@ -12,10 +12,10 @@
 // Type xsd:noFixedFacet via derivation of xsd:facet (Element xsd:enumeration)
 // Type xsd:facet (Elements xsd:minExclusive, xsd:minInclusive, xsd:maxExclusive, xsd:maxInclusive)
 
-use xml_utils::*;
 use crate::model::simple_types::{AnySimpleType, NonNegativeInteger, PositiveInteger, String_};
-use std::str::FromStr;
 use std::convert::TryFrom;
+use std::str::FromStr;
+use xml_utils::*;
 
 #[derive(Default, Debug)]
 pub struct Value(pub AnySimpleType);
@@ -91,7 +91,7 @@ pub struct PositiveValue(pub PositiveInteger);
 // Used in
 // Anonymous type of element xsd:whiteSpace
 #[derive(Debug, PartialEq)]
-pub enum WhiteSpaceValue{
+pub enum WhiteSpaceValue {
     Preserve,
     Replace,
     Collapse,

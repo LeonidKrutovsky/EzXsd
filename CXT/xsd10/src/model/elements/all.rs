@@ -1,9 +1,8 @@
+use crate::model::attributes;
 use crate::model::complex_types::all_type;
 use crate::model::elements;
-use crate::model::attributes;
 
 use xml_utils::element;
-
 
 // xsd:all
 // An "all" group that allows elements to appear in any order. Unlike other group types, does not allow other groups as children, only elements. This declaration is for an "all" group that is a child of xsd:group; its type disallows minOccurs and maxOccurs

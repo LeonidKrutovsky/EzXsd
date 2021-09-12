@@ -1,6 +1,5 @@
-use std::str::FromStr;
 use std::fmt;
-
+use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct NotEmptyXsdList<I>(pub Vec<I>);
@@ -45,12 +44,16 @@ impl<I: fmt::Display> fmt::Display for XsdList<I> {
         if self.0.len() == 1 {
             write!(f, "{}", self.0[0])
         } else {
-            write!(f, "{}", self.0.iter().fold(String::new(), |a, b| format!("{} {}", a, b)))
+            write!(
+                f,
+                "{}",
+                self.0
+                    .iter()
+                    .fold(String::new(), |a, b| format!("{} {}", a, b))
+            )
         }
-
     }
 }
-
 
 impl<I: AsRef<str>> XsdList<I> {
     pub fn text(&self) -> String {

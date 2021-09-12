@@ -19,7 +19,6 @@
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
 
-
 use crate::model::simple_types::NCName;
 
 use xml_utils::*;

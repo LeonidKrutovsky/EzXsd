@@ -16,4 +16,3 @@ use xml_utils::element;
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[element(name = "maxExclusive")]
 pub struct MaxExclusive(pub Facet);
-

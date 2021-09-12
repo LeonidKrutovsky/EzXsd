@@ -15,13 +15,12 @@
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 //
 
-use crate::model::simple_types::{String_, Boolean};
+use crate::model::simple_types::{Boolean, String_};
 
 use xml_utils::*;
 
 #[attribute(name = "fixed")]
 pub struct Fixed(pub String_);
-
 
 // fixed
 // Attribute information

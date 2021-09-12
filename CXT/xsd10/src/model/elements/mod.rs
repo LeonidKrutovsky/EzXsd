@@ -41,13 +41,16 @@ pub mod union;
 pub mod unique;
 pub mod white_space;
 
-use crate::model::simple_types::QName;
 use crate::model::attributes::AnyAttributes;
+use crate::model::simple_types::QName;
 use roxmltree::Node;
 use std::convert::{TryFrom, TryInto};
 
+pub use all::All;
 pub use annotation::Annotation;
 pub use app_info::AppInfo;
+pub use choice::Choice;
+pub use choice::SimpleChoice;
 pub use complex_content::ComplexContent;
 pub use documentation::Documentation;
 pub use element::Element;
@@ -60,15 +63,11 @@ pub use redefine::Redefine;
 pub use restriction::ComplexRestriction;
 pub use restriction::SimpleRestriction;
 pub use selector::Selector;
-pub use simple_type::LocalSimpleType;
-pub use all::All;
-pub use choice::Choice;
-pub use choice::SimpleChoice;
 pub use sequence::Sequence;
 pub use sequence::SimpleSequence;
 pub use simple_content::SimpleContent;
+pub use simple_type::LocalSimpleType;
 pub use simple_type::TopLevelSimpleType;
-
 
 #[derive(Debug, PartialEq)]
 pub enum ElementType {
@@ -185,16 +184,17 @@ impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
         } else {
             None
         };
-        Ok(
-            Self {
-            name: QName{
-                prefix,
-                name,
-            },
-            attributes: AnyAttributes(value.attributes().iter().map(|a| a.try_into()).collect::<Result<Vec<_>, _>>()?),
-            text: value.text().map(String::from)
-        }
-        )
+        Ok(Self {
+            name: QName { prefix, name },
+            attributes: AnyAttributes(
+                value
+                    .attributes()
+                    .iter()
+                    .map(|a| a.try_into())
+                    .collect::<Result<Vec<_>, _>>()?,
+            ),
+            text: value.text().map(String::from),
+        })
     }
 }
 
@@ -211,16 +211,12 @@ impl AnyElements {
     }
 }
 
-impl TryFrom<roxmltree::Children<'_, '_>> for AnyElements{
+impl TryFrom<roxmltree::Children<'_, '_>> for AnyElements {
     type Error = String;
 
     fn try_from(value: roxmltree::Children<'_, '_>) -> Result<Self, Self::Error> {
-        Ok(
-            AnyElements(
-                value
-                    .map(|n| n.try_into())
-                    .collect::<Result<Vec<_>, _>>()?
-            )
-        )
+        Ok(AnyElements(
+            value.map(|n| n.try_into()).collect::<Result<Vec<_>, _>>()?,
+        ))
     }
 }

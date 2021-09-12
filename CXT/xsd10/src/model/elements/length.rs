@@ -1,7 +1,6 @@
 use crate::model::complex_types::num_facet::NumFacet;
 use xml_utils::element;
 
-
 // xsd:length
 // See http://www.w3.org/TR/xmlschema-2/#element-length.
 // Element information

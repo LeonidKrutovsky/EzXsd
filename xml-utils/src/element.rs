@@ -30,7 +30,6 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     );
     output.extend(output2);
 
-
     if struct_name == "Redefine" {
         let mut sf = StructFields::default();
         if let Fields::Named(ref fields_named) = fields {
@@ -42,11 +41,8 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             assert_eq!(sf.attributes.len(), 3);
             assert_eq!(sf.elements.len(), 1);
             assert_eq!(sf.groups.len(), 1);
-
         }
-
     }
 
     output.into()
 }
-

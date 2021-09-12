@@ -42,7 +42,6 @@ impl QName {
     pub fn name(&self) -> &str {
         self.name.as_ref()
     }
-
 }
 
 impl FromStr for QName {

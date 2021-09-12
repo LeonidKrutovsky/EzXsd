@@ -20,4 +20,3 @@ use xml_utils::*;
 
 #[attribute(name = "attributeFormDefault")]
 pub struct AttributeFormDefault(pub FormChoice);
-

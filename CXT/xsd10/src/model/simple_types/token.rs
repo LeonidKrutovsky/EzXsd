@@ -63,10 +63,10 @@ mod test {
         fn eq(left: &str, right: &str) {
             assert_eq!(left.parse::<Token>().unwrap().as_ref(), right);
         }
-//         let two_lines_str = r"
-// This
-// is on two lines.
-//         ";
+        //         let two_lines_str = r"
+        // This
+        // is on two lines.
+        //         ";
 
         eq("This is a string!", "This is a string!");
         eq("Édition française.", "Édition française.");

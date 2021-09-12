@@ -28,9 +28,6 @@ use xml_utils::attribute;
 #[attribute(name = "namespace")]
 pub struct Namespace(pub NamespaceList);
 
-
-
-
 // namespace
 // Namespace: None
 // Schema documentation: xmlschema.xsd

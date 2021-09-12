@@ -1,6 +1,6 @@
+use crate::model::attributes;
 use crate::model::elements;
 use crate::model::groups::schema_top::SchemaTop;
-use crate::model::attributes;
 use xml_utils::element;
 
 // xsd:schema

@@ -17,10 +17,10 @@
 use std::convert::TryFrom;
 
 #[derive(Debug, PartialEq)]
-pub enum Use{
+pub enum Use {
     Optional,
     Prohibited,
-    Required
+    Required,
 }
 
 impl TryFrom<&roxmltree::Attribute<'_>> for Use {
@@ -31,7 +31,7 @@ impl TryFrom<&roxmltree::Attribute<'_>> for Use {
             "prohibited" => Self::Prohibited,
             "optional" => Self::Optional,
             "required" => Self::Required,
-            _ => return Err(format!("Use: invalid attribute value: {}", attr.value()))
+            _ => return Err(format!("Use: invalid attribute value: {}", attr.value())),
         })
     }
 }

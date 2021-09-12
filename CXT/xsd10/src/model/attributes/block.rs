@@ -20,13 +20,12 @@
 // Used in
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 
-use crate::model::simple_types::{DerivationSet, DerivationSubset, BlockSet};
+use crate::model::simple_types::{BlockSet, DerivationSet, DerivationSubset};
 
 use xml_utils::*;
 
 #[attribute(name = "block")]
 pub struct DerivationBlock(pub DerivationSet);
-
 
 impl DerivationBlock {
     pub fn is_all(&self) -> bool {
@@ -50,7 +49,6 @@ impl DerivationBlock {
         }
     }
 }
-
 
 // block
 // Attribute information

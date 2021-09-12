@@ -17,7 +17,6 @@ use xml_utils::element;
 #[element(name = "element")]
 pub struct TopLevelElement(pub top_level_element::TopLevelElement);
 
-
 // xsd:element
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
