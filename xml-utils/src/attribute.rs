@@ -3,6 +3,8 @@ use proc_macro::TokenStream;
 use quote::quote;
 use crate::named_argument::NamedArgument;
 
+
+
 pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let attr_name = arg.value;
     let struct_name = &item.ident;

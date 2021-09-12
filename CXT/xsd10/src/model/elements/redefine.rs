@@ -35,3 +35,14 @@ pub struct Redefine {
     pub schema_location: attributes::SchemaLocation,
     pub id: Option<attributes::Id>,
 }
+
+#[cfg(test)]
+mod test {
+    use super::Redefine;
+    #[test]
+    pub fn test_name() {
+        assert_eq!(Redefine::NAME, "redefine");
+
+        assert!(Redefine::test().is_none());
+    }
+}

@@ -1,62 +1,47 @@
-use syn::{ItemStruct, Fields, Type, PathArguments, GenericArgument};
 use proc_macro::TokenStream;
+use std::ops::Index;
+
+use proc_macro2::Ident;
 use quote::quote;
+use syn::{Fields, GenericArgument, ItemStruct, Path, PathArguments, Type};
+
+use crate::fields::{StructField, StructFields};
 use crate::named_argument::NamedArgument;
 
 pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let element_name = arg.value;
     let struct_name = &item.ident;
     let fields = &item.fields;
-    let output = quote! (
+
+    let mut output = quote! (
         #[derive(Debug, Default)]
         #item
 
         impl #struct_name {
             pub const NAME: &'static str = #element_name;
         }
-
-
-
     );
-    if struct_name == "Redefine" {
-        if let Fields::Named(ref hui) = fields {
-            let named = &hui.named;
-            for field in named {
-                println!("{:?}", field.ident.as_ref().unwrap());
-
-                if let Type::Path(ty) = &field.ty {
-                    let path = &ty.path;
-                    let segment = path.segments.first().unwrap();
-                    if &segment.ident == "attributes" {
-                        println!("Attribute: {:#?}", &path.segments.last().unwrap().ident);
-                    }
-                    else if  &segment.ident == "elements" {
-                        println!("Element: {:#?}", &path.segments.last().unwrap().ident);
-                    }
-                    else if  &segment.ident == "Option" {
-                        println!("Option Args: {:#?}", segment);
-                    }
-                    else if  &segment.ident == "Vec" {
-                        if let PathArguments::AngleBracketed(zlp) = &segment.arguments {
-                            if let GenericArgument::Type(ty) = zlp.args.first().unwrap() {
-                                if let Type::Path(type_path) = ty {
-                                    let path = &type_path.path;
-                                    println!("Vector Args: {:#?}", path);
-                                }
-
-                            } else {
-                                unreachable!()
-                            }
-                        }
-
-                    }
-                    for segment in &path.segments {
-
-
-                    }
-                }
-                println!("\n\n\n ************ \n\n\n ");
+    let output2 = quote! (
+        impl #struct_name {
+            pub fn test() -> Option<#struct_name> {
+                None
             }
+        }
+    );
+    output.extend(output2);
+
+
+    if struct_name == "Redefine" {
+        let mut sf = StructFields::default();
+        if let Fields::Named(ref fields_named) = fields {
+            for field in &fields_named.named {
+                sf.add(field);
+            }
+            println!("\n\n\n ************ \n\n\n ");
+            println!("{:#?}", sf);
+            assert_eq!(sf.attributes.len(), 3);
+            assert_eq!(sf.elements.len(), 1);
+            assert_eq!(sf.groups.len(), 1);
 
         }
 
@@ -64,3 +49,4 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
 
     output.into()
 }
+
