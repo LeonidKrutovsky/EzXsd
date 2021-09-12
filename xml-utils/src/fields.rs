@@ -9,13 +9,13 @@ pub enum StructField{
 }
 
 impl StructField {
-    pub fn new(path: &Path, ident: &Ident) -> Self {
-        if ident == "Option" {
-            Self::Option(path.segments[1].ident.clone())
-        } else if ident == "Vec" {
-            Self::Vec(path.segments[1].ident.clone())
+    pub fn new(first_ident: &Ident, second_ident: &Ident) -> Self {
+        if second_ident == "Option" {
+            Self::Option(first_ident.clone())
+        } else if second_ident == "Vec" {
+            Self::Vec(first_ident.clone())
         } else {
-            Self::Raw(path.segments[1].ident.clone())
+            Self::Raw(first_ident.clone())
         }
     }
 }
@@ -41,6 +41,7 @@ pub struct StructFields{
     pub attributes: Vec<StructField>,
     pub elements: Vec<StructField>,
     pub groups: Vec<StructField>,
+    pub texts: Vec<StructField>
 }
 
 impl StructFields {
@@ -62,12 +63,15 @@ impl StructFields {
         }
     }
     fn push(&mut self, path: &Path, ident: &Ident) {
-        if &path.segments[0].ident == "attributes" {
-            self.attributes.push(StructField::new(path, ident))
-        } else if &path.segments[0].ident == "elements" {
-            self.elements.push(StructField::new(path, ident))
-        } else if &path.segments[0].ident == "groups" {
-            self.groups.push(StructField::new(path, ident))
+        let first_ident = &path.segments[0].ident;
+        if first_ident == "attributes" {
+            self.attributes.push(StructField::new(&path.segments[1].ident, ident))
+        } else if first_ident == "elements" {
+            self.elements.push(StructField::new(&path.segments[1].ident, ident))
+        } else if first_ident == "groups" {
+            self.groups.push(StructField::new(&path.segments[1].ident, ident))
+        } else if first_ident == "String" {
+            self.texts.push(StructField::new(first_ident, ident))
         }
     }
 }
