@@ -1,11 +1,9 @@
 use proc_macro::TokenStream;
-use std::ops::Index;
 
-use proc_macro2::Ident;
 use quote::quote;
-use syn::{Fields, GenericArgument, ItemStruct, Path, PathArguments, Type};
+use syn::{Fields, ItemStruct};
 
-use crate::fields::{StructField, StructFields};
+use crate::fields::StructFields;
 use crate::named_argument::NamedArgument;
 
 pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
@@ -13,14 +11,24 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let struct_name = &item.ident;
     let fields = &item.fields;
 
+    let output2 = quote! (
+        pub const NAME2: &'static str = #element_name;
+    );
+
     let mut output = quote! (
         #[derive(Debug, Default)]
         #item
 
         impl #struct_name {
+            #output2
             pub const NAME: &'static str = #element_name;
+
+            pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+                Err("empty".to_string())
+            }
         }
     );
+
     let output2 = quote! (
         impl #struct_name {
             pub fn test() -> Option<#struct_name> {
@@ -38,7 +46,8 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             }
             println!("\n\n\n ************ \n\n\n ");
             println!("{:#?}", sf);
-            assert_eq!(sf.attributes.len(), 3);
+            assert_eq!(sf.attributes.len(), 2);
+            assert!(sf.any_attributes_allowed);
             assert_eq!(sf.elements.len(), 1);
             assert_eq!(sf.groups.len(), 1);
         }

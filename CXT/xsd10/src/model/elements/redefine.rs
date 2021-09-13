@@ -42,6 +42,7 @@ mod test {
     #[test]
     pub fn test_name() {
         assert_eq!(Redefine::NAME, "redefine");
+        assert_eq!(Redefine::NAME2, "redefine");
 
         assert!(Redefine::test().is_none());
     }
