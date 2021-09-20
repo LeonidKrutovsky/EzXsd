@@ -40,3 +40,15 @@ impl Default for ComplexTypeModel {
         Self::SimpleContent(SimpleContent::default())
     }
 }
+
+impl ComplexTypeModel {
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        match node.tag_name().name() {
+            SimpleContent::NAME => Ok(Self::SimpleContent(SimpleContent::parse(node)?)),
+            ComplexContent::NAME => Ok(Self::ComplexContent(ComplexContent::parse(node)?)),
+            Group::NAME => Ok(Self::Group(Box::new(Group::parse(node)?))),
+            AttributeGroup::NAME => Ok(Self::AttributeGroup(Box::new(AttributeGroup::parse(node)?))),
+            _ => Err(String::default())
+        }
+    }
+}

@@ -3,6 +3,7 @@ mod complex_type;
 mod element;
 mod fields;
 mod named_argument;
+mod groups;
 
 extern crate proc_macro;
 extern crate syn;
@@ -13,6 +14,7 @@ use crate::attribute::xsd_attribute;
 use crate::complex_type::xsd_complex_type;
 use crate::element::xsd_element;
 use crate::named_argument::NamedArgument;
+use crate::groups::xsd_group;
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
@@ -28,6 +30,14 @@ pub fn element(_metadata: TokenStream, input: TokenStream) -> TokenStream {
     let item = parse_macro_input!(input as syn::ItemStruct);
 
     xsd_element(args, item)
+}
+
+#[proc_macro_attribute]
+pub fn group(_metadata: TokenStream, input: TokenStream) -> TokenStream {
+    let args = parse_macro_input!(_metadata as NamedArgument);
+    let item = parse_macro_input!(input as syn::ItemStruct);
+
+    xsd_group(args, item)
 }
 
 #[proc_macro_attribute]
