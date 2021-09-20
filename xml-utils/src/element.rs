@@ -20,18 +20,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             pub const NAME: &'static str = #element_name;
         }
     );
-    let output2 = quote! (
-        impl #struct_name {
-            pub fn test() -> Option<#struct_name> {
-                None
-            }
 
-
-        }
-
-
-    );
-    output.extend(output2);
 
     if struct_name == "Redefine" {
         let mut sf = StructFields::default();
@@ -50,8 +39,50 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             let id = sf.attributes[2].full_type().to_string();
             assert_eq!(id, "Option < attributes :: Id >");
         }
-        println!("{:#?}", sf);
+        //println!("{:#?}", sf);
+
+        let mut fields_define = quote! {};
+        let mut fields_match = quote! {};
+        for ref field_type in sf.elements {
+            fields_define.extend(field_type.define());
+            fields_match.extend(field_type.match_row());
+        }
+
+        let out = quote! (
+            impl #struct_name {
+                pub fn parse2(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+                    #fields_define
+                    for ch in node.children().filter(|n| n.is_element()) {
+                        match ch.tag_name().name() {
+                            #fields_match
+                        }
+                    }
+                    Err(String::new())
+                }
+            }
+        );
+
+        println!("{:#?}", out.to_string());
+
     }
+
+
+
+    let output2 = quote! (
+        impl #struct_name {
+            pub fn test() -> Option<#struct_name> {
+                None
+            }
+
+            pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+                Err(String::new())
+            }
+
+
+        }
+    );
+    output.extend(output2);
 
     output.into()
 }
+

@@ -10,13 +10,6 @@ pub struct Field {
 }
 
 impl Field {
-    pub fn get_define(&self) -> TokenStream {
-        let name = &self.name;
-        quote!(
-            let #name = None;
-        )
-    }
-
     pub fn full_type(&self) -> TokenStream {
         let type_name = &self.type_name;
         if let Some(type_scope) = &self.type_scope {
@@ -63,6 +56,30 @@ impl FieldType {
             FieldType::Vec(_) =>  quote! (Vec<#ty>),
             FieldType::Raw(_) =>  ty,
         }
+    }
+
+    pub fn field(&self) -> &Field {
+        match self {
+            FieldType::Option(ref t) => t,
+            FieldType::Vec(ref t) => t,
+            FieldType::Raw(ref t) => t,
+        }
+    }
+
+    pub fn define(&self) -> TokenStream {
+        let name = &self.field().name;
+        quote! (
+            let mut #name = None;
+        )
+    }
+
+    pub fn match_row(&self) -> TokenStream {
+        let name = &self.field().name;
+        let ty = self.full_type();
+        let field_type = self.field().full_type();
+        quote! (
+            #field_type::NAME => {#name = Some(#field_type::parse(ch)?)},
+        )
     }
 }
 
