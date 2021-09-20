@@ -1,21 +1,67 @@
-use proc_macro2::Ident;
-use syn::{Field, GenericArgument, Path, PathArguments, Type};
+use proc_macro2::{Ident, TokenStream};
+use syn::{GenericArgument, Path, PathArguments, Type};
+use quote::quote;
 
 #[derive(Debug)]
-pub enum StructField {
-    Option(Ident),
-    Vec(Ident),
-    Raw(Ident),
+pub struct Field {
+    name: Ident,
+    type_name: Ident,
+    type_scope: Option<Ident>,
 }
 
-impl StructField {
-    pub fn new(first_ident: &Ident, second_ident: &Ident) -> Self {
-        if second_ident == "Option" {
-            Self::Option(first_ident.clone())
-        } else if second_ident == "Vec" {
-            Self::Vec(first_ident.clone())
+impl Field {
+    pub fn get_define(&self) -> TokenStream {
+        let name = &self.name;
+        quote!(
+            let #name = None;
+        )
+    }
+
+    pub fn full_type(&self) -> TokenStream {
+        let type_name = &self.type_name;
+        if let Some(type_scope) = &self.type_scope {
+            quote!(
+                #type_scope::#type_name
+            )
         } else {
-            Self::Raw(first_ident.clone())
+            quote!(
+                #type_name
+            )
+        }
+
+    }
+}
+
+
+#[derive(Debug)]
+pub enum FieldType {
+    Option(Field),
+    Vec(Field),
+    Raw(Field),
+}
+
+impl FieldType {
+    pub fn new(field: Field, generic_type: &Ident) -> Self {
+        if generic_type == "Option" {
+            Self::Option(field)
+        } else if generic_type == "Vec" {
+            Self::Vec(field)
+        } else {
+            Self::Raw(field)
+        }
+    }
+
+    pub fn full_type(&self) -> TokenStream {
+        let ty = match self {
+            FieldType::Option(ref t) => t,
+            FieldType::Vec(ref t) => t,
+            FieldType::Raw(ref t) => t,
+        }.full_type();
+
+        match self {
+            FieldType::Option(_) => quote! (Option<#ty>),
+            FieldType::Vec(_) =>  quote! (Vec<#ty>),
+            FieldType::Raw(_) =>  ty,
         }
     }
 }
@@ -38,42 +84,52 @@ fn unpack_generic_argument(arguments: &PathArguments) -> Option<&Path> {
 
 #[derive(Default, Debug)]
 pub struct StructFields {
-    pub attributes: Vec<StructField>,
-    pub elements: Vec<StructField>,
-    pub groups: Vec<StructField>,
-    pub texts: Vec<StructField>,
+    pub attributes: Vec<FieldType>,
+    pub elements: Vec<FieldType>,
+    pub groups: Vec<FieldType>,
+    pub texts: Vec<FieldType>,
 }
 
 impl StructFields {
-    pub fn add(&mut self, field: &Field) {
+    pub fn add(&mut self, field: &syn::Field) {
         if let Type::Path(ty) = &field.ty {
-            let path = &ty.path;
-            let segment = path.segments.first().expect("Empty segments in Field");
+            let type_path = &ty.path;
+            let name = field.ident.as_ref().unwrap();
+            let segment = type_path.segments.first().expect("Empty segments in Field");
 
             if &segment.ident == "Option" {
                 let path = unpack_generic_argument(&segment.arguments).unwrap();
-                self.push(path, &segment.ident);
+                self.push(path, &segment.ident, name);
             } else if &segment.ident == "Vec" {
                 let path = unpack_generic_argument(&segment.arguments).unwrap();
-                self.push(path, &segment.ident);
+                self.push(path, &segment.ident, name);
             } else {
-                self.push(path, &segment.ident);
+                self.push(type_path, &segment.ident, name);
             }
         }
     }
-    fn push(&mut self, path: &Path, ident: &Ident) {
-        let first_ident = &path.segments[0].ident;
-        if first_ident == "attributes" {
-            self.attributes
-                .push(StructField::new(&path.segments[1].ident, ident))
-        } else if first_ident == "elements" {
-            self.elements
-                .push(StructField::new(&path.segments[1].ident, ident))
-        } else if first_ident == "groups" {
-            self.groups
-                .push(StructField::new(&path.segments[1].ident, ident))
-        } else if first_ident == "String" {
-            self.texts.push(StructField::new(first_ident, ident))
+    fn push(&mut self, ty: &Path, type_modifier: &Ident, name: &Ident) {
+        if &ty.segments.len() > &1 {
+            let type_scope = &ty.segments[0].ident;
+            let field = Field{
+                name: name.clone(),
+                type_name: ty.segments[1].ident.clone(),
+                type_scope: Some(type_scope.clone())
+            };
+            if type_scope == "attributes" {
+                self.attributes.push(FieldType::new(field, type_modifier))
+            } else if type_scope == "elements" {
+                self.elements.push(FieldType::new(field, type_modifier))
+            } else if type_scope == "groups" {
+                self.groups.push(FieldType::new(field, type_modifier))
+            }
+        } else {
+            let field = Field{
+                name: name.clone(),
+                type_name: ty.segments[0].ident.clone(),
+                type_scope: None
+            };
+            self.texts.push(FieldType::new(field, type_modifier))
         }
     }
 }

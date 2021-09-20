@@ -36,6 +36,10 @@ pub struct Redefine {
     pub id: Option<attributes::Id>,
 }
 
+// impl Redefine {
+//     pub fn test2() {}
+// }
+
 #[cfg(test)]
 mod test {
     use super::Redefine;
@@ -44,5 +48,6 @@ mod test {
         assert_eq!(Redefine::NAME, "redefine");
 
         assert!(Redefine::test().is_none());
+        //assert_eq!(Redefine::test2(), ());
     }
 }
