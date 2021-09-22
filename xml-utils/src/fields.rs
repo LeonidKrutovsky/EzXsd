@@ -10,6 +10,17 @@ pub struct Field {
 }
 
 impl Field {
+    pub fn new(
+        name: &Ident,
+        type_name: &Ident,
+        type_scope: Option<&Ident>,
+    ) -> Self {
+        Self{
+            name: name.clone(),
+            type_name: type_name.clone(),
+            type_scope: type_scope.map(|t| t.clone())
+        }
+    }
     pub fn full_type(&self) -> TokenStream {
         let type_name = &self.type_name;
         if let Some(type_scope) = &self.type_scope {
@@ -128,11 +139,7 @@ impl StructFields {
     fn push(&mut self, ty: &Path, type_modifier: &Ident, name: &Ident) {
         if &ty.segments.len() > &1 {
             let type_scope = &ty.segments[0].ident;
-            let field = Field{
-                name: name.clone(),
-                type_name: ty.segments[1].ident.clone(),
-                type_scope: Some(type_scope.clone())
-            };
+            let field = Field::new(name, &ty.segments[1].ident, Some(type_scope));
             if type_scope == "attributes" {
                 self.attributes.push(FieldType::new(field, type_modifier))
             } else if type_scope == "elements" {

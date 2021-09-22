@@ -55,6 +55,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
                     for ch in node.children().filter(|n| n.is_element()) {
                         match ch.tag_name().name() {
                             #fields_match
+                            _ => {}
                         }
                     }
                     Err(String::new())
@@ -63,7 +64,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
         );
 
         println!("{:#?}", out.to_string());
-
+        output.extend(out);
     }
 
 
