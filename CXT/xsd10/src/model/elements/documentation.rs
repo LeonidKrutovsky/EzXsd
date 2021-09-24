@@ -1,7 +1,5 @@
 use crate::model::attributes;
 use crate::model::elements;
-use roxmltree::Node;
-use std::convert::{TryFrom, TryInto};
 use xml_utils::element;
 
 // xsd:documentation
@@ -26,43 +24,10 @@ use xml_utils::element;
 #[element(name = "documentation")]
 pub struct Documentation {
     pub text: Option<String>,
-    pub elements: elements::AnyElements,
+    pub elements: Vec<elements::RawElement>,
     pub source: Option<attributes::Source>,
     pub lang: Option<attributes::Language>,
-    pub attributes: attributes::AnyAttributes,
-}
-
-impl TryFrom<roxmltree::Node<'_, '_>> for Documentation {
-    type Error = String;
-
-    fn try_from(node: Node<'_, '_>) -> Result<Self, Self::Error> {
-        let text = node.text().map(|s| s.to_string());
-        let mut elements = elements::AnyElements::default();
-        for ch in node.children().filter(|n| n.is_element()) {
-            match ch.tag_name().name() {
-                _ => elements.push(ch.try_into()?),
-            }
-        }
-        let mut source: Option<attributes::Source> = None;
-        let mut lang: Option<attributes::Language> = None;
-        let mut attributes = attributes::AnyAttributes::default();
-
-        for attribute in node.attributes() {
-            match attribute.name() {
-                attributes::Source::NAME => source = Some(attribute.try_into()?),
-                attributes::Language::NAME => lang = Some(attribute.try_into()?),
-                _ => attributes.push(attribute.try_into()?),
-            };
-        }
-
-        Ok(Self {
-            text,
-            elements,
-            source,
-            lang,
-            attributes,
-        })
-    }
+    pub attributes: Vec<attributes::RawAttribute>,
 }
 
 #[cfg(test)]
