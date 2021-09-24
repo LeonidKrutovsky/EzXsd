@@ -174,6 +174,28 @@ pub struct RawElement {
     text: Option<String>,
 }
 
+impl RawElement {
+    fn parse(value: Node<'_, '_>) -> Result<Self, String> {
+        let name = value.tag_name().name().parse()?;
+        let prefix = if let Some(p) = value.tag_name().namespace() {
+            Some(p.parse()?)
+        } else {
+            None
+        };
+        Ok(Self {
+            name: QName { prefix, name },
+            attributes: AnyAttributes(
+                value
+                    .attributes()
+                    .iter()
+                    .map(|a| a.try_into())
+                    .collect::<Result<Vec<_>, _>>()?,
+            ),
+            text: value.text().map(String::from),
+        })
+    }
+}
+
 impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
     type Error = String;
 

@@ -103,6 +103,20 @@ impl RawAttribute {
     pub fn value(&self) -> &str {
         self.value.as_str()
     }
+
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
+        let mut ns = None;
+        if let Some(namespace) = attr.namespace() {
+            ns = Some(namespace.parse()?)
+        }
+        Ok(Self {
+            name: QName {
+                prefix: ns,
+                name: attr.name().parse()?,
+            },
+            value: attr.value().to_string(),
+        })
+    }
 }
 
 impl TryFrom<&roxmltree::Attribute<'_>> for RawAttribute {
