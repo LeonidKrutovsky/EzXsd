@@ -33,19 +33,15 @@ impl Default for MaxOccurs {
     }
 }
 
-impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccurs {
-    type Error = String;
+impl MaxOccurs {
+    pub const NAME: &'static str = "maxOccurs";
 
-    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
         Ok(match attr.value() {
             "unbounded" => Self::Unbounded,
             _ => Self::Bounded(attr.value().parse()?),
         })
     }
-}
-
-impl MaxOccurs {
-    pub const NAME: &'static str = "maxOccurs";
 }
 
 // maxOccurs
@@ -93,6 +89,19 @@ impl TryFrom<&roxmltree::Attribute<'_>> for MaxOccursBool {
 
 impl MaxOccursBool {
     pub const NAME: &'static str = "maxOccurs";
+
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
+        Ok(match attr.value() {
+            "0" => Self::Zero,
+            "1" => Self::One,
+            _ => {
+                return Err(format!(
+                    "MaxOccurs: Invalid attribute value: {}",
+                    attr.value()
+                ))
+            }
+        })
+    }
 }
 
 // maxOccurs
@@ -113,10 +122,10 @@ impl MaxOccursBool {
 #[derive(Debug, PartialEq)]
 pub struct MaxOccursOne(u8);
 
-impl TryFrom<roxmltree::Attribute<'_>> for MaxOccursOne {
-    type Error = String;
+impl MaxOccursOne {
+    pub const NAME: &'static str = "maxOccurs";
 
-    fn try_from(attr: roxmltree::Attribute) -> Result<Self, Self::Error> {
+    pub fn parse(attr: roxmltree::Attribute) -> Result<Self, String> {
         Ok(match attr.value() {
             "1" => Self(1),
             _ => {
@@ -127,10 +136,6 @@ impl TryFrom<roxmltree::Attribute<'_>> for MaxOccursOne {
             }
         })
     }
-}
-
-impl MaxOccursOne {
-    pub const NAME: &'static str = "maxOccurs";
 }
 
 impl Default for MaxOccursOne {

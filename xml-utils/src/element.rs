@@ -70,19 +70,17 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
         output.extend(redefine)
     }
 
-    if struct_name == "Documentation" {
+    let tests = vec![
+        "Documentation",
+        "AppInfo",
+        "Annotation",
+        "Any",
+        "Any",
+    ];
+
+    if tests.contains(&struct_name.to_string().as_str()){
         let documentation = parse_struct(&sf, struct_name);
         output.extend(documentation)
-    }
-
-    if struct_name == "AppInfo" {
-        let app_info = parse_struct(&sf, struct_name);
-        output.extend(app_info)
-    }
-
-    if struct_name == "Annotation" {
-        let app_info = parse_struct(&sf, struct_name);
-        output.extend(app_info)
     }
 
     let output2 = quote! (

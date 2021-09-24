@@ -28,7 +28,7 @@ use xml_utils::element;
 #[element(name = "any")]
 pub struct Any {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,
