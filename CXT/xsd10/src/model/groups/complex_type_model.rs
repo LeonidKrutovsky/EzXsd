@@ -42,7 +42,7 @@ impl Default for ComplexTypeModel {
 }
 
 impl ComplexTypeModel {
-    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+    pub fn parse(_node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
         Err(String::default())
     }
 }
