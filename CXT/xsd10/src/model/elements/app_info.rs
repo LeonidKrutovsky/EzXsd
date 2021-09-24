@@ -25,5 +25,15 @@ pub struct AppInfo {
     pub text: Option<String>,
     pub elements: Vec<elements::RawElement>,
     pub source: Option<attributes::Source>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_name() {
+        assert_eq!(AppInfo::NAME, "appinfo");
+    }
 }
