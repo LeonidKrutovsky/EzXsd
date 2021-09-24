@@ -31,35 +31,17 @@ use xml_utils::element;
 pub struct Redefine {
     pub annotations: Vec<elements::Annotation>,
     pub content: Vec<groups::Redefinable>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub schema_location: attributes::SchemaLocation,
     pub id: Option<attributes::Id>,
 }
 
-impl Redefine {
-    pub fn parse3(node: roxmltree::Node< '_, '_ >) -> Result <Self,String> {
-        let mut annotations = None ;
-        for ch in node.children().filter(| n | n.is_element()) {
-            match ch.tag_name().name() {
-                elements::Annotation::NAME =>{
-                    annotations = Some(elements :: Annotation :: parse(ch)?)
-                },
-                _ => {}
-            }
-        }
-        Err(String :: new())
-    }
-}
-
-
 #[cfg(test)]
 mod test {
     use super::Redefine;
+
     #[test]
     pub fn test_name() {
         assert_eq!(Redefine::NAME, "redefine");
-
-        assert!(Redefine::test().is_none());
-        //assert_eq!(Redefine::test2(), ());
     }
 }
