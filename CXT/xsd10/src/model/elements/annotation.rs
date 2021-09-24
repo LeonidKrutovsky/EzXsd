@@ -70,6 +70,16 @@ use xml_utils::element;
 pub struct Annotation {
     pub app_infos: Vec<elements::AppInfo>,
     pub documentations: Vec<elements::Documentation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_name() {
+        assert_eq!(Annotation::NAME, "annotation");
+    }
 }
