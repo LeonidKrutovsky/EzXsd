@@ -15,6 +15,7 @@ pub use complex_type_model::ComplexTypeModel;
 pub use element_model::ElementModel;
 pub use nested_particle::NestedParticle;
 pub use redefinable::Redefinable;
+pub use schema_top::SchemaTop;
 pub use simple_derivation::SimpleDerivation;
 pub use simple_restriction_model::SimpleRestrictionModel;
 pub use type_def_particle::TypeDefParticle;

@@ -1,6 +1,6 @@
 use crate::model::attributes;
 use crate::model::elements;
-use crate::model::groups::schema_top::SchemaTop;
+use crate::model::groups;
 use xml_utils::element;
 
 // xsd:schema
@@ -50,13 +50,13 @@ use xml_utils::element;
 // key	attributeGroup 	    xs:attributeGroup	                @name
 // key	notation	        xs:notation	                        @name
 // key	identityConstraint	.//xs:key|.//xs:unique|.//xs:keyref	@name
-#[element(name = "schema")]
+//#[element(name = "schema")]
 pub struct Schema {
     pub includes: Vec<elements::Include>,
     pub imports: Vec<elements::Import>,
     pub redefines: Vec<elements::Redefine>,
     pub annotations: Vec<elements::Annotation>,
-    pub content: Vec<(SchemaTop, Vec<elements::Annotation>)>,
+    pub content: Vec<(groups::SchemaTop, Vec<elements::Annotation>)>,
     pub attributes: attributes::AnyAttributes,
     pub target_namespace: Option<attributes::TargetNamespace>,
     pub version: Option<attributes::Version>,

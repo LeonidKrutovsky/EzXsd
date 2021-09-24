@@ -74,7 +74,14 @@ impl StructFields {
         let mut result = map_fields(&self.elements);
         result.extend(map_fields(&self.groups));
         result.extend(map_fields(&self.attributes));
-        result.extend(map_fields(&self.texts));
+
+        result.extend(self.texts.iter().map(Field::define_text_line).fold(
+            quote!(),
+            |mut acc, x| {
+                acc.extend(x);
+                acc
+            },
+        ));
 
         if let Some(any_elements) = &self.any_elements {
             result.extend(any_elements.define_line())

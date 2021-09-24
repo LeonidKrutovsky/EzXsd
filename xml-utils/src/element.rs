@@ -16,15 +16,7 @@ fn assert_redefine(sf: &StructFields) {
     assert_eq!(id, "attributes :: Id");
 }
 
-fn parse_redefine(fields: &Fields, struct_name: &Ident) -> TokenStream {
-    let mut sf = StructFields::default();
-    if let Fields::Named(ref fields_named) = fields {
-        for field in &fields_named.named {
-            sf.add(field);
-        }
-    }
-    assert_redefine(&sf);
-
+fn parse_struct(sf: &StructFields, struct_name: &Ident) -> TokenStream {
     let fields_define = sf.define_fields();
     let fields_match = sf.match_elements();
     let attributes_match = sf.match_attributes();
@@ -65,9 +57,32 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
         }
     );
 
+    let mut sf = StructFields::default();
+    if let Fields::Named(ref fields_named) = fields {
+        for field in &fields_named.named {
+            sf.add(field);
+        }
+    }
+
     if struct_name == "Redefine" {
-        let redefine = parse_redefine(fields, struct_name);
+        assert_redefine(&sf);
+        let redefine = parse_struct(&sf, struct_name);
         output.extend(redefine)
+    }
+
+    if struct_name == "Documentation" {
+        let documentation = parse_struct(&sf, struct_name);
+        output.extend(documentation)
+    }
+
+    if struct_name == "AppInfo" {
+        let app_info = parse_struct(&sf, struct_name);
+        output.extend(app_info)
+    }
+
+    if struct_name == "Annotation" {
+        let app_info = parse_struct(&sf, struct_name);
+        output.extend(app_info)
     }
 
     let output2 = quote! (
