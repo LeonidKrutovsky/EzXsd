@@ -1,12 +1,56 @@
-use proc_macro::TokenStream;
+use proc_macro2::{Ident, TokenStream};
 
 use quote::quote;
 use syn::{Fields, ItemStruct};
 
-use crate::fields::{StructFields};
 use crate::named_argument::NamedArgument;
+use crate::struct_fields::StructFields;
 
-pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
+fn assert_redefine(sf: &StructFields) {
+    assert_eq!(sf.attributes.len(), 2);
+    assert_eq!(sf.elements.len(), 1);
+    assert_eq!(sf.groups.len(), 1);
+    let attrs = sf.attributes[0].full_type().to_string();
+    assert_eq!(attrs, "attributes :: SchemaLocation");
+    let id = sf.attributes[1].full_type().to_string();
+    assert_eq!(id, "attributes :: Id");
+}
+
+fn parse_redefine(fields: &Fields, struct_name: &Ident) -> TokenStream {
+    let mut sf = StructFields::default();
+    if let Fields::Named(ref fields_named) = fields {
+        for field in &fields_named.named {
+            sf.add(field);
+        }
+    }
+    assert_redefine(&sf);
+
+    let fields_define = sf.define_fields();
+    let fields_match = sf.match_elements();
+    let attributes_match = sf.match_attributes();
+    let assign_lines = sf.assign_lines();
+
+    let result = quote! (
+        impl #struct_name {
+            pub fn parse2(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+                #fields_define
+
+                #fields_match
+
+                #attributes_match
+
+                Ok(Self{
+                    #assign_lines
+                })
+            }
+        }
+    );
+
+    println!("{}", result);
+    result
+}
+
+pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStream {
     let element_name = arg.value;
     let struct_name = &item.ident;
     let fields = &item.fields;
@@ -21,53 +65,10 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
         }
     );
 
-
     if struct_name == "Redefine" {
-        let mut sf = StructFields::default();
-        if let Fields::Named(ref fields_named) = fields {
-            for field in &fields_named.named {
-
-                sf.add(field);
-            }
-            println!("\n\n\n ************ \n\n\n ");
-            // println!("{:#?}", sf);
-            assert_eq!(sf.attributes.len(), 3);
-            assert_eq!(sf.elements.len(), 1);
-            assert_eq!(sf.groups.len(), 1);
-            let attrs = sf.attributes[0].full_type().to_string();
-            assert_eq!(attrs, "attributes :: AnyAttributes");
-            let id = sf.attributes[2].full_type().to_string();
-            assert_eq!(id, "Option < attributes :: Id >");
-        }
-        //println!("{:#?}", sf);
-
-        let mut fields_define = quote! {};
-        let mut fields_match = quote! {};
-        for ref field_type in sf.elements {
-            fields_define.extend(field_type.define());
-            fields_match.extend(field_type.match_row());
-        }
-
-        let out = quote! (
-            impl #struct_name {
-                pub fn parse2(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-                    #fields_define
-                    for ch in node.children().filter(|n| n.is_element()) {
-                        match ch.tag_name().name() {
-                            #fields_match
-                            _ => {}
-                        }
-                    }
-                    Err(String::new())
-                }
-            }
-        );
-
-        println!("{:#?}", out.to_string());
-        output.extend(out);
+        let redefine = parse_redefine(fields, struct_name);
+        output.extend(redefine)
     }
-
-
 
     let output2 = quote! (
         impl #struct_name {
@@ -78,12 +79,9 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
                 Err(String::new())
             }
-
-
         }
     );
     output.extend(output2);
 
     output.into()
 }
-

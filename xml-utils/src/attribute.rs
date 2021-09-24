@@ -13,14 +13,18 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
 
         impl #struct_name {
             pub const NAME: &'static str = #attr_name;
+
+            pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
+                Ok(Self(attr.value().parse()?))
+            }
         }
 
         impl std::convert::TryFrom<&roxmltree::Attribute<'_>> for #struct_name {
-        type Error = String;
+            type Error = String;
 
-        fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
-            Ok(Self(attr.value().parse()?))
-            }
+            fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
+                Ok(Self(attr.value().parse()?))
+                }
         }
 
         impl std::str::FromStr for #struct_name {
