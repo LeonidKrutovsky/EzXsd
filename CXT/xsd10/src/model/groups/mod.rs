@@ -28,9 +28,24 @@ pub enum ComplexContentChoice {
     Extension(Box<elements::Extension>),
 }
 
-impl Default for ComplexContentChoice {
-    fn default() -> Self {
-        unimplemented!()
+impl ComplexContentChoice {
+    pub const NAMES: &'static [&'static str] = &[
+        elements::ComplexRestriction::NAME,
+        elements::Extension::NAME,
+    ];
+
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        match node.tag_name().name() {
+            elements::ComplexRestriction::NAME => Ok(Self::Restriction(Box::new(
+                elements::ComplexRestriction::parse(node)?,
+            ))),
+
+            elements::Extension::NAME => {
+                Ok(Self::Extension(Box::new(elements::Extension::parse(node)?)))
+            }
+
+            _ => Err(format!("Unexpected node: {:#?}", node)),
+        }
     }
 }
 

@@ -48,7 +48,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
     let fields = &item.fields;
 
     let mut output = quote! (
-        #[derive(Debug, Default)]
+        #[derive(Debug)]
         #item
 
 
@@ -78,7 +78,8 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
         "Any",
     ];
 
-    if tests.contains(&struct_name.to_string().as_str()){
+    if tests.contains(&struct_name.to_string().as_str()) {
+        println!("{:#?}", &sf);
         let documentation = parse_struct(&sf, struct_name);
         output.extend(documentation)
     }

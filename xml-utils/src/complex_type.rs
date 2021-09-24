@@ -5,7 +5,7 @@ use syn::ItemStruct;
 
 pub fn xsd_complex_type(item: ItemStruct) -> TokenStream {
     let output = quote! (
-        #[derive(Debug, Default)]
+        #[derive(Debug)]
         #item
     );
 

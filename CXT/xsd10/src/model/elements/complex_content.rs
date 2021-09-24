@@ -32,7 +32,7 @@ use xml_utils::element;
 pub struct ComplexContent {
     pub annotation: Option<elements::Annotation>,
     pub content: groups::ComplexContentChoice,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub mixed: Option<attributes::Mixed>,
 }

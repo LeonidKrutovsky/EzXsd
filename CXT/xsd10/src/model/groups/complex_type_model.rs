@@ -35,12 +35,6 @@ pub enum ComplexTypeModel {
     Content(Option<TypeDefParticle>, Box<AttrDecls>),
 }
 
-impl Default for ComplexTypeModel {
-    fn default() -> Self {
-        Self::SimpleContent(SimpleContent::default())
-    }
-}
-
 impl ComplexTypeModel {
     pub fn parse(_node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
         Err(String::default())

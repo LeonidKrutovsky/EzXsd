@@ -145,7 +145,7 @@ impl Field {
             }
         } else {
             quote! (
-                #ty::NAME => {#name = Some(#ty::parse(ch)?)},
+                #match_pattern => {#name = Some(#ty::parse(ch)?)},
             )
         }
     }
