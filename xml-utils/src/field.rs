@@ -63,6 +63,22 @@ impl Field {
         }
     }
 
+    pub fn define_text_line(&self) -> TokenStream {
+        let name = &self.name;
+        let ty = self.full_type();
+        if let Some(gt) = &self.generic_type {
+            match gt {
+                GenericType::Option => quote! (
+                    let #name: Option<#ty> = node.text().map(|s| s.to_string());
+                ),
+                GenericType::Vec => unreachable!("Vec of texts are not supported"),
+                GenericType::Box => unreachable!("Box of text are not supported"),
+            }
+        } else {
+            quote! (let #name: #ty = node.text().map(|s| s.to_string());)
+        }
+    }
+
     pub fn group_match_line(&self) -> TokenStream {
         let ty = self.full_type();
         self.match_line(quote! (some_tag_name if #ty::NAMES.contains(&some_tag_name)))
