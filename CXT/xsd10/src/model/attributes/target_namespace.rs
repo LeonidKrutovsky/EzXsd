@@ -1,3 +1,6 @@
+use crate::model::simple_types::AnyUri;
+use xml_utils::*;
+
 // targetNamespace
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -9,9 +12,5 @@
 //
 // Used in
 // Anonymous type of element xsd:schema
-
-use crate::model::simple_types::AnyUri;
-use xml_utils::*;
-
 #[attribute(name = "targetNamespace")]
 pub struct TargetNamespace(pub AnyUri);

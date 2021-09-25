@@ -39,9 +39,3 @@ impl ProcessContents {
         })
     }
 }
-
-impl Default for ProcessContents {
-    fn default() -> Self {
-        Self::Strict
-    }
-}

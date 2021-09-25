@@ -1,5 +1,4 @@
 use crate::model::simple_types::NonNegativeInteger;
-use std::convert::TryFrom;
 use xml_utils::*;
 
 // minOccurs
@@ -48,10 +47,10 @@ impl Default for MinOccursBool {
     }
 }
 
-impl TryFrom<roxmltree::Attribute<'_>> for MinOccursBool {
-    type Error = String;
+impl MinOccursBool {
+    pub const NAME: &'static str = "minOccurs";
 
-    fn try_from(attr: roxmltree::Attribute) -> Result<Self, Self::Error> {
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
         Ok(match attr.value() {
             "0" => Self::Zero,
             "1" => Self::One,
@@ -63,8 +62,4 @@ impl TryFrom<roxmltree::Attribute<'_>> for MinOccursBool {
             }
         })
     }
-}
-
-impl MinOccursBool {
-    pub const NAME: &'static str = "minOccurs";
 }

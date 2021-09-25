@@ -1,3 +1,6 @@
+use crate::model::simple_types::{AnySimpleType, NonNegativeInteger, PositiveInteger, String_};
+use xml_utils::*;
+
 // value
 // Attribute information
 // Namespace: None
@@ -11,32 +14,14 @@
 // Used in
 // Type xsd:noFixedFacet via derivation of xsd:facet (Element xsd:enumeration)
 // Type xsd:facet (Elements xsd:minExclusive, xsd:minInclusive, xsd:maxExclusive, xsd:maxInclusive)
-
-use crate::model::simple_types::{AnySimpleType, NonNegativeInteger, PositiveInteger, String_};
-use std::convert::TryFrom;
-use std::str::FromStr;
-use xml_utils::*;
-
 #[derive(Default, Debug)]
 pub struct Value(pub AnySimpleType);
 
-impl FromStr for Value {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(Self(s.to_string()))
-    }
-}
-
 impl Value {
     pub const NAME: &'static str = "value";
-}
 
-impl TryFrom<&roxmltree::Attribute<'_>> for Value {
-    type Error = String;
-
-    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
-        attr.value().parse()
+    pub fn parse(s: &roxmltree::Attribute) -> Result<Self, String> {
+        Ok(Self(s.value().to_string()))
     }
 }
 
@@ -97,41 +82,24 @@ pub enum WhiteSpaceValue {
     Collapse,
 }
 
-impl FromStr for WhiteSpaceValue {
-    type Err = String;
+impl WhiteSpaceValue {
+    pub const NAME: &'static str = "value";
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(match s {
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
+        Ok(match attr.value() {
             "collapse" => Self::Collapse,
             "preserve" => Self::Preserve,
             "replace" => Self::Replace,
             _ => {
                 return Err(format!(
                 "Invalid xsd:whiteSpace:value type: {}. Anonymous (collapse | preserve | replace)",
-                s
+                attr.value()
             ))
             }
         })
     }
 }
 
-impl Default for WhiteSpaceValue {
-    fn default() -> Self {
-        unimplemented!()
-    }
-}
-
-impl WhiteSpaceValue {
-    pub const NAME: &'static str = "value";
-}
-
-impl TryFrom<&roxmltree::Attribute<'_>> for WhiteSpaceValue {
-    type Error = String;
-
-    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
-        attr.value().parse()
-    }
-}
 
 // value
 // Attribute information
@@ -145,6 +113,5 @@ impl TryFrom<&roxmltree::Attribute<'_>> for WhiteSpaceValue {
 //  A value of type xsd:string.
 // Used in
 // Anonymous type of element xsd:pattern
-
 #[attribute(name = "value")]
 pub struct PatternValue(pub String_);

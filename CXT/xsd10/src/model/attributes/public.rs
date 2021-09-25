@@ -1,3 +1,6 @@
+use crate::model::simple_types::Public as SimpleTypePublic;
+use xml_utils::*;
+
 // public
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -9,9 +12,5 @@
 //
 // Used in
 // Anonymous type of element xsd:notation
-
-use crate::model::simple_types::Public as SimpleTypePublic;
-use xml_utils::*;
-
 #[attribute(name = "public")]
-pub struct Public(SimpleTypePublic);
+pub struct Public(pub SimpleTypePublic);

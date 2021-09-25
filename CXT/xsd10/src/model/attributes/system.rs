@@ -1,3 +1,6 @@
+use crate::model::simple_types::AnyUri;
+use xml_utils::*;
+
 // system
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -10,8 +13,6 @@
 // Used in
 // Anonymous type of element xsd:notation
 
-use crate::model::simple_types::AnyUri;
-use xml_utils::*;
 
 #[attribute(name = "system")]
-pub struct System(AnyUri);
+pub struct System(pub AnyUri);

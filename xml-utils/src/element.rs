@@ -26,11 +26,8 @@ fn parse_struct(sf: &StructFields, struct_name: &Ident) -> TokenStream {
         impl #struct_name {
             pub fn parse2(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
                 #fields_define
-
                 #fields_match
-
                 #attributes_match
-
                 Ok(Self{
                     #assign_lines
                 })
@@ -75,7 +72,8 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
         "AppInfo",
         "Annotation",
         "Any",
-        "Any",
+        "AllType",
+        "AnyAttribute",
     ];
 
     if tests.contains(&struct_name.to_string().as_str()) {

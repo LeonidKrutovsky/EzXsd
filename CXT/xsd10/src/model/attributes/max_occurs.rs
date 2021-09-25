@@ -125,7 +125,7 @@ pub struct MaxOccursOne(u8);
 impl MaxOccursOne {
     pub const NAME: &'static str = "maxOccurs";
 
-    pub fn parse(attr: roxmltree::Attribute) -> Result<Self, String> {
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
         Ok(match attr.value() {
             "1" => Self(1),
             _ => {

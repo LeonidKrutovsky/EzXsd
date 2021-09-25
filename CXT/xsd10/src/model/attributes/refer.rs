@@ -15,4 +15,4 @@ use crate::model::simple_types::QName;
 use xml_utils::*;
 
 #[attribute(name = "refer")]
-pub struct Refer(QName);
+pub struct Refer(pub QName);

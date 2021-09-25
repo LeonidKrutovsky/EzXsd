@@ -1,5 +1,6 @@
 use crate::model::complex_types::wildcard::Wildcard;
 use xml_utils::element;
+use crate::model::{elements, attributes};
 
 // xsd:anyAttribute
 // See http://www.w3.org/TR/xmlschema-1/#element-anyAttribute.
@@ -21,4 +22,22 @@ use xml_utils::element;
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[element(name = "anyAttribute")]
-pub struct AnyAttribute(pub Wildcard);
+pub struct AnyAttribute{
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub namespace: attributes::Namespace,
+    pub process_contents: attributes::ProcessContents,
+}
+
+impl From<Wildcard> for AnyAttribute {
+    fn from(value: Wildcard) -> Self {
+        Self {
+            annotation: value.annotation,
+            attributes: value.attributes,
+            id: value.id,
+            namespace: value.namespace,
+            process_contents: value.process_contents,
+        }
+    }
+}

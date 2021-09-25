@@ -14,7 +14,7 @@ use xml_utils::*;
 // Used in
 // Anonymous type of element xsd:selector
 #[attribute(name = "xpath")]
-pub struct XPath(Token);
+pub struct XPath(pub Token);
 
 // xpath
 // Namespace: None
@@ -29,4 +29,4 @@ pub struct XPath(Token);
 // Used in
 // Anonymous type of element xsd:field
 #[attribute(name = "xpath")]
-pub struct FieldXPath(Token);
+pub struct FieldXPath(pub Token);

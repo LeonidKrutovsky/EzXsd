@@ -1,3 +1,6 @@
+use crate::model::simple_types::Token;
+use xml_utils::*;
+
 // version
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -9,9 +12,5 @@
 //
 // Used in
 // Anonymous type of element xsd:schema
-
-use crate::model::simple_types::Token;
-use xml_utils::*;
-
 #[attribute(name = "version")]
-pub struct Version(pub(crate) Token);
+pub struct Version(pub Token);

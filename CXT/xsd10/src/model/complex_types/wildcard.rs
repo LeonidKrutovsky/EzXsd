@@ -28,7 +28,7 @@ use xml_utils::complex_type;
 #[complex_type()]
 pub struct Wildcard {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,

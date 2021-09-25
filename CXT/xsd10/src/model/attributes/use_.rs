@@ -13,9 +13,6 @@
 //
 // Used in
 // Type xsd:localAttributeType (Element xsd:attribute)
-//
-use std::convert::TryFrom;
-
 #[derive(Debug, PartialEq)]
 pub enum Use {
     Optional,
@@ -23,25 +20,15 @@ pub enum Use {
     Required,
 }
 
-impl TryFrom<&roxmltree::Attribute<'_>> for Use {
-    type Error = String;
+impl Use {
+    pub const NAME: &'static str = "use";
 
-    fn try_from(attr: &roxmltree::Attribute) -> Result<Self, Self::Error> {
+    pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
         Ok(match attr.value() {
             "prohibited" => Self::Prohibited,
             "optional" => Self::Optional,
             "required" => Self::Required,
             _ => return Err(format!("Use: invalid attribute value: {}", attr.value())),
         })
-    }
-}
-
-impl Use {
-    pub const NAME: &'static str = "use";
-}
-
-impl Default for Use {
-    fn default() -> Self {
-        Self::Optional
     }
 }

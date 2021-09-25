@@ -36,7 +36,7 @@ use xml_utils::complex_type;
 pub struct AllType {
     pub annotation: Option<elements::Annotation>,
     pub elements: Vec<elements::Element>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub min_occurs: Option<attributes::MinOccursBool>,
     pub max_occurs: Option<attributes::MaxOccursOne>,

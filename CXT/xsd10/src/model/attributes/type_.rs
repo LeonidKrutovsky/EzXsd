@@ -1,3 +1,6 @@
+use crate::model::simple_types::QName;
+use xml_utils::*;
+
 // type
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -13,10 +16,6 @@
 //  Type xsd:topLevelAttributeType (Element xsd:attribute)
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-//
-
-use crate::model::simple_types::QName;
-use xml_utils::*;
 
 #[attribute(name = "type")]
-pub struct Type(pub(crate) QName);
+pub struct Type(pub QName);

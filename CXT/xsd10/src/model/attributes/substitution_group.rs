@@ -1,3 +1,6 @@
+use crate::model::simple_types::QName;
+use xml_utils::*;
+
 // substitutionGroup
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -10,8 +13,5 @@
 // Used in
 // Type xsd:topLevelElement (Element xsd:element)
 //
-use crate::model::simple_types::QName;
-use xml_utils::*;
-
 #[attribute(name = "substitutionGroup")]
 pub struct SubstitutionGroup(pub QName);
