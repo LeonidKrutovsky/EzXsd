@@ -17,3 +17,18 @@ impl Parse for NamedArgument {
         })
     }
 }
+
+#[derive(Debug)]
+pub struct NamedArguments {
+    pub args: NamedArgument,
+    pub eq_token: Token![,],
+}
+
+impl Parse for NamedArguments {
+    fn parse(input: ParseStream) -> Result<Self> {
+        Ok(Self {
+            args: input.parse()?,
+            eq_token: input.parse()?,
+        })
+    }
+}

@@ -1,6 +1,7 @@
 use crate::model::complex_types::attribute_group_ref;
 use crate::model::complex_types::named_attribute_group;
 use xml_utils::element;
+use crate::model::{elements, attributes, groups};
 
 // xsd:attributeGroup
 // Element information
@@ -21,7 +22,12 @@ use xml_utils::element;
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[element(name = "attributeGroup")]
-pub struct AttributeGroupRef(pub attribute_group_ref::AttributeGroupRef);
+pub struct AttributeGroupRef {
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub ref_: attributes::Ref,
+}
 
 // xsd:attributeGroup
 // See http://www.w3.org/TR/xmlschema-1/#element-attributeGroup.
@@ -37,4 +43,10 @@ pub struct AttributeGroupRef(pub attribute_group_ref::AttributeGroupRef);
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
 #[element(name = "attributeGroup")]
-pub struct AttributeGroup(pub named_attribute_group::NamedAttributeGroup);
+pub struct AttributeGroup {
+    pub annotation: Option<elements::Annotation>,
+    pub content: groups::AttrDecls,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+}

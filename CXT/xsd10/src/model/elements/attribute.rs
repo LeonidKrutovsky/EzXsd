@@ -1,6 +1,7 @@
 use crate::model::complex_types::local_attribute_type::LocalAttributeType;
 use crate::model::complex_types::top_level_attribute_type::TopLevelAttributeType;
 use xml_utils::element;
+use crate::model::{elements, attributes};
 
 // xsd:attribute
 // Element information
@@ -21,7 +22,19 @@ use xml_utils::element;
 // Type xsd:simpleRestrictionType via reference to xsd:attrDecls (Element xsd:restriction)
 // Type xsd:topLevelComplexType via reference to xsd:complexTypeModel (Element xsd:complexType)
 #[element(name = "attribute")]
-pub struct LocalAttribute(pub LocalAttributeType);
+pub struct LocalAttribute {
+    pub annotation: Option<elements::Annotation>,
+    pub simple_type: Option<elements::LocalSimpleType>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: Option<attributes::Name>,
+    pub ref_: Option<attributes::Ref>,
+    pub type_: Option<attributes::Type>,
+    pub use_: Option<attributes::Use>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub form: Option<attributes::Form>,
+}
 
 // xsd:attribute
 // See http://www.w3.org/TR/xmlschema-1/#element-attribute.
@@ -36,4 +49,13 @@ pub struct LocalAttribute(pub LocalAttributeType);
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 
 #[element(name = "attribute")]
-pub struct TopLevelAttribute(pub TopLevelAttributeType);
+pub struct TopLevelAttribute {
+    pub annotation: Option<elements::Annotation>,
+    pub simple_type: Option<elements::TopLevelSimpleType>,
+    pub attributes: attributes::AnyAttributes,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub type_: Option<attributes::Type>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+}

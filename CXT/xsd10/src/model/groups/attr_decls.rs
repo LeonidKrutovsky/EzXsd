@@ -28,3 +28,19 @@ pub struct AttrDecls {
     pub attribute_groups: Vec<AttributeGroupRef>,
     pub any_attribute: Option<AnyAttribute>,
 }
+
+impl AttrDecls {
+    pub const NAMES: &'static [&'static str] = &[
+        LocalAttribute::NAME,
+        AttributeGroupRef::NAME,
+        AnyAttribute::NAME,
+    ];
+
+    // pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+    //     let mut attributes = vec![];
+    //     match node.tag_name().name() {
+    //         LocalAttribute::NAME => attributes.push()
+    //     }
+    //     Err()
+    // }
+}

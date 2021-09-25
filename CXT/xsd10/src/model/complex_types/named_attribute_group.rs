@@ -34,7 +34,7 @@ use xml_utils::complex_type;
 pub struct NamedAttributeGroup {
     pub annotation: Option<elements::Annotation>,
     pub content: groups::AttrDecls,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
 }

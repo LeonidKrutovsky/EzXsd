@@ -35,7 +35,7 @@ fn parse_struct(sf: &StructFields, struct_name: &Ident) -> TokenStream {
         }
     );
 
-    println!("{}", result);
+    //println!("{}", result);
     result
 }
 
@@ -74,10 +74,13 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
         "Any",
         "AllType",
         "AnyAttribute",
+        "LocalAttribute",
+        "TopLevelAttribute",
+        "LocalAttribute",
     ];
 
     if tests.contains(&struct_name.to_string().as_str()) {
-        println!("{:#?}", &sf);
+        //println!("{:#?}", &sf);
         let documentation = parse_struct(&sf, struct_name);
         output.extend(documentation)
     }
