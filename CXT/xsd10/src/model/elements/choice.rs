@@ -1,5 +1,4 @@
-use crate::model::complex_types::explicit_group::ExplicitGroup;
-use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
 
 // See http://www.w3.org/TR/xmlschema-1/#element-choice.
@@ -21,7 +20,14 @@ use xml_utils::element;
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 #[element(name = "choice")]
-pub struct Choice(pub ExplicitGroup);
+pub struct Choice {
+    pub annotation: Option<elements::Annotation>,
+    pub nested_particle: Vec<groups::NestedParticle>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
+}
 
 // Namespace: http://www.w3.org/2001/XMLSchema
 // Schema document: xmlschema.xsd
@@ -31,4 +37,9 @@ pub struct Choice(pub ExplicitGroup);
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
 #[element(name = "choice")]
-pub struct SimpleChoice(pub SimpleExplicitGroup);
+pub struct SimpleChoice {
+    pub annotation: Option<elements::Annotation>,
+    pub nested_particle: Vec<groups::NestedParticle>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+}
