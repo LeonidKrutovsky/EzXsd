@@ -10,6 +10,9 @@ pub struct Field {
 }
 
 impl Field {
+    pub const COMPLEX_GROUPS: &'static [&'static str] =
+        &["AttrDecls", "ComplexTypeModel", "ElementModel"];
+
     pub fn new(
         name: &Ident,
         type_name: &Ident,
@@ -45,7 +48,14 @@ impl Field {
 
     pub fn define_line(&self) -> TokenStream {
         let name = &self.name;
-        let ty = self.full_type();
+        let ty = &self.type_name;
+
+        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
+            return quote! (
+                let #name = #ty::parse(node)?;
+            );
+        }
+        let ty = &self.full_type();
         if let Some(gt) = &self.generic_type {
             match gt {
                 GenericType::Option => quote! (
@@ -80,6 +90,9 @@ impl Field {
     }
 
     pub fn group_match_line(&self) -> TokenStream {
+        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
+            return quote!();
+        }
         let ty = self.full_type();
         self.match_line(quote! (some_tag_name if #ty::NAMES.contains(&some_tag_name)))
     }
@@ -116,6 +129,10 @@ impl Field {
 
     pub fn assigment_line(&self) -> TokenStream {
         let name = &self.name;
+        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
+            return quote!(#name, );
+        }
+
         let expect_msg = format!("Required field: {}", name);
         if let Some(generic_type) = &self.generic_type {
             match generic_type {
