@@ -31,7 +31,7 @@ use xml_utils::element;
 pub struct All {
     pub annotation: Option<elements::Annotation>,
     pub elements: Vec<elements::Element>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
 }
 
@@ -73,7 +73,7 @@ impl From<all_type::AllType> for AllType {
             attributes: value.attributes,
             id: value.id,
             min_occurs: value.min_occurs,
-            max_occurs: value.max_occurs
+            max_occurs: value.max_occurs,
         }
     }
 }
