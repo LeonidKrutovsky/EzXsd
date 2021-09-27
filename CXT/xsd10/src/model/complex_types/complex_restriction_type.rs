@@ -41,7 +41,7 @@ pub struct ComplexRestrictionType {
     pub annotation: Option<elements::Annotation>,
     pub type_def_particle: Option<groups::TypeDefParticle>,
     pub attr_decls: groups::AttrDecls,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
 }

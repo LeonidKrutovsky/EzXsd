@@ -1,7 +1,5 @@
-use crate::model::complex_types::local_attribute_type::LocalAttributeType;
-use crate::model::complex_types::top_level_attribute_type::TopLevelAttributeType;
+use crate::model::{attributes, elements};
 use xml_utils::element;
-use crate::model::{elements, attributes};
 
 // xsd:attribute
 // Element information
@@ -52,7 +50,7 @@ pub struct LocalAttribute {
 pub struct TopLevelAttribute {
     pub annotation: Option<elements::Annotation>,
     pub simple_type: Option<elements::TopLevelSimpleType>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
     pub type_: Option<attributes::Type>,
