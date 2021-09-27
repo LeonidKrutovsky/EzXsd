@@ -41,24 +41,38 @@ pub mod union;
 pub mod unique;
 pub mod white_space;
 
-use crate::model::attributes::AnyAttributes;
 use crate::model::simple_types::QName;
 use roxmltree::Node;
 use std::convert::{TryFrom, TryInto};
 
 pub use all::All;
 pub use annotation::Annotation;
+pub use any_attribute::AnyAttribute;
 pub use app_info::AppInfo;
+pub use attribute::LocalAttribute;
+pub use attribute::TopLevelAttribute;
+pub use attribute_group::AttributeGroup;
+pub use attribute_group::AttributeGroupRef;
 pub use choice::Choice;
 pub use choice::SimpleChoice;
 pub use complex_content::ComplexContent;
 pub use documentation::Documentation;
 pub use element::Element;
+pub use enumeration::Enumeration;
 pub use extension::Extension;
 pub use extension::SimpleExtension;
 pub use field::Field;
+pub use fraction_digits::FractionDigits;
 pub use import::Import;
 pub use include::Include;
+pub use length::Length;
+pub use max_exclusive::MaxExclusive;
+pub use max_inclusive::MaxInclusive;
+pub use max_length::MaxLength;
+pub use min_exclusive::MinExclusive;
+pub use min_inclusive::MinInclusive;
+pub use min_length::MinLength;
+pub use pattern::Pattern;
 pub use redefine::Redefine;
 pub use restriction::ComplexRestriction;
 pub use restriction::SimpleRestriction;
@@ -68,109 +82,15 @@ pub use sequence::SimpleSequence;
 pub use simple_content::SimpleContent;
 pub use simple_type::LocalSimpleType;
 pub use simple_type::TopLevelSimpleType;
+pub use total_digits::TotalDigits;
+pub use white_space::WhiteSpace;
 
-#[derive(Debug, PartialEq)]
-pub enum ElementType {
-    All,
-    Annotation,
-    Any,
-    AnyAttribute,
-    AppInfo,
-    Attribute,
-    AttributeGroup,
-    Choice,
-    ComplexContent,
-    ComplexType,
-    Documentation,
-    Element,
-    Enumeration,
-    Extension,
-    Field,
-    FractionDigits,
-    Group,
-    Import,
-    Include,
-    Key,
-    KeyRef,
-    Length,
-    List,
-    MaxExclusive,
-    MaxInclusive,
-    MaxLength,
-    MinExclusive,
-    MinInclusive,
-    MinLength,
-    Notation,
-    Pattern,
-    Redefine,
-    Restriction,
-    Schema,
-    Selector,
-    Sequence,
-    SimpleContent,
-    SimpleType,
-    TotalDigits,
-    Union,
-    Unique,
-    WhiteSpace,
-
-    Unknown(String),
-}
-
-pub fn xsd_element_type(name: &str) -> Result<ElementType, String> {
-    use ElementType::*;
-    let element = match name {
-        "all" => All,
-        "annotation" => Annotation,
-        "any" => Any,
-        "anyAttribute" => AnyAttribute,
-        "appInfo" => AppInfo,
-        "attribute" => Attribute,
-        "attributeGroup" => AttributeGroup,
-        "choice" => Choice,
-        "complexContent" => ComplexContent,
-        "complexType" => ComplexType,
-        "documentation" => Documentation,
-        "element" => Element,
-        "enumeration" => Enumeration,
-        "extension" => Extension,
-        "field" => Field,
-        "fractionDigits" => FractionDigits,
-        "group" => Group,
-        "import" => Import,
-        "include" => Include,
-        "key" => Key,
-        "keyRef" => KeyRef,
-        "length" => Length,
-        "list" => List,
-        "maxExclusive" => MaxExclusive,
-        "maxInclusive" => MaxInclusive,
-        "maxLength" => MaxLength,
-        "minExclusive" => MinExclusive,
-        "minInclusive" => MinInclusive,
-        "minLength" => MinLength,
-        "notation" => Notation,
-        "pattern" => Pattern,
-        "redefine" => Redefine,
-        "restriction" => Restriction,
-        "schema" => Schema,
-        "selector" => Selector,
-        "sequence" => Sequence,
-        "simpleContent" => SimpleContent,
-        "simpleType" => SimpleType,
-        "totalDigits" => TotalDigits,
-        "union" => Union,
-        "unique" => Unique,
-        "whiteSpace" => WhiteSpace,
-        _ => return Err(format!("Invalid xsd element name: {}", name)),
-    };
-    Ok(element)
-}
+use crate::model::attributes;
 
 #[derive(Debug, Default)]
 pub struct RawElement {
     name: QName,
-    attributes: AnyAttributes,
+    attributes: Vec<attributes::RawAttribute>,
     text: Option<String>,
 }
 
@@ -184,13 +104,12 @@ impl RawElement {
         };
         Ok(Self {
             name: QName { prefix, name },
-            attributes: AnyAttributes(
-                value
-                    .attributes()
-                    .iter()
-                    .map(|a| a.try_into())
-                    .collect::<Result<Vec<_>, _>>()?,
-            ),
+            attributes: value
+                .attributes()
+                .iter()
+                .map(|a| a.try_into())
+                .collect::<Result<Vec<_>, _>>()?,
+
             text: value.text().map(String::from),
         })
     }
@@ -208,13 +127,12 @@ impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
         };
         Ok(Self {
             name: QName { prefix, name },
-            attributes: AnyAttributes(
-                value
-                    .attributes()
-                    .iter()
-                    .map(|a| a.try_into())
-                    .collect::<Result<Vec<_>, _>>()?,
-            ),
+            attributes: value
+                .attributes()
+                .iter()
+                .map(|a| a.try_into())
+                .collect::<Result<Vec<_>, _>>()?,
+
             text: value.text().map(String::from),
         })
     }
