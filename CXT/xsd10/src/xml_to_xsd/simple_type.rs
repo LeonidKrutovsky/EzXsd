@@ -7,13 +7,12 @@ use roxmltree::Node;
 use crate::model::attributes::name::Name;
 use std::convert::TryInto;
 use crate::model::attributes::final_::SimpleFinal;
-use crate::model::attributes::AnyAttributes;
 
 impl LocalSimpleType {
     pub fn parse(node: Node<'_, '_>) -> Result<LocalSimpleType, String> {
         let mut annotation = None;
         let mut id = None;
-        let mut attributes= AnyAttributes::default();
+        let mut attributes= vec![];
         for attr in node.attributes() {
             match attr.name() {
                 "id" => id = Some(attr.try_into()?),
@@ -46,7 +45,7 @@ impl TopLevelSimpleType {
         let mut id = None;
         let mut final_: Option<SimpleFinal> = None;
         let mut name: Option<Name> = None;
-        let mut attributes= AnyAttributes::default();
+        let mut attributes: Vec<attributes::RawAttribute> = vec![];
 
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.xsd_type()? {

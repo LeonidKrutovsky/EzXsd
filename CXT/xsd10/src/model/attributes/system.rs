@@ -13,6 +13,5 @@ use xml_utils::*;
 // Used in
 // Anonymous type of element xsd:notation
 
-
 #[attribute(name = "system")]
 pub struct System(pub AnyUri);

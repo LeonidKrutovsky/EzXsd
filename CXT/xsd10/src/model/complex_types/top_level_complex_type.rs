@@ -47,41 +47,11 @@ use xml_utils::complex_type;
 pub struct TopLevelComplexType {
     pub annotation: Option<elements::Annotation>,
     pub model: groups::ComplexTypeModel,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
     pub abstract_: attributes::Abstract,
     pub final_: Option<attributes::Final>,
     pub block: Option<attributes::DerivationBlock>,
     pub mixed: attributes::Mixed,
-}
-
-impl TopLevelComplexType {
-    pub fn simple_content(&self) -> Option<&elements::SimpleContent> {
-        match &self.model {
-            groups::ComplexTypeModel::SimpleContent(sc) => Some(sc),
-            _ => None,
-        }
-    }
-
-    pub fn complex_content(&self) -> Option<&elements::ComplexContent> {
-        match &self.model {
-            groups::ComplexTypeModel::ComplexContent(sc) => Some(sc),
-            _ => None,
-        }
-    }
-
-    pub fn type_def_particle(&self) -> Option<&groups::TypeDefParticle> {
-        match &self.model {
-            groups::ComplexTypeModel::Content(tdp, _) => tdp.as_ref(),
-            _ => None,
-        }
-    }
-
-    pub fn attr_decls(&self) -> Option<&groups::AttrDecls> {
-        match &self.model {
-            groups::ComplexTypeModel::Content(_, attr_decls) => Some(attr_decls),
-            _ => None,
-        }
-    }
 }
