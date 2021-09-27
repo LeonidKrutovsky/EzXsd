@@ -36,7 +36,23 @@ pub enum ComplexTypeModel {
 }
 
 impl ComplexTypeModel {
-    pub fn parse(_node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-        Err(String::default())
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        let mut type_def_particle: Option<TypeDefParticle> = None;
+        for ch in node.children().filter(|n| n.is_element()) {
+            match ch.tag_name().name() {
+                SimpleContent::NAME => return Ok(Self::SimpleContent(SimpleContent::parse(node)?)),
+                ComplexContent::NAME => {
+                    return Ok(Self::ComplexContent(ComplexContent::parse(node)?))
+                }
+                tag_name if TypeDefParticle::NAMES.contains(&tag_name) => {
+                    type_def_particle = Some(TypeDefParticle::parse(ch)?)
+                }
+                _ => {}
+            }
+        }
+        Ok(Self::Content(
+            type_def_particle,
+            Box::new(AttrDecls::parse(node)?),
+        ))
     }
 }
