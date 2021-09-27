@@ -5,20 +5,20 @@ mod field;
 mod groups;
 mod named_argument;
 mod struct_fields;
+mod utils;
 
 extern crate proc_macro;
 extern crate syn;
 use proc_macro::TokenStream;
-use syn::parse_macro_input;
 use quote::quote;
+use syn::parse_macro_input;
 
 use crate::attribute::xsd_attribute;
 use crate::complex_type::xsd_complex_type;
 use crate::element::xsd_element;
 use crate::groups::xsd_group;
-use crate::named_argument::{NamedArgument, NamedArguments};
+use crate::named_argument::NamedArgument;
 
-use syn::{AttributeArgs, ItemFn};
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
@@ -46,10 +46,9 @@ pub fn test_attr(_metadata: TokenStream, input: TokenStream) -> TokenStream {
 
 #[proc_macro_attribute]
 pub fn group(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-    let args = parse_macro_input!(_metadata as NamedArgument);
-    let item = parse_macro_input!(input as syn::ItemStruct);
+    let item = parse_macro_input!(input as syn::ItemEnum);
 
-    xsd_group(args, item)
+    xsd_group(item)
 }
 
 #[proc_macro_attribute]

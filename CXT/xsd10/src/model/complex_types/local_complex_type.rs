@@ -44,5 +44,5 @@ pub struct LocalComplexType {
     pub model: groups::ComplexTypeModel,
     pub id: Option<attributes::Id>,
     pub mixed: attributes::Mixed,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

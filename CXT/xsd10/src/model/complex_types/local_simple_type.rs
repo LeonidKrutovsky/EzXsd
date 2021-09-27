@@ -34,5 +34,5 @@ pub struct LocalSimpleType {
     pub annotation: Option<elements::Annotation>,
     pub content_choice: groups::SimpleDerivation,
     pub id: Option<attributes::Id>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

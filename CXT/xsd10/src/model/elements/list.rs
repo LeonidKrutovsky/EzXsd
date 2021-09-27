@@ -27,7 +27,7 @@ use xml_utils::element;
 pub struct List {
     pub annotation: Option<elements::Annotation>,
     pub simple_type: Option<elements::LocalSimpleType>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub item_type: Option<attributes::ItemType>,
 }

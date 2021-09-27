@@ -48,7 +48,7 @@ use xml_utils::complex_type;
 pub struct LocalElement {
     pub annotation: Option<elements::Annotation>,
     pub model: groups::ElementModel,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: Option<attributes::Name>,
     pub ref_: Option<attributes::Ref>,
