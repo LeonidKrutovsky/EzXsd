@@ -1,6 +1,4 @@
-use crate::model::complex_types::local_element;
-use crate::model::complex_types::narrow_max_min::NarrowMaxMin;
-use crate::model::complex_types::top_level_element;
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
 
 // xsd:element
@@ -15,7 +13,21 @@ use xml_utils::element;
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 #[element(name = "element")]
-pub struct TopLevelElement(pub top_level_element::TopLevelElement);
+pub struct TopLevelElement {
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ElementModel,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+    pub type_: Option<attributes::Type>,
+    pub substitution_group: Option<attributes::SubstitutionGroup>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub nillable: attributes::Nillable,
+    pub abstract_: attributes::Abstract,
+    pub final_: Option<attributes::Final>,
+    pub block: Option<attributes::Block>,
+}
 
 // xsd:element
 // Element information
@@ -29,7 +41,22 @@ pub struct TopLevelElement(pub top_level_element::TopLevelElement);
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 #[element(name = "element")]
-pub struct LocalElement(pub local_element::LocalElement);
+pub struct LocalElement {
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ElementModel,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: Option<attributes::Name>,
+    pub ref_: Option<attributes::Ref>,
+    pub type_: Option<attributes::Type>,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub nillable: attributes::Nillable,
+    pub block: Option<attributes::Block>,
+    pub form: Option<attributes::Form>,
+}
 
 // xsd:element
 // Element information
@@ -44,4 +71,19 @@ pub struct LocalElement(pub local_element::LocalElement);
 // Anonymous type of element xsd:all via reference to xsd:allModel
 // Type xsd:allType via reference to xsd:allModel (Element xsd:all)
 #[element(name = "element")]
-pub struct Element(pub NarrowMaxMin);
+pub struct Element {
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ElementModel,
+    pub id: Option<attributes::Id>,
+    pub name: Option<attributes::Name>,
+    pub ref_: Option<attributes::Ref>,
+    pub type_: Option<attributes::Type>,
+    pub default: Option<attributes::Default_>,
+    pub fixed: Option<attributes::Fixed>,
+    pub nillable: attributes::Nillable,
+    pub block: Option<attributes::Block>,
+    pub form: Option<attributes::Form>,
+    pub min_occurs: attributes::MinOccursBool,
+    pub max_occurs: attributes::MaxOccursBool,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
