@@ -1,5 +1,5 @@
-use crate::model::complex_types::{local_simple_type, top_level_simple_type};
 use xml_utils::element;
+use crate::model::{elements, groups, attributes};
 
 // xsd:simpleType
 // Element information
@@ -21,7 +21,12 @@ use xml_utils::element;
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
 #[element(name = "simpleType")]
-pub struct LocalSimpleType(pub local_simple_type::LocalSimpleType);
+pub struct LocalSimpleType {
+    pub annotation: Option<elements::Annotation>,
+    pub content_choice: groups::SimpleDerivation,
+    pub id: Option<attributes::Id>,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
 
 // xsd:simpleType
 // See http://www.w3.org/TR/xmlschema-2/#element-simpleType.
@@ -37,4 +42,11 @@ pub struct LocalSimpleType(pub local_simple_type::LocalSimpleType);
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
 #[element(name = "simpleType")]
-pub struct TopLevelSimpleType(pub top_level_simple_type::TopLevelSimpleType);
+pub struct TopLevelSimpleType {
+    pub annotation: Option<elements::Annotation>,
+    pub content_choice: groups::SimpleDerivation,
+    pub id: Option<attributes::Id>,
+    pub final_: Option<attributes::SimpleFinal>,
+    pub name: attributes::Name,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
