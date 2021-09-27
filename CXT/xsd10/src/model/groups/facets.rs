@@ -1,15 +1,6 @@
-use crate::model::elements::enumeration::Enumeration;
-use crate::model::elements::fraction_digits::FractionDigits;
-use crate::model::elements::length::Length;
-use crate::model::elements::max_exclusive::MaxExclusive;
-use crate::model::elements::max_inclusive::MaxInclusive;
-use crate::model::elements::max_length::MaxLength;
-use crate::model::elements::min_exclusive::MinExclusive;
-use crate::model::elements::min_inclusive::MinInclusive;
-use crate::model::elements::min_length::MinLength;
-use crate::model::elements::pattern::Pattern;
-use crate::model::elements::total_digits::TotalDigits;
-use crate::model::elements::white_space::WhiteSpace;
+use crate::model::elements;
+
+use xml_utils::group;
 
 // xsd:facets
 //        We should use a substitution group for facets, but
@@ -38,18 +29,18 @@ use crate::model::elements::white_space::WhiteSpace;
 //
 // Used in
 // Group xsd:simpleRestrictionModel
-#[derive(Debug)]
+#[group()]
 pub enum Facets {
-    MinExclusive(MinExclusive),
-    MinInclusive(MinInclusive),
-    MaxExclusive(MaxExclusive),
-    MaxInclusive(MaxInclusive),
-    TotalDigits(TotalDigits),
-    FractionDigits(FractionDigits),
-    Length(Length),
-    MinLength(MinLength),
-    MaxLength(MaxLength),
-    Enumeration(Enumeration),
-    WhiteSpace(WhiteSpace),
-    Pattern(Pattern),
+    MinExclusive(elements::MinExclusive),
+    MinInclusive(elements::MinInclusive),
+    MaxExclusive(elements::MaxExclusive),
+    MaxInclusive(elements::MaxInclusive),
+    TotalDigits(elements::TotalDigits),
+    FractionDigits(elements::FractionDigits),
+    Length(elements::Length),
+    MinLength(elements::MinLength),
+    MaxLength(elements::MaxLength),
+    Enumeration(elements::Enumeration),
+    WhiteSpace(elements::WhiteSpace),
+    Pattern(elements::Pattern),
 }
