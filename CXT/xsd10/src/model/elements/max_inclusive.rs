@@ -1,4 +1,3 @@
-use crate::model::complex_types::facet::Facet;
 use crate::model::{attributes, elements};
 use xml_utils::element;
 

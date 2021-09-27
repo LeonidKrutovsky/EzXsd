@@ -1,7 +1,5 @@
-use crate::model::complex_types::explicit_group::ExplicitGroup;
-use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
-use crate::model::{elements, groups, attributes};
 
 // xsd:sequence
 // Element information
@@ -19,7 +17,6 @@ pub struct SimpleSequence {
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
 }
-
 
 // xsd:sequence
 // See http://www.w3.org/TR/xmlschema-1/#element-sequence.
@@ -42,4 +39,11 @@ pub struct SimpleSequence {
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 #[element(name = "sequence")]
-pub struct Sequence(pub ExplicitGroup);
+pub struct Sequence {
+    pub annotation: Option<elements::Annotation>,
+    pub nested_particle: Vec<groups::NestedParticle>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
+}

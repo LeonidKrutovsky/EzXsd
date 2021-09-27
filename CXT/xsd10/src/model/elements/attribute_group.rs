@@ -26,7 +26,7 @@ pub struct AttributeGroupRef {
     pub id: Option<attributes::Id>,
     pub ref_: attributes::Ref,
 }
-use crate::model::groups::AttrDecls;
+
 // xsd:attributeGroup
 // See http://www.w3.org/TR/xmlschema-1/#element-attributeGroup.
 // Element information
