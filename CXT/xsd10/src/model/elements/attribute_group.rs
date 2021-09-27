@@ -1,7 +1,5 @@
-use crate::model::complex_types::attribute_group_ref;
-use crate::model::complex_types::named_attribute_group;
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
-use crate::model::{elements, attributes, groups};
 
 // xsd:attributeGroup
 // Element information
@@ -28,7 +26,7 @@ pub struct AttributeGroupRef {
     pub id: Option<attributes::Id>,
     pub ref_: attributes::Ref,
 }
-
+use crate::model::groups::AttrDecls;
 // xsd:attributeGroup
 // See http://www.w3.org/TR/xmlschema-1/#element-attributeGroup.
 // Element information

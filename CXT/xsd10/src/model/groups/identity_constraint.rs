@@ -1,6 +1,7 @@
 use crate::model::elements::key::Key;
 use crate::model::elements::key_ref::KeyRef;
 use crate::model::elements::unique::Unique;
+use xml_utils::group;
 
 // xsd:identityConstraint
 // The three kinds of identity constraints, all with type of or derived from 'keybase'.
@@ -17,7 +18,7 @@ use crate::model::elements::unique::Unique;
 //
 // Used in
 // Group xsd:elementModel
-#[derive(Debug)]
+#[group()]
 pub enum IdentityConstraint {
     Unique(Unique),
     Key(Key),
