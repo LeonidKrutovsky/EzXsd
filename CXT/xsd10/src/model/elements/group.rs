@@ -1,5 +1,4 @@
-use crate::model::complex_types::named_group::NamedGroup;
-use crate::model::complex_types::named_group_ref::NamedGroupRef;
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
 
 // See http://www.w3.org/TR/xmlschema-1/#element-group.
@@ -15,7 +14,13 @@ use xml_utils::element;
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
 #[element(name = "group")]
-pub struct Group(pub NamedGroup);
+pub struct Group {
+    pub annotation: Option<elements::Annotation>,
+    pub content_choice: groups::ContentChoice,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+}
 
 // xsd:group
 // Element information
@@ -37,4 +42,11 @@ pub struct Group(pub NamedGroup);
 // Type xsd:explicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup via reference to xsd:nestedParticle (Elements xsd:choice, xsd:sequence)
 #[element(name = "group")]
-pub struct GroupRef(pub NamedGroupRef);
+pub struct GroupRef {
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub ref_: attributes::Ref,
+    pub min_occurs: attributes::MinOccurs,
+    pub max_occurs: attributes::MaxOccurs,
+}
