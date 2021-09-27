@@ -29,7 +29,7 @@ use xml_utils::complex_type;
 #[complex_type()]
 pub struct NamedGroupRef {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub ref_: attributes::Ref,
     pub min_occurs: attributes::MinOccurs,

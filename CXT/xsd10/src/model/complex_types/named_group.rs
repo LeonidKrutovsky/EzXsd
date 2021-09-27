@@ -33,7 +33,7 @@ use xml_utils::complex_type;
 pub struct NamedGroup {
     pub annotation: Option<elements::Annotation>,
     pub content_choice: ContentChoice,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
 }
@@ -43,10 +43,4 @@ pub enum ContentChoice {
     All(elements::All),
     Choice(elements::SimpleChoice),
     Sequence(elements::SimpleSequence),
-}
-
-impl Default for ContentChoice {
-    fn default() -> Self {
-        unimplemented!()
-    }
 }

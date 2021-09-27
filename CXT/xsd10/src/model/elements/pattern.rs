@@ -27,5 +27,5 @@ pub struct Pattern {
     pub annotation: Option<elements::Annotation>,
     pub id: Option<attributes::Id>,
     pub value: attributes::PatternValue,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

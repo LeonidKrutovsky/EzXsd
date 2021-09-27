@@ -36,6 +36,6 @@ use xml_utils::complex_type;
 pub struct SimpleExplicitGroup {
     pub annotation: Option<elements::Annotation>,
     pub nested_particle: Vec<groups::NestedParticle>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
 }

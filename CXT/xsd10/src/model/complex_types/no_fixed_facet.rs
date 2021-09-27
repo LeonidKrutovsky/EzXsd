@@ -31,5 +31,5 @@ pub struct NoFixedFacet {
     pub annotation: Option<elements::Annotation>,
     pub id: Option<attributes::Id>,
     pub value: attributes::Value,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

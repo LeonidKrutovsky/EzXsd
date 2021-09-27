@@ -136,16 +136,3 @@ impl TryFrom<&roxmltree::Attribute<'_>> for RawAttribute {
         })
     }
 }
-
-#[derive(Debug, Default)]
-pub struct AnyAttributes(pub Vec<RawAttribute>);
-
-impl AnyAttributes {
-    pub fn push(&mut self, attr: RawAttribute) {
-        self.0.push(attr);
-    }
-
-    pub fn len(&self) -> usize {
-        self.0.len()
-    }
-}

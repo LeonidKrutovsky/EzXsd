@@ -36,5 +36,5 @@ pub struct NumFacet {
     pub id: Option<attributes::Id>,
     pub fixed: attributes::FixedBool,
     pub value: attributes::NonNegativeValue,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

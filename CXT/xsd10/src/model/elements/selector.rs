@@ -24,7 +24,7 @@ use xml_utils::element;
 #[element(name = "selector")]
 pub struct Selector {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub xpath: attributes::XPath,
 }

@@ -1,8 +1,9 @@
-use crate::model::complex_types::named_group_ref::NamedGroupRef;
 use crate::model::elements::any::Any;
 use crate::model::elements::choice::Choice;
 use crate::model::elements::element::LocalElement;
 use crate::model::elements::sequence::Sequence;
+use crate::model::GroupRef;
+use xml_utils::group;
 
 // xsd:nestedParticle
 // Group information
@@ -21,10 +22,10 @@ use crate::model::elements::sequence::Sequence;
 // Used in
 // Type xsd:explicitGroup (Elements xsd:choice, xsd:sequence)
 // Type xsd:simpleExplicitGroup (Elements xsd:choice, xsd:sequence)
-#[derive(Debug)]
+#[group()]
 pub enum NestedParticle {
-    Element(Box<LocalElement>),
-    Group(NamedGroupRef),
+    Element(LocalElement),
+    Group(GroupRef),
     Choice(Choice),
     Sequence(Sequence),
     Any(Any),

@@ -57,7 +57,7 @@ pub struct Schema {
     pub redefines: Vec<elements::Redefine>,
     pub annotations: Vec<elements::Annotation>,
     pub content: Vec<(groups::SchemaTop, Vec<elements::Annotation>)>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub target_namespace: Option<attributes::TargetNamespace>,
     pub version: Option<attributes::Version>,
     pub final_default: attributes::FinalDefault,

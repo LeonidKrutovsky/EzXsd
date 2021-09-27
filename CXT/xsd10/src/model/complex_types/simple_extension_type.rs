@@ -34,7 +34,7 @@ use xml_utils::complex_type;
 pub struct SimpleExtensionType {
     pub annotation: Option<elements::Annotation>,
     pub attr_decls: groups::AttrDecls,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
 }

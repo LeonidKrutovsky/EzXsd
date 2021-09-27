@@ -42,7 +42,7 @@ use xml_utils::element;
 pub struct Restriction {
     pub annotation: Option<elements::Annotation>,
     pub model: groups::SimpleRestrictionModel,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub base: Option<attributes::Base>, // base attribute and simpleType child are mutually exclusive, but one or other is required
 }

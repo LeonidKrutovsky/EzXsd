@@ -31,6 +31,6 @@ use xml_utils::element;
 pub struct SimpleContent {
     pub annotation: Option<elements::Annotation>,
     pub content: groups::SimpleContentChoice,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
 }

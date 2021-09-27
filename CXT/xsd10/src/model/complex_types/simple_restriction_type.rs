@@ -52,5 +52,5 @@ pub struct SimpleRestrictionType {
     pub attr_decls: groups::AttrDecls,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

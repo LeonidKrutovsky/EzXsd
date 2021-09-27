@@ -26,7 +26,7 @@ use xml_utils::element;
 #[element(name = "notation")]
 pub struct Notation {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
     pub public: Option<attributes::Public>,

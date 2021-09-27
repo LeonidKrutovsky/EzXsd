@@ -7,6 +7,7 @@ use crate::model::elements::notation::Notation;
 use crate::model::elements::simple_type::TopLevelSimpleType;
 use crate::model::simple_types::ncname::NCName;
 use std::rc::Rc;
+use xml_utils::group;
 
 // xsd:schemaTop
 // This group is for the elements which occur freely at the top level of schemas. All of their types are based on the "annotated" type by extension.
@@ -28,7 +29,7 @@ use std::rc::Rc;
 //
 // Used in
 // Anonymous type of element xsd:schema
-#[derive(Debug)]
+#[group()]
 pub enum SchemaTop {
     SimpleType(Rc<TopLevelSimpleType>),
     ComplexType(Rc<TopLevelComplexType>),
@@ -42,12 +43,12 @@ pub enum SchemaTop {
 impl SchemaTop {
     pub fn name(&self) -> NCName {
         match self {
-            SchemaTop::SimpleType(val) => val.0.name.0.clone(),
-            SchemaTop::ComplexType(val) => val.0.name.0.clone(),
-            SchemaTop::Group(val) => val.0.name.0.clone(),
-            SchemaTop::AttributeGroup(val) => val.0.name.0.clone(),
-            SchemaTop::Element(val) => val.0.name.0.clone(),
-            SchemaTop::Attribute(val) => val.0.name.0.clone(),
+            SchemaTop::SimpleType(val) => val.name.0.clone(),
+            SchemaTop::ComplexType(val) => val.name.0.clone(),
+            SchemaTop::Group(val) => val.name.0.clone(),
+            SchemaTop::AttributeGroup(val) => val.name.0.clone(),
+            SchemaTop::Element(val) => val.name.0.clone(),
+            SchemaTop::Attribute(val) => val.name.0.clone(),
             SchemaTop::Notation(val) => val.name.0.clone(),
         }
     }

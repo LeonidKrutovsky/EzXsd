@@ -59,5 +59,5 @@ pub struct NarrowMaxMin {
     pub form: Option<attributes::Form>,
     pub min_occurs: attributes::MinOccursBool,
     pub max_occurs: attributes::MaxOccursBool,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

@@ -55,8 +55,29 @@ pub enum SimpleContentChoice {
     Extension(Box<elements::SimpleExtension>),
 }
 
-impl Default for SimpleContentChoice {
-    fn default() -> Self {
-        unimplemented!()
+#[derive(Debug)]
+pub enum ContentChoice {
+    All(elements::All),
+    Choice(elements::SimpleChoice),
+    Sequence(elements::SimpleSequence),
+}
+
+impl ContentChoice {
+    pub const NAMES: &'static [&'static str] = &[
+        elements::All::NAME,
+        elements::SimpleChoice::NAME,
+        elements::SimpleSequence::NAME,
+    ];
+
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        match node.tag_name().name() {
+            elements::All::NAME => Ok(Self::All(elements::All::parse(node)?)),
+            elements::SimpleChoice::NAME => Ok(Self::Choice(elements::SimpleChoice::parse(node)?)),
+            elements::SimpleSequence::NAME => {
+                Ok(Self::Sequence(elements::SimpleSequence::parse(node)?))
+            }
+
+            _ => Err(format!("Unexpected node: {:#?}", node)),
+        }
     }
 }
