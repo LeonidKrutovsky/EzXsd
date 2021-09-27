@@ -28,7 +28,7 @@ use xml_utils::element;
 #[element(name = "import")]
 pub struct Import {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub namespace: Option<attributes::NamespaceUri>,
     pub schema_location: Option<attributes::SchemaLocation>,

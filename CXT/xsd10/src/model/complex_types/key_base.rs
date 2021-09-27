@@ -34,7 +34,7 @@ pub struct KeyBase {
     pub annotation: Option<elements::Annotation>,
     pub selector: elements::Selector,
     pub fields: Vec<elements::Field>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
 }

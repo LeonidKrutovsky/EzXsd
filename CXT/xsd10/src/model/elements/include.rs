@@ -22,7 +22,7 @@ use xml_utils::element;
 #[element(name = "include")]
 pub struct Include {
     pub annotation: Option<elements::Annotation>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub schema_location: attributes::SchemaLocation,
 }
