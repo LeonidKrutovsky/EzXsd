@@ -44,7 +44,7 @@ use xml_utils::element;
 pub struct Union {
     pub annotation: Option<elements::Annotation>,
     pub simple_type: Vec<elements::LocalSimpleType>,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub member_types: attributes::MemberTypes,
 }

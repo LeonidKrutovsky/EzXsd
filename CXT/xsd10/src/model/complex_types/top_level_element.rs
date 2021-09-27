@@ -45,7 +45,7 @@ use xml_utils::complex_type;
 pub struct TopLevelElement {
     pub annotation: Option<elements::Annotation>,
     pub model: groups::ElementModel,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
     pub type_: Option<attributes::Type>,

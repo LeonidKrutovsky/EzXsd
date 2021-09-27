@@ -100,7 +100,6 @@ impl WhiteSpaceValue {
     }
 }
 
-
 // value
 // Attribute information
 // Namespace: None

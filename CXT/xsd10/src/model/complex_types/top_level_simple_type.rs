@@ -38,5 +38,5 @@ pub struct TopLevelSimpleType {
     pub id: Option<attributes::Id>,
     pub final_: Option<attributes::SimpleFinal>,
     pub name: attributes::Name,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

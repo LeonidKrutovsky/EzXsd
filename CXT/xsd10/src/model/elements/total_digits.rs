@@ -30,5 +30,5 @@ pub struct TotalDigits {
     pub id: Option<attributes::Id>,
     pub fixed: attributes::FixedBool,
     pub value: attributes::PositiveValue,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }

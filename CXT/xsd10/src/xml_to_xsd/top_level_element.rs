@@ -13,7 +13,6 @@ use crate::model::attributes::nillable::Nillable;
 use crate::model::attributes::abstract_::Abstract;
 use crate::model::attributes::final_::Final;
 use crate::model::attributes::block::Block;
-use crate::model::attributes::AnyAttributes;
 
 
 impl TopLevelElement {

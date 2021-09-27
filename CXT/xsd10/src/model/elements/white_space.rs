@@ -30,5 +30,5 @@ pub struct WhiteSpace {
     pub id: Option<attributes::Id>,
     pub fixed: attributes::FixedBool,
     pub value: attributes::WhiteSpaceValue,
-    pub attributes: attributes::AnyAttributes,
+    pub attributes: Vec<attributes::RawAttribute>,
 }
