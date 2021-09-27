@@ -30,17 +30,18 @@ pub struct AttrDecls {
 }
 
 impl AttrDecls {
-    pub const NAMES: &'static [&'static str] = &[
-        LocalAttribute::NAME,
-        AttributeGroupRef::NAME,
-        AnyAttribute::NAME,
-    ];
-
-    // pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-    //     let mut attributes = vec![];
-    //     match node.tag_name().name() {
-    //         LocalAttribute::NAME => attributes.push()
-    //     }
-    //     Err()
-    // }
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        let mut attr_decls = Self::default();
+        for ch in node.children().filter(|n| n.is_element()) {
+            match ch.tag_name().name() {
+                LocalAttribute::NAME => attr_decls.attributes.push(LocalAttribute::parse(node)?),
+                AttributeGroupRef::NAME => attr_decls
+                    .attribute_groups
+                    .push(AttributeGroupRef::parse(node)?),
+                AnyAttribute::NAME => attr_decls.any_attribute = Some(AnyAttribute::parse(node)?),
+                _ => {}
+            }
+        }
+        Ok(attr_decls)
+    }
 }
