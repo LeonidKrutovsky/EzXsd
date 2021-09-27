@@ -1,4 +1,4 @@
-use crate::model::complex_types::key_base::KeyBase;
+use crate::model::{attributes, elements};
 use xml_utils::element;
 
 // See http://www.w3.org/TR/xmlschema-1/#element-key.
@@ -15,4 +15,11 @@ use xml_utils::element;
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
 #[element(name = "key")]
-pub struct Key(pub KeyBase);
+pub struct Key {
+    pub annotation: Option<elements::Annotation>,
+    pub selector: elements::Selector,
+    pub fields: Vec<elements::Field>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+}

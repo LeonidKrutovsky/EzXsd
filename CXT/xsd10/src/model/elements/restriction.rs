@@ -1,6 +1,4 @@
 use crate::model::attributes;
-use crate::model::complex_types::complex_restriction_type::ComplexRestrictionType;
-use crate::model::complex_types::simple_restriction_type::SimpleRestrictionType;
 use crate::model::elements;
 use crate::model::groups;
 use xml_utils::element;
@@ -55,7 +53,14 @@ pub struct Restriction {
 // Used in
 // Anonymous type of element xsd:simpleContent
 #[element(name = "restriction")]
-pub struct SimpleRestriction(pub SimpleRestrictionType);
+pub struct SimpleRestriction {
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::SimpleRestrictionModel,
+    pub attr_decls: groups::AttrDecls,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -66,4 +71,11 @@ pub struct SimpleRestriction(pub SimpleRestrictionType);
 // Used in
 // Anonymous type of element xsd:complexContent
 #[element(name = "restriction")]
-pub struct ComplexRestriction(pub ComplexRestrictionType);
+pub struct ComplexRestriction {
+    pub annotation: Option<elements::Annotation>,
+    pub type_def_particle: Option<groups::TypeDefParticle>,
+    pub attr_decls: groups::AttrDecls,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
+}

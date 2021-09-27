@@ -1,4 +1,4 @@
-use crate::model::complex_types::num_facet::NumFacet;
+use crate::model::{attributes, elements};
 use xml_utils::element;
 
 // /xsd:maxLength
@@ -15,4 +15,10 @@ use xml_utils::element;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[element(name = "maxLength")]
-pub struct MaxLength(pub NumFacet);
+pub struct MaxLength {
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub fixed: attributes::FixedBool,
+    pub value: attributes::NonNegativeValue,
+    pub attributes: Vec<attributes::RawAttribute>,
+}

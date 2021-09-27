@@ -19,7 +19,6 @@ use crate::element::xsd_element;
 use crate::groups::xsd_group;
 use crate::named_argument::NamedArgument;
 
-
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {
     let args = parse_macro_input!(_metadata as NamedArgument);

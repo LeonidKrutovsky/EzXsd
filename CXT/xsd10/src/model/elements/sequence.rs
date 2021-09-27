@@ -1,6 +1,7 @@
 use crate::model::complex_types::explicit_group::ExplicitGroup;
 use crate::model::complex_types::simple_explicit_group::SimpleExplicitGroup;
 use xml_utils::element;
+use crate::model::{elements, groups, attributes};
 
 // xsd:sequence
 // Element information
@@ -12,7 +13,13 @@ use xml_utils::element;
 // Used in
 // Type xsd:namedGroup (Element xsd:group)
 #[element(name = "sequence")]
-pub struct SimpleSequence(pub SimpleExplicitGroup);
+pub struct SimpleSequence {
+    pub annotation: Option<elements::Annotation>,
+    pub nested_particle: Vec<groups::NestedParticle>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+}
+
 
 // xsd:sequence
 // See http://www.w3.org/TR/xmlschema-1/#element-sequence.

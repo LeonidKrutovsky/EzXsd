@@ -1,4 +1,4 @@
-use crate::model::complex_types::facet::Facet;
+use crate::model::{attributes, elements};
 use xml_utils::element;
 
 // xsd:minInclusive
@@ -15,4 +15,10 @@ use xml_utils::element;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[element(name = "minInclusive")]
-pub struct MinInclusive(pub Facet);
+pub struct MinInclusive {
+    pub annotation: Option<elements::Annotation>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub value: attributes::Value,
+    pub fixed: attributes::FixedBool,
+}

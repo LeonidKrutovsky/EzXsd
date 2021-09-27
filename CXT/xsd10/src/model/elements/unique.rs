@@ -1,5 +1,6 @@
 use crate::model::complex_types::key_base::KeyBase;
 use xml_utils::element;
+use crate::model::{attributes, elements};
 
 // xsd:unique
 // See http://www.w3.org/TR/xmlschema-1/#element-unique.
@@ -35,4 +36,12 @@ use xml_utils::element;
 //    </xsd:field>
 // </xsd:unique>
 #[element(name = "unique")]
-pub struct Unique(pub KeyBase);
+pub struct Unique {
+    pub annotation: Option<elements::Annotation>,
+    pub selector: elements::Selector,
+    pub fields: Vec<elements::Field>,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub name: attributes::Name,
+}
+

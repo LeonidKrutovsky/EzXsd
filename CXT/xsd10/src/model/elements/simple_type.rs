@@ -1,5 +1,5 @@
+use crate::model::{attributes, elements, groups};
 use xml_utils::element;
-use crate::model::{elements, groups, attributes};
 
 // xsd:simpleType
 // Element information

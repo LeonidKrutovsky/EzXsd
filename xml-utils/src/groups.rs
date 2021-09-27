@@ -41,9 +41,7 @@ impl Variant for syn::Variant {
     fn generic_type(&self) -> Option<&Ident> {
         if let Fields::Unnamed(unnamed_fields) = &self.fields {
             if let Type::Path(type_path) = &unnamed_fields.unnamed[0].ty {
-                if let PathArguments::AngleBracketed(_) =
-                    &type_path.path.segments[0].arguments
-                {
+                if let PathArguments::AngleBracketed(_) = &type_path.path.segments[0].arguments {
                     return Some(&type_path.path.segments[0].ident);
                 }
             }
