@@ -1,6 +1,5 @@
-use crate::model::complex_types::extension_type::ExtensionType;
-use crate::model::complex_types::simple_extension_type::SimpleExtensionType;
 use xml_utils::element;
+use crate::model::{attributes, elements, groups};
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -11,7 +10,13 @@ use xml_utils::element;
 // Used in
 // Anonymous type of element xsd:simpleContent
 #[element(name = "extension")]
-pub struct SimpleExtension(pub SimpleExtensionType);
+pub struct SimpleExtension {
+    pub annotation: Option<elements::Annotation>,
+    pub attr_decls: groups::AttrDecls,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
+}
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -27,4 +32,12 @@ pub struct SimpleExtension(pub SimpleExtensionType);
 // Used in
 // Anonymous type of element xsd:complexContent
 #[element(name = "extension")]
-pub struct Extension(pub ExtensionType);
+pub struct Extension {
+    pub annotation: Option<elements::Annotation>,
+    pub type_def_particle: Option<groups::TypeDefParticle>,
+    pub attr_decls: groups::AttrDecls,
+    pub attributes: Vec<attributes::RawAttribute>,
+    pub id: Option<attributes::Id>,
+    pub base: attributes::Base,
+}
+

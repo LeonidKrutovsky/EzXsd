@@ -1,4 +1,3 @@
-use crate::model::complex_types::local_complex_type;
 use crate::model::{attributes, elements, groups};
 use xml_utils::element;
 
@@ -14,6 +13,7 @@ use xml_utils::element;
 // Anonymous type of element xsd:redefine via reference to xsd:redefinable
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
 // Group xsd:schemaTop via reference to xsd:redefinable
+
 #[element(name = "complexType")]
 pub struct TopLevelComplexType {
     pub annotation: Option<elements::Annotation>,
@@ -39,4 +39,10 @@ pub struct TopLevelComplexType {
 // Type xsd:narrowMaxMin via reference to xsd:elementModel (Element xsd:element)
 // Type xsd:topLevelElement via reference to xsd:elementModel (Element xsd:element)
 #[element(name = "complexType")]
-pub struct LocalComplexType(pub local_complex_type::LocalComplexType);
+pub struct LocalComplexType {
+    pub annotation: Option<elements::Annotation>,
+    pub model: groups::ComplexTypeModel,
+    pub id: Option<attributes::Id>,
+    pub mixed: attributes::Mixed,
+    pub attributes: Vec<attributes::RawAttribute>,
+}

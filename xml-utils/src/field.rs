@@ -11,7 +11,7 @@ pub struct Field {
 
 impl Field {
     pub const COMPLEX_GROUPS: &'static [&'static str] =
-        &["AttrDecls", "ComplexTypeModel", "ElementModel"];
+        &["AttrDecls", "ComplexTypeModel", "ElementModel", "SimpleRestrictionModel"];
 
     pub fn new(
         name: &Ident,
@@ -48,14 +48,14 @@ impl Field {
 
     pub fn define_line(&self) -> TokenStream {
         let name = &self.name;
-        let ty = &self.type_name;
+        let ty = &self.full_type();
 
         if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
             return quote! (
                 let #name = #ty::parse(node)?;
             );
         }
-        let ty = &self.full_type();
+
         if let Some(gt) = &self.generic_type {
             match gt {
                 GenericType::Option => quote! (

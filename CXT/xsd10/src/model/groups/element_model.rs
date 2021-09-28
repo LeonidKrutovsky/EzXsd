@@ -35,7 +35,7 @@ pub enum ElementModelChoice {
 }
 
 impl ElementModel {
-    pub fn parse(node: &roxmltree::Node) -> Result<Self, String> {
+    pub fn parse(node: roxmltree::Node) -> Result<Self, String> {
         let mut choice: Option<ElementModelChoice> = None;
         let mut identity_constraints: Vec<IdentityConstraint> = vec![];
         for ch in node.children().filter(|n| n.is_element()) {

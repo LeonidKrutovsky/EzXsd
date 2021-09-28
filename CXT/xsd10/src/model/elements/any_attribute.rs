@@ -1,4 +1,3 @@
-use crate::model::complex_types::wildcard::Wildcard;
 use crate::model::{attributes, elements};
 use xml_utils::element;
 
@@ -28,16 +27,4 @@ pub struct AnyAttribute {
     pub id: Option<attributes::Id>,
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,
-}
-
-impl From<Wildcard> for AnyAttribute {
-    fn from(value: Wildcard) -> Self {
-        Self {
-            annotation: value.annotation,
-            attributes: value.attributes,
-            id: value.id,
-            namespace: value.namespace,
-            process_contents: value.process_contents,
-        }
-    }
 }

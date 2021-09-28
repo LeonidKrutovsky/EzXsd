@@ -1,5 +1,5 @@
-use crate::model::complex_types::no_fixed_facet::NoFixedFacet;
 use xml_utils::element;
+use crate::model::{attributes, elements};
 
 // xsd:enumeration
 // See http://www.w3.org/TR/xmlschema-2/#element-enumeration.
@@ -23,4 +23,9 @@ use xml_utils::element;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[element(name = "enumeration")]
-pub struct Enumeration(pub NoFixedFacet);
+pub struct Enumeration {
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub value: attributes::Value,
+    pub attributes: Vec<attributes::RawAttribute>,
+}

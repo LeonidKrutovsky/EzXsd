@@ -1,4 +1,4 @@
-use crate::model::complex_types::local_simple_type::LocalSimpleType;
+use crate::model::elements;
 use crate::model::groups::facets::Facets;
 
 // xsd:simpleRestrictionModel
@@ -29,6 +29,22 @@ use crate::model::groups::facets::Facets;
 // Type xsd:simpleRestrictionType (Element xsd:restriction)
 #[derive(Default, Debug)]
 pub struct SimpleRestrictionModel {
-    pub simple_type: Option<LocalSimpleType>,
+    pub simple_type: Option<elements::LocalSimpleType>,
     pub facets: Vec<Facets>,
+}
+
+impl SimpleRestrictionModel {
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        let mut result = Self::default();
+        for ch in node.children().filter(|n| n.is_element()) {
+            match ch.tag_name().name() {
+                elements::LocalSimpleType::NAME => result.simple_type = Some(elements::LocalSimpleType::parse(node)?),
+                tag_name if Facets::NAMES.contains(&tag_name) => {
+                    result.facets.push(Facets::parse(ch)?)
+                }
+                _ => {}
+            }
+        }
+        Ok(result)
+    }
 }

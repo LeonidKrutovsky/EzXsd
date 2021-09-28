@@ -1,5 +1,4 @@
 use crate::model::attributes;
-use crate::model::complex_types::all_type;
 use crate::model::elements;
 
 use xml_utils::element;
@@ -63,17 +62,4 @@ pub struct AllType {
     pub id: Option<attributes::Id>,
     pub min_occurs: Option<attributes::MinOccursBool>,
     pub max_occurs: Option<attributes::MaxOccursOne>,
-}
-
-impl From<all_type::AllType> for AllType {
-    fn from(value: all_type::AllType) -> Self {
-        Self {
-            annotation: value.annotation,
-            elements: value.elements,
-            attributes: value.attributes,
-            id: value.id,
-            min_occurs: value.min_occurs,
-            max_occurs: value.max_occurs,
-        }
-    }
 }

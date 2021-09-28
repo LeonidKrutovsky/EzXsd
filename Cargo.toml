@@ -2,7 +2,7 @@
 members = [
   "xml-utils",
   "CXT/xsd10",
-  "WST/wsdl11",
-  "examples/xsd_onvif",
-  "examples/wsdl_onvif",
+  #"WST/wsdl11",
+  #"examples/xsd_onvif",
+  #"examples/wsdl_onvif",
 ]

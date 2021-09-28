@@ -1,5 +1,5 @@
-use crate::model::complex_types::num_facet::NumFacet;
 use xml_utils::element;
+use crate::model::{attributes, elements};
 
 // xsd:fractionDigits
 // See http://www.w3.org/TR/xmlschema-2/#element-fractionDigits.
@@ -24,4 +24,11 @@ use xml_utils::element;
 // Group xsd:simpleRestrictionModel via reference to xsd:facets
 // Type xsd:simpleRestrictionType via reference to xsd:simpleRestrictionModel (Element xsd:restriction)
 #[element(name = "fractionDigits")]
-pub struct FractionDigits(pub NumFacet);
+pub struct FractionDigits {
+    pub annotation: Option<elements::Annotation>,
+    pub id: Option<attributes::Id>,
+    pub fixed: attributes::FixedBool,
+    pub value: attributes::NonNegativeValue,
+    pub attributes: Vec<attributes::RawAttribute>,
+}
+

@@ -24,7 +24,7 @@ fn parse_struct(sf: &StructFields, struct_name: &Ident) -> TokenStream {
 
     let result = quote! (
         impl #struct_name {
-            pub fn parse2(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+            pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
                 #fields_define
                 #fields_match
                 #attributes_match
@@ -47,8 +47,6 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
     let mut output = quote! (
         #[derive(Debug)]
         #item
-
-
         impl #struct_name {
             pub const NAME: &'static str = #element_name;
         }
@@ -63,40 +61,10 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
 
     if struct_name == "Redefine" {
         assert_redefine(&sf);
-        let redefine = parse_struct(&sf, struct_name);
-        output.extend(redefine)
     }
 
-    let tests = vec![
-        "Documentation",
-        "AppInfo",
-        "Annotation",
-        "Any",
-        "AllType",
-        "AnyAttribute",
-        "LocalAttribute",
-        "TopLevelAttribute",
-        "LocalAttribute",
-    ];
-
-    if tests.contains(&struct_name.to_string().as_str()) {
-        //println!("{:#?}", &sf);
-        let documentation = parse_struct(&sf, struct_name);
-        output.extend(documentation)
-    }
-
-    let output2 = quote! (
-        impl #struct_name {
-            pub fn test() -> Option<#struct_name> {
-                None
-            }
-
-            pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-                Err(String::new())
-            }
-        }
-    );
-    output.extend(output2);
+    let documentation = parse_struct(&sf, struct_name);
+        output.extend(documentation);
 
     output.into()
 }
