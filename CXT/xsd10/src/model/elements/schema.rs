@@ -1,7 +1,7 @@
-use crate::model::attributes;
-use crate::model::elements;
-use crate::model::groups;
+use crate::model::{Include, Import, Redefine, Annotation};
 use xml_utils::element;
+use crate::model::groups::SchemaTop;
+use crate::model::attributes::{RawAttribute, TargetNamespace, Version, FinalDefault, BlockDefault, AttributeFormDefault, ElementFormDefault, Id, Language};
 
 // xsd:schema
 // See http://www.w3.org/TR/xmlschema-1/#element-schema.
@@ -50,20 +50,76 @@ use xml_utils::element;
 // key	attributeGroup 	    xs:attributeGroup	                @name
 // key	notation	        xs:notation	                        @name
 // key	identityConstraint	.//xs:key|.//xs:unique|.//xs:keyref	@name
-//#[element(name = "schema")]
+#[derive(Debug,Default)]
 pub struct Schema {
-    pub includes: Vec<elements::Include>,
-    pub imports: Vec<elements::Import>,
-    pub redefines: Vec<elements::Redefine>,
-    pub annotations: Vec<elements::Annotation>,
-    pub content: Vec<(groups::SchemaTop, Vec<elements::Annotation>)>,
-    pub attributes: Vec<attributes::RawAttribute>,
-    pub target_namespace: Option<attributes::TargetNamespace>,
-    pub version: Option<attributes::Version>,
-    pub final_default: attributes::FinalDefault,
-    pub block_default: attributes::BlockDefault,
-    pub attribute_form_default: attributes::AttributeFormDefault,
-    pub element_form_default: attributes::ElementFormDefault,
-    pub id: Option<attributes::Id>,
-    pub lang: Option<attributes::Language>,
+    pub includes: Vec<Include>,
+    pub imports: Vec<Import>,
+    pub redefines: Vec<Redefine>,
+    pub annotations: Vec<Annotation>,
+    pub content: Vec<(SchemaTop, Vec<Annotation>)>,
+
+    pub attributes: Vec<RawAttribute>,
+    pub target_namespace: Option<TargetNamespace>,
+    pub version: Option<Version>,
+    pub final_default: Option<FinalDefault>,
+    pub block_default: Option<BlockDefault>,
+    pub attribute_form_default: AttributeFormDefault,
+    pub element_form_default: ElementFormDefault,
+    pub id: Option<Id>,
+    pub lang: Option<Language>,
+}
+
+
+impl Schema {
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        let mut schema = Self::default();
+        let mut annotations: Vec<Annotation> = vec![];
+        let mut schema_top: Option<SchemaTop> = None;
+
+        for ch in node.children().filter(|n| n.is_element()) {
+            if schema_top.is_none() {
+                match ch.tag_name().name() {
+                    Include::NAME => schema.includes.push(Include::parse(ch)?),
+                    Import::NAME => schema.imports.push(Import::parse(ch)?),
+                    Redefine::NAME => schema.redefines.push(Redefine::parse(ch)?),
+                    Annotation::NAME => schema.annotations.push(Annotation::parse(ch)?),
+                    tag_name if SchemaTop::NAMES.contains(&tag_name) => {
+                        schema_top = Some(SchemaTop::parse(ch)?)
+                    }
+                    _ => {}
+                }
+            } else {
+                match ch.tag_name().name() {
+                    Annotation::NAME => annotations.push(Annotation::parse(ch)?),
+                    tag_name if SchemaTop::NAMES.contains(&tag_name) => {
+                        schema.content.push((schema_top.unwrap(), annotations));
+                        annotations = vec![];
+                        schema_top = Some(SchemaTop::parse(ch)?);
+                    }
+                    _ => {}
+                }
+            }
+
+            for attr in node.attributes() {
+                match attr.name() {
+                    TargetNamespace::NAME => {
+                        schema.target_namespace = Some(TargetNamespace::parse(attr)?)
+                    }
+                    Version::NAME => schema.version = Some(Version::parse(attr)?),
+                    FinalDefault::NAME => schema.final_default = Some(FinalDefault::parse(attr)?),
+                    BlockDefault::NAME => schema.block_default = Some(BlockDefault::parse(attr)?),
+                    AttributeFormDefault::NAME => {
+                        schema.attribute_form_default = AttributeFormDefault::parse(attr)?
+                    }
+                    ElementFormDefault::NAME => {
+                        schema.element_form_default = ElementFormDefault::parse(attr)?
+                    }
+                    Id::NAME => schema.id = Some(Id::parse(attr)?),
+                    Language::NAME => schema.lang = Some(Language::parse(attr)?),
+                    _ => schema.attributes.push(RawAttribute::parse(attr)?)
+                }
+            }
+        }
+        Ok(schema)
+    }
 }
