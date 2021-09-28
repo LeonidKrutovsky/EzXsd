@@ -87,3 +87,47 @@ pub struct Element {
     pub max_occurs: attributes::MaxOccursBool,
     pub attributes: Vec<attributes::RawAttribute>,
 }
+
+#[cfg(test)]
+mod test {
+    use super::TopLevelElement;
+
+    #[test]
+    pub fn test_parse() {
+        let xsd = r##"<element
+        name="GetAccessProfileInfo"
+        id="id42"
+        substitutionGroup="ns:Name"
+        default="Default"
+        fixed="Fixed"
+        nillable="true"
+        abstract="true"
+        final="extension"
+        block="#all"
+        >
+                    <complexType>
+                        <sequence>
+                            <element name="Token" type="pt:ReferenceToken" minOccurs="1" maxOccurs="unbounded">
+                                <annotation>
+                                    <documentation>Tokens of AccessProfileInfo items to get.</documentation>
+                                </annotation>
+                            </element>
+                        </sequence>
+                    </complexType>
+                </element>"##;
+
+        let doc = roxmltree::Document::parse(xsd).unwrap();
+        let root = doc.root_element();
+        let res = TopLevelElement::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.id.unwrap().0.as_ref(), "id42");
+        assert_eq!(res.substitution_group.unwrap().0.to_string(), "ns:Name");
+        assert_eq!(res.default.unwrap().0.as_ref(), "Default");
+        assert_eq!(res.fixed.unwrap().0.as_ref(), "Fixed");
+        assert_eq!(res.nillable.0, true);
+        assert_eq!(res.abstract_.0, true);
+        assert_eq!(res.final_.unwrap().0.to_string(), "extension");
+        assert_eq!(res.block.unwrap().0.to_string(), "#all");
+    }
+}
+
