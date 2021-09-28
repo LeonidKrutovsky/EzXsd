@@ -1,5 +1,4 @@
 use crate::model::simple_types;
-
 use xml_utils::attribute;
 
 #[attribute(name = "lang")]

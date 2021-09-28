@@ -1,3 +1,6 @@
+use crate::model::simple_types::id::Id as SimpleTypeId;
+use xml_utils::attribute;
+
 // id
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -55,11 +58,5 @@
 // Type xsd:simpleExplicitGroup via derivation of xsd:annotated (Elements xsd:choice , xsd:sequence)
 // Type xsd:facet via derivation of xsd:annotated (Elements xsd:minExclusive , xsd:minInclusive , xsd:maxExclusive , xsd:maxInclusive)
 // Type xsd:numFacet via derivation of xsd:annotated (Elements xsd:fractionDigits , xsd:length , xsd:minLength , xsd:maxLength)
-//
-
-use crate::model::simple_types::id::Id as SimpleTypeId;
-
-use xml_utils::*;
-
 #[attribute(name = "id")]
 pub struct Id(pub SimpleTypeId);

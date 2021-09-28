@@ -1,3 +1,6 @@
+use crate::model::simple_types::FullDerivationSet;
+use xml_utils::attribute;
+
 // finalDefault
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -19,10 +22,5 @@
 //
 // Used in
 // Anonymous type of element xsd:schema
-
-use crate::model::simple_types::FullDerivationSet;
-
-use xml_utils::*;
-
 #[attribute(name = "finalDefault")]
-pub struct FinalDefault(FullDerivationSet);
+pub struct FinalDefault(pub FullDerivationSet);

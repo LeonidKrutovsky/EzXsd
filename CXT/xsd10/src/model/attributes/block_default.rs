@@ -1,3 +1,6 @@
+use crate::model::simple_types::BlockSet;
+use xml_utils::*;
+
 // blockDefault
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -18,9 +21,5 @@
 //
 // Used in
 // Anonymous type of element xsd:schema
-
-use crate::model::simple_types::BlockSet;
-use xml_utils::*;
-
 #[attribute(name = "blockDefault")]
-pub struct BlockDefault(BlockSet);
+pub struct BlockDefault(pub BlockSet);
