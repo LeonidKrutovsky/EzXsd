@@ -15,7 +15,7 @@ use syn::parse_macro_input;
 
 use crate::attribute::xsd_attribute;
 use crate::complex_type::xsd_complex_type;
-use crate::element::{xsd_element, xsd_element_test};
+use crate::element::{xsd_element};
 use crate::groups::xsd_group;
 use crate::named_argument::NamedArgument;
 
@@ -32,13 +32,6 @@ pub fn element(_metadata: TokenStream, input: TokenStream) -> TokenStream {
     let args = parse_macro_input!(_metadata as NamedArgument);
     let item = parse_macro_input!(input as syn::ItemStruct);
     xsd_element(args, item)
-}
-
-#[proc_macro_attribute]
-pub fn element_test(_metadata: TokenStream, input: TokenStream) -> TokenStream {
-    let args = parse_macro_input!(_metadata as NamedArgument);
-    let item = parse_macro_input!(input as syn::ItemStruct);
-    xsd_element_test(args, item)
 }
 
 #[proc_macro_attribute]

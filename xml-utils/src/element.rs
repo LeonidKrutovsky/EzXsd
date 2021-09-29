@@ -45,80 +45,46 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
     let struct_name = &item.ident;
     let fields = &item.fields;
 
-    let mut output = quote! (
-        #[derive(Debug)]
-        #item
-        impl #struct_name {
-            pub const NAME: &'static str = #element_name;
-        }
-    );
-
+    let mut fields_stream = quote! {};
     let mut sf = StructFields::default();
     if let Fields::Named(ref fields_named) = fields {
         for field in &fields_named.named {
+            let tp = field.full_type();
+            let name = field.name();
+            fields_stream.extend(quote! {pub #name: #tp,});
 
             if struct_name == "TopLevelElement" {
-                 //println!("{:#?} \n", field);
-                println!("Name = {}",field.name());
-                let tp = field.full_type();
-                println!("FullType = {}",quote!{#tp});
-                let tp = field.type_name();
-                println!("TypeName = {}", tp);
+                if name == "nillable" {
+                    let attr = &field.attrs[0];
+                    //println!("{:#?} \n", attr.path.segments[0].ident);
+                    let res: Result<NamedArgument, _> = attr.parse_args();
+                    println!("{:#?} \n", res);
+                }
+
+                // println!("Name = {}",field.name());
+                // let tp = field.full_type();
+                // println!("FullType = {}",quote!{#tp});
+                // let tp = field.type_name();
+                // println!("TypeName = {}", tp);
             }
              sf.add(field);
         }
     }
+
+    let mut output = quote! (
+        #[derive(Debug)]
+        pub struct #struct_name {
+            #fields_stream
+        }
+        impl #struct_name {
+            pub const NAME: &'static str = #element_name;
+        }
+    );
 
     if struct_name == "Redefine" {
         assert_redefine(&sf);
     }
-
-    let documentation = parse_struct(&sf, struct_name);
-        output.extend(documentation);
-
-    output.into()
-}
-
-pub fn xsd_element_test(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStream {
-    let element_name = arg.value;
-    let struct_name = &item.ident;
-    let fields = &item.fields;
-
-    let mut output = quote! ();
-
-
-
-
-    let mut sf = StructFields::default();
-    if let Fields::Named(ref fields_named) = fields {
-        let mut q = quote! {};
-        for field in &fields_named.named {
-            let name = field.name();
-            let tp = field.full_type();
-            q.extend(quote!(pub #name: #tp,));
-            if name == "nillable" {
-                println!("{:#?}", field);
-            }
-
-             sf.add(field);
-        }
-        println!("{}", q);
-        let s = quote! (
-            #[derive(Debug)]
-        pub struct #struct_name {
-                #q
-            }
-
-
-        impl #struct_name {
-            pub const NAME: &'static str = #element_name;
-        }
-    );
-        output.extend(s);
-    }
-
-    let documentation = parse_struct(&sf, struct_name);
-        output.extend(documentation);
+    output.extend(parse_struct(&sf, struct_name));
 
     output.into()
 }
