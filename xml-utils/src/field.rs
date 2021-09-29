@@ -1,5 +1,32 @@
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
+use syn::Path;
+
+pub trait FieldWrapper {
+    fn name(&self) -> &Ident;
+    fn full_type(&self) -> &syn::Path;
+    fn type_name(&self) -> &Ident;
+
+}
+
+impl FieldWrapper for syn::Field {
+    fn name(&self) -> &Ident {
+        self.ident.as_ref().expect("Only named fields support")
+    }
+
+    fn full_type(&self) -> &syn::Path {
+        if let syn::Type::Path(type_path) = &self.ty {
+            &type_path.path
+        } else {
+            unreachable!()
+        }
+    }
+
+    fn type_name(&self) -> &Ident {
+        let first_segment = &self.full_type().segments[0];
+        &first_segment.ident
+    }
+}
 
 #[derive(Debug)]
 pub struct Field {

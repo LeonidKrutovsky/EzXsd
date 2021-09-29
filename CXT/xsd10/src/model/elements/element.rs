@@ -1,5 +1,7 @@
 use crate::model::{attributes, elements, groups};
 use xml_utils::element;
+use xml_utils::test_attr;
+use xml_utils::element_test;
 
 // xsd:element
 // See http://www.w3.org/TR/xmlschema-1/#element-element.
@@ -12,7 +14,7 @@ use xml_utils::element;
 // Used in
 // Group xsd:schemaTop
 // Anonymous type of element xsd:schema via reference to xsd:schemaTop
-#[element(name = "element")]
+#[element_test(name = "element")]
 pub struct TopLevelElement {
     pub annotation: Option<elements::Annotation>,
     pub model: groups::ElementModel,
@@ -23,6 +25,7 @@ pub struct TopLevelElement {
     pub substitution_group: Option<attributes::SubstitutionGroup>,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
+    #[field(default = true)]
     pub nillable: attributes::Nillable,
     pub abstract_: attributes::Abstract,
     pub final_: Option<attributes::Final>,

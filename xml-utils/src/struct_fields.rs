@@ -1,4 +1,4 @@
-use crate::field::Field;
+use crate::field::{Field, FieldWrapper};
 use crate::utils::unpack_generic_argument;
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
@@ -16,6 +16,7 @@ pub struct StructFields {
 
 impl StructFields {
     pub fn add(&mut self, field: &syn::Field) {
+
         if let Type::Path(ty) = &field.ty {
             let type_path = &ty.path;
             let name = field.ident.as_ref().unwrap();
