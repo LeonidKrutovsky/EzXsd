@@ -1,6 +1,5 @@
 use crate::model::{attributes, elements, groups};
 use xml_utils::element;
-use xml_utils::test_attr;
 
 // xsd:element
 // See http://www.w3.org/TR/xmlschema-1/#element-element.
@@ -24,7 +23,7 @@ pub struct TopLevelElement {
     pub substitution_group: Option<attributes::SubstitutionGroup>,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
-    #[field(default = "true")]
+    #[default(true)]
     pub nillable: attributes::Nillable,
     pub abstract_: attributes::Abstract,
     pub final_: Option<attributes::Final>,

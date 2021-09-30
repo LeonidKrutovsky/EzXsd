@@ -1,4 +1,4 @@
-use crate::field::{Field, FieldWrapper};
+use crate::field::{Field};
 use crate::utils::unpack_generic_argument;
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;

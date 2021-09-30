@@ -1,12 +1,29 @@
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
-use syn::Path;
+use syn::parse::{Parse, ParseStream};
+
+#[derive(Debug)]
+pub struct DefaultArgument {
+    pub name: syn::Ident,
+    pub eq_token: syn::Token![=],
+    pub value: Option<syn::LitBool>,
+}
+
+impl Parse for DefaultArgument {
+    fn parse(input: ParseStream) -> syn::Result<Self> {
+        Ok(Self {
+            name: input.parse()?,
+            eq_token: input.parse()?,
+            value: input.parse()?,
+        })
+    }
+}
 
 pub trait FieldWrapper {
     fn name(&self) -> &Ident;
     fn full_type(&self) -> &syn::Path;
     fn type_name(&self) -> &Ident;
-
+    fn default_value(&self) -> Option<syn::LitBool>;
 }
 
 impl FieldWrapper for syn::Field {
@@ -25,6 +42,16 @@ impl FieldWrapper for syn::Field {
     fn type_name(&self) -> &Ident {
         let first_segment = &self.full_type().segments[0];
         &first_segment.ident
+    }
+
+    fn default_value(&self) -> Option<syn::LitBool> {
+        if self.attrs.is_empty() {
+            None
+        } else {
+            let attr = &self.attrs[0];
+            let res: syn::Result<syn::LitBool> = attr.parse_args();
+            res.ok()
+        }
     }
 }
 

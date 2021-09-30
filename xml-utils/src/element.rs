@@ -2,7 +2,7 @@ use proc_macro2::{Ident, TokenStream};
 
 use quote::quote;
 use syn::{Fields, ItemStruct};
-use crate::field::FieldWrapper;
+use crate::field::{FieldWrapper, DefaultArgument};
 
 use crate::named_argument::NamedArgument;
 use crate::struct_fields::StructFields;
@@ -55,17 +55,9 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
 
             if struct_name == "TopLevelElement" {
                 if name == "nillable" {
-                    let attr = &field.attrs[0];
-                    //println!("{:#?} \n", attr.path.segments[0].ident);
-                    let res: Result<NamedArgument, _> = attr.parse_args();
-                    println!("{:#?} \n", res);
+                    println!("{:#?} \n", field.default_value());
                 }
 
-                // println!("Name = {}",field.name());
-                // let tp = field.full_type();
-                // println!("FullType = {}",quote!{#tp});
-                // let tp = field.type_name();
-                // println!("TypeName = {}", tp);
             }
              sf.add(field);
         }

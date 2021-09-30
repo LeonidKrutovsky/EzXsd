@@ -1,5 +1,4 @@
 use crate::model::{Include, Import, Redefine, Annotation};
-use xml_utils::element;
 use crate::model::groups::SchemaTop;
 use crate::model::attributes::{RawAttribute, TargetNamespace, Version, FinalDefault, BlockDefault, AttributeFormDefault, ElementFormDefault, Id, Language};
 
