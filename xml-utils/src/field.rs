@@ -24,7 +24,9 @@ pub trait FieldWrapper {
     fn name(&self) -> &Ident;
     fn full_type(&self) -> &syn::Path;
     fn default_value(&self) -> Option<syn::LitBool>;
+    fn is_sequence_group(&self) -> bool;
     fn field_type(&self) -> (Option<GenericType>, FieldType);
+    fn define_line(&self) -> proc_macro2::TokenStream;
 }
 
 impl FieldWrapper for syn::Field {
@@ -52,6 +54,15 @@ impl FieldWrapper for syn::Field {
         }
     }
 
+    fn is_sequence_group(&self) -> bool {
+        if self.attrs.is_empty() {
+            false
+        } else {
+            &self.attrs[0].path.segments[0].ident == "sequence_group"
+        }
+    }
+
+
     fn field_type(&self) -> (Option<GenericType>, FieldType) {
         let generic_type = GenericType::new(&self.full_type().segments[0].ident);
         let ident = &if generic_type.is_some() {
@@ -65,14 +76,10 @@ impl FieldWrapper for syn::Field {
         } else if ident == "attributes" {
             FieldType::Attribute
         } else if ident == "groups" {
-            if self.attrs.is_empty() {
-                FieldType::ChoiceGroup
+            if self.is_sequence_group() {
+                FieldType::SequenceGroup
             } else {
-                if &self.attrs[0].path.segments[0].ident == "sequence_group" {
-                    FieldType::SequenceGroup
-                } else {
-                    unreachable!("Unknown field attribute")
-                }
+                FieldType::ChoiceGroup
             }
         } else if ident == "String" {
             FieldType::Text
@@ -80,6 +87,64 @@ impl FieldWrapper for syn::Field {
             unreachable!("Unknown Field type")
         };
         (generic_type, field_type)
+    }
+
+    fn define_line(&self) -> TokenStream {
+        let name = self.name();
+        let ty = self.full_type();
+        let (generic_type, field_type) = self.field_type();
+
+
+        if let Some(gt) = generic_type {
+            match gt {
+                GenericType::Option => {
+                    if field_type == FieldType::Text {
+                        quote! (let #name: #ty = node.text().map(|s| s.to_string());)
+                    } else {
+                        quote! (let mut #name: #ty = None;)
+                    }
+
+                }
+                GenericType::Vec => quote! (let mut #name: #ty = vec![];),
+                GenericType::Box => quote! (let mut #name: Option<#ty> = None;),
+            }
+        } else {
+            if self.is_sequence_group() {
+                quote! (let #name = #ty::parse(node)?;)
+            } else if field_type == FieldType::Text {
+                quote! (let #name: #ty = node.text().map(|s| s.to_string())?;)
+            } else {
+                quote! (let mut #name: Option<#ty> = None;)
+            }
+        }
+    }
+}
+
+pub trait NamedFields {
+    fn impl_parse(&self) -> proc_macro2::TokenStream;
+}
+
+impl NamedFields for syn::FieldsNamed {
+    fn impl_parse(&self) -> TokenStream {
+        let mut fields_define = quote!();
+        let mut fields_match = quote!();
+        let mut attributes_match = quote!();
+        let mut assign_lines = quote!();
+
+        for field in &self.named {
+            fields_define.extend(field.define_line());
+        }
+
+        quote!(
+            pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+                #fields_define
+                #fields_match
+                #attributes_match
+                Ok(Self{
+                    #assign_lines
+                })
+            }
+        )
     }
 }
 
@@ -271,7 +336,7 @@ impl GenericType {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum FieldType {
     Element,
     Attribute,
