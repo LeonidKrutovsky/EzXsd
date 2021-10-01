@@ -43,6 +43,7 @@ pub struct AttributeGroupRef {
 #[element(name = "attributeGroup")]
 pub struct AttributeGroup {
     pub annotation: Option<elements::Annotation>,
+     #[sequence_group]
     pub content: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,

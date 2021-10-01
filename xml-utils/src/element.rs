@@ -52,10 +52,14 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
             let tp = field.full_type();
             let name = field.name();
             fields_stream.extend(quote! {pub #name: #tp,});
-
+            let (gen, f) = field.field_type();
             if struct_name == "TopLevelElement" {
+                //let ft = field.full_type();
+                //println!("Type = {:?}", field.field_type());
+                //println!("Full type = {}", quote!{#ft});
+                //println!("Type name = {}", quote!{#tn});
                 if name == "nillable" {
-                    println!("{:#?} \n", field.default_value());
+
                 }
 
             }

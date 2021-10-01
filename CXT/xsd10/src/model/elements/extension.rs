@@ -12,6 +12,7 @@ use crate::model::{attributes, elements, groups};
 #[element(name = "extension")]
 pub struct SimpleExtension {
     pub annotation: Option<elements::Annotation>,
+     #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -35,6 +36,7 @@ pub struct SimpleExtension {
 pub struct Extension {
     pub annotation: Option<elements::Annotation>,
     pub type_def_particle: Option<groups::TypeDefParticle>,
+     #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,

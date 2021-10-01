@@ -15,6 +15,7 @@ use xml_utils::element;
 #[element(name = "element")]
 pub struct TopLevelElement {
     pub annotation: Option<elements::Annotation>,
+    #[sequence_group]
     pub model: groups::ElementModel,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -44,6 +45,7 @@ pub struct TopLevelElement {
 #[element(name = "element")]
 pub struct LocalElement {
     pub annotation: Option<elements::Annotation>,
+    #[sequence_group]
     pub model: groups::ElementModel,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -74,6 +76,7 @@ pub struct LocalElement {
 #[element(name = "element")]
 pub struct Element {
     pub annotation: Option<elements::Annotation>,
+    #[sequence_group]
     pub model: groups::ElementModel,
     pub id: Option<attributes::Id>,
     pub name: Option<attributes::Name>,

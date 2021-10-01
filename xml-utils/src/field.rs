@@ -1,6 +1,7 @@
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
 use syn::parse::{Parse, ParseStream};
+use crate::utils::unpack_generic_argument;
 
 #[derive(Debug)]
 pub struct DefaultArgument {
@@ -22,26 +23,23 @@ impl Parse for DefaultArgument {
 pub trait FieldWrapper {
     fn name(&self) -> &Ident;
     fn full_type(&self) -> &syn::Path;
-    fn type_name(&self) -> &Ident;
     fn default_value(&self) -> Option<syn::LitBool>;
+    fn field_type(&self) -> (Option<GenericType>, FieldType);
 }
 
 impl FieldWrapper for syn::Field {
+    //annotation or text
     fn name(&self) -> &Ident {
         self.ident.as_ref().expect("Only named fields support")
     }
 
+    //e.g. Option<elements::Annotation> or groups::ElementModel
     fn full_type(&self) -> &syn::Path {
         if let syn::Type::Path(type_path) = &self.ty {
             &type_path.path
         } else {
             unreachable!()
         }
-    }
-
-    fn type_name(&self) -> &Ident {
-        let first_segment = &self.full_type().segments[0];
-        &first_segment.ident
     }
 
     fn default_value(&self) -> Option<syn::LitBool> {
@@ -52,6 +50,36 @@ impl FieldWrapper for syn::Field {
             let res: syn::Result<syn::LitBool> = attr.parse_args();
             res.ok()
         }
+    }
+
+    fn field_type(&self) -> (Option<GenericType>, FieldType) {
+        let generic_type = GenericType::new(&self.full_type().segments[0].ident);
+        let ident = &if generic_type.is_some() {
+            unpack_generic_argument(&self.full_type().segments[0].arguments)
+        } else {
+            &self.full_type()
+        }.segments[0].ident;
+
+        let field_type = if ident == "elements" {
+            FieldType::Element
+        } else if ident == "attributes" {
+            FieldType::Attribute
+        } else if ident == "groups" {
+            if self.attrs.is_empty() {
+                FieldType::ChoiceGroup
+            } else {
+                if &self.attrs[0].path.segments[0].ident == "sequence_group" {
+                    FieldType::SequenceGroup
+                } else {
+                    unreachable!("Unknown field attribute")
+                }
+            }
+        } else if ident == "String" {
+            FieldType::Text
+        } else {
+            unreachable!("Unknown Field type")
+        };
+        (generic_type, field_type)
     }
 }
 
@@ -227,4 +255,41 @@ pub enum GenericType {
     Option,
     Vec,
     Box,
+}
+
+impl GenericType {
+    pub fn new(ident: &Ident) -> Option<Self> {
+        Some (if ident == "Option" {
+            Self::Option
+        } else if ident == "Vec" {
+            Self::Vec
+        } else if ident == "Box" {
+            Self::Box
+        } else {
+            return None;
+        })
+    }
+}
+
+#[derive(Debug)]
+pub enum FieldType {
+    Element,
+    Attribute,
+    ChoiceGroup,
+    SequenceGroup,
+    Text
+}
+
+impl FieldType {
+    pub fn new(ident: &Ident) -> Option<Self> {
+        Some (if ident == "element" {
+            Self::Element
+        } else if ident == "attribute" {
+            Self::Attribute
+        } else if ident == "group" {
+            Self::ChoiceGroup
+        } else {
+            return None;
+        })
+    }
 }
