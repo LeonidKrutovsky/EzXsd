@@ -50,3 +50,33 @@ pub struct TopLevelSimpleType {
     pub name: attributes::Name,
     pub attributes: Vec<attributes::RawAttribute>,
 }
+
+#[cfg(test)]
+mod test {
+
+    use crate::model::groups::simple_derivation::SimpleDerivation;
+    use crate::model::TopLevelSimpleType;
+
+    #[test]
+    fn test_top_level_simple_type_parse() {
+        let doc = roxmltree::Document::parse(
+            r##"<simpleType id="ID" name="Type1" final="#all" a='b' b='a'>
+                        <list itemType="itemType" />
+                    </simpleType>"##,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: TopLevelSimpleType = TopLevelSimpleType::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.attributes.len(), 2);
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert_eq!(res.name.0.as_ref(), "Type1");
+        match &res.content_choice {
+            SimpleDerivation::List(x) => {
+                assert_eq!(x.item_type.as_ref().unwrap().0.name(), "itemType")
+            }
+            _ => unreachable!("test failed!"),
+        }
+    }
+}
+
