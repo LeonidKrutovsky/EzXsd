@@ -30,18 +30,21 @@ pub struct AttrDecls {
 }
 
 impl AttrDecls {
-    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-        let mut attr_decls = Self::default();
-        for ch in node.children().filter(|n| n.is_element()) {
-            match ch.tag_name().name() {
-                LocalAttribute::NAME => attr_decls.attributes.push(LocalAttribute::parse(node)?),
-                AttributeGroupRef::NAME => attr_decls
-                    .attribute_groups
-                    .push(AttributeGroupRef::parse(node)?),
-                AnyAttribute::NAME => attr_decls.any_attribute = Some(AnyAttribute::parse(node)?),
-                _ => {}
-            }
+    pub const NAMES: &'static [&'static str] = &[
+                LocalAttribute::NAME, AttributeGroupRef::NAME, AnyAttribute::NAME
+            ];
+
+    pub fn is_empty(&self) -> bool {
+        self.attributes.is_empty() && self.any_attribute.is_none() && self.attribute_groups.is_empty()
+    }
+
+    pub fn push(&mut self, node: roxmltree::Node<'_, '_>) -> Result<(), String> {
+        match node.tag_name().name() {
+            LocalAttribute::NAME => self.attributes.push(LocalAttribute::parse(node)?),
+            AttributeGroupRef::NAME => self.attribute_groups.push(AttributeGroupRef::parse(node)?),
+            AnyAttribute::NAME => self.any_attribute = Some(AnyAttribute::parse(node)?),
+            _ => Err(format!("Unexpected node in AttrDecls group: {:?}", node))?
         }
-        Ok(attr_decls)
+        Ok(())
     }
 }

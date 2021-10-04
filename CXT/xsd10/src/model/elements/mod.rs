@@ -1,3 +1,56 @@
+use std::convert::{TryFrom, TryInto};
+
+use roxmltree::Node;
+
+pub use all::All;
+pub use all::AllType;
+pub use annotation::Annotation;
+pub use any_attribute::AnyAttribute;
+pub use app_info::AppInfo;
+pub use attribute::LocalAttribute;
+pub use attribute::TopLevelAttribute;
+pub use attribute_group::AttributeGroup;
+pub use attribute_group::AttributeGroupRef;
+pub use choice::Choice;
+pub use choice::SimpleChoice;
+pub use complex_content::ComplexContent;
+pub use documentation::Documentation;
+pub use element::Element;
+pub use enumeration::Enumeration;
+pub use extension::Extension;
+pub use extension::SimpleExtension;
+pub use field::Field;
+pub use fraction_digits::FractionDigits;
+pub use group::Group;
+pub use import::Import;
+pub use include::Include;
+pub use length::Length;
+pub use max_exclusive::MaxExclusive;
+pub use max_inclusive::MaxInclusive;
+pub use max_length::MaxLength;
+pub use min_exclusive::MinExclusive;
+pub use min_inclusive::MinInclusive;
+pub use min_length::MinLength;
+pub use pattern::Pattern;
+pub use redefine::Redefine;
+pub use restriction::ComplexRestriction;
+pub use restriction::SimpleRestriction;
+pub use selector::Selector;
+pub use sequence::Sequence;
+pub use sequence::SimpleSequence;
+pub use simple_content::SimpleContent;
+pub use simple_type::LocalSimpleType;
+pub use simple_type::TopLevelSimpleType;
+pub use total_digits::TotalDigits;
+pub use white_space::WhiteSpace;
+pub use complex_type::LocalComplexType;
+pub use unique::Unique;
+pub use key::Key;
+pub use key_ref::KeyRef;
+
+use crate::model::attributes;
+use crate::model::simple_types::QName;
+
 pub mod all;
 pub mod annotation;
 pub mod any;
@@ -40,52 +93,6 @@ pub mod total_digits;
 pub mod union;
 pub mod unique;
 pub mod white_space;
-
-use crate::model::simple_types::QName;
-use roxmltree::Node;
-use std::convert::{TryFrom, TryInto};
-
-pub use all::All;
-pub use annotation::Annotation;
-pub use any_attribute::AnyAttribute;
-pub use app_info::AppInfo;
-pub use attribute::LocalAttribute;
-pub use attribute::TopLevelAttribute;
-pub use attribute_group::AttributeGroup;
-pub use attribute_group::AttributeGroupRef;
-pub use choice::Choice;
-pub use choice::SimpleChoice;
-pub use complex_content::ComplexContent;
-pub use documentation::Documentation;
-pub use element::Element;
-pub use enumeration::Enumeration;
-pub use extension::Extension;
-pub use extension::SimpleExtension;
-pub use field::Field;
-pub use fraction_digits::FractionDigits;
-pub use import::Import;
-pub use include::Include;
-pub use length::Length;
-pub use max_exclusive::MaxExclusive;
-pub use max_inclusive::MaxInclusive;
-pub use max_length::MaxLength;
-pub use min_exclusive::MinExclusive;
-pub use min_inclusive::MinInclusive;
-pub use min_length::MinLength;
-pub use pattern::Pattern;
-pub use redefine::Redefine;
-pub use restriction::ComplexRestriction;
-pub use restriction::SimpleRestriction;
-pub use selector::Selector;
-pub use sequence::Sequence;
-pub use sequence::SimpleSequence;
-pub use simple_content::SimpleContent;
-pub use simple_type::LocalSimpleType;
-pub use simple_type::TopLevelSimpleType;
-pub use total_digits::TotalDigits;
-pub use white_space::WhiteSpace;
-
-use crate::model::attributes;
 
 #[derive(Debug, Default)]
 pub struct RawElement {

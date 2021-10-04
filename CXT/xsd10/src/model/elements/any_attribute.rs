@@ -25,6 +25,7 @@ pub struct AnyAttribute {
     pub annotation: Option<elements::Annotation>,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
+    #[default]
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,
 }

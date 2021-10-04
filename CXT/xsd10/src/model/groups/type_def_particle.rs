@@ -29,3 +29,33 @@ pub enum TypeDefParticle {
     Choice(Choice),
     Sequence(Sequence),
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_names() {
+        assert_eq!(
+            TypeDefParticle::NAMES,
+            [Group::NAME, AllType::NAME, Choice::NAME, Sequence::NAME]
+        );
+    }
+
+    #[test]
+    fn test_parse_sequence() {
+        let xsd = r###"
+                <sequence some_attr="value">
+                    <element name="Item" type="string" maxOccurs="unbounded" />
+                </sequence>
+        "###;
+
+        let doc = roxmltree::Document::parse(xsd).unwrap();
+        let root = doc.root_element();
+        if let TypeDefParticle::Sequence(seq) = TypeDefParticle::parse(root).unwrap() {
+            assert!(seq.annotation.is_none());
+            assert_eq!(seq.attributes[0].value(), "value");
+        } else {
+            panic!("Test test_parse_sequence failed")
+        }
+    }
+}

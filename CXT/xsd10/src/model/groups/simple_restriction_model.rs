@@ -34,12 +34,29 @@ pub struct SimpleRestrictionModel {
 }
 
 impl SimpleRestrictionModel {
-    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+    pub const NAMES: &'static [&'static str] = &[
+        elements::LocalSimpleType::NAME,
+
+        elements::MinExclusive::NAME,
+        elements::MinInclusive::NAME,
+        elements::MaxExclusive::NAME,
+        elements::MaxInclusive::NAME,
+        elements::TotalDigits::NAME,
+        elements::FractionDigits::NAME,
+        elements::Length::NAME,
+        elements::MinLength::NAME,
+        elements::MaxLength::NAME,
+        elements::Enumeration::NAME,
+        elements::WhiteSpace::NAME,
+        elements::Pattern::NAME,
+    ];
+
+    pub fn push(&mut self, node: roxmltree::Node<'_, '_>) -> Result<(), String> {
         let mut result = Self::default();
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.tag_name().name() {
                 elements::LocalSimpleType::NAME => {
-                    result.simple_type = Some(elements::LocalSimpleType::parse(node)?)
+                    result.simple_type = Some(elements::LocalSimpleType::parse(ch)?)
                 }
                 tag_name if Facets::NAMES.contains(&tag_name) => {
                     result.facets.push(Facets::parse(ch)?)
@@ -47,6 +64,6 @@ impl SimpleRestrictionModel {
                 _ => {}
             }
         }
-        Ok(result)
+        Ok(())
     }
 }

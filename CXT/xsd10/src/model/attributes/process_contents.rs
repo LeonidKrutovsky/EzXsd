@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 // processContents
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -26,14 +28,22 @@ impl ProcessContents {
     pub const NAME: &'static str = "processContents";
 
     pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
-        Ok(match attr.value() {
+        attr.value().parse()
+    }
+}
+
+impl FromStr for ProcessContents {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s {
             "skip" => Self::Skip,
             "lax" => Self::Lax,
             "strict" => Self::Strict,
             _ => {
                 return Err(format!(
                     "ProcessContents: Invalid attribute value: {}",
-                    attr.value()
+                    s
                 ))
             }
         })

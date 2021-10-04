@@ -30,8 +30,11 @@ pub struct Any {
     pub annotation: Option<elements::Annotation>,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
+    #[default]
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,
+    #[default]
     pub min_occurs: attributes::MinOccurs,
+    #[default]
     pub max_occurs: attributes::MaxOccurs,
 }

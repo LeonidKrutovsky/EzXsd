@@ -44,6 +44,8 @@ pub struct Sequence {
     pub nested_particle: Vec<groups::NestedParticle>,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
+    #[default]
     pub min_occurs: attributes::MinOccurs,
+    #[default]
     pub max_occurs: attributes::MaxOccurs,
 }

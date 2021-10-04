@@ -2,6 +2,7 @@ use crate::model::elements::complex_content::ComplexContent;
 use crate::model::elements::simple_content::SimpleContent;
 use crate::model::groups::attr_decls::AttrDecls;
 use crate::model::groups::type_def_particle::TypeDefParticle;
+use crate::model::elements;
 
 // xsd:complexTypeModel
 // Group information
@@ -35,24 +36,62 @@ pub enum ComplexTypeModel {
     Content(Option<TypeDefParticle>, Box<AttrDecls>),
 }
 
+impl Default for ComplexTypeModel {
+    fn default() -> Self {
+        Self::Content(None, Box::new(AttrDecls::default()))
+    }
+}
+
 impl ComplexTypeModel {
-    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-        let mut type_def_particle: Option<TypeDefParticle> = None;
-        for ch in node.children().filter(|n| n.is_element()) {
-            match ch.tag_name().name() {
-                SimpleContent::NAME => return Ok(Self::SimpleContent(SimpleContent::parse(node)?)),
-                ComplexContent::NAME => {
-                    return Ok(Self::ComplexContent(ComplexContent::parse(node)?))
+    pub const NAMES: &'static [&'static str] = &[
+        elements::SimpleContent::NAME,
+        elements::ComplexContent::NAME,
+
+        elements::Group::NAME,
+        elements::AllType::NAME,
+        elements::Choice::NAME,
+        elements::Sequence::NAME,
+
+        elements::LocalAttribute::NAME,
+        elements::AttributeGroupRef::NAME,
+        elements::AnyAttribute::NAME,
+    ];
+
+    pub fn push(&mut self, node: roxmltree::Node<'_, '_>) -> Result<(), String> {
+        match self {
+            ComplexTypeModel::SimpleContent(_) | ComplexTypeModel::ComplexContent(_) => {
+                Err(format!("Unexpected node in ComplexTypeModel group: {:?}", node))?
+            }
+            ComplexTypeModel::Content(tdp, ad) => {
+                if tdp.is_some() || !ad.is_empty() {
+                    match node.tag_name().name() {
+                        SimpleContent::NAME | ComplexContent::NAME => {
+                            Err(format!("Unexpected node in ComplexTypeModel group: {:?}", node))?
+                        }
+                        tag_name if TypeDefParticle::NAMES.contains(&tag_name) => {
+                            tdp.insert(TypeDefParticle::parse(node)?);
+                        }
+                        tag_name if AttrDecls::NAMES.contains(&tag_name) => {
+                            ad.push(node);
+                        }
+                        _ => {}
+                    }
+                } else {
+                    match node.tag_name().name() {
+                        SimpleContent::NAME => {*self = Self::SimpleContent(SimpleContent::parse(node)?)}
+                        ComplexContent::NAME => {*self = Self::ComplexContent(ComplexContent::parse(node)?)}
+                        tag_name if TypeDefParticle::NAMES.contains(&tag_name) => {
+                            tdp.insert(TypeDefParticle::parse(node)?);
+                        }
+                        tag_name if AttrDecls::NAMES.contains(&tag_name) => {
+                            ad.push(node)?;
+                        }
+                        _ => {}
+                    }
                 }
-                tag_name if TypeDefParticle::NAMES.contains(&tag_name) => {
-                    type_def_particle = Some(TypeDefParticle::parse(ch)?)
-                }
-                _ => {}
             }
         }
-        Ok(Self::Content(
-            type_def_particle,
-            Box::new(AttrDecls::parse(node)?),
-        ))
+
+        Ok(())
     }
 }

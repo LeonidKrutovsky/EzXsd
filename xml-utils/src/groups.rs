@@ -94,7 +94,5 @@ pub fn xsd_group(item: ItemEnum) -> TokenStream {
         }
     );
 
-    //println!("{}", output);
-
     output.into()
 }

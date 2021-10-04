@@ -47,6 +47,8 @@ pub struct GroupRef {
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub ref_: attributes::Ref,
+    #[default]
     pub min_occurs: attributes::MinOccurs,
+    #[default]
     pub max_occurs: attributes::MaxOccurs,
 }

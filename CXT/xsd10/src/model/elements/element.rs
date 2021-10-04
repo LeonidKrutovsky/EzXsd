@@ -24,8 +24,9 @@ pub struct TopLevelElement {
     pub substitution_group: Option<attributes::SubstitutionGroup>,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
-    #[default(true)]
+    #[default(false)]
     pub nillable: attributes::Nillable,
+    #[default(false)]
     pub abstract_: attributes::Abstract,
     pub final_: Option<attributes::Final>,
     pub block: Option<attributes::Block>,
@@ -52,10 +53,13 @@ pub struct LocalElement {
     pub name: Option<attributes::Name>,
     pub ref_: Option<attributes::Ref>,
     pub type_: Option<attributes::Type>,
+    #[default]
     pub min_occurs: attributes::MinOccurs,
+    #[default]
     pub max_occurs: attributes::MaxOccurs,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
+    #[default(false)]
     pub nillable: attributes::Nillable,
     pub block: Option<attributes::Block>,
     pub form: Option<attributes::Form>,
@@ -84,13 +88,17 @@ pub struct Element {
     pub type_: Option<attributes::Type>,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
+    #[default]
     pub nillable: attributes::Nillable,
     pub block: Option<attributes::Block>,
     pub form: Option<attributes::Form>,
+    #[default]
     pub min_occurs: attributes::MinOccursBool,
+    #[default]
     pub max_occurs: attributes::MaxOccursBool,
     pub attributes: Vec<attributes::RawAttribute>,
 }
+
 
 #[cfg(test)]
 mod test {
@@ -98,31 +106,29 @@ mod test {
 
     #[test]
     pub fn test_parse() {
-        let xsd = r##"<element
-        name="GetAccessProfileInfo"
-        id="id42"
-        substitutionGroup="ns:Name"
-        default="Default"
-        fixed="Fixed"
-        nillable="true"
-        abstract="true"
-        final="extension"
-        block="#all"
+        let xsd = r###"
+        <element
+            name="StringItems"
+            id="id42"
+            substitutionGroup="ns:Name"
+            default="Default"
+            fixed="Fixed"
+            nillable="true"
+            abstract="true"
+            final="extension"
+            block="#all"
         >
-                    <complexType>
-                        <sequence>
-                            <element name="Token" type="pt:ReferenceToken" minOccurs="1" maxOccurs="unbounded">
-                                <annotation>
-                                    <documentation>Tokens of AccessProfileInfo items to get.</documentation>
-                                </annotation>
-                            </element>
-                        </sequence>
-                    </complexType>
-                </element>"##;
+            <complexType>
+                <sequence>
+                    <element name="Item" type="string" maxOccurs="unbounded" />
+                </sequence>
+            </complexType>
+        </element>
+        "###;
 
         let doc = roxmltree::Document::parse(xsd).unwrap();
         let root = doc.root_element();
-        let res = TopLevelElement::parse(root).unwrap();
+        let res: TopLevelElement = TopLevelElement::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.id.unwrap().0.as_ref(), "id42");
         assert_eq!(res.substitution_group.unwrap().0.to_string(), "ns:Name");

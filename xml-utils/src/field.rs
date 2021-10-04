@@ -1,30 +1,20 @@
 use crate::utils::unpack_generic_argument;
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
-use syn::parse::{Parse, ParseStream};
 
-#[derive(Debug)]
-pub struct DefaultArgument {
-    pub name: syn::Ident,
-    pub eq_token: syn::Token![=],
-    pub value: Option<syn::LitBool>,
-}
-
-impl Parse for DefaultArgument {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        Ok(Self {
-            name: input.parse()?,
-            eq_token: input.parse()?,
-            value: input.parse()?,
-        })
-    }
+pub enum DefaultArg {
+    Bool(syn::LitBool),
+    Ident(syn::Ident),
+    Int(syn::LitInt),
+    Str(syn::LitStr),
+    Empty,
 }
 
 pub trait FieldWrapper {
     fn name(&self) -> &Ident;
     fn full_type(&self) -> &syn::Path;
     fn type_path(&self) -> &syn::Path;
-    fn default_value(&self) -> Option<syn::LitBool>;
+    fn default_value(&self) -> Option<DefaultArg>;
     fn is_sequence_group(&self) -> bool;
     fn field_type(&self) -> (Option<GenericType>, FieldType);
     fn define_line(&self) -> proc_macro2::TokenStream;
@@ -57,14 +47,27 @@ impl FieldWrapper for syn::Field {
         }
     }
 
-    fn default_value(&self) -> Option<syn::LitBool> {
+    fn default_value(&self) -> Option<DefaultArg> {
         if self.attrs.is_empty() {
-            None
-        } else {
-            let attr = &self.attrs[0];
-            let res: syn::Result<syn::LitBool> = attr.parse_args();
-            res.ok()
+            return None;
         }
+        let attr = &self.attrs[0];
+        if attr.path.segments[0].ident != "default" {
+            return None;
+        }
+
+        let res = if let Ok(lit_bool) = attr.parse_args::<syn::LitBool>() {
+            DefaultArg::Bool(lit_bool)
+        } else if let Ok(lit_int) = attr.parse_args::<syn::LitInt>() {
+            DefaultArg::Int(lit_int)
+        } else if let Ok(ident) = attr.parse_args::<syn::Ident>() {
+            DefaultArg::Ident(ident)
+        } else if let Ok(ident) = attr.parse_args::<syn::LitStr>() {
+            DefaultArg::Str(ident)
+        } else {
+            DefaultArg::Empty
+        };
+        Some(res)
     }
 
     fn is_sequence_group(&self) -> bool {
@@ -132,7 +135,7 @@ impl FieldWrapper for syn::Field {
             }
         } else {
             if self.is_sequence_group() {
-                quote! (let #name = #ty::parse(node)?;)
+                quote! (let mut #name = #ty::default();)
             } else if field_type == FieldType::Text {
                 quote! (let #name: #ty = node.text().map(|s| s.to_string())?;)
             } else {
@@ -148,9 +151,11 @@ impl FieldWrapper for syn::Field {
 
         let match_line = match field_type {
             FieldType::Element | FieldType::Attribute => quote!(#ty::NAME),
-            FieldType::ChoiceGroup => quote!(__tn__ if #ty::NAMES.contains(&__tn__)),
+            FieldType::SequenceGroup | FieldType::ChoiceGroup => {
+                quote!(__tn__ if #ty::NAMES.contains(&__tn__))
+            }
             FieldType::RawElement | FieldType::RawAttribute => quote!(&_),
-            FieldType::SequenceGroup | FieldType::Text => return None,
+            FieldType::Text => return None,
         };
 
         let parse = quote! (#ty::parse(__value__)?);
@@ -161,7 +166,11 @@ impl FieldWrapper for syn::Field {
                 GenericType::Box => quote!(#match_line => #name = Some(Box::new(#parse)),),
             }
         } else {
-            quote!(#match_line => #name = Some(#parse),)
+            if field_type == FieldType::SequenceGroup {
+                quote!(#match_line => #name.push(__value__)?,)
+            } else {
+                quote!(#match_line => #name = Some(#parse),)
+            }
         };
 
         Some(result)
@@ -183,6 +192,16 @@ impl FieldWrapper for syn::Field {
         } else {
             if field_type == FieldType::SequenceGroup {
                 quote! (#name,)
+            } else if let Some(dv) = self.default_value() {
+                let ty = self.type_path();
+                let default_val = match dv {
+                    DefaultArg::Bool(v) => quote! (#ty{0: #v.into()}),
+                    DefaultArg::Ident(v) => quote! (#ty{0: #v.into()}),
+                    DefaultArg::Int(v) => quote! (#ty{0: #v.into()}),
+                    DefaultArg::Str(v) => quote! (#ty{0: #v.into()}),
+                    DefaultArg::Empty => quote! (#ty::default()),
+                };
+                quote! (#name: #name.unwrap_or(#default_val),)
             } else {
                 quote! (#name: #name.expect(#expect_msg), )
             }
@@ -209,12 +228,12 @@ impl NamedFields for syn::FieldsNamed {
             let (_generic_type, field_type) = field.field_type();
             if let Some(match_line) = field.match_element_line() {
                 match field_type {
-                    FieldType::Element => elements_match.extend(match_line),
+                    FieldType::Element | FieldType::SequenceGroup | FieldType::ChoiceGroup => {
+                        elements_match.extend(match_line)
+                    }
                     FieldType::RawElement => default_element = Some(match_line),
                     FieldType::Attribute => attributes_match.extend(match_line),
                     FieldType::RawAttribute => default_attribute = Some(match_line),
-                    FieldType::ChoiceGroup => elements_match.extend(match_line),
-                    FieldType::SequenceGroup => {}
                     FieldType::Text => {}
                 }
             }
@@ -253,7 +272,6 @@ impl NamedFields for syn::FieldsNamed {
             }
         )
     }
-
 }
 
 #[derive(Debug)]

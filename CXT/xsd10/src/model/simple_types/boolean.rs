@@ -68,6 +68,7 @@ mod tests {
         assert!(!Boolean::from_str("0").unwrap().0);
         assert!(Boolean::from_str("1").unwrap().0);
         assert!(Boolean::from_str("true").unwrap().0);
+        assert_eq!(Boolean::from_str("true").unwrap(), true.into());
     }
 
     #[test]
