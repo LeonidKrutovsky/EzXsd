@@ -54,7 +54,7 @@ pub struct LocalComplexType {
 
 #[cfg(test)]
 mod test {
-    use crate::model::groups::ComplexTypeModel;
+    use crate::model::groups::{ComplexTypeModel, TypeDefParticle};
     use crate::model::TopLevelComplexType;
 
     #[test]
@@ -90,5 +90,39 @@ mod test {
         } else {
             panic!("test_parse_top_level_complex_type failed!");
         }
+    }
+
+    #[test]
+    fn test_parse_top_level_complex_type_with_sequence() {
+        let doc = roxmltree::Document::parse(
+            r##"
+	<complexType name="FloatRange" xmlns="http://www.w3.org/2001/XMLSchema" id="ID" a='a'>
+		<annotation>
+			<documentation>DocText</documentation>
+		</annotation>
+		<sequence>
+			<element name="Min" type="xs:float"/>
+			<element name="Max" type="xs:float"/>
+		</sequence>
+	</complexType>
+                 "##,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res = TopLevelComplexType::parse(root).unwrap();
+        assert_eq!(res.annotation.as_ref().unwrap().documentations[0].text.as_ref().unwrap(), "DocText");
+        assert_eq!(res.attributes.len(), 1);
+        assert_eq!(res.id.as_ref().unwrap().0.as_ref(), "ID");
+        assert_eq!(res.name.0.as_ref(), "FloatRange");
+
+        if let ComplexTypeModel::Content(tdp, _) = &res.model {
+            if let TypeDefParticle::Sequence(val) = tdp.as_ref().unwrap() {
+            assert_eq!(val.nested_particle.len(), 2);
+            } else {
+                panic!();
+            }
+        }
+
+
     }
 }
