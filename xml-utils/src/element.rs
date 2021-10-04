@@ -29,10 +29,6 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
                 #parse_method
             }
         );
-
-        if struct_name == "TopLevelComplexType" {
-            println!("*** {}", output)
-        }
     }
     output.into()
 }
