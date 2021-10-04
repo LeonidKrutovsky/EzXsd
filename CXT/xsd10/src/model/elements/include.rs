@@ -26,3 +26,29 @@ pub struct Include {
     pub id: Option<attributes::Id>,
     pub schema_location: attributes::SchemaLocation,
 }
+
+#[cfg(test)]
+mod test {
+    use super::Include;
+
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<include id="ID" schemaLocation="http://uri" b='a'>
+                    <annotation>
+                        <appinfo>Some appinfo</appinfo>
+                        <documentation>Some doc2</documentation>
+                    </annotation>
+            </include>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: Include = Include::parse(root).unwrap();
+        assert_eq!(res.annotation.as_ref().unwrap().documentations.len(), 1);
+        assert_eq!(res.annotation.unwrap().app_infos.len(), 1);
+        assert_eq!(res.attributes.len(), 1);
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert_eq!(res.schema_location.0.as_ref(), "http://uri");
+    }
+}
+
