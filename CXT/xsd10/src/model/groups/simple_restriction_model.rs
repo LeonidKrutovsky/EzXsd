@@ -52,18 +52,68 @@ impl SimpleRestrictionModel {
     ];
 
     pub fn push(&mut self, node: roxmltree::Node<'_, '_>) -> Result<(), String> {
-        let mut result = Self::default();
-        for ch in node.children().filter(|n| n.is_element()) {
-            match ch.tag_name().name() {
-                elements::LocalSimpleType::NAME => {
-                    result.simple_type = Some(elements::LocalSimpleType::parse(ch)?)
-                }
-                tag_name if Facets::NAMES.contains(&tag_name) => {
-                    result.facets.push(Facets::parse(ch)?)
-                }
-                _ => {}
+        match node.tag_name().name() {
+            elements::LocalSimpleType::NAME => {
+                self.simple_type = Some(elements::LocalSimpleType::parse(node)?)
             }
+            tag_name if Facets::NAMES.contains(&tag_name) => {
+                self.facets.push(Facets::parse(node)?)
+            }
+            _ => {}
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::model::groups::facets::Facets;
+    use crate::model::groups::simple_restriction_model::SimpleRestrictionModel;
+
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<root id="ID" a='b' b='a'>
+                <simpleType id="STN">
+                    <list itemType="ListOfType" />
+                </simpleType>
+                <minInclusive value="1"/>
+                <maxInclusive value="5"/>
+                <pattern value="[0-9]"/>
+                </root>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let mut res = SimpleRestrictionModel::default();
+        for ch in root.children().filter(|e| e.is_element()) {
+            match ch.tag_name().name() {
+                tn if SimpleRestrictionModel::NAMES.contains(&tn) => {
+                    assert!(res.push(ch).is_ok());
+                }
+                &_ => {}
+            }
+        }
+
+        println!("{:?}", res);
+
+        assert_eq!(res.simple_type.unwrap().id.unwrap().0.as_ref(), "STN");
+        assert_eq!(res.facets.len(), 3);
+        if let Facets::MinInclusive(val) = &res.facets[0] {
+            assert_eq!(val.value.0, "1")
+        } else {
+            panic!()
+        }
+
+        if let Facets::MaxInclusive(val) = &res.facets[1] {
+            assert_eq!(val.value.0, "5")
+        } else {
+            panic!()
+        }
+
+        if let Facets::Pattern(val) = &res.facets[2] {
+            assert_eq!(val.value.0.as_ref(), "[0-9]")
+        } else {
+            panic!()
+        }
     }
 }

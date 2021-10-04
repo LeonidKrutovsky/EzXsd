@@ -20,5 +20,6 @@ pub struct MaxInclusive {
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub value: attributes::Value,
+    #[default]
     pub fixed: attributes::FixedBool,
 }
