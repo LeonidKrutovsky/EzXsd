@@ -48,3 +48,32 @@ impl AttrDecls {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::model::groups::attr_decls::AttrDecls;
+
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<root xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                   <xs:attribute name="Attr1" type="xs:boolean" />
+                   <xs:attribute name="Attr2" type="xs:boolean" />
+                   <xs:attribute name="Attr3" type="xs:boolean" />
+                   <xs:anyAttribute processContents="lax"/>
+                   </root>"#,
+        )
+        .unwrap();
+
+        let root = doc.root_element();
+        let mut res = AttrDecls::default();
+        for ch in root.children().filter(|n| n.is_element()) {
+            assert!(res.push(ch).is_ok());
+        }
+
+        assert_eq!(res.attribute_groups.len(), 0);
+        assert_eq!(res.attributes.len(), 3);
+        assert!(res.any_attribute.is_some());
+    }
+}
+
