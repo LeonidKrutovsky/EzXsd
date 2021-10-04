@@ -83,3 +83,43 @@ pub struct ComplexRestriction {
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_parse_restriction() {
+        let doc = roxmltree::Document::parse(
+            r#"<restriction xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="ID" base="xsd:Type1" a='b' b='a'>
+                    <xsd:annotation>
+						<xsd:documentation>Text</xsd:documentation>
+					</xsd:annotation>
+
+                    <xsd:minExclusive value="2"/>
+                    <xsd:minInclusive value="1"/>
+                    <xsd:maxExclusive value="6"/>
+                    <xsd:maxInclusive value="5"/>
+
+                    <xsd:totalDigits value="1"/>
+                    <xsd:fractionDigits value="1"/>
+                    <xsd:length value="1"/>
+                    <xsd:minLength value="1"/>
+
+                    <xsd:maxLength value="1"/>
+                    <xsd:enumeration value="4"/>
+                    <xsd:whiteSpace value="collapse"/>
+                    <xsd:pattern value="[2-5]"/>
+            </restriction>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res = Restriction::parse(root).unwrap();
+        assert!(res.annotation.is_some());
+        assert_eq!(res.attributes.len(), 2);
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert_eq!(res.base.as_ref().unwrap().0.name(), "Type1");
+        assert_eq!(res.base.as_ref().unwrap().0.prefix().unwrap(), "xsd");
+        let model = &res.model;
+        assert_eq!(model.facets.len(), 12);
+    }
+}

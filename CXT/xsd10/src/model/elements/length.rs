@@ -27,6 +27,7 @@ use xml_utils::element;
 pub struct Length {
     pub annotation: Option<elements::Annotation>,
     pub id: Option<attributes::Id>,
+    #[default]
     pub fixed: attributes::FixedBool,
     pub value: attributes::NonNegativeValue,
     pub attributes: Vec<attributes::RawAttribute>,

@@ -28,6 +28,7 @@ use xml_utils::element;
 pub struct TotalDigits {
     pub annotation: Option<elements::Annotation>,
     pub id: Option<attributes::Id>,
+    #[default]
     pub fixed: attributes::FixedBool,
     pub value: attributes::PositiveValue,
     pub attributes: Vec<attributes::RawAttribute>,
