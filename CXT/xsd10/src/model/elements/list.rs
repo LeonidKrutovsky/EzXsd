@@ -31,3 +31,27 @@ pub struct List {
     pub id: Option<attributes::Id>,
     pub item_type: Option<attributes::ItemType>,
 }
+
+#[cfg(test)]
+mod test {
+    use super::List;
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<list id="ID" a='b' b='a'>
+                <simpleType id="STN">
+                    <list itemType="ListOfType" />
+                </simpleType>
+            </list>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: List = List::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.attributes.len(), 2);
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
+        assert!(res.item_type.is_none());
+        assert_eq!(res.simple_type.unwrap().id.unwrap().0.as_ref(), "STN");
+    }
+}
+
