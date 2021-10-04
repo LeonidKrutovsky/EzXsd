@@ -1,7 +1,7 @@
+use crate::utils::unpack_generic_argument;
 use proc_macro2::{Ident, TokenStream};
 use quote::quote;
 use syn::parse::{Parse, ParseStream};
-use crate::utils::unpack_generic_argument;
 
 #[derive(Debug)]
 pub struct DefaultArgument {
@@ -23,10 +23,13 @@ impl Parse for DefaultArgument {
 pub trait FieldWrapper {
     fn name(&self) -> &Ident;
     fn full_type(&self) -> &syn::Path;
+    fn type_path(&self) -> &syn::Path;
     fn default_value(&self) -> Option<syn::LitBool>;
     fn is_sequence_group(&self) -> bool;
     fn field_type(&self) -> (Option<GenericType>, FieldType);
     fn define_line(&self) -> proc_macro2::TokenStream;
+    fn match_element_line(&self) -> Option<proc_macro2::TokenStream>;
+    fn assigment_line(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream;
 }
 
 impl FieldWrapper for syn::Field {
@@ -41,6 +44,16 @@ impl FieldWrapper for syn::Field {
             &type_path.path
         } else {
             unreachable!()
+        }
+    }
+
+    fn type_path(&self) -> &syn::Path {
+        let segment = &self.full_type().segments[0];
+        let generic_type = GenericType::new(&segment.ident);
+        if generic_type.is_some() {
+            unpack_generic_argument(&segment.arguments)
+        } else {
+            &self.full_type()
         }
     }
 
@@ -62,19 +75,30 @@ impl FieldWrapper for syn::Field {
         }
     }
 
-
     fn field_type(&self) -> (Option<GenericType>, FieldType) {
         let generic_type = GenericType::new(&self.full_type().segments[0].ident);
-        let ident = &if generic_type.is_some() {
+        let segments = &if generic_type.is_some() {
             unpack_generic_argument(&self.full_type().segments[0].arguments)
         } else {
             &self.full_type()
-        }.segments[0].ident;
+        }
+        .segments;
+
+        let ident = &segments[0].ident;
+        let ty = &segments.last().unwrap().ident;
 
         let field_type = if ident == "elements" {
-            FieldType::Element
+            if ty == "RawElement" {
+                FieldType::RawElement
+            } else {
+                FieldType::Element
+            }
         } else if ident == "attributes" {
-            FieldType::Attribute
+            if ty == "RawAttribute" {
+                FieldType::RawAttribute
+            } else {
+                FieldType::Attribute
+            }
         } else if ident == "groups" {
             if self.is_sequence_group() {
                 FieldType::SequenceGroup
@@ -94,7 +118,6 @@ impl FieldWrapper for syn::Field {
         let ty = self.full_type();
         let (generic_type, field_type) = self.field_type();
 
-
         if let Some(gt) = generic_type {
             match gt {
                 GenericType::Option => {
@@ -103,7 +126,6 @@ impl FieldWrapper for syn::Field {
                     } else {
                         quote! (let mut #name: #ty = None;)
                     }
-
                 }
                 GenericType::Vec => quote! (let mut #name: #ty = vec![];),
                 GenericType::Box => quote! (let mut #name: Option<#ty> = None;),
@@ -118,201 +140,120 @@ impl FieldWrapper for syn::Field {
             }
         }
     }
+
+    fn match_element_line(&self) -> Option<proc_macro2::TokenStream> {
+        let name = self.name();
+        let ty = self.type_path();
+        let (generic_type, field_type) = self.field_type();
+
+        let match_line = match field_type {
+            FieldType::Element | FieldType::Attribute => quote!(#ty::NAME),
+            FieldType::ChoiceGroup => quote!(__tn__ if #ty::NAMES.contains(&__tn__)),
+            FieldType::RawElement | FieldType::RawAttribute => quote!(&_),
+            FieldType::SequenceGroup | FieldType::Text => return None,
+        };
+
+        let parse = quote! (#ty::parse(__value__)?);
+        let result = if let Some(gt) = generic_type {
+            match gt {
+                GenericType::Option => quote!(#match_line => #name = Some(#parse),),
+                GenericType::Vec => quote!(#match_line => #name.push(#parse),),
+                GenericType::Box => quote!(#match_line => #name = Some(Box::new(#parse)),),
+            }
+        } else {
+            quote!(#match_line => #name = Some(#parse),)
+        };
+
+        Some(result)
+    }
+
+    fn assigment_line(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream {
+        let name = self.name();
+        let expect_msg = format!(
+            "Invalid <xsd:{}> element. Required field: {}",
+            elem_name.value(),
+            name
+        );
+        let (generic_type, field_type) = self.field_type();
+        if let Some(gt) = generic_type {
+            match gt {
+                GenericType::Option | GenericType::Vec => quote! (#name, ),
+                GenericType::Box => quote! (#name: #name.expect(#expect_msg), ),
+            }
+        } else {
+            if field_type == FieldType::SequenceGroup {
+                quote! (#name,)
+            } else {
+                quote! (#name: #name.expect(#expect_msg), )
+            }
+        }
+    }
 }
 
 pub trait NamedFields {
-    fn impl_parse(&self) -> proc_macro2::TokenStream;
+    fn impl_parse(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream;
 }
 
 impl NamedFields for syn::FieldsNamed {
-    fn impl_parse(&self) -> TokenStream {
+    fn impl_parse(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream {
         let mut fields_define = quote!();
-        let mut fields_match = quote!();
+        let mut elements_match = quote!();
         let mut attributes_match = quote!();
         let mut assign_lines = quote!();
 
+        let mut default_element: Option<proc_macro2::TokenStream> = None;
+        let mut default_attribute: Option<proc_macro2::TokenStream> = None;
+
         for field in &self.named {
             fields_define.extend(field.define_line());
+            let (_generic_type, field_type) = field.field_type();
+            if let Some(match_line) = field.match_element_line() {
+                match field_type {
+                    FieldType::Element => elements_match.extend(match_line),
+                    FieldType::RawElement => default_element = Some(match_line),
+                    FieldType::Attribute => attributes_match.extend(match_line),
+                    FieldType::RawAttribute => default_attribute = Some(match_line),
+                    FieldType::ChoiceGroup => elements_match.extend(match_line),
+                    FieldType::SequenceGroup => {}
+                    FieldType::Text => {}
+                }
+            }
+            assign_lines.extend(field.assigment_line(elem_name))
+        }
+
+        if let Some(de) = default_element {
+            elements_match.extend(de);
+        } else {
+            elements_match.extend(quote!(&_ => Err(format!("Invalid <xsd:{}> element. Unexpected node: {:?}", #elem_name, __value__))?));
+        }
+
+        if let Some(da) = default_attribute {
+            attributes_match.extend(da);
+        } else {
+            attributes_match.extend(quote!(&_ => Err(format!("Invalid <xsd:{}> element. Unexpected attribute: {:?}", #elem_name, __value__))?));
         }
 
         quote!(
             pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
                 #fields_define
-                #fields_match
-                #attributes_match
+                for __value__ in node.children().filter(|n| n.is_element()) {
+                    match __value__.tag_name().name() {
+                        #elements_match
+                    }
+                }
+                for __value__ in node.attributes() {
+                    match __value__.name() {
+                        #attributes_match
+                    }
+                }
+
                 Ok(Self{
                     #assign_lines
                 })
             }
         )
     }
-}
 
-#[derive(Debug)]
-pub struct Field {
-    pub name: Ident,
-    pub type_name: Ident,
-    pub type_scope: Option<Ident>,
-    pub generic_type: Option<GenericType>,
-}
-
-impl Field {
-    pub const COMPLEX_GROUPS: &'static [&'static str] =
-        &["AttrDecls", "ComplexTypeModel", "ElementModel", "SimpleRestrictionModel"];
-
-    pub fn new(
-        name: &Ident,
-        type_name: &Ident,
-        type_scope: Option<&Ident>,
-        generic_type: &Ident,
-    ) -> Self {
-        let generic_type = if generic_type == "Option" {
-            Some(GenericType::Option)
-        } else if generic_type == "Vec" {
-            Some(GenericType::Vec)
-        } else if generic_type == "Box" {
-            Some(GenericType::Box)
-        } else {
-            None
-        };
-
-        Self {
-            name: name.clone(),
-            type_name: type_name.clone(),
-            type_scope: type_scope.map(|t| t.clone()),
-            generic_type,
-        }
-    }
-
-    pub fn full_type(&self) -> TokenStream {
-        let type_name = &self.type_name;
-        if let Some(type_scope) = &self.type_scope {
-            quote!(#type_scope::#type_name)
-        } else {
-            quote!(#type_name)
-        }
-    }
-
-    pub fn define_line(&self) -> TokenStream {
-        let name = &self.name;
-        let ty = &self.full_type();
-
-        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
-            return quote! (
-                let #name = #ty::parse(node)?;
-            );
-        }
-
-        if let Some(gt) = &self.generic_type {
-            match gt {
-                GenericType::Option => quote! (
-                    let mut #name: Option<#ty> = None;
-                ),
-                GenericType::Vec => quote! (
-                    let mut #name: Vec<#ty> = vec![];
-                ),
-                GenericType::Box => quote! (
-                    let mut #name: Option<Box<#ty>> = None;
-                ),
-            }
-        } else {
-            quote! (let mut #name: Option<#ty> = None;)
-        }
-    }
-
-    pub fn define_text_line(&self) -> TokenStream {
-        let name = &self.name;
-        let ty = self.full_type();
-        if let Some(gt) = &self.generic_type {
-            match gt {
-                GenericType::Option => quote! (
-                    let #name: Option<#ty> = node.text().map(|s| s.to_string());
-                ),
-                GenericType::Vec => unreachable!("Vec of texts are not supported"),
-                GenericType::Box => unreachable!("Box of text are not supported"),
-            }
-        } else {
-            quote! (let #name: #ty = node.text().map(|s| s.to_string());)
-        }
-    }
-
-    pub fn group_match_line(&self) -> TokenStream {
-        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
-            return quote!();
-        }
-        let ty = self.full_type();
-        self.match_line(quote! (some_tag_name if #ty::NAMES.contains(&some_tag_name)))
-    }
-
-    pub fn element_match_line(&self) -> TokenStream {
-        let ty = self.full_type();
-        self.match_line(quote! (#ty::NAME))
-    }
-
-    pub fn attribute_match_line(&self) -> TokenStream {
-        let name = &self.name;
-        let ty = self.full_type();
-        let parse_line = quote! (
-            #ty::parse(attr)?
-        );
-        if let Some(generic_type) = &self.generic_type {
-            match generic_type {
-                GenericType::Option => quote! (
-                    #ty::NAME => {#name = Some(#parse_line)},
-                ),
-                GenericType::Vec => quote! (
-                    #ty::NAME => {#name.push(#parse_line)},
-                ),
-                GenericType::Box => quote! (
-                    #ty::NAME => {#name = Some(Box::new(#parse_line))},
-                ),
-            }
-        } else {
-            quote! (
-                #ty::NAME => {#name = Some(#parse_line)},
-            )
-        }
-    }
-
-    pub fn assigment_line(&self) -> TokenStream {
-        let name = &self.name;
-        if Self::COMPLEX_GROUPS.contains(&self.type_name.to_string().as_ref()) {
-            return quote!(#name, );
-        }
-
-        let expect_msg = format!("Required field: {}", name);
-        if let Some(generic_type) = &self.generic_type {
-            match generic_type {
-                GenericType::Option => quote! (#name, ),
-                GenericType::Vec => quote! (#name, ),
-                GenericType::Box => quote! (#name: #name.expect(#expect_msg), ),
-            }
-        } else {
-            quote! (#name: #name.expect(#expect_msg), )
-        }
-    }
-
-    fn match_line(&self, match_pattern: TokenStream) -> TokenStream {
-        let name = &self.name;
-        let ty = self.full_type();
-        if let Some(generic_type) = &self.generic_type {
-            match generic_type {
-                GenericType::Option => quote! (
-                    #match_pattern => {#name = Some(#ty::parse(ch)?)},
-                ),
-                GenericType::Vec => quote! (
-                    #match_pattern => {#name.push(#ty::parse(ch)?)},
-                ),
-                GenericType::Box => quote! (
-                    #match_pattern => {#name = Some(Box::new(#ty::parse(ch)?))},
-                ),
-            }
-        } else {
-            quote! (
-                #match_pattern => {#name = Some(#ty::parse(ch)?)},
-            )
-        }
-    }
 }
 
 #[derive(Debug)]
@@ -324,7 +265,7 @@ pub enum GenericType {
 
 impl GenericType {
     pub fn new(ident: &Ident) -> Option<Self> {
-        Some (if ident == "Option" {
+        Some(if ident == "Option" {
             Self::Option
         } else if ident == "Vec" {
             Self::Vec
@@ -339,22 +280,10 @@ impl GenericType {
 #[derive(Debug, PartialEq)]
 pub enum FieldType {
     Element,
+    RawElement,
     Attribute,
+    RawAttribute,
     ChoiceGroup,
     SequenceGroup,
-    Text
-}
-
-impl FieldType {
-    pub fn new(ident: &Ident) -> Option<Self> {
-        Some (if ident == "element" {
-            Self::Element
-        } else if ident == "attribute" {
-            Self::Attribute
-        } else if ident == "group" {
-            Self::ChoiceGroup
-        } else {
-            return None;
-        })
-    }
+    Text,
 }

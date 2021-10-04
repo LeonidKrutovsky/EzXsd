@@ -57,3 +57,7 @@ pub struct TopLevelElement {
     pub final_: Option<attributes::Final>,
     pub block: Option<attributes::Block>,
 }
+
+impl TopLevelElement {
+
+}

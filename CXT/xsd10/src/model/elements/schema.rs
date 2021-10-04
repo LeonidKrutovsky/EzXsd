@@ -1,6 +1,9 @@
-use crate::model::{Include, Import, Redefine, Annotation};
+use crate::model::attributes::{
+    AttributeFormDefault, BlockDefault, ElementFormDefault, FinalDefault, Id, Language,
+    RawAttribute, TargetNamespace, Version,
+};
 use crate::model::groups::SchemaTop;
-use crate::model::attributes::{RawAttribute, TargetNamespace, Version, FinalDefault, BlockDefault, AttributeFormDefault, ElementFormDefault, Id, Language};
+use crate::model::{Annotation, Import, Include, Redefine};
 
 // xsd:schema
 // See http://www.w3.org/TR/xmlschema-1/#element-schema.
@@ -49,7 +52,7 @@ use crate::model::attributes::{RawAttribute, TargetNamespace, Version, FinalDefa
 // key	attributeGroup 	    xs:attributeGroup	                @name
 // key	notation	        xs:notation	                        @name
 // key	identityConstraint	.//xs:key|.//xs:unique|.//xs:keyref	@name
-#[derive(Debug,Default)]
+#[derive(Debug, Default)]
 pub struct Schema {
     pub includes: Vec<Include>,
     pub imports: Vec<Import>,
@@ -67,7 +70,6 @@ pub struct Schema {
     pub id: Option<Id>,
     pub lang: Option<Language>,
 }
-
 
 impl Schema {
     pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
@@ -115,7 +117,7 @@ impl Schema {
                     }
                     Id::NAME => schema.id = Some(Id::parse(attr)?),
                     Language::NAME => schema.lang = Some(Language::parse(attr)?),
-                    _ => schema.attributes.push(RawAttribute::parse(attr)?)
+                    _ => schema.attributes.push(RawAttribute::parse(attr)?),
                 }
             }
         }

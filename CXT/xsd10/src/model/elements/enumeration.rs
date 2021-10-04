@@ -1,5 +1,5 @@
-use xml_utils::element;
 use crate::model::{attributes, elements};
+use xml_utils::element;
 
 // xsd:enumeration
 // See http://www.w3.org/TR/xmlschema-2/#element-enumeration.
@@ -29,3 +29,4 @@ pub struct Enumeration {
     pub value: attributes::Value,
     pub attributes: Vec<attributes::RawAttribute>,
 }
+

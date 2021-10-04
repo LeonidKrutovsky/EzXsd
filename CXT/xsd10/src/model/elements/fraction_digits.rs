@@ -1,5 +1,5 @@
-use xml_utils::element;
 use crate::model::{attributes, elements};
+use xml_utils::element;
 
 // xsd:fractionDigits
 // See http://www.w3.org/TR/xmlschema-2/#element-fractionDigits.
@@ -31,4 +31,3 @@ pub struct FractionDigits {
     pub value: attributes::NonNegativeValue,
     pub attributes: Vec<attributes::RawAttribute>,
 }
-

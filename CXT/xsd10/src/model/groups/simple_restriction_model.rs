@@ -38,7 +38,9 @@ impl SimpleRestrictionModel {
         let mut result = Self::default();
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.tag_name().name() {
-                elements::LocalSimpleType::NAME => result.simple_type = Some(elements::LocalSimpleType::parse(node)?),
+                elements::LocalSimpleType::NAME => {
+                    result.simple_type = Some(elements::LocalSimpleType::parse(node)?)
+                }
                 tag_name if Facets::NAMES.contains(&tag_name) => {
                     result.facets.push(Facets::parse(ch)?)
                 }

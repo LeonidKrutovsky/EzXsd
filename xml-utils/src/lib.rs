@@ -4,7 +4,6 @@ mod element;
 mod field;
 mod groups;
 mod named_argument;
-mod struct_fields;
 mod utils;
 
 extern crate proc_macro;
@@ -14,7 +13,7 @@ use syn::parse_macro_input;
 
 use crate::attribute::xsd_attribute;
 use crate::complex_type::xsd_complex_type;
-use crate::element::{xsd_element};
+use crate::element::xsd_element;
 use crate::groups::xsd_group;
 use crate::named_argument::NamedArgument;
 

@@ -1,5 +1,5 @@
-use xml_utils::element;
 use crate::model::{attributes, elements, groups};
+use xml_utils::element;
 
 // Element information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -12,7 +12,7 @@ use crate::model::{attributes, elements, groups};
 #[element(name = "extension")]
 pub struct SimpleExtension {
     pub annotation: Option<elements::Annotation>,
-     #[sequence_group]
+    #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -36,10 +36,9 @@ pub struct SimpleExtension {
 pub struct Extension {
     pub annotation: Option<elements::Annotation>,
     pub type_def_particle: Option<groups::TypeDefParticle>,
-     #[sequence_group]
+    #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
 }
-

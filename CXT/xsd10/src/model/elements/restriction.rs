@@ -39,7 +39,7 @@ use xml_utils::element;
 #[element(name = "restriction")]
 pub struct Restriction {
     pub annotation: Option<elements::Annotation>,
-     #[sequence_group]
+    #[sequence_group]
     pub model: groups::SimpleRestrictionModel,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -56,9 +56,9 @@ pub struct Restriction {
 #[element(name = "restriction")]
 pub struct SimpleRestriction {
     pub annotation: Option<elements::Annotation>,
-     #[sequence_group]
+    #[sequence_group]
     pub model: groups::SimpleRestrictionModel,
-     #[sequence_group]
+    #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub id: Option<attributes::Id>,
     pub base: attributes::Base,
@@ -77,7 +77,7 @@ pub struct SimpleRestriction {
 pub struct ComplexRestriction {
     pub annotation: Option<elements::Annotation>,
     pub type_def_particle: Option<groups::TypeDefParticle>,
-     #[sequence_group]
+    #[sequence_group]
     pub attr_decls: groups::AttrDecls,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,

@@ -17,7 +17,7 @@ use xml_utils::element;
 #[element(name = "complexType")]
 pub struct TopLevelComplexType {
     pub annotation: Option<elements::Annotation>,
-     #[sequence_group]
+    #[sequence_group]
     pub model: groups::ComplexTypeModel,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
@@ -42,7 +42,7 @@ pub struct TopLevelComplexType {
 #[element(name = "complexType")]
 pub struct LocalComplexType {
     pub annotation: Option<elements::Annotation>,
-     #[sequence_group]
+    #[sequence_group]
     pub model: groups::ComplexTypeModel,
     pub id: Option<attributes::Id>,
     pub mixed: attributes::Mixed,
