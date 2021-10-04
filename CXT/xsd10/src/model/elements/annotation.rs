@@ -76,10 +76,24 @@ pub struct Annotation {
 
 #[cfg(test)]
 mod test {
-    use super::*;
-
+    use crate::model::elements::annotation::Annotation;
     #[test]
-    fn test_name() {
-        assert_eq!(Annotation::NAME, "annotation");
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<annotation id="ID" lang="us" a='a' b='a'>
+            <appinfo>Some appinfo</appinfo>
+            <appinfo>Some appinfo2</appinfo>
+            <documentation>Some doc</documentation>
+            <documentation>Some doc2</documentation>
+            </annotation>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res = Annotation::parse(root).unwrap();
+        assert_eq!(res.app_infos.len(), 2);
+        assert_eq!(res.documentations.len(), 2);
+        assert_eq!(res.attributes.len(), 3);
+        assert_eq!(res.id.unwrap().0.as_ref(), "ID");
     }
 }
+

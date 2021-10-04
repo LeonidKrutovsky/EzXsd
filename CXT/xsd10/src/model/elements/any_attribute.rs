@@ -29,3 +29,25 @@ pub struct AnyAttribute {
     pub namespace: attributes::Namespace,
     pub process_contents: attributes::ProcessContents,
 }
+
+#[cfg(test)]
+mod test {
+    use super::AnyAttribute;
+    use crate::model::simple_types::namespace_list::NamespaceList;
+    use crate::model::attributes::ProcessContents;
+
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r###"<anyAttribute a='a' b='b' namespace="##any" processContents="lax" c='c'/>"###,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res = AnyAttribute::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.attributes.len(), 3);
+        assert_eq!(res.namespace.0, NamespaceList::Any);
+        assert_eq!(res.process_contents, ProcessContents::Lax);
+    }
+}
+

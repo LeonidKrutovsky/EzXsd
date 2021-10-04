@@ -2,6 +2,8 @@ use std::convert::{TryFrom, TryInto};
 
 use roxmltree::Node;
 
+mod tests;
+
 pub use all::All;
 pub use all::AllType;
 pub use annotation::Annotation;

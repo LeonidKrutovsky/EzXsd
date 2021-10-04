@@ -38,3 +38,27 @@ pub struct Any {
     #[default]
     pub max_occurs: attributes::MaxOccurs,
 }
+
+#[cfg(test)]
+mod test {
+    use crate::model::elements::any::Any;
+    use crate::model::simple_types::namespace_list::NamespaceList;
+    use crate::model::attributes::process_contents::ProcessContents;
+    use crate::model::attributes::max_occurs::MaxOccurs;
+
+    #[test]
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r###"<any a='a' b='b' namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" c='c'/>"###,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: Any = Any::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.attributes.len(), 3);
+        assert_eq!(res.namespace.0, NamespaceList::Any);
+        assert_eq!(res.process_contents, ProcessContents::Lax);
+        assert_eq!(res.min_occurs.0, "0".parse().unwrap());
+        assert_eq!(res.max_occurs, MaxOccurs::Unbounded);
+    }
+}

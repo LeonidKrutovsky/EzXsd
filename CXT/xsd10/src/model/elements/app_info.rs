@@ -30,10 +30,23 @@ pub struct AppInfo {
 
 #[cfg(test)]
 mod test {
-    use super::*;
+    use super::AppInfo;
 
     #[test]
-    fn test_name() {
-        assert_eq!(AppInfo::NAME, "appinfo");
+    fn test_parse() {
+        let doc = roxmltree::Document::parse(
+            r#"<appInfo source="http://ya.com" lang="us" a='a' b='a'>
+            A string
+            <el>Some element</el>
+            </appInfo>"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: AppInfo = AppInfo::parse(root).unwrap();
+        assert_eq!(res.text.unwrap().trim(), "A string");
+        assert_eq!(res.source.unwrap().0.as_ref(), "http://ya.com");
+        assert_eq!(res.attributes.len(), 3);
+        assert_eq!(res.elements.len(), 1);
+        assert_eq!(res.elements[0].text.as_ref().unwrap(), "Some element");
     }
 }
