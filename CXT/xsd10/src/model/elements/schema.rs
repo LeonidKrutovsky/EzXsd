@@ -100,8 +100,9 @@ impl Schema {
                     _ => {}
                 }
             }
+        }
 
-            for attr in node.attributes() {
+        for attr in node.attributes() {
                 match attr.name() {
                     TargetNamespace::NAME => {
                         schema.target_namespace = Some(TargetNamespace::parse(attr)?)
@@ -120,7 +121,6 @@ impl Schema {
                     _ => schema.attributes.push(RawAttribute::parse(attr)?),
                 }
             }
-        }
         Ok(schema)
     }
 }

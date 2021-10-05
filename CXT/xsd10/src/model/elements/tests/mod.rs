@@ -5,7 +5,11 @@ mod schema;
 
 pub fn parse_document<'a>(doc: &'a roxmltree::Document) -> Result<Schema, String> {
     let schema_node = doc.root_element();
-    Schema::parse(schema_node)
+    let res = Schema::parse(schema_node);
+    if res.is_err() {
+        println!("{}", res.as_ref().err().unwrap())
+    }
+    res
 }
 
 #[cfg(test)]

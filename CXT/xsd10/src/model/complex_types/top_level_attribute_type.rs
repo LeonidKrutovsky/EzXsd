@@ -32,7 +32,7 @@ use xml_utils::complex_type;
 #[complex_type()]
 pub struct TopLevelAttributeType {
     pub annotation: Option<elements::Annotation>,
-    pub simple_type: Option<elements::TopLevelSimpleType>,
+    pub simple_type: Option<elements::LocalSimpleType>,
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,

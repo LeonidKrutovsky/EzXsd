@@ -1,7 +1,7 @@
-use crate::field::{FieldWrapper, NamedFields};
 use quote::quote;
 use syn::{Fields, ItemStruct};
 
+use crate::field::{FieldWrapper, NamedFields};
 use crate::named_argument::NamedArgument;
 
 pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStream {

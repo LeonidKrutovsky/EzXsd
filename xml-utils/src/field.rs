@@ -203,7 +203,7 @@ impl FieldWrapper for syn::Field {
                 };
                 quote! (#name: #name.unwrap_or(#default_val),)
             } else {
-                quote! (#name: #name.expect(#expect_msg), )
+                quote! (#name: #name.ok_or_else(|| format!("{}. Node: {:?}", #expect_msg, node))?, )
             }
         }
     }

@@ -1,3 +1,7 @@
+use xml_utils::attribute;
+
+use crate::model::simple_types::NCName;
+
 // name
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -17,12 +21,6 @@
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:keybase (Elements xsd:unique , xsd:key)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-//
-
-use crate::model::simple_types::NCName;
-
-use xml_utils::*;
-
 #[attribute(name = "name")]
 #[derive(Clone)]
 pub struct Name(pub NCName);
