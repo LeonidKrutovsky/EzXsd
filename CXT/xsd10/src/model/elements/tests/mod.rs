@@ -1,13 +1,21 @@
+use crate::model::Schema;
+
 mod complex_type;
 mod schema;
 
+pub fn parse_document<'a>(doc: &'a roxmltree::Document) -> Result<Schema, String> {
+    let schema_node = doc.root_element();
+    Schema::parse(schema_node)
+}
+
 #[cfg(test)]
 mod onvif_files_test {
-    use crate::xml_to_xsd::schema::parse_document;
     use roxmltree::Document;
+    use crate::model::elements::tests::parse_document;
+
     macro_rules! INPUT_PATH {
         () => {
-            "../../../input/"
+            "../../../../input/"
         };
     }
     //const INPUT_PATH: &str = "../../../input/";

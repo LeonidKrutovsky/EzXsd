@@ -27,6 +27,7 @@ pub struct AnyAttribute {
     pub id: Option<attributes::Id>,
     #[default]
     pub namespace: attributes::Namespace,
+    #[default]
     pub process_contents: attributes::ProcessContents,
 }
 

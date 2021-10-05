@@ -32,6 +32,12 @@ impl ProcessContents {
     }
 }
 
+impl Default for ProcessContents {
+    fn default() -> Self {
+        Self::Strict
+    }
+}
+
 impl FromStr for ProcessContents {
     type Err = String;
 
