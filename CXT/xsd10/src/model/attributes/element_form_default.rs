@@ -1,5 +1,6 @@
-use crate::model::simple_types::FormChoice;
 use xml_utils::attribute;
+
+use crate::model::simple_types::FormChoice;
 
 // elementFormDefault
 // Namespace: None

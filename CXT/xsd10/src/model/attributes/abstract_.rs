@@ -1,3 +1,7 @@
+use xml_utils::*;
+
+use crate::model::simple_types::Boolean;
+
 // abstract
 // Attribute information
 // Namespace: None
@@ -11,9 +15,5 @@
 // Used in
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 // Type xsd:topLevelElement (Element xsd:element)
-
-use crate::model::simple_types::Boolean;
-use xml_utils::*;
-
 #[attribute(name = "abstract")]
 pub struct Abstract(pub Boolean);

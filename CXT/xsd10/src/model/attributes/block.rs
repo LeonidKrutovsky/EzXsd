@@ -1,3 +1,7 @@
+use xml_utils::*;
+
+use crate::model::simple_types::{BlockSet, DerivationSet, DerivationSubset};
+
 // block
 // Attribute information
 // Namespace: None
@@ -19,11 +23,6 @@
 
 // Used in
 // Type xsd:topLevelComplexType (Element xsd:complexType)
-
-use crate::model::simple_types::{BlockSet, DerivationSet, DerivationSubset};
-
-use xml_utils::*;
-
 #[attribute(name = "block")]
 pub struct DerivationBlock(pub DerivationSet);
 

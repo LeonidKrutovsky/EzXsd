@@ -1,3 +1,7 @@
+use xml_utils::*;
+
+use crate::model::simple_types::String_;
+
 // default
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -13,10 +17,5 @@
 //  Type xsd:topLevelAttributeType (Element xsd:attribute)
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-
-use crate::model::simple_types::String_;
-
-use xml_utils::*;
-
 #[attribute(name = "default")]
 pub struct Default_(pub String_);

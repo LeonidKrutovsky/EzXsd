@@ -71,7 +71,7 @@ mod test {
     fn test_valid_values() {
         #[inline]
         fn is_ok(s: &str) {
-            Language::from_str(s).unwrap();
+            assert!(Language::from_str(s).is_ok());
         }
 
         is_ok("en");

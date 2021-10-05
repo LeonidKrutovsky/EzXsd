@@ -1,3 +1,7 @@
+use xml_utils::*;
+
+use crate::model::simple_types::QName;
+
 // base
 // Attribute information
 // Namespace: None
@@ -16,9 +20,5 @@
 // Type xsd:extensionType (Element xsd:extension)
 // Type xsd:simpleExtensionType (Element xsd:extension)
 // Type xsd:simpleRestrictionType (Element xsd:restriction)
-
-use crate::model::simple_types::QName;
-use xml_utils::*;
-
 #[attribute(name = "base")]
 pub struct Base(pub QName);

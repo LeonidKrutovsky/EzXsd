@@ -1,3 +1,7 @@
+use xml_utils::*;
+
+use crate::model::simple_types::FormChoice;
+
 // attributeFormDefault
 // Attribute information
 // Namespace: None
@@ -14,9 +18,5 @@
 
 // Used in
 // Anonymous type of element xsd:schema
-
-use crate::model::simple_types::FormChoice;
-use xml_utils::*;
-
 #[attribute(name = "attributeFormDefault")]
 pub struct AttributeFormDefault(pub FormChoice);
