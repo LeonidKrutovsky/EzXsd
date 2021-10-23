@@ -103,24 +103,24 @@ impl Schema {
         }
 
         for attr in node.attributes() {
-                match attr.name() {
-                    TargetNamespace::NAME => {
-                        schema.target_namespace = Some(TargetNamespace::parse(attr)?)
-                    }
-                    Version::NAME => schema.version = Some(Version::parse(attr)?),
-                    FinalDefault::NAME => schema.final_default = Some(FinalDefault::parse(attr)?),
-                    BlockDefault::NAME => schema.block_default = Some(BlockDefault::parse(attr)?),
-                    AttributeFormDefault::NAME => {
-                        schema.attribute_form_default = AttributeFormDefault::parse(attr)?
-                    }
-                    ElementFormDefault::NAME => {
-                        schema.element_form_default = ElementFormDefault::parse(attr)?
-                    }
-                    Id::NAME => schema.id = Some(Id::parse(attr)?),
-                    Language::NAME => schema.lang = Some(Language::parse(attr)?),
-                    _ => schema.attributes.push(RawAttribute::parse(attr)?),
+            match attr.name() {
+                TargetNamespace::NAME => {
+                    schema.target_namespace = Some(TargetNamespace::parse(attr)?)
                 }
+                Version::NAME => schema.version = Some(Version::parse(attr)?),
+                FinalDefault::NAME => schema.final_default = Some(FinalDefault::parse(attr)?),
+                BlockDefault::NAME => schema.block_default = Some(BlockDefault::parse(attr)?),
+                AttributeFormDefault::NAME => {
+                    schema.attribute_form_default = AttributeFormDefault::parse(attr)?
+                }
+                ElementFormDefault::NAME => {
+                    schema.element_form_default = ElementFormDefault::parse(attr)?
+                }
+                Id::NAME => schema.id = Some(Id::parse(attr)?),
+                Language::NAME => schema.lang = Some(Language::parse(attr)?),
+                _ => schema.attributes.push(RawAttribute::parse(attr)?),
             }
+        }
         Ok(schema)
     }
 }

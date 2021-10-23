@@ -46,5 +46,12 @@ pub use elements::total_digits::*;
 pub use elements::union::*;
 pub use elements::unique::*;
 pub use elements::white_space::*;
+use std::rc::Rc;
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";
+
+
+pub struct Namespace {
+    pub uri: Rc<String>,
+    pub alias: Option<String>
+}

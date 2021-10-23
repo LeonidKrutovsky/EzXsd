@@ -4,7 +4,9 @@ use std::str::FromStr;
 use num_bigint::{BigUint, ToBigUint};
 
 // xsd:nonNegativeInteger
-// The type xsd:nonNegativeInteger represents an arbitrarily large non-negative integer. An xsd:nonNegativeInteger is a sequence of digits, optionally preceded by a + sign. Leading zeros are permitted, but decimal points are not.
+// The type xsd:nonNegativeInteger represents an arbitrarily large non-negative integer.
+// An xsd:nonNegativeInteger is a sequence of digits, optionally preceded by a + sign.
+// Leading zeros are permitted, but decimal points are not.
 //
 // Simple Type Information
 // Namespace: http://www.w3.org/2001/XMLSchema

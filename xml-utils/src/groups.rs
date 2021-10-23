@@ -50,7 +50,7 @@ impl Variant for syn::Variant {
     }
 }
 
-pub fn xsd_group(item: ItemEnum) -> TokenStream {
+pub fn xsd_choice_group(item: ItemEnum) -> TokenStream {
     let enum_name = &item.ident;
     let mut names = quote!();
     let mut match_cases = quote!();

@@ -28,3 +28,7 @@ pub struct Selector {
     pub id: Option<attributes::Id>,
     pub xpath: attributes::XPath,
 }
+
+fn test() -> &'static str{
+    attributes::xpath::NAME
+}

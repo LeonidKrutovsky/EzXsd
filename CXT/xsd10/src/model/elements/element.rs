@@ -59,7 +59,7 @@ pub struct LocalElement {
     pub max_occurs: attributes::MaxOccurs,
     pub default: Option<attributes::Default_>,
     pub fixed: Option<attributes::Fixed>,
-    #[default(false)]
+    #[default]
     pub nillable: attributes::Nillable,
     pub block: Option<attributes::Block>,
     pub form: Option<attributes::Form>,

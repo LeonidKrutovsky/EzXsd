@@ -87,8 +87,8 @@ use std::convert::TryFrom;
 
 #[derive(Debug, Default)]
 pub struct RawAttribute {
-    name: QName,
-    value: AnySimpleType,
+    pub name: QName,
+    pub value: AnySimpleType,
 }
 
 impl RawAttribute {

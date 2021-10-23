@@ -12,7 +12,7 @@ path = "src/lib.rs"
 
 
 [dependencies]
-roxmltree = "0.10.1"
+roxmltree = "0.14.1"
 Inflector = "*"
 chrono = "0.4.10"
 num-bigint = "0.2.6"

@@ -1,14 +1,31 @@
 #[cfg(test)]
 mod test {
     use crate::model::simple_types::form_choice::FormChoice;
-    use crate::model::Schema;
-    use roxmltree::Document;
+    use crate::model::{Schema};
+    use roxmltree::{Document, Node};
     use crate::model::elements::tests::parse_document;
+    use crate::model::groups::{SchemaTop, SimpleDerivation};
+    use std::rc::Rc;
+
+    fn print(node: Node<'_, '_>, level: usize) {
+        let indent = " ".repeat(level);
+        println!("{}<{}>  {}", indent ,node.tag_name().name(), node.tag_name().namespace().unwrap_or(""));
+        // for ns in node.namespaces() {
+        //     println!("{}NS = {:?}", indent, ns);
+        // }
+
+        for ch in node.children().filter(|n| n.is_element()) {
+            print(ch, level+4);
+        }
+
+    }
 
     const TEXT: &str = include_str!("fixtures/schema.xsd");
     #[test]
     fn test_parse_document() {
         let doc = Document::parse(TEXT).unwrap();
+        let root = doc.root_element();
+        print(root, 0);
         let schema = parse_document(&doc).unwrap();
         assert_eq!(
             schema.target_namespace.as_ref().unwrap().0.as_ref(),

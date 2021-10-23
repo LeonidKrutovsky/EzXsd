@@ -1,5 +1,8 @@
 use crate::model::{attributes, elements};
 use xml_utils::element;
+use std::ops::{Deref, DerefMut};
+use crate::model::complex_types::key_base::KeyBase;
+use crate::model::attributes::RawAttribute;
 
 // xsd:unique
 // See http://www.w3.org/TR/xmlschema-1/#element-unique.
@@ -34,12 +37,50 @@ use xml_utils::element;
 //    <xsd:field xpath="token">
 //    </xsd:field>
 // </xsd:unique>
-#[element(name = "unique")]
-pub struct Unique {
-    pub annotation: Option<elements::Annotation>,
-    pub selector: elements::Selector,
-    pub fields: Vec<elements::Field>,
-    pub attributes: Vec<attributes::RawAttribute>,
-    pub id: Option<attributes::Id>,
-    pub name: attributes::Name,
+#[derive(Debug)]
+pub struct Unique(KeyBase);
+
+impl Deref for Unique {
+    type Target = KeyBase;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for Unique {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+impl Unique {
+    pub const NAME: &'static str = "unique";
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        Ok(Self{0: KeyBase::parse(node)?})
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use crate::model::Unique;
+
+    #[test]
+    fn test_parse() {
+         let doc = roxmltree::Document::parse(
+            r#"
+<unique name="NCName" attr1="" attr2 = "">
+   <selector xpath="token">
+   </selector>
+   <field xpath="token">
+   </field>
+</unique>
+"#,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res = Unique::parse(root).unwrap();
+        assert!(res.annotation.is_none());
+        assert_eq!(res.attributes.len(), 2);
+    }
 }

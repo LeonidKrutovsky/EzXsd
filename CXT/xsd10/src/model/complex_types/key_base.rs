@@ -1,6 +1,8 @@
 use crate::model::attributes;
 use crate::model::elements;
 use xml_utils::complex_type;
+use crate::model::attributes::RawAttribute;
+
 // xsd:keybase
 // Complex type information
 // Namespace: http://www.w3.org/2001/XMLSchema
@@ -37,4 +39,41 @@ pub struct KeyBase {
     pub attributes: Vec<attributes::RawAttribute>,
     pub id: Option<attributes::Id>,
     pub name: attributes::Name,
+}
+
+impl KeyBase {
+    pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
+        let mut annotation: Option<elements::Annotation> = None;
+        let mut selector: Option<elements::Selector> = None;
+        let mut fields: Vec<elements::Field> = vec![];
+        let mut attributes: Vec<attributes::RawAttribute> = vec![];
+        let mut id: Option<attributes::Id> = None;
+        let mut name: Option<attributes::Name> = None;
+
+        for ch in node.children().filter(|n| n.is_element()) {
+            match ch.tag_name().name() {
+                elements::Annotation::NAME => { annotation = Some(elements::Annotation::parse(ch)?) }
+                elements::Selector::NAME => { selector = Some(elements::Selector::parse(ch)?) }
+                elements::Field::NAME => { fields.push(elements::Field::parse(ch)?) }
+                _ => { Err(format!("err"))? }
+            }
+        }
+
+        for attr in node.attributes() {
+            match attr.name() {
+                attributes::Id::NAME => { id = Some(attributes::Id::parse(attr)?) }
+                attributes::Name::NAME => { name = Some(attributes::Name::parse(attr)?) }
+                _ => attributes.push(RawAttribute::parse(attr)?)
+            }
+        }
+
+        Ok(Self{
+            annotation,
+            selector: selector.ok_or_else(|| format!(""))?,
+            fields,
+            attributes,
+            id,
+            name: name.ok_or_else(|| format!(""))?,
+        })
+    }
 }

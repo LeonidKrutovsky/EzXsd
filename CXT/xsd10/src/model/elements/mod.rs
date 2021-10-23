@@ -1,4 +1,4 @@
-use std::convert::{TryFrom, TryInto};
+use std::convert::{TryInto};
 
 use roxmltree::Node;
 
@@ -100,6 +100,7 @@ pub mod white_space;
 pub struct RawElement {
     name: QName,
     attributes: Vec<attributes::RawAttribute>,
+    elements: Vec<Self>,
     text: Option<String>,
 }
 
@@ -118,54 +119,8 @@ impl RawElement {
                 .iter()
                 .map(|a| a.try_into())
                 .collect::<Result<Vec<_>, _>>()?,
-
+            elements: vec![],
             text: value.text().map(String::from),
         })
-    }
-}
-
-impl TryFrom<roxmltree::Node<'_, '_>> for RawElement {
-    type Error = String;
-
-    fn try_from(value: Node<'_, '_>) -> Result<Self, Self::Error> {
-        let name = value.tag_name().name().parse()?;
-        let prefix = if let Some(p) = value.tag_name().namespace() {
-            Some(p.parse()?)
-        } else {
-            None
-        };
-        Ok(Self {
-            name: QName { prefix, name },
-            attributes: value
-                .attributes()
-                .iter()
-                .map(|a| a.try_into())
-                .collect::<Result<Vec<_>, _>>()?,
-
-            text: value.text().map(String::from),
-        })
-    }
-}
-
-#[derive(Debug, Default)]
-pub struct AnyElements(pub Vec<RawElement>);
-
-impl AnyElements {
-    pub fn push(&mut self, elem: RawElement) {
-        self.0.push(elem);
-    }
-
-    pub fn len(&self) -> usize {
-        self.0.len()
-    }
-}
-
-impl TryFrom<roxmltree::Children<'_, '_>> for AnyElements {
-    type Error = String;
-
-    fn try_from(value: roxmltree::Children<'_, '_>) -> Result<Self, Self::Error> {
-        Ok(AnyElements(
-            value.map(|n| n.try_into()).collect::<Result<Vec<_>, _>>()?,
-        ))
     }
 }
