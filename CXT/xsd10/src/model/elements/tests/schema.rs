@@ -4,8 +4,6 @@ mod test {
     use crate::model::{Schema};
     use roxmltree::{Document, Node};
     use crate::model::elements::tests::parse_document;
-    use crate::model::groups::{SchemaTop, SimpleDerivation};
-    use std::rc::Rc;
 
     fn print(node: Node<'_, '_>, level: usize) {
         let indent = " ".repeat(level);

@@ -16,4 +16,4 @@ use crate::model::simple_types::Boolean;
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 // Type xsd:topLevelElement (Element xsd:element)
 #[attribute(name = "abstract")]
-pub struct Abstract(pub Boolean);
+pub struct Abstract(pub bool);
