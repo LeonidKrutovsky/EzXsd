@@ -1,3 +1,7 @@
+use crate::model::simple_types::QName;
+
+use xml_utils::*;
+
 // ref
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -13,11 +17,5 @@
 //  Type xsd:localElement (Element xsd:element)
 //  Type xsd:namedGroupRef (Element xsd:group)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-//
-
-use crate::model::simple_types::QName;
-
-use xml_utils::*;
-
 #[attribute(name = "ref")]
 pub struct Ref(pub QName);

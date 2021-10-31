@@ -62,4 +62,12 @@ impl MinOccursBool {
             }
         })
     }
+
+    pub fn text(&self) -> String {
+        let value = match self {
+            Self::One => "1",
+            Self::Zero => "0",
+        };
+        format!("{}={}", Self::NAME, value)
+    }
 }

@@ -1,3 +1,6 @@
+use crate::model::simple_types::AnyUri;
+use xml_utils::*;
+
 // source
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -9,9 +12,5 @@
 //
 // Used in
 // Anonymous type of element xsd:appinfo Anonymous type of element xsd:documentation
-
-use crate::model::simple_types::AnyUri;
-use xml_utils::*;
-
 #[attribute(name = "source")]
 pub struct Source(pub AnyUri);

@@ -98,6 +98,15 @@ impl WhiteSpaceValue {
             }
         })
     }
+
+    pub fn text(&self) -> String {
+        let value = match self {
+            WhiteSpaceValue::Preserve => "collapse",
+            WhiteSpaceValue::Replace => "preserve",
+            WhiteSpaceValue::Collapse => "replace",
+        }.to_string();
+        format!("{}={}", Self::NAME, value)
+    }
 }
 
 // value

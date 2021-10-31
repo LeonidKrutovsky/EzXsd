@@ -1,3 +1,7 @@
+use crate::model::simple_types::FormChoice;
+
+use xml_utils::*;
+
 // form
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -14,11 +18,5 @@
 // Type xsd:localAttributeType (Element xsd:attribute)
 //  Type xsd:localElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-//
-
-use crate::model::simple_types::FormChoice;
-
-use xml_utils::*;
-
 #[attribute(name = "form")]
 pub struct Form(pub FormChoice);

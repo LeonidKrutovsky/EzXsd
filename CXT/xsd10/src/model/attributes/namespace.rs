@@ -39,6 +39,5 @@ pub struct Namespace(pub NamespaceList);
 //
 // Used in
 // Anonymous type of element xsd:import
-
 #[attribute(name = "namespace")]
 pub struct NamespaceUri(pub AnyUri);

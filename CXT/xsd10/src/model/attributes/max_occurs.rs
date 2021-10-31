@@ -42,6 +42,13 @@ impl MaxOccurs {
             _ => Self::Bounded(attr.value().parse()?),
         })
     }
+
+    pub fn text(&self) -> String {
+        match self {
+            MaxOccurs::Bounded(v) => format!("{}=\"{}\"", Self::NAME, v),
+            MaxOccurs::Unbounded => format!("{}=\"unbounded\"", Self::NAME),
+        }
+    }
 }
 
 // maxOccurs
@@ -101,6 +108,14 @@ impl MaxOccursBool {
                 ))
             }
         })
+    }
+
+    pub fn text(&self) -> String {
+        let value = match self {
+            Self::Zero => "0",
+            Self::One => "1",
+        };
+        format!("{}={}", Self::NAME, value)
     }
 }
 

@@ -1,3 +1,7 @@
+use crate::model::simple_types::qname::QName;
+
+use xml_utils::*;
+
 // itemType
 // Attribute information
 // Namespace: None
@@ -9,10 +13,5 @@
 //  A value of type xsd:QName.
 // Used in
 // Anonymous type of element xsd:list
-
-use crate::model::simple_types::qname::QName;
-
-use xml_utils::*;
-
 #[attribute(name = "itemType")]
 pub struct ItemType(pub QName);

@@ -1,3 +1,7 @@
+use crate::model::simple_types::{Boolean, String_};
+
+use xml_utils::*;
+
 // fixed
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -13,12 +17,6 @@
 //  Type xsd:topLevelAttributeType (Element xsd:attribute)
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
-//
-
-use crate::model::simple_types::{Boolean, String_};
-
-use xml_utils::*;
-
 #[attribute(name = "fixed")]
 pub struct Fixed(pub String_);
 

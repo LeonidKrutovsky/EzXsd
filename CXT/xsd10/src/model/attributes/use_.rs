@@ -31,4 +31,13 @@ impl Use {
             _ => return Err(format!("Use: invalid attribute value: {}", attr.value())),
         })
     }
+
+    pub fn text(&self) -> String {
+        let value = match self {
+            Use::Optional => "optional",
+            Use::Prohibited => "prohibited",
+            Use::Required => "required"
+        };
+        format!("{}={}", Self::NAME, value)
+    }
 }

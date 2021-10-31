@@ -1,3 +1,7 @@
+use crate::model::simple_types::QName;
+
+use xml_utils::*;
+
 // refer
 // Namespace: None
 // Schema documentation: xmlschema.xsd
@@ -9,10 +13,5 @@
 //
 // Used in
 // Anonymous type of element xsd:keyref
-
-use crate::model::simple_types::QName;
-
-use xml_utils::*;
-
 #[attribute(name = "refer")]
 pub struct Refer(pub QName);
