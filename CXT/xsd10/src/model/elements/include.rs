@@ -51,4 +51,3 @@ mod test {
         assert_eq!(res.schema_location.0.as_ref(), "http://uri");
     }
 }
-

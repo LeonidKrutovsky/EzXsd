@@ -97,6 +97,10 @@ impl ComplexTypeModel {
 
         Ok(())
     }
+
+    pub fn text(&self) -> String {
+        unimplemented!()
+    }
 }
 
 #[cfg(test)]

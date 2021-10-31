@@ -1,8 +1,8 @@
-use crate::model::{attributes, elements};
-use xml_utils::element;
-use std::ops::{Deref, DerefMut};
-use crate::model::complex_types::key_base::KeyBase;
 use crate::model::attributes::RawAttribute;
+use crate::model::complex_types::key_base::KeyBase;
+use crate::model::{attributes, elements};
+use std::ops::{Deref, DerefMut};
+use xml_utils::element;
 
 // xsd:unique
 // See http://www.w3.org/TR/xmlschema-1/#element-unique.
@@ -57,7 +57,9 @@ impl DerefMut for Unique {
 impl Unique {
     pub const NAME: &'static str = "unique";
     pub fn parse(node: roxmltree::Node<'_, '_>) -> Result<Self, String> {
-        Ok(Self{0: KeyBase::parse(node)?})
+        Ok(Self {
+            0: KeyBase::parse(node)?,
+        })
     }
 }
 
@@ -67,7 +69,7 @@ mod test {
 
     #[test]
     fn test_parse() {
-         let doc = roxmltree::Document::parse(
+        let doc = roxmltree::Document::parse(
             r#"
 <unique name="NCName" attr1="" attr2 = "">
    <selector xpath="token">

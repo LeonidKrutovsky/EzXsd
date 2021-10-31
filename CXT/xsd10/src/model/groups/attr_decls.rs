@@ -31,11 +31,15 @@ pub struct AttrDecls {
 
 impl AttrDecls {
     pub const NAMES: &'static [&'static str] = &[
-                LocalAttribute::NAME, AttributeGroupRef::NAME, AnyAttribute::NAME
-            ];
+        LocalAttribute::NAME,
+        AttributeGroupRef::NAME,
+        AnyAttribute::NAME,
+    ];
 
     pub fn is_empty(&self) -> bool {
-        self.attributes.is_empty() && self.any_attribute.is_none() && self.attribute_groups.is_empty()
+        self.attributes.is_empty()
+            && self.any_attribute.is_none()
+            && self.attribute_groups.is_empty()
     }
 
     pub fn push(&mut self, node: roxmltree::Node<'_, '_>) -> Result<(), String> {
@@ -43,9 +47,13 @@ impl AttrDecls {
             LocalAttribute::NAME => self.attributes.push(LocalAttribute::parse(node)?),
             AttributeGroupRef::NAME => self.attribute_groups.push(AttributeGroupRef::parse(node)?),
             AnyAttribute::NAME => self.any_attribute = Some(AnyAttribute::parse(node)?),
-            _ => Err(format!("Unexpected node in AttrDecls group: {:?}", node))?
+            _ => Err(format!("Unexpected node in AttrDecls group: {:?}", node))?,
         }
         Ok(())
+    }
+
+    pub fn text(&self) -> String {
+        unimplemented!()
     }
 }
 
@@ -76,4 +84,3 @@ mod test {
         assert!(res.any_attribute.is_some());
     }
 }
-

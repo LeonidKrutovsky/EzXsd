@@ -50,8 +50,7 @@ use std::rc::Rc;
 
 pub const XSD_NS_URI: &str = "http://www.w3.org/2001/XMLSchema";
 
-
 pub struct Namespace {
     pub uri: Rc<String>,
-    pub alias: Option<String>
+    pub alias: Option<String>,
 }

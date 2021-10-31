@@ -104,7 +104,8 @@ impl WhiteSpaceValue {
             WhiteSpaceValue::Preserve => "collapse",
             WhiteSpaceValue::Replace => "preserve",
             WhiteSpaceValue::Collapse => "replace",
-        }.to_string();
+        }
+        .to_string();
         format!("{}={}", Self::NAME, value)
     }
 }

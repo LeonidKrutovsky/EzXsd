@@ -1,7 +1,7 @@
 use crate::named_argument::NamedArgument;
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{ItemStruct, Fields, Type};
+use syn::{Fields, ItemStruct, Type};
 
 pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
     let attr_name = arg.value;
@@ -38,8 +38,6 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
         println!("{}", parse_body);
     }
 
-
-
     let output = quote! (
         #[derive(Debug, Default)]
         #item
@@ -52,7 +50,7 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             }
 
             pub fn text(&self) -> String {
-                format!("{}=", Self::NAME)
+                format!(" {}={}", Self::NAME, self.0)
             }
         }
 

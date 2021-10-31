@@ -1,21 +1,25 @@
 #[cfg(test)]
 mod test {
-    use crate::model::simple_types::form_choice::FormChoice;
-    use crate::model::{Schema};
-    use roxmltree::{Document, Node};
     use crate::model::elements::tests::parse_document;
+    use crate::model::simple_types::form_choice::FormChoice;
+    use crate::model::Schema;
+    use roxmltree::{Document, Node};
 
     fn print(node: Node<'_, '_>, level: usize) {
         let indent = " ".repeat(level);
-        println!("{}<{}>  {}", indent ,node.tag_name().name(), node.tag_name().namespace().unwrap_or(""));
+        println!(
+            "{}<{}>  {}",
+            indent,
+            node.tag_name().name(),
+            node.tag_name().namespace().unwrap_or("")
+        );
         // for ns in node.namespaces() {
         //     println!("{}NS = {:?}", indent, ns);
         // }
 
         for ch in node.children().filter(|n| n.is_element()) {
-            print(ch, level+4);
+            print(ch, level + 4);
         }
-
     }
 
     const TEXT: &str = include_str!("fixtures/schema.xsd");
@@ -66,11 +70,21 @@ mod test {
             "http://www.w3.org/2004/08/xop/include"
         );
         assert_eq!(
-            schema.imports[0].schema_location.as_ref().unwrap().0.as_ref(),
+            schema.imports[0]
+                .schema_location
+                .as_ref()
+                .unwrap()
+                .0
+                .as_ref(),
             "http://www.w3.org/2005/05/xmlmime"
         );
         assert_eq!(
-            schema.imports[2].schema_location.as_ref().unwrap().0.as_ref(),
+            schema.imports[2]
+                .schema_location
+                .as_ref()
+                .unwrap()
+                .0
+                .as_ref(),
             "http://docs.oasis-open.org/wsn/b-2.xsd"
         );
     }

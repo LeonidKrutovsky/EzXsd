@@ -91,6 +91,9 @@ pub fn xsd_choice_group(item: ItemEnum) -> TokenStream {
                     _ => {return Err(format!("{}: {:?}", #err_msg, node))},
                 })
             }
+            pub fn text(&self) -> String {
+                unimplemented!()
+            }
         }
     );
 

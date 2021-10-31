@@ -29,4 +29,3 @@ pub struct Enumeration {
     pub value: attributes::Value,
     pub attributes: Vec<attributes::RawAttribute>,
 }
-

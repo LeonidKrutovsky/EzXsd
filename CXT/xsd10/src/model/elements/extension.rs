@@ -46,8 +46,8 @@ pub struct Extension {
 #[cfg(test)]
 mod test {
     use super::*;
-    use crate::model::groups::TypeDefParticle;
     use crate::model::attributes::ProcessContents;
+    use crate::model::groups::TypeDefParticle;
 
     #[test]
     fn test_empty() {
@@ -57,7 +57,7 @@ mod test {
         )
         .unwrap();
         let root = doc.root_element();
-        let res:Extension = Extension::parse(root).unwrap();
+        let res: Extension = Extension::parse(root).unwrap();
         assert!(res.annotation.is_none());
         assert_eq!(res.base.0.name(), "BarType");
         assert_eq!(res.base.0.prefix(), Some("tns"));
@@ -87,7 +87,7 @@ mod test {
         )
         .unwrap();
         let root = doc.root_element();
-        let res:Extension = Extension::parse(root).unwrap();
+        let res: Extension = Extension::parse(root).unwrap();
         assert!(res.annotation.is_some());
         if let TypeDefParticle::Sequence(val) = res.type_def_particle.unwrap() {
             assert!(val.annotation.is_some());
@@ -97,7 +97,9 @@ mod test {
 
         let attr = &res.attr_decls;
         assert_eq!(attr.attributes.len(), 3);
-        assert_eq!(attr.any_attribute.as_ref().unwrap().process_contents, ProcessContents::Lax);
+        assert_eq!(
+            attr.any_attribute.as_ref().unwrap().process_contents,
+            ProcessContents::Lax
+        );
     }
 }
-

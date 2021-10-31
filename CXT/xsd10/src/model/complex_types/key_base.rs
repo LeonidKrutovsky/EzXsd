@@ -1,7 +1,7 @@
 use crate::model::attributes;
+use crate::model::attributes::RawAttribute;
 use crate::model::elements;
 use xml_utils::complex_type;
-use crate::model::attributes::RawAttribute;
 
 // xsd:keybase
 // Complex type information
@@ -52,22 +52,22 @@ impl KeyBase {
 
         for ch in node.children().filter(|n| n.is_element()) {
             match ch.tag_name().name() {
-                elements::Annotation::NAME => { annotation = Some(elements::Annotation::parse(ch)?) }
-                elements::Selector::NAME => { selector = Some(elements::Selector::parse(ch)?) }
-                elements::Field::NAME => { fields.push(elements::Field::parse(ch)?) }
-                _ => { Err(format!("err"))? }
+                elements::Annotation::NAME => annotation = Some(elements::Annotation::parse(ch)?),
+                elements::Selector::NAME => selector = Some(elements::Selector::parse(ch)?),
+                elements::Field::NAME => fields.push(elements::Field::parse(ch)?),
+                _ => Err(format!("err"))?,
             }
         }
 
         for attr in node.attributes() {
             match attr.name() {
-                attributes::Id::NAME => { id = Some(attributes::Id::parse(attr)?) }
-                attributes::Name::NAME => { name = Some(attributes::Name::parse(attr)?) }
-                _ => attributes.push(RawAttribute::parse(attr)?)
+                attributes::Id::NAME => id = Some(attributes::Id::parse(attr)?),
+                attributes::Name::NAME => name = Some(attributes::Name::parse(attr)?),
+                _ => attributes.push(RawAttribute::parse(attr)?),
             }
         }
 
-        Ok(Self{
+        Ok(Self {
             annotation,
             selector: selector.ok_or_else(|| format!(""))?,
             fields,

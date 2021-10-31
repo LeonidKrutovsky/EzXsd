@@ -34,8 +34,8 @@ pub struct AnyAttribute {
 #[cfg(test)]
 mod test {
     use super::AnyAttribute;
-    use crate::model::simple_types::namespace_list::NamespaceList;
     use crate::model::attributes::ProcessContents;
+    use crate::model::simple_types::namespace_list::NamespaceList;
 
     #[test]
     fn test_parse() {
@@ -51,4 +51,3 @@ mod test {
         assert_eq!(res.process_contents, ProcessContents::Lax);
     }
 }
-

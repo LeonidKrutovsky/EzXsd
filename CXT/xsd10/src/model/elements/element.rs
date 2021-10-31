@@ -99,7 +99,6 @@ pub struct Element {
     pub attributes: Vec<attributes::RawAttribute>,
 }
 
-
 #[cfg(test)]
 mod test {
     use super::TopLevelElement;

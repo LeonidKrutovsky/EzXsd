@@ -36,7 +36,6 @@ pub struct SimpleRestrictionModel {
 impl SimpleRestrictionModel {
     pub const NAMES: &'static [&'static str] = &[
         elements::LocalSimpleType::NAME,
-
         elements::MinExclusive::NAME,
         elements::MinInclusive::NAME,
         elements::MaxExclusive::NAME,
@@ -56,12 +55,14 @@ impl SimpleRestrictionModel {
             elements::LocalSimpleType::NAME => {
                 self.simple_type = Some(elements::LocalSimpleType::parse(node)?)
             }
-            tag_name if Facets::NAMES.contains(&tag_name) => {
-                self.facets.push(Facets::parse(node)?)
-            }
+            tag_name if Facets::NAMES.contains(&tag_name) => self.facets.push(Facets::parse(node)?),
             _ => {}
         }
         Ok(())
+    }
+
+    pub fn text(&self) -> String {
+        unimplemented!()
     }
 }
 

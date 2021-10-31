@@ -1,4 +1,4 @@
-use std::convert::{TryInto};
+use std::convert::TryInto;
 
 use roxmltree::Node;
 
@@ -16,6 +16,7 @@ pub use attribute_group::AttributeGroupRef;
 pub use choice::Choice;
 pub use choice::SimpleChoice;
 pub use complex_content::ComplexContent;
+pub use complex_type::LocalComplexType;
 pub use documentation::Documentation;
 pub use element::Element;
 pub use enumeration::Enumeration;
@@ -26,6 +27,8 @@ pub use fraction_digits::FractionDigits;
 pub use group::Group;
 pub use import::Import;
 pub use include::Include;
+pub use key::Key;
+pub use key_ref::KeyRef;
 pub use length::Length;
 pub use max_exclusive::MaxExclusive;
 pub use max_inclusive::MaxInclusive;
@@ -44,11 +47,8 @@ pub use simple_content::SimpleContent;
 pub use simple_type::LocalSimpleType;
 pub use simple_type::TopLevelSimpleType;
 pub use total_digits::TotalDigits;
-pub use white_space::WhiteSpace;
-pub use complex_type::LocalComplexType;
 pub use unique::Unique;
-pub use key::Key;
-pub use key_ref::KeyRef;
+pub use white_space::WhiteSpace;
 
 use crate::model::attributes;
 use crate::model::simple_types::QName;

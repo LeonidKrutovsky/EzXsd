@@ -54,4 +54,3 @@ mod test {
         assert_eq!(res.simple_type.unwrap().id.unwrap().0.as_ref(), "STN");
     }
 }
-

@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod test {
+    use crate::model::elements::tests::parse_document;
     use crate::model::groups::nested_particle::NestedParticle;
     use crate::model::groups::schema_top::SchemaTop;
     use crate::model::groups::type_def_particle::TypeDefParticle;
+    use crate::model::groups::ComplexTypeModel;
     use crate::model::{Annotation, TopLevelComplexType};
     use roxmltree::Document;
     use std::rc::Rc;
-    use crate::model::elements::tests::parse_document;
-    use crate::model::groups::ComplexTypeModel;
 
     const TEXT: &str = include_str!("fixtures/complex_types.xsd");
     #[test]
@@ -31,18 +31,22 @@ mod test {
     fn test_1(ct: &Rc<TopLevelComplexType>) {
         assert_eq!(ct.name.0.as_ref(), "IntRange");
         assert_eq!(
-            ct.annotation.as_ref().unwrap().documentations[0].text.as_ref().unwrap(),
+            ct.annotation.as_ref().unwrap().documentations[0]
+                .text
+                .as_ref()
+                .unwrap(),
             "Doc Text"
         );
 
         assert_eq!(ct.attributes.len(), 1);
         assert_eq!(ct.attributes[0].value(), "Whatever!");
 
-        let type_def_particle = if let ComplexTypeModel::Content(type_def_particle, _attr_decls) = &ct.model {
-            type_def_particle
-        } else {
-            unreachable!()
-        };
+        let type_def_particle =
+            if let ComplexTypeModel::Content(type_def_particle, _attr_decls) = &ct.model {
+                type_def_particle
+            } else {
+                unreachable!()
+            };
         if let TypeDefParticle::Sequence(seq) = type_def_particle.as_ref().unwrap() {
             assert_eq!(seq.nested_particle.len(), 2);
             if let NestedParticle::Element(el) = &seq.nested_particle[0] {

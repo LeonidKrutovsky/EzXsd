@@ -60,6 +60,7 @@ impl FromStr for Language {
 
 impl_from_string!(Language);
 impl_as_ref!(Language);
+impl_display!(Language);
 
 #[cfg(test)]
 mod test {

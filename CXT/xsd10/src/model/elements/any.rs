@@ -42,10 +42,10 @@ pub struct Any {
 
 #[cfg(test)]
 mod test {
+    use crate::model::attributes::max_occurs::MaxOccurs;
+    use crate::model::attributes::process_contents::ProcessContents;
     use crate::model::elements::any::Any;
     use crate::model::simple_types::namespace_list::NamespaceList;
-    use crate::model::attributes::process_contents::ProcessContents;
-    use crate::model::attributes::max_occurs::MaxOccurs;
 
     #[test]
     fn test_parse() {

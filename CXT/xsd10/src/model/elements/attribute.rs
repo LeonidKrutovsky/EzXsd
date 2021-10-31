@@ -58,7 +58,6 @@ pub struct TopLevelAttribute {
     pub fixed: Option<attributes::Fixed>,
 }
 
-
 #[cfg(test)]
 mod test {
     use super::TopLevelAttribute;

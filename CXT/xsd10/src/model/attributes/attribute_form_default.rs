@@ -1,4 +1,4 @@
-use xml_utils::*;
+use xml_utils::attribute;
 
 use crate::model::simple_types::FormChoice;
 
@@ -20,3 +20,37 @@ use crate::model::simple_types::FormChoice;
 // Anonymous type of element xsd:schema
 #[attribute(name = "attributeFormDefault")]
 pub struct AttributeFormDefault(pub FormChoice);
+
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+
+    use super::AttributeFormDefault;
+    use super::FormChoice;
+
+    #[test]
+    fn test_valid_values() {
+        assert_eq!(
+            AttributeFormDefault::from_str("qualified").unwrap().0,
+            FormChoice::Qualified
+        );
+        assert_eq!(
+            AttributeFormDefault::from_str("unqualified").unwrap().0,
+            FormChoice::Unqualified
+        );
+    }
+
+    #[test]
+    fn test_text() {
+        assert_eq!(
+            AttributeFormDefault::from_str("qualified").unwrap().text(),
+            " attributeFormDefault=\"qualified\""
+        );
+        assert_eq!(
+            AttributeFormDefault::from_str("unqualified")
+                .unwrap()
+                .text(),
+            " attributeFormDefault=\"unqualified\""
+        );
+    }
+}

@@ -67,6 +67,7 @@ pub struct AnyUri(AnySimpleType);
 
 impl_from_string!(AnyUri);
 impl_as_ref!(AnyUri);
+impl_display!(AnyUri);
 
 impl FromStr for AnyUri {
     type Err = String;

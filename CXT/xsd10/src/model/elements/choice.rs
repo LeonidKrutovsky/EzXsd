@@ -64,7 +64,7 @@ mod test {
         )
         .unwrap();
         let root = doc.root_element();
-        let res:Choice = Choice::parse(root).unwrap();
+        let res: Choice = Choice::parse(root).unwrap();
         assert!(res.annotation.is_none());
         let np = &res.nested_particle;
         assert_eq!(np.len(), 3);

@@ -73,4 +73,8 @@ impl ElementModel {
         }
         Ok(())
     }
+
+    pub fn text(&self) -> String {
+        unimplemented!()
+    }
 }

@@ -110,19 +110,23 @@ mod test {
         .unwrap();
         let root = doc.root_element();
         let res = TopLevelComplexType::parse(root).unwrap();
-        assert_eq!(res.annotation.as_ref().unwrap().documentations[0].text.as_ref().unwrap(), "DocText");
+        assert_eq!(
+            res.annotation.as_ref().unwrap().documentations[0]
+                .text
+                .as_ref()
+                .unwrap(),
+            "DocText"
+        );
         assert_eq!(res.attributes.len(), 1);
         assert_eq!(res.id.as_ref().unwrap().0.as_ref(), "ID");
         assert_eq!(res.name.0.as_ref(), "FloatRange");
 
         if let ComplexTypeModel::Content(tdp, _) = &res.model {
             if let TypeDefParticle::Sequence(val) = tdp.as_ref().unwrap() {
-            assert_eq!(val.nested_particle.len(), 2);
+                assert_eq!(val.nested_particle.len(), 2);
             } else {
                 panic!();
             }
         }
-
-
     }
 }

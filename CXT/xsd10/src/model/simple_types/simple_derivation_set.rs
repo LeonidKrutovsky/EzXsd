@@ -1,6 +1,7 @@
 use std::str::FromStr;
 
 use crate::model::simple_types::xsd_list::XsdList;
+use std::fmt::Formatter;
 
 // xsd:simpleDerivationSet
 //    #all or (possibly empty) subset of {restriction, union, list}
@@ -49,6 +50,15 @@ impl FromStr for SimpleDerivationSet {
     }
 }
 
+impl std::fmt::Display for SimpleDerivationSet {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SimpleDerivationSet::All => write!(f, "{}", "#all"),
+            SimpleDerivationSet::List(val) => write!(f, "{}", val),
+        }
+    }
+}
+
 #[derive(Debug, PartialEq)]
 pub enum SimpleDerivationSubset {
     List,
@@ -67,6 +77,16 @@ impl FromStr for SimpleDerivationSubset {
             _ => return Err(format!("Invalid value for SimpleDerivationSubset: {}", s)),
         };
         Ok(res)
+    }
+}
+
+impl std::fmt::Display for SimpleDerivationSubset {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            SimpleDerivationSubset::List => write!(f, " {}", "list"),
+            SimpleDerivationSubset::Union => write!(f, " {}", "union"),
+            SimpleDerivationSubset::Restriction => write!(f, " {}", "restriction"),
+        }
     }
 }
 

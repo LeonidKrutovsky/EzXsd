@@ -14,8 +14,8 @@ pub fn parse_document<'a>(doc: &'a roxmltree::Document) -> Result<Schema, String
 
 #[cfg(test)]
 mod onvif_files_test {
-    use roxmltree::Document;
     use crate::model::elements::tests::parse_document;
+    use roxmltree::Document;
 
     macro_rules! INPUT_PATH {
         () => {

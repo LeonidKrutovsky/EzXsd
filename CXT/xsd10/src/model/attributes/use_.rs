@@ -36,7 +36,7 @@ impl Use {
         let value = match self {
             Use::Optional => "optional",
             Use::Prohibited => "prohibited",
-            Use::Required => "required"
+            Use::Required => "required",
         };
         format!("{}={}", Self::NAME, value)
     }

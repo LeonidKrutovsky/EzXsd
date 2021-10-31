@@ -46,12 +46,7 @@ impl FromStr for ProcessContents {
             "skip" => Self::Skip,
             "lax" => Self::Lax,
             "strict" => Self::Strict,
-            _ => {
-                return Err(format!(
-                    "ProcessContents: Invalid attribute value: {}",
-                    s
-                ))
-            }
+            _ => return Err(format!("ProcessContents: Invalid attribute value: {}", s)),
         })
     }
 }
