@@ -41,4 +41,4 @@ pub struct Fixed(pub String_);
 // Type xsd:numFacet via derivation of xsd:facet (Elements xsd:fractionDigits, xsd:length, xsd:minLength, xsd:maxLength)
 
 #[attribute(name = "fixed")]
-pub struct FixedBool(pub Boolean);
+pub struct FixedBool(pub bool);

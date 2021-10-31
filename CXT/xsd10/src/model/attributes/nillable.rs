@@ -16,4 +16,4 @@ use xml_utils::*;
 //  Type xsd:topLevelElement (Element xsd:element)
 //  Type xsd:narrowMaxMin via derivation of xsd:localElement (Element xsd:element)
 #[attribute(name = "nillable")]
-pub struct Nillable(pub Boolean);
+pub struct Nillable(pub bool);

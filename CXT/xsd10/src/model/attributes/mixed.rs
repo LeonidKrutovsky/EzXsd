@@ -15,4 +15,4 @@ use xml_utils::*;
 // Type xsd:topLevelComplexType (Element xsd:complexType)
 //
 #[attribute(name = "mixed")]
-pub struct Mixed(pub Boolean);
+pub struct Mixed(pub bool);
