@@ -27,6 +27,10 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
             impl #struct_name {
                 pub const NAME: &'static str = #element_name;
                 #parse_method
+
+                pub fn text(&self) -> String {
+                    unimplemented!()
+                }
             }
         );
     }

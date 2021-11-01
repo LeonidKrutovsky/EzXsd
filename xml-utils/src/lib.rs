@@ -16,7 +16,6 @@ use crate::complex_type::xsd_complex_type;
 use crate::element::xsd_element;
 use crate::groups::xsd_choice_group;
 use crate::named_argument::NamedArgument;
-use syn::parse::{Parse, ParseStream};
 
 #[proc_macro_attribute]
 pub fn attribute(_metadata: TokenStream, input: TokenStream) -> TokenStream {

@@ -1,4 +1,4 @@
-use crate::model::simple_types::{Boolean, String_};
+use crate::model::simple_types::{String_};
 
 use xml_utils::*;
 

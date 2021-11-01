@@ -1,6 +1,4 @@
-use crate::model::simple_types::Boolean;
-
-use xml_utils::*;
+use xml_utils::attribute;
 
 // nillable
 // Namespace: None
