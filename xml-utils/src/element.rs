@@ -19,6 +19,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
             fields_stream.extend(quote! {pub #name: #tp,})
         }
         let parse_method = fields_named.impl_parse(&element_name);
+        let text_method = fields_named.impl_text(&element_name);
         output = quote! (
             #[derive(Debug)]
             pub struct #struct_name {
@@ -28,9 +29,7 @@ pub fn xsd_element(arg: NamedArgument, item: ItemStruct) -> proc_macro::TokenStr
                 pub const NAME: &'static str = #element_name;
                 #parse_method
 
-                pub fn text(&self) -> String {
-                    unimplemented!()
-                }
+                #text_method
             }
         );
     }

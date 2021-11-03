@@ -211,6 +211,7 @@ impl FieldWrapper for syn::Field {
 
 pub trait NamedFields {
     fn impl_parse(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream;
+    fn impl_text(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream;
 }
 
 impl NamedFields for syn::FieldsNamed {
@@ -271,6 +272,15 @@ impl NamedFields for syn::FieldsNamed {
                 })
             }
         )
+    }
+    fn impl_text(&self, elem_name: &syn::LitStr) -> proc_macro2::TokenStream {
+        let mut attributes_text = quote!();
+
+        quote! {
+            pub fn text(&self) -> String {
+                format!("<{0}> </{0}>", Self::NAME)
+            }
+        }
     }
 }
 

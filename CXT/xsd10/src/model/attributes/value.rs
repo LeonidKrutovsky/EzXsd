@@ -106,7 +106,7 @@ impl WhiteSpaceValue {
             WhiteSpaceValue::Collapse => "replace",
         }
         .to_string();
-        format!("{}={}", Self::NAME, value)
+        format!(" {}={}", Self::NAME, value)
     }
 }
 

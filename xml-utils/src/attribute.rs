@@ -50,7 +50,7 @@ pub fn xsd_attribute(arg: NamedArgument, item: ItemStruct) -> TokenStream {
             }
 
             pub fn text(&self) -> String {
-                format!(" {}={}", Self::NAME, self.0)
+                format!(" {}=\"{}\"", Self::NAME, self.0)
             }
         }
 

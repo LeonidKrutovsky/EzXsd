@@ -45,8 +45,8 @@ impl MaxOccurs {
 
     pub fn text(&self) -> String {
         match self {
-            MaxOccurs::Bounded(v) => format!("{}=\"{}\"", Self::NAME, v),
-            MaxOccurs::Unbounded => format!("{}=\"unbounded\"", Self::NAME),
+            MaxOccurs::Bounded(v) => format!(" {}=\"{}\"", Self::NAME, v),
+            MaxOccurs::Unbounded => format!(" {}=\"unbounded\"", Self::NAME),
         }
     }
 }
@@ -115,7 +115,7 @@ impl MaxOccursBool {
             Self::Zero => "0",
             Self::One => "1",
         };
-        format!("{}={}", Self::NAME, value)
+        format!(" {}={}", Self::NAME, value)
     }
 }
 

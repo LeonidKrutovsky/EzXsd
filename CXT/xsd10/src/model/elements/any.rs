@@ -1,3 +1,4 @@
+use chrono::format::format;
 use crate::model::attributes;
 use crate::model::elements;
 use xml_utils::element;
@@ -40,6 +41,18 @@ pub struct Any {
     pub max_occurs: attributes::MaxOccurs,
 }
 
+impl Any {
+    pub fn text2(&self) -> String {
+        let mut attrs = String::new();
+        attrs.push_str(&self.namespace.text());
+        attrs.push_str(&self.process_contents.text());
+        attrs.push_str(&self.min_occurs.text());
+        attrs.push_str(&self.max_occurs.text());
+
+        format!("<{0}{1}> </{0}>", Self::NAME, attrs)
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::model::attributes::max_occurs::MaxOccurs;
@@ -61,5 +74,16 @@ mod test {
         assert_eq!(res.process_contents, ProcessContents::Lax);
         assert_eq!(res.min_occurs.0, "0".parse().unwrap());
         assert_eq!(res.max_occurs, MaxOccurs::Unbounded);
+    }
+
+    #[test]
+    fn test_text() {
+        let doc = roxmltree::Document::parse(
+            r###"<any a='a' b='b' namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" c='c'/>"###,
+        )
+        .unwrap();
+        let root = doc.root_element();
+        let res: Any = Any::parse(root).unwrap();
+        assert_eq!(res.text2(), "<any> </any>");
     }
 }

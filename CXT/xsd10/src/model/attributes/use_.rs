@@ -38,6 +38,6 @@ impl Use {
             Use::Prohibited => "prohibited",
             Use::Required => "required",
         };
-        format!("{}={}", Self::NAME, value)
+        format!(" {}={}", Self::NAME, value)
     }
 }

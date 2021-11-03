@@ -68,6 +68,6 @@ impl MinOccursBool {
             Self::One => "1",
             Self::Zero => "0",
         };
-        format!("{}={}", Self::NAME, value)
+        format!(" {}={}", Self::NAME, value)
     }
 }

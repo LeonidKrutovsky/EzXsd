@@ -30,6 +30,14 @@ impl ProcessContents {
     pub fn parse(attr: &roxmltree::Attribute) -> Result<Self, String> {
         attr.value().parse()
     }
+    pub fn text(&self) -> String {
+        let value = match self {
+            ProcessContents::Lax => "lax",
+            ProcessContents::Skip => "skip",
+            ProcessContents::Strict => "strict",
+        };
+        format!(" {}=\"{}\"", Self::NAME, value)
+    }
 }
 
 impl Default for ProcessContents {
