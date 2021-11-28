@@ -75,3 +75,27 @@ impl DerivationBlock {
 
 #[attribute(name = "block")]
 pub struct Block(pub BlockSet);
+
+#[cfg(test)]
+mod tests {
+    use crate::model::attributes::{Block, DerivationBlock};
+    use crate::model::simple_types::{BlockSet, DerivationSet};
+
+    #[test]
+    fn deriviation_block_to_text() {
+        let deriviation_block = DerivationBlock(DerivationSet::All);
+        assert_eq!(deriviation_block.text(), " block=\"#all\"");
+
+        let deriviation_block = DerivationBlock(DerivationSet::List("restriction extension".parse().unwrap()));
+        assert_eq!(deriviation_block.text(), " block=\"restriction extension\"");
+    }
+
+        #[test]
+    fn block_to_text() {
+        let block = Block(BlockSet::All);
+        assert_eq!(block.text(), " block=\"#all\"");
+
+        let block = Block(BlockSet::List("restriction extension substitution".parse().unwrap()));
+        assert_eq!(block.text(), " block=\"restriction extension substitution\"");
+    }
+}

@@ -1,3 +1,4 @@
+use std::fmt::format;
 use crate::model::simple_types::{AnySimpleType, NonNegativeInteger, PositiveInteger, String_};
 use xml_utils::*;
 
@@ -22,6 +23,10 @@ impl Value {
 
     pub fn parse(s: &roxmltree::Attribute) -> Result<Self, String> {
         Ok(Self(s.value().to_string()))
+    }
+
+    pub fn text(&self) -> String {
+        format!(" value=\"{}\"", self.0)
     }
 }
 

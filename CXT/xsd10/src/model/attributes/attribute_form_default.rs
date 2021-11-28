@@ -53,4 +53,13 @@ mod tests {
             " attributeFormDefault=\"unqualified\""
         );
     }
+
+    #[test]
+    fn to_text() {
+        let value = AttributeFormDefault(FormChoice::Unqualified);
+        assert_eq!(value.text(), " attributeFormDefault=\"unqualified\"");
+
+        let value = AttributeFormDefault(FormChoice::Qualified);
+        assert_eq!(value.text(), " attributeFormDefault=\"qualified\"");
+    }
 }

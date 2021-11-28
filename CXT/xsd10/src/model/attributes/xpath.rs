@@ -30,3 +30,21 @@ pub struct XPath(pub Token);
 // Anonymous type of element xsd:field
 #[attribute(name = "xpath")]
 pub struct FieldXPath(pub Token);
+
+
+#[cfg(test)]
+mod test {
+    use crate::model::attributes::{FieldXPath, XPath};
+
+    #[test]
+    fn xpath_to_text() {
+        let xpath: XPath = "someString".parse().unwrap();
+        assert_eq!(xpath.text(), " xpath=\"someString\"")
+    }
+
+    #[test]
+    fn fieldxpath_to_text() {
+        let xpath: FieldXPath = "someString".parse().unwrap();
+        assert_eq!(xpath.text(), " xpath=\"someString\"")
+    }
+}

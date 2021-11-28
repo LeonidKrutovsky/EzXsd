@@ -117,6 +117,10 @@ impl RawAttribute {
             value: attr.value().to_string(),
         })
     }
+
+    pub fn text(&self) -> String {
+        format!(" {}=\"{}\"", self.name, self.value)
+    }
 }
 
 impl TryFrom<&roxmltree::Attribute<'_>> for RawAttribute {

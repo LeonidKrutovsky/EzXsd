@@ -46,4 +46,10 @@ mod tests {
         assert_eq!(Abstract::from_str("0").unwrap().text(), " abstract=false");
         assert_eq!(Abstract::from_str("1").unwrap().text(), " abstract=true");
     }
+
+    #[test]
+    fn to_text() {
+        let value = Abstract(true);
+        assert_eq!(value.text(), " abstract=\"true\"")
+    }
 }

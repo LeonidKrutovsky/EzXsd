@@ -54,12 +54,7 @@ impl fmt::Display for FullDerivationSet {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             FullDerivationSet::All => write!(f, "{}", "#all"),
-            FullDerivationSet::List(x) => {
-                let res =
-                    x.0.iter()
-                        .fold(String::new(), |a, b| format!("{} {}", a, b));
-                write!(f, "{}", res)
-            }
+            FullDerivationSet::List(x) => write!(f, "{}", x),
         }
     }
 }

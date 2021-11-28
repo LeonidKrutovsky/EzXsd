@@ -22,3 +22,14 @@ use crate::model::simple_types::QName;
 // Type xsd:simpleRestrictionType (Element xsd:restriction)
 #[attribute(name = "base")]
 pub struct Base(pub QName);
+
+#[cfg(test)]
+mod tests {
+    use crate::model::attributes::Base;
+
+    #[test]
+    fn text() {
+        let base = Base("xss:SomeName".parse().unwrap());
+        assert_eq!(base.text(), " base=\"xss:SomeName\"")
+    }
+}

@@ -40,8 +40,8 @@ impl Default for FormChoice {
 impl std::fmt::Display for FormChoice {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            FormChoice::Qualified => write!(f, "\"{}\"", "qualified"),
-            FormChoice::Unqualified => write!(f, "\"{}\"", "unqualified"),
+            FormChoice::Qualified => write!(f, "{}", "qualified"),
+            FormChoice::Unqualified => write!(f, "{}", "unqualified"),
         }
     }
 }

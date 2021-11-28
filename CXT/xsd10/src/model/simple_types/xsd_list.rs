@@ -49,7 +49,13 @@ impl<I: fmt::Display> fmt::Display for XsdList<I> {
                 "{}",
                 self.0
                     .iter()
-                    .fold(String::new(), |a, b| format!("{} {}", a, b))
+                    .fold(String::new(), |a, b| {
+                        if a.is_empty(){
+                            format!("{}", b)
+                        } else {
+                            format!("{} {}", a, b)
+                        }
+                    })
             )
         }
     }
